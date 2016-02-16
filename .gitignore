@@ -1,0 +1,4 @@
+*.swp
+*.map
+.sass-cache/
+public/stylesheets/layout.css
