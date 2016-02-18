@@ -1,0 +1,349 @@
+"=========== Meta ============
+"StrID : 305
+"Title : Herramientas de un desarrollador I: Tmux
+"Slug  : tmux
+"Cats  : Sin categoría
+"Tags  : 
+"=============================
+"EditType   : post
+"EditFormat : Markdown
+"TextAttach : wpid1417-vimpress_53782abf_mkd.txt
+"========== Content ==========
+[php]set_setting("show_numbers_in_sections", false);[/php]
+[php]set_setting("show_numbers_in_subsections", false);[/php]
+
+<strong>NOTA</strong>: Este artículo fue publicado originalmente en <a href="http://revista.atixlibre.org/?p=259" target="_blank">ATIX</a>, revista de software libre.
+
+<blockquote>
+Tmux es un multiplexor de terminal: posibilita que una o más de terminales, cada una ejecutando un programa por separado,  puedan crearse, accederse y controlarse desde una sola pantalla.
+</blockquote>
+
+Hace seis años aproximadamente empece a usar el sistema operativo GNU/Linux, casi el mismo tiempo en el que me inicie en la programación, cuando aun cursaba el bachillerato. Hoy soy estudiante de ingeniería, próximo a graduarme, puedo decir que GNU/Linux es el mejor entorno de desarrollo que he conocido.
+
+A lo largo de estos años he aprendido a utilizar el SO y algunas herramientas que me han ayudado a realizar mi trabajo de manera más fácil y eficiente, y que considero, debería ser el kit básico de todo desarrollador.
+
+En este tiempo también he conocido a algunos programadores, la mayoría de ellos usuarios de Windows, dependientes de las GUIs y de los IDEs, demorando demasiado en tareas que bien se podrían automatizar empleando las herramientas adecuadas. En la edición 2012 del CONACUP, un concursante que terminó por sentarse a lado mio, no pudo siquiera intentar resolver los problemas propios del evento debido a que paso la mayor parte del tiempo cambiándose de máquina en máquina porque eclipse se le bloqueaba. Verídico.
+
+Tiempo atrás leí una pregunta muy popular en StackOverflow, <em>C++ IDE for Linux?</em>, muchas respuestas y comentarios, de entre ellos destacó uno: <em>UNIX is an IDE. All of it.</em>, lo cual me hizo recordar cual fue el propósito inicial de UNIX, un sistema para programadores.
+
+
+Estamos iniciando el año y he decidido comenzar una serie de artículos que titulo <em>"Herramientas de un desarrollador"</em> como son:
+
+- Multiplexor de terminal: tmux
+- Línea de comandos: Bash
+- Editor de texto: Vim y/o emacs 
+- Utilerías: grep, find, sed, etc.
+- Sistema de control de versiones: git
+
+Lo único que se necesita para seguir estos artículos es un emulador de terminal(xterm, gnome-terminal, konsole, etc.) y ganas de aprender. Puesto que vamos a dedicar mucho tiempo trabajando en línea de comandos es vital una herramienta que nos permita administrar terminales en forma eficiente, esta herramienta se llama tmux y es el tema de esta primer entrega.
+
+[php]section("¿Qué es tmux?");[/php]
+
+En electrónica un multiplexor es un dispositivo que permite trasmitir varios mensajes o señales de manera simultanea sobre un canal de comunicación. Tmux es un multiplexor de terminal, esto es, posibilita que una o más de terminales(o ventanas), cada una ejecutando un programa por separado, puedan accederse y controlarse desde una sola pantalla. 
+
+En mis actividades diarias empleo muy a menudo una o más terminales, cuando programo utilizo como mínimo dos, en una tengo abierto vim y en la otra realizo las pruebas. Antes yo solía tener dos terminales abiertas en dos ventanas, usando Ctrl + Tab para moverme entre ellas, pero con el tiempo esto se volvió tedioso y mi vista se cansaba fácilmente debido a los constantes destellos del cambio de ventanas. Investigando un poco conocí GNU Screen, no me gusto. Descubrí tmux y fue exactamente lo que andaba buscando.
+
+[php]figure('hdud1_0', 'Antes', 'hdud1_0', 'png', 'ES');[/php]
+
+[php]figure('hdud1_1', 'Después', 'hdud1_1', 'png', 'ES');[/php]
+
+[php]section("Instalación");[/php]
+
+Para los usuarios de distribuciones Debian, Ubuntu, CentOS, Fedora, etc. es muy probable que puedan instalar tmux directamente con el gestor de paquetes o bien pueden compilarlo desde código fuente, nada complicado.
+
+[php]subsection("Con el gestor de paquetes");[/php]
+
+<pre lang="bash" theme="slate">
+# Debian y Ubuntu
+$ sudo apt-get install tmux
+</pre>
+
+[php]section("Desde código fuente");[/php]
+
+Ve al sitio oficial de tmux(<a href="http://tmux.sourceforge.net/" target="_blank">http://tmux.sourceforge.net</a>) y descarga el código fuente, yo estoy empleando la versión 1.6. Por cierto, tmux depende de <code>libevent</code> y <code>ncurses</code>.
+
+<pre lang="bash" theme="slate">
+$ # Instalar dependencias
+$ sudo apt-get install libevent-dev libncurses5-dev
+$
+$ cd ~/Downloads/
+$ tar xvf tmux-1.6.tar.gz
+$ cd tmux-1.6/
+$ ./configure
+$ make
+$ sudo make install
+$
+$ # Prueba la instalacion
+$ tmux -V
+</pre>
+
+[php]section("Lo básico");[/php]
+
+Para empezar a usar tmux abre una terminal y ejecuta tmux, teclea el comando exit para salir. Tmux al igual que vim es modal, el modo por defecto es el que nos permite interactuar con la terminal. Los otros modos son:
+
+<ul>
+<li><strong>output mode</strong>: Entramos a este modo cuando un comando que produce una salida, tal como list-keys, es ejecutado con una combinación de teclas.</li>
+<li><strong>copy mode</strong>: Este modo permite copiar texto de las ventanas, del historial o de la salida producida por otros programas.</li>
+</ul>
+
+[php]subsection("El prefijo de comandos");[/php]
+
+El prefijo de comandos es una combinación de teclas que avisa a tmux que estamos a punto de indicarle una acción que debe realizar, por defecto esta combinación es <kbd>Ctrl</kbd> + <kbd>b</kbd>, <kbd>PREFIX</kbd> de aquí en adelante. La instrucción <kbd>PREFIX</kbd> + <kbd>c</kbd> se traduce en presionar las teclas <kbd>Ctrl</kbd> y <kbd>b</kbd> simultáneamente, soltar las teclas y después presionar la letra <kbd>c</kbd>. 
+Tmux tiene un comando para cada acción y una serie de keybindings para ejecutar algunos de ellos con una combinación de teclas, de esto hablaremos más adelante. Para entrar en modo de comandos presiona <kbd>PREFIX</kbd> + <kbd>:</kbd> y teclea el comando.
+
+[php]subsection("Copy mode");[/php]
+
+Como ya se menciono, en este modo podemos navegar por el contenido que se ha generado en la terminal y copiar texto si así lo queremos. Presiona <kbd>PREFIX</kbd> + <kbd>[</kbd> para entrar en este modo.
+
+[php]subsection("Paneles");[/php]
+
+Tmux permite dividir el área de trabajo en varias partes, llamadas paneles, estas pueden ser horizontales o verticales.
+
+<pre lang="text" theme="slate">
+# Creación de panel horizontal
+# Combinación     Comando
+PREFIX + "      (split-window)
+
+# Creación de panel vertical
+PREFIX + %      (split-window -h)
+
+# Moverse al siguiente panel
+PREFIX + o      (select-pane -t :.+)
+
+#Moverse al al panel superior, inferior, izquierdo y derecho
+
+PREFIX + UP     (select-pane -U)
+PREFIX + DOWN   (select-pane -D)
+PREFIX + LEFT   (select-pane -L)
+PREFIX + RIGHT  (select-pane -R)
+</pre>
+
+[php]figure('hdud1_2', 'Splits', 'hdud1_2', 'png', 'ES');[/php]
+
+Una combinación muy util para moverse entre paneles es <kbd>PREFIX</kbd> + <kbd>q</kbd>, que enumera cada uno de los paneles por un momento, presiona el numero del panel al cual te quieres trasladar y listo.
+
+[php]figure('hdud1_3', 'Paneles enumerados', 'hdud1_3', 'png', 'ES');[/php]
+
+Si necesitas reducir o aumentar el área de un panel lo puedes hacer con las siguientes combinaciones.
+
+[php]subsection("Aumentar o reducir el panel verticalmente.");[/php]
+
+<pre lang="bash" theme="slate">
+PREFIX + C-UP     (resize-pane -U)
+PREFIX + C-DOWN   (resize-pane -D)
+</pre>
+
+[php]subsection("Aumentar o reducir el panel horizontalmente.");[/php]
+
+<pre lang="bash" theme="slate">
+PREFIX + C-LEFT   (resize-pane -L)
+PREFIX + C-RIGHT  (resize-pane -R)
+</pre>
+
+Para cerrar un panel tenemos dos opciones, terminar la sesión en la terminal con el comando exit o presionando <kbd>PREFIX</kbd> + <kbd>x</kbd>, que cierra el panel con previa confirmación.
+
+[php]subsection("Organizando paneles");[/php]
+
+Tmux proporciona cinco plantillas que nos permiten organizar nuestros paneles.
+
+<ul>
+<li><strong>even-horizontal</strong>: Alinea todos los paneles horizontalmente, de izquierda a derecha. </li>
+<li><strong>even-vertical</strong>: Alinea todos los paneles verticalmente, de arriba a abajo. </li>
+<li><strong>main-horizontal</strong>: Crea un panel en la parte superior que ocupa casi todo el espacio de la pantalla y alinea el resto de los paneles en la parte inferior. </li>
+<li><strong>main-vertical</strong>: Crea un panel en el lado izquierdo que ocupa casi todo el espacio de la pantalla y alinea el resto de los paneles a la derecha.</li>
+<li><strong>tiled</strong>: Alinea todos los paneles en la pantalla con igual cantidad de espacio.</li>
+</ul>
+
+Presiona <kbd>PREFIX</kbd> + <kbd>Espacio</kbd> para probar cada plantilla.
+
+[php]subsection("Ventanas");[/php]
+
+Cuando los paneles no son suficientes o deseamos agrupar las terminales segun su actividad contamos con las ventanas.
+
+<h6>Crear una ventana.</h6>
+<pre lang="bash" theme="slate">PREFIX + c</pre>
+
+Las ventanas tienen nombre y lo podemos modificar con:
+
+<pre lang="bash" theme="slate">PREFIX + ,</pre>
+
+<h6>Moverse entre ventanas.</h6>
+<pre lang="bash" theme="slate">
+PREFIX + n # Siguiente
+PREFIX + p # Anterior
+</pre>
+
+[php]figure('hdud1_4', 'Ventanas', 'hdud1_4', 'png', 'ES');[/php]
+
+El listado de ventanas activas se muestra en la parte inferior de la pantalla, cada ventana tiene un número que la identifica. Una forma fácil de cambiar de ventana es presionando <kbd>PREFIX</kbd> + numero_de_ventana. Si tienes demasiadas ventanas también es posible buscarlas por su nombre con <kbd>PREFIX</kbd> + <kbd>f</kbd> o bien presionar <kbd>PREFIX</kbd> + <kbd>w</kbd> para mostrar el listado de ventanas.
+
+[php]subsection("Sesiones");[/php]
+
+Una sesión es una colección de pseudo terminales(ver man 7 pty) que son administradas por tmux. Cada sesión tiene una o más ventanas asociadas a ella. Las sesiones son persistentes y mantendrán su estado en caso de una desconexión. Aquí va un punto importante, si un programa se esta ejecutando cuando la sesión se interrumpe éste continuara su ejecución cuando la sesión sea reanudada.
+
+En otras palabras las sesiones sirven para crear entornos de trabajo personalizados, por ejemplo, si están trabajando en un proyecto y tienes abiertos varios archivos, un terminal interactivo de Ruby o Python, varias ventanas, etc. Si por alguna razón tienes que interrumpir tus actividades, resultaría un poco molesto tener que cerrar archivos, programas, paneles y ventanas, y una hora más tarde cuando regresas a trabajar, restablecer el entorno. La solución es crear una sesión y le asignamos un nombre acorde, si trabajas en más de un proyecto o tarea simplemente crea otra sesión y mantendrás tus áreas de trabajo organizadas.
+Aunque no lo indiquemos explícitamente tmux crea una sesión de forma automática cada vez que lo ejecutamos.
+
+<pre lang="bash" theme="slate">
+#Crear una sesión:
+$ tmux new -s nombre_de_sesion
+
+#Cerrar sesión:
+PREFIX + d
+
+#o bién:
+$ tmux kill-session -t nombre_de_sesion
+
+#Listar sesiones existentes:
+$ tmux list-sessions
+
+#Abrir sesión cuando solo existe una:
+$ tmux attach
+
+#Abrir una sesión en especifico:
+$ tmux attach -t nombre_de_sesion
+</pre>
+
+[php]section("Configuración y personalización");[/php]
+
+Hasta ahora hemos cubierto lo esencial, usando las configuraciones por defecto, sin embargo éstas no siempre son las más cómodas para todos, es por eso que tmux nos admite ser personalizado usando el archivo <code>~/.tmux.conf</code>. A continuación muestro algunas de las opciones disponibles:
+
+<pre lang="bash" theme="slate">
+# Soporte para 256 colores.
+set -g default-terminal "screen-256color"
+
+# Cambiar PREFIX a Ctrl + a, más cómodo.
+set-option -g prefix C-a
+unbind-key C-b
+bind-key C-a send-prefix
+
+#Como dividir la pantalla de forma más intuitiva
+# | en vez de %
+bind | split-window -h
+# - en vez de "
+bind - split-window -v
+
+#Cambiando el el atajo para entrar al modo copy.
+bind-key e copy-mode
+</pre>
+
+Tmux soporta los modos vi y emacs para moverse dentro de la aplicación, por defecto el modo emacs es activado. Activar modo vi y algunos atajos.
+
+<pre lang="bash" theme="slate">
+setw -g mode-keys vi
+bind-key -t vi-copy 'v' begin-selection
+bind-key -t vi-copy 'y' copy-selection
+</pre>
+
+Con estas opciones activadas, haz lo siguiente para copiar contenido dentro de tmux, <strong>1)</strong> entra en modo copy, <strong>2)</strong> presiona la tecla v para iniciar la selección y muevete con las teclas <kbd>hjkl</kbd>, como en vim, <strong>3)</strong> presiona la tecla y para copiar la selección.
+
+[php]subsection("Moverse entre los paneles de manera similar a vim con los splits.");[/php]
+
+<pre lang="bash" theme="slate">
+# Presiona PREFIX + [jkhl]
+# para cambiar de panel
+unbind-key j
+bind-key j select-pane -D
+unbind-key k
+bind-key k select-pane -U
+unbind-key h
+bind-key h select-pane -L
+unbind-key l
+bind-key l select-pane -R
+</pre>
+
+[php]subsection("Cambia el modo de redimencionar paneles.");[/php]
+
+<pre lang="bash" theme="slate">
+# Presiona Ctrl + a + [jkhl]
+# para redimensionar panel
+bind-key C-a-j resize-pane -D 2
+bind-key C-a-k resize-pane -U 2
+bind-key C-a-h resize-pane -L 4
+bind-key C-a-l resize-pane -R 4
+</pre>
+
+[php]subsection("Configurar la barra de estado.");[/php]
+
+<pre lang="bash" theme="slate">
+# Color de fondo y de letra
+set -g status-bg black
+set -g status-fg white
+
+# Leyendas que se deben mostrar
+# A la izquierda el nombre del host
+# y a la derecha la fecha
+set -g status-left '#[fg=green]#H'
+set -g status-right '#[fg=yellow]#(date)'
+
+# Color de la ventana activa
+set-window-option -g window-status-current-bg blue
+
+# Color del panel activo
+set-option -g pane-active-border-fg colour027
+</pre>
+
+Longitud del historial.
+
+<pre lang="bash" theme="slate">set -g history-limit 10000</pre>
+
+Recargar configuración con <kbd>PREFIX</kbd> + <kbd>r</kbd>.
+
+<pre lang="bash" theme="slate">
+unbind r
+bind r source-file ~/.tmux.conf
+</pre>
+
+Existen muchas más opciones de configuración pero creo que con esto es suficiente para comenzar.
+
+[php]section("Algunos hacks");[/php]
+
+[php]subsection("Iniciar tmux automáticamente al abrir una terminal");[/php]
+
+Hemos visto que para utilizar tmux abrimos una terminal y entonces lo ejecutamos, para hacer que tmux se ejecute automáticamente cuando abrimos una terminal agrega las siguientes líneas al archivo <code>~/.bashrc</code>.
+
+<pre lang="bash" theme="slate">
+[[ $- != *i* ]] && return
+[[ $TERM != screen* ]] && exec tmux -2
+</pre>
+
+Si estamos ejecutando el interprete de comandos en modo interactivo y tenemos soporte para 256 colores entonces ejecutamos tmux.
+
+[php]subsection("Copiar texto al portapapeles del sistema");[/php]
+
+Estando en el modo copy es posible copiar texto para ser usado en otros paneles o ventanas dentro de tmux, pero no en otras aplicaciones, es decir, el texto copiado en tmux no se puede pegar en firefox, por citar un ejemplo. La siguiente línea soluciona el problema. Es necesario tener instalado el programa <code>xclip</code>.
+
+<pre lang="bash" theme="slate">
+bind C-c run "tmux save-buffer - | xclip -i -selection clipboard"
+</pre>
+
+Funciona de esta manera, entra en modo copy y copia el texto en cuestión tal como ya se ha visto. Sal del modo copy y presiona <kbd>PREFIX</kbd>, suelta y después <kbd>Ctrl</kbd>+<kbd>c</kbd> para colocar el contenido en el portapapeles del sistema.
+
+Una desventaja que he notado con este truco es que una vez que lo usas vim ya no puede trabajar con el portapapeles del sistema(<code>"*</code>), aun no he encontrado una solución.
+
+[php]subsection("Agregar una tecla control adicional");[/php]
+
+Cuando reasigne <kbd>PREFIX</kbd> a <kbd>Ctrl</kbd> + <kbd>a</kbd> mencione que ésta combinación era más cómoda, y lo es en comparación a <kbd>Ctrl</kbd> + <kbd>b</kbd>, pero en realidad para mi es más accesible porque he reasignado la tecla de la ventana para que actúe como una tecla control adicional, esta asignación trabaja a nivel de sistema y no tiene relación directa con tmux pero a mi me resulta muy útil, en especial con vim.
+
+Para realizar la re asignación emplea el comando <code>xmodmap</code> y agrega lo siguiente en el archivo <code>~/.Xmodmap</code>.
+
+<pre lang="bash" theme="slate">
+remove Control = Control_L Control_R
+remove mod4 = Super_L Super_R
+add Control = Control_L Super_L
+</pre>
+
+Algunos entornos de escritorio ejecutan este archivo al iniciar, si no es tu caso, agrega el comando <code>xmodmap ~/.Xmodmap</code> al archivo de inicio de tu entorno de escritorio, para openbox el archivo es <code>~/.config/openbox/autostart.sh</code>.
+
+[php]section("Conclusión");[/php]
+
+Tmux al igual que las otras herramientas que vamos a tratar no son el tipo de programas que se aprenden a usar en 5 minutos, requieren cierta cantidad de tiempo, yo lo llamo una inversión porque el tiempo que dediquen para aprender a utilizarlas lo verán remunerado en poco tiempo en forma de eficiencia y productividad.
+
+[php]section("Referencias");[/php]
+
+<table>
+<tr><td>[1]</td>  <td><a href="http://tmux.sourceforge.net"  target="_blank">http://tmux.sourceforge.net</a>                                      </td></tr>
+<tr><td>[2]</td>  <td><a href="http://pragprog.com/book/bhtmux/tmux" target="_blank">tmux Productive Mouse-Free Development, Brian P. Hogan</a>   </td></tr>
+<tr><td>[3]</td>  <td><a href="http://stackoverflow.com/questions/24109/c-ide-for-linux" target="_blank">C IDE for Linux?</a>                     </td></tr>
+<tr><td>[4]</td>  <td><a href="http://unix.stackexchange.com/questions/15715/getting-tmux-to-copy-a-buffer-to-the-clipboard" target="_blank">Getting tmux to copy a buffer to the clipboard</a>  </td></tr>
+</table>
