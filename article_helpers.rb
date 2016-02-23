@@ -26,4 +26,11 @@ module ArticleHelpers
   def generate_bib_table(lang)
     "PENDING"
   end
+
+  def equation(eq, caption)
+    "<div class='equation'>$#{eq}$</div>"
+  end
+
+  def finalize
+  end
 end

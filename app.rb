@@ -9,7 +9,7 @@ get '/' do
   erb :index, locals: { name: "Rafael" }
 end
 
-get '/posts/:post' do
+get '/posts/:post/?' do
   post = params[:post].downcase.to_sym
   begin
     erb post
