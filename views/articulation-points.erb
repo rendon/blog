@@ -1,25 +1,12 @@
-"=========== Meta ============
-"StrID : 117
-"Title : Articulation points
-"Slug  : articulation-points
-"Cats  : Sin categoría
-"Tags  : Algorithms, Programming contests
-"=============================
-"EditType   : post
-"EditFormat : Markdown
-"TextAttach : wpid1398-vimpress_5377c834_mkd.txt
-"========== Content ==========
-[php]
-set_setting("show_numbers_in_sections", false);
-[/php]
+<%= tex_set("show_numbers_in_sections", false); %>
 
-[php]section("Welcome");[/php]
+<%= section("Welcome"); %>
 
-Hi friends! Currently I am training for a programming contest and I have no time to publish. I am learning many interesting topics about algorithms and programming and I want to share that with you. However, to write an article consumes much of my time and I'm devising a format that is both brief and useful: Algorithm or Data structure, brief info, sample problem, solution and references.
+<p>Hey guys! Currently I am training for a programming contest and I have no time to publish. I am learning many interesting topics about algorithms and programming and I want to share that with you. However, to write an article consumes much of my time and I'm devising a format that is both brief and useful: Algorithm or Data structure, brief info, sample problem, solution and references.</p>
 
-[php]section("Articulation points");[/php]
+<%= section("Articulation points"); %>
 
-Today's topic is about <a href="http://en.wikipedia.org/wiki/Graph_theory" target="_blank">graph theory</a>, articulation points. Here a <a href="http://www.cs.umd.edu/~samir/451/bc.ps" target="_blank">brief info from Dave Mount</a>:
+<p>Today's topic is about <a href="http://en.wikipedia.org/wiki/Graph_theory" target="_blank">graph theory</a>, articulation points. Here a <a href="http://www.cs.umd.edu/~samir/451/bc.ps" target="_blank">brief info from Dave Mount</a>:</p>
 
 <div class="box">
 <strong>Articulation Points and Biconnected Graphs:</strong> Today we discuss another application of DFS, this time to a problem on undirected graphs. Let <em>G = (V, E)</em> be a <strong> connected</strong> undirected graph. Consider de following definitions.
@@ -27,13 +14,13 @@ Today's topic is about <a href="http://en.wikipedia.org/wiki/Graph_theory" targe
 <strong>Articulation Point( or Cut Vertex):</strong> Is any vertex whose removal(together with the removal of any incident edges) results in a disconnected graph.
 </div>
 
-[php]figure('ArtPoints', 'Articulation points example', 'ArtPoints', 'svg', 'EN');[/php]
+<%= figure('ArtPoints', 'Articulation points example', 'ArtPoints', 'svg', 'EN'); %>
 
-[php]section("Sample problem");[/php]
+<%= section("Sample problem"); %>
 
-A problem where you can put in practice this topic is <a href="http://lightoj.com/volume_showproblem.php?problem=1063" target="_blank">1063 Ant Hills</a> from <a href="http://lightoj.com" target="_blank">lightoj.com</a>.
+<p>A problem where you can put in practice this topic is <a href="http://lightoj.com/volume_showproblem.php?problem=1063" target="_blank">1063 Ant Hills</a> from <a href="http://lightoj.com" target="_blank">lightoj.com</a>.</p>
 
-[php]section("Solution to sample problem");[/php]
+<%= section("Solution to sample problem"); %>
 
 <pre lang="cpp" theme="slate">
 #include <iostream>
@@ -124,7 +111,7 @@ int main(int argc, char **argv)
 }
 </pre>
 
-[php]section("References");[/php]
+<%= section("References"); %>
 
 <table border="0">
   <tr><td>1</td>   <td><a href="http://www.cs.umd.edu/~samir/451/bc.ps" target="_blank">Articulation Points and Biconnected Components</a></td></tr>
@@ -132,4 +119,4 @@ int main(int argc, char **argv)
   <tr><td>3</td><td><a href="http://en.wikipedia.org/wiki/Biconnected_component" target="_blank">Biconnected component</a></td></tr>
 </table>
 
-[php]finalize();[/php]
+<%= finalize(); %>

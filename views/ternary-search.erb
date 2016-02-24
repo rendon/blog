@@ -1,46 +1,35 @@
-"=========== Meta ============
-"StrID : 147
-"Title : Ternary search
-"Slug  : ternary-search
-"Cats  : Sin categoría
-"Tags  : Algorithms, Math, Programming contests
-"=============================
-"EditType   : post
-"EditFormat : HTML
-"TextAttach : 
-"========== Content ==========
-[php]
+<%= 
 initialize();
-set_setting("show_numbers_in_sections", false);
-set_setting("show_numbers_in_subsections", false);
-[/php]
+tex_set("show_numbers_in_sections", false);
+tex_set("show_numbers_in_subsections", false);
+ %>
 
-Hi! This time I going to talk you about a new technique I've just learned, <a href="http://en.wikipedia.org/wiki/Ternary_search" target="_blank">Ternary Search</a>.
+<p>Hi! This time I going to talk about a new technique I've just learned, <a href="http://en.wikipedia.org/wiki/Ternary_search" target="_blank">Ternary Search</a>.</p>
 
-[php]section("Ternary search");[/php]
+<%= section("Ternary search"); %>
 
-Ternary search is a technique similar to <a href="http://en.wikipedia.org/wiki/Binary_search_algorithm" target="_blank">Binary Search</a> and is important since ternary search could success in situations where the binary search would fail. Time ago I was very criticized in the <a href="http://codeforces.com" target="_blank">Codeforces</a> forum for arguing that has no sense to use ternary search if it is not more efficient than binary search. Is not about efficiency but --said the others. Actually I meant to ternary search in arrays, to reduce the search space to a third part, etc. Now I understand what they were talking about.
+<p>Ternary search is a technique similar to <a href="http://en.wikipedia.org/wiki/Binary_search_algorithm" target="_blank">Binary Search</a> and is important since ternary search could success in situations where the binary search would fail. Time ago I was very criticized in the <a href="http://codeforces.com" target="_blank">Codeforces</a> forum for arguing that has no sense to use ternary search if it is not more efficient than binary search. Is not about efficiency but --said the others. Actually I meant to ternary search in arrays, to reduce the search space to a third part, etc. Now I understand what they were talking about.</p>
 
-[php]section("Sample problem");[/php]
+<%= section("Sample problem"); %>
 
-You can solve the <a href="http://lightoj.com/volume_showproblem.php?problem=1146" target="_blank">1146 - Closest Distance</a> problem from <a href="http://lightoj.com" target="_blank">lightoj.com</a> with this technique.
+<p>You can solve the <a href="http://lightoj.com/volume_showproblem.php?problem=1146" target="_blank">1146 - Closest Distance</a> problem from <a href="http://lightoj.com" target="_blank">lightoj.com</a> with this technique.</p>
 
-[php]section("Solution to sample problem");[/php]
+<%= section("Solution to sample problem"); %>
 
-[php]subsection("Basic idea");[/php]
+<%= subsection("Basic idea"); %>
 
-Compute the distance between the two men as they move and take the minimum distance.
+<p>Compute the distance between the two men as they move and take the minimum distance.</p>
 
-[php]figure('ternary_search_1', 'Termnary search example', 'ternary_search_1', 'png', 'EN');[/php]
+<%= figure('ternary_search_1', 'Termnary search example', 'ternary_search_1', 'png', 'EN'); %>
 
-Obviously , we can only take discrete points, and, since the problem ask for an answer with an error less than 1e-6, a brute force approach would take much time, very much. So the strategy is to use ternary search:
+<p>Obviously, we can only take discrete points, and, since the problem ask for an answer with an error less than 1e-6, a brute force approach would take much time, very much. So the strategy is to use ternary search:</p>
 
-[php]figure('ternary_search_2', 'Step 1', 'ternary_search_2', 'png', 'EN');[/php]
-[php]figure('ternary_search_3', 'Step 2', 'ternary_search_3', 'png', 'EN');[/php]
-[php]figure('ternary_search_4', 'Step 3', 'ternary_search_4', 'png', 'EN');[/php]
-[php]figure('ternary_search_5', 'Step 4', 'ternary_search_5', 'png', 'EN');[/php]
+<%= figure('ternary_search_2', 'Step 1', 'ternary_search_2', 'png', 'EN'); %>
+<%= figure('ternary_search_3', 'Step 2', 'ternary_search_3', 'png', 'EN'); %>
+<%= figure('ternary_search_4', 'Step 3', 'ternary_search_4', 'png', 'EN'); %>
+<%= figure('ternary_search_5', 'Step 4', 'ternary_search_5', 'png', 'EN'); %>
 
-And so on. Here is my solution:
+<p>And so on. Here is my solution:</p>
 
 <pre lang="cpp" theme="slate">
 #include <iostream>
@@ -120,7 +109,7 @@ int main(int argc, char **argv)
 
 </pre>
 
-[php]section("References");[/php]
+<%= section("References"); %>
 
 <table border="0">
   <tr><td>1</td> <td><a href="http://en.wikipedia.org/wiki/Ternary_search" target="_blank">Ternary search</a></td></tr>

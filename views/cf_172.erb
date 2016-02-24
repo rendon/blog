@@ -1,27 +1,16 @@
-"=========== Meta ============
-"StrID : 578
-"Title : Codeforces R_172_Div2
-"Slug  : cf_172
-"Cats  :
-"Tags  : 
-"=============================
-"EditType   : post
-"EditFormat : Markdown
-"TextAttach : wpid1508-vimpress_53795cf6_mkd.txt
-"========== Content ==========
-[php] set_setting("show_numbers_in_sections", false); [/php]
-[php] set_setting("show_numbers_in_subsections", false); [/php]
+<%=  tex_set("show_numbers_in_sections", false);  %>
+<%=  tex_set("show_numbers_in_subsections", false);  %>
 
-[php]figure('codeforces_logo','', '', 'png', 'ES');[/php]
+<%= figure('codeforces_logo','', '', 'png', 'ES'); %>
 
-I took part in Codeforces 172 Division II and here are my solutions for some of the problems.
+<p>I took part in Codeforces 172 Division II and here are my solutions for some of the problems.</p>
 
-[php]section("A. Word capitalization");[/php]
+<%= section("A. Word capitalization"); %>
 
 <a href="http://www.codeforces.com/contest/281/problem/A" title="Word capitalization">Problem description</a>
-[php]subsection("Solution:");[/php]
+<%= subsection("Solution:"); %>
 
-Read the string and change the first character to uppercase.
+<p>Read the string and change the first character to uppercase.</p>
 
 <pre lang="cpp" theme="slate">
 #include <iostream>
@@ -40,13 +29,13 @@ int main(int argc, char *argv[])
 }
 </pre>
 
-[php]section("B. Nearest fraction");[/php]
+<%= section("B. Nearest fraction"); %>
 
 <a href="http://www.codeforces.com/contest/281/problem/B" title="Nearest fraction">Problem description</a>
 
-[php]subsection("Solution:");[/php]
+<%= subsection("Solution:"); %>
 
-I could not solve the problem in the contest. My implementation is based on other contestants' solutions. Sincerely my idea was similar but I avoided the use of floating point(supposedly to avoid precision problems) and it didn't work well.
+<p>I could not solve the problem in the contest. My implementation is based on other contestants' solutions. Sincerely my idea was similar but I avoided the use of floating point(supposedly to avoid precision problems) and it didn't work well.</p>
 
 <pre lang="cpp" theme="slate">
 #include <iostream>
@@ -88,15 +77,15 @@ int main(int argc, char *argv[])
 }
 </pre>
 
-[php]section("C. Rectangle puzzle");[/php]
+<%= section("C. Rectangle puzzle"); %>
 
 <a href="http://codeforces.com/contest/281/problem/C" title="Rectangle puzzle">Problem description</a>.
 
-[php]subsection("Solution:");[/php]
+<%= subsection("Solution:"); %>
 
-Let's call $$R$$ and $$S$$ the original and the rotated rectangle respectively, with corner points $$R_{a}$$, $$R_{b}$$, $$R_{c}$$, $$R_{d}$$, $$S_{a}$$, $$S_{b}$$, $$S_{c}$$ and $$S_{d}$$. Initially $$R$$ and $$S$$ are the same.
+<p>Let's call $R$ and $S$ the original and the rotated rectangle respectively, with corner points $R_{a}$, $R_{b}$, $R_{c}$, $R_{d}$, $S_{a}$, $S_{b}$, $S_{c}$ and $S_{d}$. Initially $R$ and $S$ are the same.</p>
 
-Rotate $$S$$ $$\alpha$$ degrees(take care of the special cases $$\alpha = 0$$ and $$\alpha = 180$$) and, for each line segment of $$S$$ check if it do intersect with any side of $$R$$(<code>isX()</code> method in the code), if so, compute the intersection point(<code>intersection()</code> method in the code) and add it to a list of point, lets call it P. Finally compute the area of the polygon formed by P(the points need to be sorted in clockwise or counterclockwise  order) and, since the area is computed using cross product take the absolute value divided by two.
+<p>Rotate $S$ $\alpha$ degrees(take care of the special cases $\alpha = 0$ and $\alpha = 180$) and, for each line segment of $S$ check if it do intersect with any side of $R$(<code>isX()</code> method in the code), if so, compute the intersection point(<code>intersection()</code> method in the code) and add it to a list of point, lets call it P. Finally compute the area of the polygon formed by P(the points need to be sorted in clockwise or counterclockwise  order) and, since the area is computed using cross product take the absolute value divided by two.</p>
 
 <pre lang="cpp" line="1" theme="slate">
 #include <iostream>
@@ -247,4 +236,4 @@ int main(int argc, char *argv[])
 
 </pre>
 
-These are my own solutions, feel free to comment or use the code for your own needs.
+<p>These are my own solutions, feel free to comment or use the code for your own needs.</p>

@@ -1,24 +1,13 @@
-"=========== Meta ============
-"StrID : 
-"Title : A* Algorithm
-"Slug  : a-star
-"Cats  : 
-"Tags  : 
-"=============================
-"EditType   : post
-"EditFormat : Markdown
-"TextAttach : vimpress_545ec0be_mkd.txt
-"========== Content ==========
-Oh boy! Is so easy to implement an algorithm once you know exactly how it works :).
+<p>Oh boy! It is so easy to implement an algorithm once you know exactly how it works :).</p>
 
-I've been trying to implement the <a href="http://en.wikipedia.org/wiki/A*_search_algorithm" target="_blank">A*</a> algorithm and solve at least one problem with it, however, almost all sources of information are abstract and give only high level details, but I got it!
+<p>I've been trying to implement the <a href="http://en.wikipedia.org/wiki/A*_search_algorithm" target="_blank">A*</a> algorithm and solve at least one problem with it, however, almost all sources of information are abstract and give only high level details, but I got it!</p>
 
-I don't have much time so I'm just going to leave a problem and my solution using the A* algorithm. For the theory you can count with <a href="http://en.wikipedia.org/wiki/A*_search_algorithm" target="_blank">Wikipedia</a>. 
+<p>I don't have much time so I'm just going to leave a problem and my solution using the A* algorithm. For the theory you can count on <a href="http://en.wikipedia.org/wiki/A*_search_algorithm" target="_blank">Wikipedia</a>. </p>
 
-[php]section("Problem");[/php]
+<%= section("Problem"); %>
 <a href="http://lightoj.com/volume_showproblem.php?problem=1139" target="_blank">1139 - 8 Puzzle</a>
 
-[php]section("Solution");[/php]
+<%= section("Solution"); %>
 <pre lang="cpp" theme="slate">
 #include <bits/stdc++.h>
 using namespace std;
@@ -180,6 +169,6 @@ int main(int argc, char **argv) {
 }
 </pre>
 
-[php]section("References");[/php]
-add_bib('algs4', 'Kevin Wayne and Robert Sedgewick', 'Algorithms, Part I', 'https://www.coursera.org/course/algs4partI'); 
-add_bib('edxai', 'Dan Klein and Pieter Abbeel', 'CS188.1x Artificial Intelligence', 'https://courses.edx.org/courses/BerkeleyX/CS188.1x/2013_Spring/info'); 
+<%= section("References"); %>
+<%= add_bib('algs4', 'Kevin Wayne and Robert Sedgewick', 'Algorithms, Part I', 'https://www.coursera.org/course/algs4partI'); %>
+<%= add_bib('edxai', 'Dan Klein and Pieter Abbeel', 'CS188.1x Artificial Intelligence', 'https://courses.edx.org/courses/BerkeleyX/CS188.1x/2013_Spring/info'); %>

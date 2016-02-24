@@ -1,10 +1,10 @@
-module ArticleHelpers
+module Tex
   def ref(id)
     "PENDING"
   end
 
   def figure(a, b, c, d, e)
-    "PENDING"
+    "-- IMG PENDING --"
   end
 
   def section(title)
@@ -20,7 +20,7 @@ module ArticleHelpers
   end
 
   def add_bib(a, b, c, d)
-    "PENDING"
+    "--BIB PENDING--<br/>"
   end
 
   def generate_bib_table(lang)
@@ -32,5 +32,9 @@ module ArticleHelpers
   end
 
   def finalize
+  end
+
+  def tex_set(k, v)
+
   end
 end

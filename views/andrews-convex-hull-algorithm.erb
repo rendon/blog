@@ -1,34 +1,20 @@
-"=========== Meta ============
-"StrID : 159
-"Title : Andrew's Convex Hull Algorithm
-"Slug  : andrews-convex-hull-algorithm
-"Cats  : Sin categoría
-"Tags  : 
-"=============================
-"EditType   : post
-"EditFormat : Markdown
-"TextAttach : wpid1401-vimpress_537815bb_mkd.txt
-"========== Content ==========
-[php]
-set_setting("show_numbers_in_sections", false);
-[/php]
+<%= tex_set("show_numbers_in_sections", false); %>
 
-Convex hull is a classical problem in computational geometry and often used in programming contests. Today I present to you  the Andrew's algorithm to compute the convex hull from a set of 2D points. 
+<p>Convex hull is a classical problem in computational geometry and often used in programming contests. Today I present to you  the Andrew's algorithm to compute the convex hull from a set of 2D points. </p>
 
-[php]figure('convex_hull_0', 'Convex Hull', 'convex_hull_0', 'svg', 'EN');[/php]
+<%= figure('convex_hull_0', 'Convex Hull', 'convex_hull_0', 'svg', 'EN'); %>
 
-[php]section("Convex Hull");[/php]
-Here a definition from Robert Sedgewick lecture notes.
+<%= section("Convex Hull"); %>
+<p>Here a definition from Robert Sedgewick lecture notes.</p>
 
 <div class="box">
-A set of point is <strong>convex</strong> if for any two points <em>p</em> and <em>q</em> is the set, the line segment <em>pq</em> is completely in the set.
+<p>A set of point is <strong>convex</strong> if for any two points <em>p</em> and <em>q</em> is the set, the line segment <em>pq</em> is completely in the set.</p>
   
 <strong>Convex hull</strong>. Smallest convex set containing all the points.
 </div>
 
-[php]section("Andrew's algorithm");[/php]
-
-The Andrews's Algorithm splits the convex hull in two parts parts, upper hull and lower hull, here the algorithm.
+<%= section("Andrew's algorithm"); %>
+<p>The Andrews's Algorithm splits the convex hull in two parts parts, upper hull and lower hull, here the algorithm.</p>
 
 <ol>
   <li>L and U are lists of points.</li>
@@ -50,37 +36,37 @@ The Andrews's Algorithm splits the convex hull in two parts parts, upper hull an
 
 <table>
 <tr>
-<td>[php]figure('convex_hull_1', 'Step 1', 'convex_hull_1', 'png', 'EN');[/php]</td>
-<td>[php]figure('convex_hull_2', 'Step 2', 'convex_hull_2', 'png', 'EN');[/php]</td>
+<td><%= figure('convex_hull_1', 'Step 1', 'convex_hull_1', 'png', 'EN'); %></td>
+<td><%= figure('convex_hull_2', 'Step 2', 'convex_hull_2', 'png', 'EN'); %></td>
 </tr>
 <tr>
-<td>[php]figure('convex_hull_3', 'Step 3', 'convex_hull_3', 'png', 'EN');[/php]</td>
-<td>[php]figure('convex_hull_4', 'Step 4', 'convex_hull_4', 'png', 'EN');[/php]</td>
+<td><%= figure('convex_hull_3', 'Step 3', 'convex_hull_3', 'png', 'EN'); %></td>
+<td><%= figure('convex_hull_4', 'Step 4', 'convex_hull_4', 'png', 'EN'); %></td>
 </tr>
 <tr>
-<td>[php]figure('convex_hull_5', 'Step 5', 'convex_hull_5', 'png', 'EN');[/php]</td>
-<td>[php]figure('convex_hull_6', 'Step 6', 'convex_hull_6', 'png', 'EN');[/php]</td>
+<td><%= figure('convex_hull_5', 'Step 5', 'convex_hull_5', 'png', 'EN'); %></td>
+<td><%= figure('convex_hull_6', 'Step 6', 'convex_hull_6', 'png', 'EN'); %></td>
 </tr>
 </table>
 
-[php]section("Sample problem");[/php]
+<%= section("Sample problem"); %>
 
-A easy problem where you can put in practice this topic is with <a href="http://lightoj.com/volume_showproblem.php?problem=1203" target="_blank">1203 - Guarding Bananas</a> from <a href="http://lightoj.com/" target="_blank">lightoj.com</a>.
+<p>A easy problem where you can put in practice this topic is with <a href="http://lightoj.com/volume_showproblem.php?problem=1203" target="_blank">1203 - Guarding Bananas</a> from <a href="http://lightoj.com/" target="_blank">lightoj.com</a>.</p>
 
-To check if three point are convex you can use a vector cross product.
+<p>To check if three point are convex you can use a vector cross product.</p>
 
 <table>
 <tr>
-<td>[php]figure('convex_hull_7', 'Clockwise', 'convex_hull_7', 'png', 'EN');[/php]</td>
-<td>[php]figure('convex_hull_8', 'Anticlockwise', 'convex_hull_8', 'png', 'EN');[/php]</td>
+<td><%= figure('convex_hull_7', 'Clockwise', 'convex_hull_7', 'png', 'EN'); %></td>
+<td><%= figure('convex_hull_8', 'Anticlockwise', 'convex_hull_8', 'png', 'EN'); %></td>
 </tr>
 </table>
 
-If points A, O and B are in clockwise orientation then $$ v \times u$$ will be greater than zero, otherwise the result will be less than  zero.
+<p>If points A, O and B are in clockwise orientation then $ v \times u$ will be greater than zero, otherwise the result will be less than  zero.</p>
 
-[php]section("Solution to sample problem");[/php]
+<%= section("Solution to sample problem"); %>
 
-Apply the algorithm to find the convex hull and then, for each point that form the convex hull, compute the angle between it and its left and right points, take the minimum.
+<p>Apply the algorithm to find the convex hull and then, for each point that form the convex hull, compute the angle between it and its left and right points, take the minimum.</p>
 
 <pre lang="cpp" theme="slate">
 #include <iostream>
@@ -203,7 +189,7 @@ int main(int argc, char **argv)
 }
 </pre>
 
-[php]section("References");[/php]
+<%= section("References"); %>
 <table border="0">
   <tr><td>1</td> <td><a href="http://community.topcoder.com/tc?module=Static&d1=tutorials&d2=lineSweep" target="_blank">Line Sweep Algorithms, bmerry</a></td></tr>
   <tr><td>2</td> <td><a href="http://www.cs.princeton.edu/courses/archive/fall05/cos226/lectures/geometry.pdf" target="_blank">Geometry Lecture, Robert Sedgewick</a></td></tr>

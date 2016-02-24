@@ -1,9 +1,9 @@
 require 'sinatra'
 require "rdiscount"
 
-require_relative 'article_helpers'
+require_relative 'tex'
 
-helpers ArticleHelpers
+helpers Tex
 
 get '/' do
   erb :index, locals: { name: "Rafael" }
