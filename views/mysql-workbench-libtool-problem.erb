@@ -1,15 +1,4 @@
-"=========== Meta ============
-"StrID : 575
-"Title : Problems with libtool when installing MySQL Workbench from source code
-"Slug  : mysql-workbench-libtool-problem
-"Cats  : 
-"Tags  : 
-"=============================
-"EditType   : post
-"EditFormat : markdown
-"TextAttach : 
-"========== Content ==========
-I have been trying to use MySQL Workbench these days but it crashes so often and I decided to install it from source code and see what happens. However I faced this problem:
+<p>I have been trying to use MySQL Workbench these days but it crashes so often and I decided to install it from source code and see what happens. However I faced this problem:</p>
 
 <pre lang="bash" theme="slate">
 make[4]: Entering directory `/home/user/Downloads/workbench/mysql-workbench-gpl-5.2.44-src/ext/antlr-runtime'
@@ -47,10 +36,10 @@ make[1]: Leaving directory `/home/user/Downloads/workbench/mysql-workbench-gpl-5
 make: *** [all] Error 2
 </pre>
 
-I found the solution <a href="http://blog.csdn.net/kumu_linux/article/details/7957449" title="Solution">here</a>:
+<p>I found the solution <a href="http://blog.csdn.net/kumu_linux/article/details/7957449" title="Solution">here</a>:</p>
 
 <pre lang="Bash">
 cp /usr/bin/libtool /home/user/Downloads/workbench/mysql-workbench-gpl-5.2.44-src/ext/antlr-runtime/
 </pre>
 
-I hope it be useful to you. Bye!
+<p>I hope it be useful to you. Bye!</p>
