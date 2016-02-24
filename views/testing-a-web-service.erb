@@ -1,17 +1,6 @@
-"=========== Meta ============
-"StrID : 883
-"Title : Testing a Web service
-"Slug  : testing-a-web-service
-"Cats  : Sin categoría
-"Tags  : 
-"=============================
-"EditType   : post
-"EditFormat : Markdown
-"TextAttach : wpid1602-vimpress_52817244_mkd.txt
-"========== Content ==========
-I've been working with Web services these days for some college projects. Here are some interesting ways to test your web service.
+<p>I've been working with Web services these days for some college projects. Here are some interesting ways to test your web service.</p>
 
-Supponse this is our Web service:
+<p>Supponse this is our Web service:</p>
 
 <pre lang="php">
 <?php
@@ -46,32 +35,33 @@ if (isset($HTTP_RAW_POST_DATA)) {
 ?>
 </pre>
 
-[php]
+<%= 
 figure('testws_myservice', 'Our web service', 'testws_myservice', 'png', 'EN');
-[/php]
+ %>
 
-Now, How to test if our Web service is working as expected? Let' see.
+<p>Now, How to test if our Web service is working as expected? Let' see.</p>
 
-[php]section("SoapUI");[/php]
+<%= section("SoapUI"); %>
 
-This is a greate tool. Given a Web service location, SoapUI generates the needed SOAP messages to send requests to our Web service. Here I show how to test our previous Web service.
+<p>This is a greate tool. Given a Web service location, SoapUI generates the needed SOAP messages to send requests to our Web service. Here I show how to test our previous Web service.</p>
 
-[php]
+<%= 
 figure('testws_soapui_new', 'SoapUI new project', 'testws_soapui_new','png', 'EN');
-[/php]
+ %>
 
 
-[php]
+<%= 
 figure('testws_soapui_request', 'Calling our Web service using SoapUI', 'testws_soapui_request', 'png', 'EN');
-[/php]
+ %>
 
-[php]section("Command line");[/php]
+<%= section("Command line"); %>
 
-Using the command line always let us understand better how the stuffs works :). 
+<p>Using the command line always let us understand better how the stuffs works :). </p>
 
-Put the following request message in a file called _request.xml_:
+<p>Put the following request message in a file called _request.xml_:</p>
 
-<pre lang="xml">
+<pre>
+<code>
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:mys="MyService">
    <soapenv:Header/>
    <soapenv:Body>
@@ -80,37 +70,38 @@ Put the following request message in a file called _request.xml_:
       </mys:Hello>
    </soapenv:Body>
 </soapenv:Envelope>
+</code>
 </pre>
 
-[php]subsection("Using Wget");[/php]
+<%= subsection("Using Wget"); %>
 
-Issue the following command to test our Web service:
+<p>Issue the following command to test our Web service:</p>
 
 <pre theme="slate">
 wget --post-file=request.xml --header="Content-Type: text/xml" --header="SOAPAction: 'Hello'" http://localhost/ws/index.php?wsdl -O response.xml
 </pre>
 
-The content the file _response.xml_ should be something like this:
+<p>The content the file _response.xml_ should be something like this:</p>
 
 <pre lang="xml">
 <?xml version="1.0" encoding="utf-8"?><SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Body><ns1:HelloResponse xmlns:ns1="MyService"><response>Hello Rafael!</response></ns1:HelloResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>
 </pre>
 
-This is the same response shown in picture [php]ref('testws_soapui_request');[/php], unindented though.
+<p>This is the same response shown in picture <%= ref('testws_soapui_request'); %>, unindented though.</p>
 
-[php]subsection("Using cURL");[/php]
+<%= subsection("Using cURL"); %>
 
-Here is the curl version:
+<p>Here is the curl version:</p>
 
 <pre theme="slate">
 curl --header "Content-Type: text/xml; charset=utf-8" --data @request.xml http://localhost/ws/index.php > out.xml
 </pre>
 
-The content of the _out.xml_ file must be the same as the previous example.
+<p>The content of the _out.xml_ file must be the same as the previous example.</p>
 
-[php]subsection("Using telnet");[/php]
+<%= subsection("Using telnet"); %>
 
-Here I show you how you can send an HTTP POST request to our WS using telnet:
+<p>Here I show you how you can send an HTTP POST request to our WS using telnet:</p>
 
 <pre theme="slate">
 [10:29:57]ddc@intel~$ telnet localhost 80
@@ -135,11 +126,11 @@ Content-Type: text/xml; charset=utf-8
 <?xml version="1.0" encoding="utf-8"?><SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Body><ns1:HelloResponse xmlns:ns1="MyService"><response>Hello Rafael!</response></ns1:HelloResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>Connection closed by foreign host.
 </pre>
 
-DON'T FORGET to specify the content length!
+<p>DON'T FORGET to specify the content length!</p>
 
-[php]section("Using Java");[/php]
+<%= section("Using Java"); %>
 
-Well, this is useful too, specially if you are developing a Java application.
+<p>Well, this is useful too, specially if you are developing a Java application.</p>
 
 <pre lang="java">
 import java.io.BufferedReader;
@@ -187,9 +178,9 @@ public class TestWS {
 }
 </pre>
 
-[php]section("Using C++ with Qt");[/php]
+<%= section("Using C++ with Qt"); %>
 
-I used this too:
+<p>I used this too:</p>
 
 <pre lang="cpp">
 MainWindow::MainWindow(QWidget *parent) :
@@ -233,12 +224,10 @@ void MainWindow::testFinished(QNetworkReply *reply)
 }
 </pre>
 
-The methods _testService()_ and _testFinished()_ are <a href="http://qt-project.org/doc/qt-5.0/qtcore/signalsandslots.html">SLOTS</a>.
+<p>The methods _testService()_ and _testFinished()_ are <a href="http://qt-project.org/doc/qt-5.0/qtcore/signalsandslots.html">SLOTS</a>.</p>
 
-[php]section("What's next?");[/php]
+<%= section("What's next?"); %>
 
-So far we have seen only how to test the connection to the Web service, the next step would be to extract the information we need from the response message, is not that hard, search for XML parser for your language, for Qt I've used <a href="https://qt-project.org/doc/qt-4.8/qxmlstreamreader.html" target="_blank">QXmlStreamReader</a>.
+<p>So far we have seen only how to test the connection to the Web service, the next step would be to extract the information we need from the response message, is not that hard, search for XML parser for your language, for Qt I've used <a href="https://qt-project.org/doc/qt-4.8/qxmlstreamreader.html" target="_blank">QXmlStreamReader</a>.</p>
 
-I hope this be helpful.
-
-
+<p>I hope this be helpful.</p>

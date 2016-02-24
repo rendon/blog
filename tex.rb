@@ -7,6 +7,10 @@ module Tex
     "-- IMG PENDING --"
   end
 
+  def cite(id)
+    "-- CITE PENDING --"
+  end
+
   def section(title)
     "<h2>#{title}</h2>"
   end
@@ -19,11 +23,11 @@ module Tex
     "<h4>#{title}</h4>"
   end
 
-  def add_bib(a, b, c, d)
+  def add_bib(a, b, c, d = '')
     "--BIB PENDING--<br/>"
   end
 
-  def generate_bib_table(lang)
+  def generate_bib_table(lang = "ES")
     "PENDING"
   end
 

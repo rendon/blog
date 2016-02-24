@@ -1,27 +1,16 @@
-"=========== Meta ============
-"StrID : 289
-"Title : Game controller with Arduino
-"Slug  : arduino-game-controller
-"Cats  : Sin categoría
-"Tags  : 
-"=============================
-"EditType   : post
-"EditFormat : Markdown
-"TextAttach : wpid1407-vimpress_537827db_mkd.txt
-"========== Content ==========
-[php]set_setting("show_numbers_in_sections", false);[/php]
+<% tex_set("show_numbers_in_sections", false); %>
 
-Hi guys!, In my <a href="/arduino-control-speakers/" target="_blank">previous post</a> I described how to build a volume controller with Arduino, using the <strong>termios</strong> API for serial communication in GNU/Linux, well, in this post I use the same concepts to build a simple game controller for the classical game Snake.
+<p>Hi guys!, In my <a href="/arduino-control-speakers/" target="_blank">previous post</a> I described how to build a volume controller with Arduino, using the <strong>termios</strong> API for serial communication in GNU/Linux, well, in this post I use the same concepts to build a simple game controller for the classical game Snake.</p>
 
-[php]section("Let's get started");[/php]
+<%= section("Let's get started"); %>
 
-We need to build the following circuit:
+<p>We need to build the following circuit:</p>
 
-[php]figure('game1', 'Schematic', 'game1', 'jpg', 'EN');[/php]
+<%= figure('game1', 'Schematic', 'game1', 'jpg', 'EN'); %>
 
-[php]figure('game2', 'Electronic diagram', 'game2', 'jpg', 'EN');[/php]
+<%= figure('game2', 'Electronic diagram', 'game2', 'jpg', 'EN'); %>
 
- We need the following code in <em>wiring</em> to receive instructions from the board.  
+<p>We need the following code in <em>wiring</em> to receive instructions from the board.  </p>
 
 <pre lang="cpp" line="1" theme="slate">
 const int DOWN  = 8;
@@ -71,8 +60,7 @@ void loop()
 }
 </pre>
 
-The previous code reads the button presses and write the appropriate values to the serial channel, we'll read this values from our game. I have implemented a limited version of the game Snake for our purpose, here is the code:
-
+<p>The previous code reads the button presses and write the appropriate values to the serial channel, we'll read this values from our game. I have implemented a limited version of the game Snake for our purpose, here is the code:</p>
 
 <pre lang="cpp" line="1" theme="slate">
 // Compile with: g++ -Wall -o snake snake.cpp -lcurses
@@ -299,15 +287,15 @@ int main(int argc, char** argv)
 }
 </pre>
 
-Connect the Arduino to the PC and execute the previous program. Here is a screenshot of the game in action.
+<p>Connect the Arduino to the PC and execute the previous program. Here is a screenshot of the game in action.</p>
 
-[php]figure('game3', 'Game in action', 'game3', 'jpg', 'EN');[/php]
+<%= figure('game3', 'Game in action', 'game3', 'jpg', 'EN'); %>
 
-Game Over! See you in the next post.
+<p>Game Over! See you in the next post.</p>
 
-[php]section("References");[/php]
+<%= section("References"); %>
 
-The schematic and the electronic diagram were designed using <a href="http://fritzing.org/" target="_blank">fritzing</a>.
+<p>The schematic and the electronic diagram were designed using <a href="http://fritzing.org/" target="_blank">fritzing</a>.</p>
 
 <table>
   <tr> <td>1</td> <td><a href="http://en.wikibooks.org/wiki/Serial_Programming/Serial_Linux" target="_blank">Serial Programming/Serial Linux</a></td> </tr>

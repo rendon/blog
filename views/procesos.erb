@@ -1,25 +1,14 @@
-"=========== Meta ============
-"StrID : 976
-"Title : Procesos
-"Slug  : procesos
-"Cats  : Sin categoría
-"Tags  : 
-"=============================
-"EditType   : post
-"EditFormat : Markdown
-"TextAttach : wpid980-vimpress_52bcf48e_mkd.txt
-"========== Content ==========
-Como parte de mi proyecto final estoy estudiando sobre sistemas operativos con un enfoque especial en GNU/Linux, en lo posible voy a ir publicando algunas cosas que me parezcan interesantes y que ojala lo sean para otros más también.
+<p>Como parte de mi proyecto final estoy estudiando sobre sistemas operativos con un enfoque especial en GNU/Linux, en lo posible voy a ir publicando algunas cosas que me parezcan interesantes y que ojala lo sean para otros más también.</p>
 
-[php]section('Proceso');[/php]
+<%= section('Proceso'); %>
 
-Uno de los primeros temas que se abordan en los libros de sistemas operativos son los *procesos*, que en términos simples son programas en *ejecución*. Un programa por si mismo no es un proceso. Podríamos decir que un programa por si solo es una entidad **pasiva** mientras que un proceso es una entidad **activa**, un programa que se esta ejecutando en el sistema y tiene asociado a él más que código ejecutable.
+<p>Uno de los primeros temas que se abordan en los libros de sistemas operativos son los *procesos*, que en términos simples son programas en *ejecución*. Un programa por si mismo no es un proceso. Podríamos decir que un programa por si solo es una entidad **pasiva** mientras que un proceso es una entidad **activa**, un programa que se esta ejecutando en el sistema y tiene asociado a él más que código ejecutable.</p>
 
-Dentro de los datos que se asocian a un proceso podemos encontrar un identificador de proceso (PID), información sobre el creador del proceso actual (el padre), una lista de los procesos creados por el proceso actual (los hijos), recursos como archivos abiertos, un espacio de memoria para uso particular, entre otros. El sistema operativo necesita toda esta información para poder administrar los procesos de manera correcta.
+<p>Dentro de los datos que se asocian a un proceso podemos encontrar un identificador de proceso (PID), información sobre el creador del proceso actual (el padre), una lista de los procesos creados por el proceso actual (los hijos), recursos como archivos abiertos, un espacio de memoria para uso particular, entre otros. El sistema operativo necesita toda esta información para poder administrar los procesos de manera correcta.</p>
 
-[php]section('Procesos en Linux');[/php]
+<%= section('Procesos en Linux'); %>
 
-En Linux (el kernel) toda la información relacionada a un proceso se almacena en la estructura `task_struct` la cual esta definida en el encabezado `<linux/sched.h>` y dentro de sus campos podemos encontrar los siguientes:
+<p>En Linux (el kernel) toda la información relacionada a un proceso se almacena en la estructura <code>task_struct</code> la cual esta definida en el encabezado <code><linux/sched.h></code> y dentro de sus campos podemos encontrar los siguientes:</p>
 
 <pre lang="c">
 struct task_struct {
@@ -51,15 +40,15 @@ struct task_struct {
 }
 </pre>
 
-Como podrán apreciar en la última línea, un proceso también mantiene una lista de sus procesos hermanos, aquellos que comparten el mismo padre.
+<p>Como podrán apreciar en la última línea, un proceso también mantiene una lista de sus procesos hermanos, aquellos que comparten el mismo padre.</p>
 
-El kernel mantiene la lista de procesos en una lista doublemente enlazada donde cada elemento contiene una estructura `task_struct`. La figura [php]ref('doubly_linked_list');[/php] muestra como luce dicha lista.
+<p>El kernel mantiene la lista de procesos en una lista doublemente enlazada donde cada elemento contiene una estructura <code>task_struct</code>. La figura <%= ref('doubly_linked_list'); %> muestra como luce dicha lista.</p>
 
-[php]
+<%= 
 figure('doubly_linked_list', 'Lista doblemente enlazada de procesos', 'doubly_linked_list', 'svg', 'ES');
-[/php]
+ %>
 
-Puesto que un proceso es un programa en ejecución y normalmente la cantidad de procesos es mayor que la cantidad de procesadores (en muchas ocasiones solo uno), éstos tienen que compartir el tiempo de la CPU y es el sistema operativo quien se encarga de coordinar esta actividad. Debido a lo anterior un proceso tiene asociado un *estado*, que como su nombre lo indica, nos permite determinar que esta haciendo el proceso dentro del sistema operativo, básicamente esta en ejecución o esperando, a continuación una lista de todos los estados posibles en en SO Linux.
+<p>Puesto que un proceso es un programa en ejecución y normalmente la cantidad de procesos es mayor que la cantidad de procesadores (en muchas ocasiones solo uno), éstos tienen que compartir el tiempo de la CPU y es el sistema operativo quien se encarga de coordinar esta actividad. Debido a lo anterior un proceso tiene asociado un *estado*, que como su nombre lo indica, nos permite determinar que esta haciendo el proceso dentro del sistema operativo, básicamente esta en ejecución o esperando, a continuación una lista de todos los estados posibles en en SO Linux.</p>
 
 - TASK_RUNNING: El proceso esta en ejecución.
 - TASK_INTERRUPTIBLE: El proceso esta durmiendo (bloqueado), esperando que se cumpla alguna condición, por ejemplo, cuando se espera a que el usuario realice una acción.
@@ -67,23 +56,23 @@ Puesto que un proceso es un programa en ejecución y normalmente la cantidad de 
 - __TASK_TRACED: El proceso esta siendo rastreado por otro proceso, por ejemplo, por un depurador.
 - __TASK_STOPPED: El proceso a termina su ejecución
 
-La figura [php]ref('process_states');[/php] ilustra las relaciones entre los distintos estados.
+La figura <%= ref('process_states'); %> ilustra las relaciones entre los distintos estados.
 
-[php]
+<%= 
 figure('process_states', 'Diagrama de flujo de los estados de un proceso', 'process_states', 'svg', 'ES');
-[/php]
+ %>
 
-En Linux el primer proceso que se ejecuta es `init` con PID igual a 1 y es éste el que se encarga de crear al resto de los procesos  necesarios para el funcionamiento del sistema. A su vez, cada nuevo proceso es capaz de crear otros más. No es difícil darse cuenta que este mecanismo forma un árbol de procesos, donde la raíz es el proceso `init`, los nodos intermedios son aquello diferentes de `init` y que tienen al menos un proceso hijo, mientras que las hojas son aquellos que no crean nuevos procesos.
+<p>En Linux el primer proceso que se ejecuta es <code>init</code> con PID igual a 1 y es éste el que se encarga de crear al resto de los procesos  necesarios para el funcionamiento del sistema. A su vez, cada nuevo proceso es capaz de crear otros más. No es difícil darse cuenta que este mecanismo forma un árbol de procesos, donde la raíz es el proceso <code>init</code>, los nodos intermedios son aquello diferentes de <code>init</code> y que tienen al menos un proceso hijo, mientras que las hojas son aquellos que no crean nuevos procesos.</p>
 
-[php]section('Consultar información de procesos');[/php]
+<%= section('Consultar información de procesos'); %>
 
-A continuación veremos como obtener información a cerca de los procesos desde el punto de vista del administrador del sistema como desde el punto de vista del desarrollador.
+<p>A continuación veremos como obtener información a cerca de los procesos desde el punto de vista del administrador del sistema como desde el punto de vista del desarrollador.</p>
 
-[php]subsection('Utilizando el comando ps');[/php]
+<%= subsection('Utilizando el comando ps'); %>
 
-El comando `ps` obtiene y reporta información de los procesos en el sistema en un determinado instante (snapshot). `ps` soporta varias opciones que nos permiten filtrar justo la información que necesitamos, veamos algunos ejemplos.
+<p>El comando <code>ps</code> obtiene y reporta información de los procesos en el sistema en un determinado instante (snapshot). <code>ps</code> soporta varias opciones que nos permiten filtrar justo la información que necesitamos, veamos algunos ejemplos.</p>
 
-Listar todos los procesos en el sistema: `ps -e`
+<p>Listar todos los procesos en el sistema: <code>ps -e</code></p>
 
 <pre theme="slate">
   PID TTY          TIME CMD
@@ -106,7 +95,7 @@ Listar todos los procesos en el sistema: `ps -e`
 30759 ?        00:00:00 kworker/1:2
 </pre>
 
-Mostrar los procesos en forma de arbol: `ps -ejH`
+<p>Mostrar los procesos en forma de arbol: <code>ps -ejH</code></p>
 <pre theme="slate">
   PID  PGID   SID TTY          TIME CMD
     2     0     0 ?        00:00:00 kthreadd
@@ -140,7 +129,7 @@ Mostrar los procesos en forma de arbol: `ps -ejH`
     .
 </pre>
 
-Mostrar los procesos creados por el usuario *root*:
+<p>Mostrar los procesos creados por el usuario *root*:</p>
 
 <pre theme="slate">
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
@@ -170,7 +159,7 @@ root     30032  0.0  0.0      0     0 ?        S    15:19   0:00 [kworker/0:1]
 root     30759  0.0  0.0      0     0 ?        S    15:30   0:00 [kworker/1:2]
 </pre>
 
-Es posible especificar que campos debe contener el reporte, por ejemplo: `ps -eo pid,class,rtprio,pri,psr,pcpu,stat,comm`
+<p>Es posible especificar que campos debe contener el reporte, por ejemplo: <code>ps -eo pid,class,rtprio,pri,psr,pcpu,stat,comm</code></p>
 
 <pre theme="slate">
   PID CLS RTPRIO PRI PSR %CPU STAT COMMAND
@@ -203,34 +192,40 @@ Es posible especificar que campos debe contener el reporte, por ejemplo: `ps -eo
 29918 TS       -  19   1  0.0 Ss   bash
 </pre>
 
-El significado de las opciones es el siguiente:
+<p>El significado de las opciones es el siguiente:</p>
 
-- *pid*: El identificador de proceso.
-- *class*: Clase de planificación del proceso, e.g:
-    - `-` no ha sido reportado
-    - `FF` proviene de SCHED_FIFO, una cola de espera normal, el primero en llegar es el primero en salir.
-    - `RR`  proviene de SCHED_RR, utiliza un algoritmo <a href="https://en.wikipedia.org/wiki/Round-robin" target="_blank">Round robin</a>.
-    - `IDL` proviene  SCHED_IDLE, para procesos con prioridad muy baja.
-    - `?` el valor no se conoce.
-- *rtprio*: Prioridad en tiempo real.
-- *pri*: Prioridad del proceso, valores más pequeños significan prioridad más alta.
-- *psr*: A que procesador se encuentra asignado el proceso.
-- *pcpu*: Porcentaje de uso de la CPU.
-- *stat*: Estado del proceso:
-    - `D`   Esperando. No interrumpible.
-    - `R`   En ejecución o en la cola de ejecución.
-    - `S`   Esperando. Interrumpible.
-    - `T`   Parado.
-    - `X`   Muerto (nunca debería de ser visto).
-    - `Z`   Difunto (zombie), el proceso ha terminado pero no ha sido reclamado por quien lo creo, su padre.
-- *comm*: Nombre del comando.
+<ul>
+  <li>*pid*: El identificador de proceso.</li>
+  <li>*class*: Clase de planificación del proceso, e.g:</li>
+  <ul>
+    <li><code>-</code> no ha sido reportado
+    <li><code>FF</code> proviene de SCHED_FIFO, una cola de espera normal, el primero en llegar es el primero en salir.
+    <li><code>RR</code>  proviene de SCHED_RR, utiliza un algoritmo <a href="https://en.wikipedia.org/wiki/Round-robin" target="_blank">Round robin</a>.
+    <li><code>IDL</code> proviene  SCHED_IDLE, para procesos con prioridad muy baja.
+    <li><code>?</code> el valor no se conoce.
+  </ul>
+  <li>*rtprio*: Prioridad en tiempo real.</li>
+  <li>*pri*: Prioridad del proceso, valores más pequeños significan prioridad más alta.</li>
+  <li>*psr*: A que procesador se encuentra asignado el proceso.</li>
+  <li>*pcpu*: Porcentaje de uso de la CPU.</li>
+  <li>*stat*: Estado del proceso:</li>
+  <ul>
+    <li><code>D</code>   Esperando. No interrumpible.</li>
+    <li><code>R</code>   En ejecución o en la cola de ejecución.</li>
+    <li><code>S</code>   Esperando. Interrumpible.</li>
+    <li><code>T</code>   Parado.</li>
+    <li><code>X</code>   Muerto (nunca debería de ser visto).</li>
+    <li><code>Z</code>   Difunto (zombie), el proceso ha terminado pero no ha sido reclamado por quien lo creo, su padre.</li>
+  </ul>
+  <li> *comm*: Nombre del comando.</li>
+</ul>
 
 
-Para más información véase la documentación (`man ps`). Otro comando que puede ser útil es `top`, cuya funcionalidad es similar a `ps` en cuanto a la información que despliega, la diferencia es que `top` se mantiene actualizando la información constantemente.
+<p>Para más información véase la documentación (<code>man ps</code>). Otro comando que puede ser útil es <code>top</code>, cuya funcionalidad es similar a <code>ps</code> en cuanto a la información que despliega, la diferencia es que <code>top</code> se mantiene actualizando la información constantemente.</p>
 
-[php]subsection('Desde C');[/php]
+<%= subsection('Desde C'); %>
 
-Para obtener información sobre el proceso actual utilizaremos la macro `current`, cuya implementación varia entre plataformas. El siguiente listado muestra como moverse desde el proceso actual hasta la raíz:
+<p>Para obtener información sobre el proceso actual utilizaremos la macro <code>current</code>, cuya implementación varia entre plataformas. El siguiente listado muestra como moverse desde el proceso actual hasta la raíz:</p>
 
 <pre lang="c">
 struct task_struct *parent = current;
@@ -250,7 +245,7 @@ list_for_each(list, &s->children)
 
 
 ###Visualizar el árbol de procesos
-Con las premisas que hemos visto podemos extraer algo de información significativa de nuestro sistema operativo, lo primero que se me ocurrió es simular lo que hace el comando `pstree`. El siguiente código realiza un recorrido primero en profundidad (<a href="https://en.wikipedia.org/wiki/Depth-first_search" target="_blank">DFS</a>) para obtener el árbol de procesos de nuestro sistema:
+Con las premisas que hemos visto podemos extraer algo de información significativa de nuestro sistema operativo, lo primero que se me ocurrió es simular lo que hace el comando <code>pstree</code>. El siguiente código realiza un recorrido primero en profundidad (<a href="https://en.wikipedia.org/wiki/Depth-first_search" target="_blank">DFS</a>) para obtener el árbol de procesos de nuestro sistema:
 
 <pre lang="c">
 #include <linux/init.h>
@@ -505,15 +500,15 @@ MODULE_AUTHOR("Rafael Rendón Pablo");
 
 Manualmente hay que editar un poco la salida para que que sirva como entrada para el visualizador. He aquí el archivo resultante: <a href="../../files/pstree.gi">pstree.gi</a>.
 
-La figura [php]ref("pstree");[/php] muestra el resultado.
+La figura <%= ref("pstree"); %> muestra el resultado.
 
-[php]
+<%= 
 figure('pstree', 'Árbol de procesos', 'pstree', 'svg', 'ES');
-[/php]
+ %>
 
-[php]section('Creación de procesos');[/php]
+<%= section('Creación de procesos'); %>
 
-En sistemas UNIX la creación de nuevos procesos se realiza en dos pasos. Primero se bifurca el proceso actual utilizando la función `fork()`, la cual crea una copia del proceso actual, la única diferencia entre estos dos procesos es el PID, el cual es único. El segundo paso consiste en reemplazar el espacio de memoria del nuevo proceso con el código ejecutable del programa que se quiere ejecutar e inmediatamente iniciar la ejecución, esto se logra con la función `exec()`.
+En sistemas UNIX la creación de nuevos procesos se realiza en dos pasos. Primero se bifurca el proceso actual utilizando la función <code>fork()</code>, la cual crea una copia del proceso actual, la única diferencia entre estos dos procesos es el PID, el cual es único. El segundo paso consiste en reemplazar el espacio de memoria del nuevo proceso con el código ejecutable del programa que se quiere ejecutar e inmediatamente iniciar la ejecución, esto se logra con la función <code>exec()</code>.
 
 <pre lang="c">
 #include <sys/types.h>
@@ -539,14 +534,14 @@ int main()
 </pre>
 
 
-Notarán que he utilizado `execlp()` en vez de `exec()`, esto es porque en realidad `exec()` es un familia de funciones, la cuales son *front ends* para la función `execve()`.
+Notarán que he utilizado <code>execlp()</code> en vez de <code>exec()</code>, esto es porque en realidad <code>exec()</code> es un familia de funciones, la cuales son *front ends* para la función <code>execve()</code>.
 
 El código funciona de la siguiente manera:
 
 - Cuando se realiza la bifurcación se crea una copia del proceso actual y ambos procesos continúan su ejecución en la siguiente instrucción.
-- Debido a que el hijo es una copia del padre debe existir un mecanismos para diferenciarlos y este es que el valor de `pid` en el hijo es igual al cero (el cero no es un PID válido puesto que a `init` le corresponde el 1 y todos los demás PIDs deben ser mayores a él) y en el proceso padre el valor de `pid` es igual al verdadero PID del nuevo proceso.
+- Debido a que el hijo es una copia del padre debe existir un mecanismos para diferenciarlos y este es que el valor de <code>pid</code> en el hijo es igual al cero (el cero no es un PID válido puesto que a <code>init</code> le corresponde el 1 y todos los demás PIDs deben ser mayores a él) y en el proceso padre el valor de <code>pid</code> es igual al verdadero PID del nuevo proceso.
 - Una vez que sabemos como diferenciar a los dos procesos podemos reemplazar al proceso hijo con el programa que pretendemos ejecutar.
-- El proceso padre puede continuar con su ejecución o bien esperar que que el hijo termine, lo cual dependerá de la tarea que se este realizando, para esperar a que el hijo termine utilizamos la función `wait()`.
+- El proceso padre puede continuar con su ejecución o bien esperar que que el hijo termine, lo cual dependerá de la tarea que se este realizando, para esperar a que el hijo termine utilizamos la función <code>wait()</code>.
 
 
 Por último veamos un ejemplo un poco más elaborado, un mini emulador de terminal:
@@ -613,13 +608,13 @@ int main(void)
 }
 </pre>
 
-En este ejemplo básicamente leemos la línea de texto que el usuario introduce y se paramos el nombre del comando de los parámetros y además verificamos si el comando debe ejecutarse en *background* (el comando finaliza con un ampersand), después de esto creamos un nuevo proceso y utilizamos la función `execlp()` para ejecutar al comando en cuestión, el cual debe existir en el sistema.
+En este ejemplo básicamente leemos la línea de texto que el usuario introduce y se paramos el nombre del comando de los parámetros y además verificamos si el comando debe ejecutarse en *background* (el comando finaliza con un ampersand), después de esto creamos un nuevo proceso y utilizamos la función <code>execlp()</code> para ejecutar al comando en cuestión, el cual debe existir en el sistema.
 
 Este programa esta bien limitado y tiene varías fallas, el único propósito es dar una mejor idea de como se crean procesos y no de crear una copia de Bash :).
 
-[php]
+<%= 
 add_bib("lkd_rl", "Robert Love", "Linux Kernel Development, 3rd Ed.");
 add_bib("osc_9th", "Silberschatz et al.", "Operating System Concepts, 9th Ed.");
 generate_bib_table();
-[/php]
+ %>
 
