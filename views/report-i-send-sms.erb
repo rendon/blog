@@ -1,88 +1,83 @@
-"=========== Meta ============
-"StrID : 833
-"Title : Reporte I: Envio de mensajes SMS desde la PC
-"Slug  : report-i-send-sms
-"Cats  : Sin categoría
-"Tags  : 
-"=============================
-"EditType   : post
-"EditFormat : Markdown
-"TextAttach : wpid1572-wpid-vimpress_5289808c_mkd.txt
-"========== Content ==========
+<p>¡Hola! Con éste documento doy inicio a una serie de reportes correspondientes al desarrollo de los proyectos de la asignatura **Desarrollo de Aplicaciones para Tecnologías Móviles**.</p>
 
-¡Hola! Con éste documento doy inicio a una serie de reportes correspondientes al desarrollo de los proyectos de la asignatura **Desarrollo de Aplicaciones para Tecnologías Móviles**.
+<%= section('Definición del problema'); %>
 
-[php]section('Definición del problema');[/php]
+<p>En esta ocasión toca el turno al primer proyecto, que podríamos denominar "Envío de mensajes SMS desde la PC". A continuación una breve descripción.</p>
 
-En esta ocasión toca el turno al primer proyecto, que podríamos denominar "Envío de mensajes SMS desde la PC". A continuación una breve descripción.
+<blockquote>Desarrollar una aplicación de escritorio que permita a sus usuarios enviar y recibir mensajes de texto (SMS) desde la PC, usando un dispositivo celular o smartphone que funja como emisor y receptor.</blockquote>
 
-> Desarrollar una aplicación de escritorio que permita a sus usuarios enviar y recibir mensajes de texto (SMS) desde la PC, usando un dispositivo celular o smartphone que funja como emisor y receptor.
+<%= section('Propuesta de solución'); %>
 
-[php]section('Propuesta de solución');[/php]
+<p>La solución que vamos a tratar en este reporte consiste en lo siguiente. No vamos a crear 1 programa sino 2, un servidor en el dispositivo móvil y un cliente en la PC. El siguiente diagrama puede ayudar a entender mejor la solución.</p>
 
-La solución que vamos a tratar en este reporte consiste en lo siguiente. No vamos a crear 1 programa sino 2, un servidor en el dispositivo móvil y un cliente en la PC. El siguiente diagrama puede ayudar a entender mejor la solución.
-
-[php]figure('sms_01', 'Diagrama de la solución', 'sms_01', 'png', 'ES');[/php]
+<%= figure('sms_01', 'Diagrama de la solución', 'sms_01', 'png', 'ES'); %>
 
 
-[php]subsection('Servidor');[/php]
+<%= subsection('Servidor'); %>
 
-Se encargará de las siguientes actividades:
+<p>Se encargará de las siguientes actividades:</p>
 
-- Enviar los mensajes que el cliente le solicite y almacenarlos en una base de datos.
-- Recibir los mensajes entrantes y almacenarlos en la base de datos.
-- Servir la libreta de contactos del dispositivo móvil.
-- Servir la lista de mensajes enviados.
-- Servir la lista de mensajes recibidos.
-- Resolver si existe un nuevo mensaje.
-- Servir el último mensaje recibido.
-
-
-[php]subsection('Cliente');[/php]
-
-Éste se comunicará con el servidor y proporcionará una interfaz gráfica al usuario con los siguientes servicios.
-
-- Enviar mensaje SMS.
-- Mostrar la lista de contactos.
-- Visualizar los mensajes recibidos.
-- Actualizar la bandeja de entrada cuando lleguen nuevos mensajes.
-- Visualizar los mensajes enviados.
-
-[php]section('Requisitos');[/php]
-
-Para poder seguir este tutorial necesitas contar con los siguientes requisitos:
-
-- Un dispositivo móvil con sistema operativo Android 2.3 (probablemente funcione con versiones posteriores)
-- <a href="/setup-jdk/">El SDK de Java configurado</a>.
-- <a href="/setup-android-sdk/">El SDK de Android configurado</a>.
-- Opcional: IntelliJ IDEA 12 Comunity Edition, `http://www.jetbrains.com/idea/`.
-- Conocimientos intermedios de Java.
-- Un sistema operativo GNU/Linux Debian, utilizaremos la versión 7, denominada Wheezy.
+<ul>
+  <li>Enviar los mensajes que el cliente le solicite y almacenarlos en una base de datos.</li>
+  <li>Recibir los mensajes entrantes y almacenarlos en la base de datos.</li>
+  <li>Servir la libreta de contactos del dispositivo móvil.</li>
+  <li>Servir la lista de mensajes enviados.</li>
+  <li>Servir la lista de mensajes recibidos.</li>
+  <li>Resolver si existe un nuevo mensaje.</li>
+  <li>Servir el último mensaje recibido.</li>
+</li>
 
 
-[php]subsection('Notas');[/php]
+<%= subsection('Cliente'); %>
 
-- Es necesario aclarar que no vamos a explicar los programas línea por línea, sino más bien, una explicación de las partes más importantes que les ayude a comprenderlos, en caso de necesitar una explicación más detallada pueden consultar las referencias que se proporcionan al final del documento.
+<p>Éste se comunicará con el servidor y proporcionará una interfaz gráfica al usuario con los siguientes servicios.</p>
 
-- Acostumbro codificar en Ingles puesto que considero es más homogéneo, permite exponer mi código a una audiencia más amplia, y me ayuda a mejorar mi comprensión del idioma. Aunque por ser un trabajo para la escuela la interfaz forzosamente tiene que ser en Español.
+<ul>
+  <li>Enviar mensaje SMS.</li>
+  <li>Mostrar la lista de contactos.</li>
+  <li>Visualizar los mensajes recibidos.</li>
+  <li>Actualizar la bandeja de entrada cuando lleguen nuevos mensajes.</li>
+  <li>Visualizar los mensajes enviados.</li>
+</ul>
 
-[php]section('El servidor');[/php]
+<%= section('Requisitos'); %>
 
-El servidor es una aplicación para Android. Es un servidor HTTP que recibe peticiones mediante el método GET, quizás no lo más adecuado pero si lo más sencillo. Para no empezar desde cero vamos a hacer uso de NanoHTTPD (_http://nanohttpd.com/_), que como su nombre lo indica es un servidor HTTP muy pequeño, ideal para un sistema embebido.
+<p>Para poder seguir este tutorial necesitas contar con los siguientes requisitos:</p>
 
-Con el fin de aprender a utilizar el SDK de Android he optado por no utilizar un IDE para esta parte, únicamente las herramientas que incluye el SDK y la línea de comandos, nada de que preocuparse. 
+<ul>
+  <li>Un dispositivo móvil con sistema operativo Android 2.3 (probablemente funcione con versiones posteriores)</li>
+  <li><a href="/setup-jdk/">El SDK de Java configurado</a>.</li>
+  <li><a href="/setup-android-sdk/">El SDK de Android configurado</a>.</li>
+  <li>Opcional: IntelliJ IDEA 12 Comunity Edition, <code>http://www.jetbrains.com/idea/</code>.</li>
+  <li>Conocimientos intermedios de Java.</li>
+  <li>Un sistema operativo GNU/Linux Debian, utilizaremos la versión 7, denominada Wheezy.</li>
+</ul>
 
 
-[php]subsection('Crear el proyecto');[/php]
+<%= subsection('Notas'); %>
 
-En la línea de comandos teclee los siguiente:
+<ul>
+  <li>Es necesario aclarar que no vamos a explicar los programas línea por línea, sino más bien, una explicación de las partes más importantes que les ayude a comprenderlos, en caso de necesitar una explicación más detallada pueden consultar las referencias que se proporcionan al final del documento.</li>
+  <li>Acostumbro codificar en Ingles puesto que considero es más homogéneo, permite exponer mi código a una audiencia más amplia, y me ayuda a mejorar mi comprensión del idioma. Aunque por ser un trabajo para la escuela la interfaz forzosamente tiene que ser en Español.</li>
+</ul>
+
+<%= section('El servidor'); %>
+
+<p>El servidor es una aplicación para Android. Es un servidor HTTP que recibe peticiones mediante el método GET, quizás no lo más adecuado pero si lo más sencillo. Para no empezar desde cero vamos a hacer uso de NanoHTTPD (_http://nanohttpd.com/_), que como su nombre lo indica es un servidor HTTP muy pequeño, ideal para un sistema embebido.</p>
+
+<p>Con el fin de aprender a utilizar el SDK de Android he optado por no utilizar un IDE para esta parte, únicamente las herramientas que incluye el SDK y la línea de comandos, nada de que preocuparse. </p>
+
+
+<%= subsection('Crear el proyecto'); %>
+
+<p>En la línea de comandos teclee los siguiente:</p>
 
 <pre lang="bash" theme="slate">
 mkdir SMSServer
 android create project --target android-10 -n SMSServer -k com.inforscience.server -a SMSServer -p ./SMSServer
 </pre>
 
-Así debe lucir la estructura del proyecto:
+<p>Así debe lucir la estructura del proyecto:</p>
 
 <pre theme="slate">
 SMSServer/
@@ -108,7 +103,7 @@ SMSServer/
 9 directories, 9 files
 </pre>
 
-Por el momento en el archivo _SMSServer.java_ hay solo un método, _onCreate()_, que lo único que hace es imprimir un mensaje en de bienvenida. Primero veamos cómo implementar el servidor, dentro del archivo _SMSServer.java_ creamos una clase privada _HelloServer_ que herede de _NanoHTTPD_, un constructor y  el método _serve()_, es éste último es donde se concentra la mayor parte de la acción. El código es bastante simple por lo que no creo que halla necesidad de entrar mucho detalle.
+<p>Por el momento en el archivo _SMSServer.java_ hay solo un método, _onCreate()_, que lo único que hace es imprimir un mensaje en de bienvenida. Primero veamos cómo implementar el servidor, dentro del archivo _SMSServer.java_ creamos una clase privada _HelloServer_ que herede de _NanoHTTPD_, un constructor y  el método _serve()_, es éste último es donde se concentra la mayor parte de la acción. El código es bastante simple por lo que no creo que halla necesidad de entrar mucho detalle.</p>
 
 <pre lang="java" >
 private class HelloServer extends NanoHTTPD {
@@ -212,25 +207,27 @@ private class HelloServer extends NanoHTTPD {
 </pre>
 
 
-La forma de enviar datos con el método GET tiene el siguiente formato:
+<p>La forma de enviar datos con el método GET tiene el siguiente formato:</p>
 
-_http://servidor:puerto/?parametro1=valor1&parametro2=valor2&parametroN=valorN_
+<p>_http://servidor:puerto/?parametro1=valor1&parametro2=valor2&parametroN=valorN_</p>
 
-Un signo de interrogación seguido por una lista de parámetros con formato clave=valor, separados por ampersands (&). NanoHTTPD se encarga de extraer dichos parámetros y se los pasa al método _serve()_ en la variable _parameters_, el cliente siempre enviará como primer parámetro la cadena "command" y su valor va a determinar la acción que el cliente esta solicitando. Los posibles comandos son:
+<p>Un signo de interrogación seguido por una lista de parámetros con formato clave=valor, separados por ampersands (&). NanoHTTPD se encarga de extraer dichos parámetros y se los pasa al método _serve()_ en la variable _parameters_, el cliente siempre enviará como primer parámetro la cadena "command" y su valor va a determinar la acción que el cliente esta solicitando. Los posibles comandos son:</p>
 
-- **COMMAND_GET_CONTACTS** para solicitar la lista de contactos.
-- **COMMAND_SEND_MESSAGE** para enviar un mensaje.
-- **COMMAND_GET_SENT_MESSAGES** para solicitar todos los mensajes enviados.
-- **COMMAND_GET_RECEIVED_MESSAGES** para solicitar todos los mensajes recibidos.
-- **COMMAND_CHECK_FOR_NEW_MESSAGE** para preguntar al servidor si hay un mensaje nuevo.
-- **COMMAND_GET_LAST_MESSAGE** para recuperar el nuevo nuevo mensaje en caso de haberlo.
+<ul>
+  <li>**COMMAND_GET_CONTACTS** para solicitar la lista de contactos.</li>
+  <li>**COMMAND_SEND_MESSAGE** para enviar un mensaje.</li>
+  <li>**COMMAND_GET_SENT_MESSAGES** para solicitar todos los mensajes enviados.</li>
+  <li>**COMMAND_GET_RECEIVED_MESSAGES** para solicitar todos los mensajes recibidos.</li>
+  <li>**COMMAND_CHECK_FOR_NEW_MESSAGE** para preguntar al servidor si hay un mensaje nuevo.</li>
+  <li>**COMMAND_GET_LAST_MESSAGE** para recuperar el nuevo nuevo mensaje en caso de haberlo.</li>
+</ul>
 
 
-Todas éstas constantes se definen tanto en el cliente como en el servidor. 
+<p>Todas éstas constantes se definen tanto en el cliente como en el servidor. </p>
 
-[php]subsection('Agregando acción al método onCreate()');[/php]
+<%= subsection('Agregando acción al método onCreate()'); %>
 
-Éste método es el primero que se ejecuta al iniciar la aplicación y en el vamos a incluir algunas acciones, como son, iniciar el servidor, recuperar la lista de contactos del dispositivo y cargar la base de datos. En caso de que la base de datos no exista ésta deberá ser creada, las bases de datos SQLite se almacenan en archivos. 
+<p>Éste método es el primero que se ejecuta al iniciar la aplicación y en el vamos a incluir algunas acciones, como son, iniciar el servidor, recuperar la lista de contactos del dispositivo y cargar la base de datos. En caso de que la base de datos no exista ésta deberá ser creada, las bases de datos SQLite se almacenan en archivos. </p>
 
 <pre lang="java" >
 @Override
@@ -279,9 +276,9 @@ public void onCreate(Bundle savedInstanceState)
 }
 </pre>
 
-[php]subsection('Servir la lista de contactos');[/php]
+<%= subsection('Servir la lista de contactos'); %>
 
-En el método _onCreate()_ cargamos la libreta de contactos en _contactList_, ésta lista es la que le enviaremos al cliente cuando la solicite.
+<p>En el método _onCreate()_ cargamos la libreta de contactos en _contactList_, ésta lista es la que le enviaremos al cliente cuando la solicite.</p>
 
 
 <pre lang="java" >
@@ -303,7 +300,7 @@ public String getContacts()
 </pre>
 
 
-[php]subsection('Servir la lista de mensajes enviados');[/php]
+<%= subsection('Servir la lista de mensajes enviados'); %>
 
 <pre lang="java" >
 public String getReceivedMessages()
@@ -322,9 +319,9 @@ public String getReceivedMessages()
 }
 </pre>
 
-[php]subsection('Enviar SMS');[/php]
+<%= subsection('Enviar SMS'); %>
 
-El método _sendSMS()_ es el que se encarga de enviar los mensajes SMS:
+<p>El método _sendSMS()_ es el que se encarga de enviar los mensajes SMS:</p>
 
 <pre lang="java" >
 public int sendSMS(final String number, final String text)
@@ -343,9 +340,9 @@ public int sendSMS(final String number, final String text)
 </pre>
 
 
-[php]subsection('Detectar los mensajes entrantes');[/php]
+<%= subsection('Detectar los mensajes entrantes'); %>
 
-Esta es una de las partes más interesantes. Cada vez que sucede un evento el sistema hace notificaciones todas la aplicaciones que así lo requieran, para ser notificados es necesario heredar la clase _BroadcastReceiver_.
+<p>Esta es una de las partes más interesantes. Cada vez que sucede un evento el sistema hace notificaciones todas la aplicaciones que así lo requieran, para ser notificados es necesario heredar la clase _BroadcastReceiver_.</p>
 
 
 <pre lang="java" >
@@ -375,7 +372,7 @@ public class SmsReceiver extends BroadcastReceiver {
 </pre>
 
 
-Y en el método _onResume()_ de la clase SMSServer:
+<p>Y en el método _onResume()_ de la clase SMSServer:</p>
 
 <pre lang="java" >
 @Override
@@ -409,9 +406,9 @@ protected void onResume()
 </pre>
 
 
-[php]subsection('La base de datos');[/php]
+<%= subsection('La base de datos'); %>
 
-Para que el registro de mensajes enviados y recibidos persista incluso después de reiniciar el servidor es necesario almacenar dichos mensajes en algún lugar, en este caso, una base de datos, Android provee soporte nativo para SQLite. La clase _DBManager se encarga de todas las operaciones de la base de datos.
+<p>Para que el registro de mensajes enviados y recibidos persista incluso después de reiniciar el servidor es necesario almacenar dichos mensajes en algún lugar, en este caso, una base de datos, Android provee soporte nativo para SQLite. La clase _DBManager se encarga de todas las operaciones de la base de datos.</p>
 
 <pre lang="java" >
 public class DBManager {
@@ -479,9 +476,9 @@ public class DBManager {
 </pre>
 
 
-[php]subsection('Concesión de permisos');[/php]
+<%= subsection('Concesión de permisos'); %>
 
-En Android las aplicaciones por defecto cuentan con privilegios muy limitados, por lo cual es necesario conceder permisos para poder acceder al Internet, a los mensajes, a los contactos, etc. Estos permisos se especifican en el archivo _AndroidManifest.xml_ que se encuentra en folder raíz del proyecto.
+<p>En Android las aplicaciones por defecto cuentan con privilegios muy limitados, por lo cual es necesario conceder permisos para poder acceder al Internet, a los mensajes, a los contactos, etc. Estos permisos se especifican en el archivo _AndroidManifest.xml_ que se encuentra en folder raíz del proyecto.</p>
 
 <pre lang="xml" >
 <uses-permission android:name="android.permission.INTERNET" />
@@ -494,9 +491,9 @@ En Android las aplicaciones por defecto cuentan con privilegios muy limitados, p
 <uses-permission android:name="android.permission.READ_CONTACTS" />
 </pre>
 
-Hasta aquí la descripción del programa, veamos ahora la compilación e instalación. 
+<p>Hasta aquí la descripción del programa, veamos ahora la compilación e instalación. </p>
 
-Nos posicionamos en el folder de nuestro proyecto y tecleamos lo siguiente, la primera línea es para compilar y la segunda para instalar la aplicación en el dispositivo o en el emulador, lo que encuentre primero.
+<p>Nos posicionamos en el folder de nuestro proyecto y tecleamos lo siguiente, la primera línea es para compilar y la segunda para instalar la aplicación en el dispositivo o en el emulador, lo que encuentre primero.</p>
 
 
 <pre lang="bash" theme="slate">
@@ -504,19 +501,19 @@ ant debug
 ant debug install
 </pre>
 
-La dirección del servidor es la dirección IP que tienen el dispositivo móvil, en el puerto 8080, por ejemplo, _http://192.168.1.242:8080_. Esta dirección la tienen que conocer el cliente para poder conectarse.
+<p>La dirección del servidor es la dirección IP que tienen el dispositivo móvil, en el puerto 8080, por ejemplo, _http://192.168.1.242:8080_. Esta dirección la tienen que conocer el cliente para poder conectarse.</p>
 
-[php]figure('sms_02', 'Interfaz del servidor de SMS', 'sms_02', 'png', 'ES');[/php]
+<%= figure('sms_02', 'Interfaz del servidor de SMS', 'sms_02', 'png', 'ES'); %>
 
-[php]section('El cliente');[/php]
+<%= section('El cliente'); %>
 
-El cliente es una programa en Java, con una interfaz sencilla, una venta principal con tres pestañas, la primera para enviar mensajes, la segunda para visualizar los mensajes recibidos y la última para visualizar los mensajes enviados. Para esta parte utilice el IDE IntelliJ IDEA.
+<p>El cliente es una programa en Java, con una interfaz sencilla, una venta principal con tres pestañas, la primera para enviar mensajes, la segunda para visualizar los mensajes recibidos y la última para visualizar los mensajes enviados. Para esta parte utilice el IDE IntelliJ IDEA.</p>
 
-Además de la interfaz gráfica se ha desarrollado una clase _SmsClient_ que se encargará de obtener los recursos del servidor. A continuación se describen los métodos.
+<p>Además de la interfaz gráfica se ha desarrollado una clase _SmsClient_ que se encargará de obtener los recursos del servidor. A continuación se describen los métodos.</p>
 
-[php]subsection('testConnection()');[/php]
+<%= subsection('testConnection()'); %>
 
-Intenta conectar al servidor y retorna verdadero en caso de éxito.
+<p>Intenta conectar al servidor y retorna verdadero en caso de éxito.</p>
 
 <pre lang="java">
 public boolean testConnection()
@@ -539,9 +536,9 @@ public boolean testConnection()
 }
 </pre>
 
-[php]subsection('getSentMessages()');[/php]
+<%= subsection('getSentMessages()'); %>
 
-Obtiene del servidor la lista de mensajes enviados.
+<p>Obtiene del servidor la lista de mensajes enviados.</p>
 
 <pre lang="java">
 public Vector<SentMessage> getSentMessages()
@@ -581,9 +578,9 @@ public Vector<SentMessage> getSentMessages()
 }
 </pre>
 
-[php]subsection('getReceivedMessages()');[/php]
+<%= subsection('getReceivedMessages()'); %>
 
-Recupera del servidor la lista de mensajes enviados.
+<p>Recupera del servidor la lista de mensajes enviados.</p>
 
 <pre lang="java">
 public Vector<ReceivedMessage> getReceivedMessages()
@@ -624,9 +621,9 @@ public Vector<ReceivedMessage> getReceivedMessages()
 </pre>
 
 
-[php]subsection('getContactList()');[/php]
+<%= subsection('getContactList()'); %>
 
-Obtiene del servidor la lista de contactos en el dispositivo.
+<p>Obtiene del servidor la lista de contactos en el dispositivo.</p>
 
 <pre lang="java">
 public Vector<Contact> getContactList()
@@ -666,9 +663,9 @@ public Vector<Contact> getContactList()
 }
 </pre>
 
-[php]subsection('sendSMS()');[/php]
+<%= subsection('sendSMS()'); %>
 
-Solicita al servidor enviar un mensaje, enviándole como parámetros el número y el mensaje.
+<p>Solicita al servidor enviar un mensaje, enviándole como parámetros el número y el mensaje.</p>
 
 <pre lang="java">
 public boolean sendSMS(String number, String message) throws Exception
@@ -703,9 +700,9 @@ public boolean sendSMS(String number, String message) throws Exception
 </pre>
 
 
-[php]subsection('NewMessagePanel');[/php]
+<%= subsection('NewMessagePanel'); %>
 
-Hacemos unas cuantas validaciones y en caso satisfactorio procedemos a enviar el mensaje.
+<p>Hacemos unas cuantas validaciones y en caso satisfactorio procedemos a enviar el mensaje.</p>
 
 <pre lang="java" >
 @Override
@@ -734,11 +731,11 @@ public void actionPerformed(ActionEvent event)
 }
 </pre>
 
-[php]figure('sms_03', 'Envío de mensajes', 'sms_03', 'png', 'ES');[/php]
+<%= figure('sms_03', 'Envío de mensajes', 'sms_03', 'png', 'ES'); %>
 
-[php]subsection('InboxPanel');[/php]
+<%= subsection('InboxPanel'); %>
 
-Esta parte si es un poco interesante, cómo saber si ha llegado un nuevo mensaje y  en su caso obtenerlo y actualizar el contenido de la bandeja de entrada. Para eso creamos una clase que se ejecuta en un hilo independiente y continuamente pregunta al servidor si hay mensajes nuevos.
+<p>Esta parte si es un poco interesante, cómo saber si ha llegado un nuevo mensaje y  en su caso obtenerlo y actualizar el contenido de la bandeja de entrada. Para eso creamos una clase que se ejecuta en un hilo independiente y continuamente pregunta al servidor si hay mensajes nuevos.</p>
 
 <pre lang="java" >
 private class SMSMonitor implements Runnable {
@@ -788,12 +785,12 @@ private class SMSMonitor implements Runnable {
 }
 </pre>
 
-[php]figure('sms_04', 'Bandeja de entrada', 'sms_04', 'png', 'ES');[/php]
+<%= figure('sms_04', 'Bandeja de entrada', 'sms_04', 'png', 'ES'); %>
 
 
-[php]subsection('SentMessagePanel');[/php]
+<%= subsection('SentMessagePanel'); %>
 
-Esta parte es más simple, únicamente muestra la lista de mensajes enviados. En caso de no poder contactar al servidor al momento de iniciar la aplicación, ésta se mantiene continuamente reintentado, lo mismo pasa con las otras partes de la aplicación.
+<p>Esta parte es más simple, únicamente muestra la lista de mensajes enviados. En caso de no poder contactar al servidor al momento de iniciar la aplicación, ésta se mantiene continuamente reintentado, lo mismo pasa con las otras partes de la aplicación.</p>
 
 <pre lang="java" >
 @Override
@@ -818,15 +815,15 @@ public void run()
 }
 </pre>
 
-[php]figure('sms_05', 'Mensajes enviados', 'sms_05', 'png', 'ES');[/php]
+<%= figure('sms_05', 'Mensajes enviados', 'sms_05', 'png', 'ES'); %>
 
-[php]subsection('Bono');[/php]
+<%= subsection('Bono'); %>
 
-Al enviar un mensaje el usuario puede introducir el número directamente o presionar el botón con etiqueta "..." para acceder a la lista de contactos del dispositivo. Por cuestiones de seguridad he alterado la imagen puesto que es mi lista de contactos.
+<p>Al enviar un mensaje el usuario puede introducir el número directamente o presionar el botón con etiqueta "..." para acceder a la lista de contactos del dispositivo. Por cuestiones de seguridad he alterado la imagen puesto que es mi lista de contactos.</p>
 
-[php]figure('sms_06', 'Lista de contactos', 'sms_06', 'png', 'ES');[/php]
+<%= figure('sms_06', 'Lista de contactos', 'sms_06', 'png', 'ES'); %>
 
-El código es sencillo:
+<p>El código es sencillo:</p>
 
 
 <pre lang="java" >
@@ -877,16 +874,16 @@ private class ContactChooser extends JFrame {
 }
 </pre>
 
-Hasta aquí las explicaciones, espero les sea de utilidad.
+<p>Hasta aquí las explicaciones, espero les sea de utilidad.</p>
 
-[php]section('Código fuente');[/php]
+<%= section('Código fuente'); %>
 
-Tanto el servidor como el cliente se encuentran hospedados en Bitbucket, bajo la licencia GPLv3, con excepcón de NanoHTTPD, el cual tienen su propia licencia. Para obtenerlo puedes ir directamente a los siguientes sitios y descargar un archivo ZIP.
+<p>Tanto el servidor como el cliente se encuentran hospedados en Bitbucket, bajo la licencia GPLv3, con excepcón de NanoHTTPD, el cual tienen su propia licencia. Para obtenerlo puedes ir directamente a los siguientes sitios y descargar un archivo ZIP.</p>
 
 **SMSServer:** <a href="https://bitbucket.org/rendon/smsserver">https://bitbucket.org/rendon/smsserver</a>
 **SMSClient:** <a href="https://bitbucket.org/rendon/smsclient">https://bitbucket.org/rendon/smsclient</a>
 
-O bien puedes clonar el proyecto usando el Sistema de Control de Versiones **git**.
+<p>O bien puedes clonar el proyecto usando el Sistema de Control de Versiones **git**.</p>
 
 
 <pre lang="bash" theme="slate">
@@ -894,25 +891,27 @@ $ git clone https://rendon@bitbucket.org/rendon/smsserver.git
 $ git clone https://rendon@bitbucket.org/rendon/smsclient.git
 </pre>
 
-[php]section('Conclusión');[/php]
+<%= section('Conclusión'); %>
 
-Este primer proyecto fue interesante puesto que me permitió recordar algunas cosas y aprender muchas más, por ejemplo, cómo crear aplicaciones en Android, entiendo mejor la forma en que trabajan los servidores, entre otras cosas.
+<p>Este primer proyecto fue interesante puesto que me permitió recordar algunas cosas y aprender muchas más, por ejemplo, cómo crear aplicaciones en Android, entiendo mejor la forma en que trabajan los servidores, entre otras cosas.</p>
 
-Los programas en realidad no son tan complicados, con un poco de investigación y análisis estoy seguro de que lograrán entenderlos.
+<p>Los programas en realidad no son tan complicados, con un poco de investigación y análisis estoy seguro de que lograrán entenderlos.</p>
 
-[php]section('Por hacer');[/php]
+<%= section('Por hacer'); %>
 
-En esta sección vamos a listar algunas características que en nuestra aplicación no se implementaron pero que la harían mejor.
+<p>En esta sección vamos a listar algunas características que en nuestra aplicación no se implementaron pero que la harían mejor.</p>
 
-- Cambiar el método de comunicación con el servidor de **GET** a **POST**, éste último es más seguro.
-- Actualmente la aplicación de escritorio tiene que estar verificando constantemente la llegada de nuevos mensajes, lo más adecuado sería que el smartphone notifique a la aplicación de escritorio en cuándo arribe  un nuevo SMS.
-- Implementar un método de autenticación para que no cualquiera pueda enviar mensajes.
+<ul>
+  <li>Cambiar el método de comunicación con el servidor de **GET** a **POST**, éste último es más seguro.</li>
+  <li>Actualmente la aplicación de escritorio tiene que estar verificando constantemente la llegada de nuevos mensajes, lo más adecuado sería que el smartphone notifique a la aplicación de escritorio en cuándo arribe  un nuevo SMS.</li>
+  <li>Implementar un método de autenticación para que no cualquiera pueda enviar mensajes.</li>
+</ul>
 
-[php]section('Referencias');[/php]
+<%= section('Referencias'); %>
 
-[php]
+<% 
 add_bib('android_doc', 'Android', 'Documentación de Android', 'https://developer.android.com/index.html');
 add_bib('beg_and_app_dev', 'Wei-Meng Lee', 'Begining Android Application Development', 'http://www.wrox.com/WileyCDA/WroxTitle/Beginning-Android-Application-Development.productCd-1118087291.html');
 add_bib('nanohttpd_site', 'NanoHTTPD', 'Documentación de NanoHTTPD', 'http://nanohttpd.com');
-generate_bib_table();
-[/php]
+%>
+<%= generate_bib_table(); %>

@@ -1,73 +1,68 @@
-"=========== Meta ============
-"StrID : 915
-"Title : Reporte V: Web service con aplicación Android como cliente
-"Slug  : report-v-android-web-service
-"Cats  : Sin categoría
-"Tags  : 
-"=============================
-"EditType   : post
-"EditFormat : Markdown
-"TextAttach : wpid1616-vimpress_5288464f_mkd.txt
-"========== Content ==========
-Este reporte corresponde al proyecto número 5 de la asignatura Desarrollo de Aplicaciones para Tecnologías Móviles.
+<p>Este reporte corresponde al proyecto número 5 de la asignatura Desarrollo de Aplicaciones para Tecnologías Móviles.</p>
 
-[php]section('Definición del problema'); [/php]
+<%= section('Definición del problema');  %>
 
-> Desarrollar un Web service (en el lenguaje que más les agrade) capaz de manipular una base de datos a petición del cliente, en este caso, el cliente será una aplicación móvil para la plataforma Android.
+<blockquote>Desarrollar un Web service (en el lenguaje que más les agrade) capaz de manipular una base de datos a petición del cliente, en este caso, el cliente será una aplicación móvil para la plataforma Android.</blockquote>
 
-[php]section('Definiciones'); [/php]
+<%= section('Definiciones');  %>
 
-Como este reporte forma parte de una serie de reportes, vamos a omitir la teoría sobre Web services puesto que ya se abordo en el reporte número <a href="/?p=865">II</a>.
+<p>Como este reporte forma parte de una serie de reportes, vamos a omitir la teoría sobre Web services puesto que ya se abordo en el reporte número <a href="/?p=865">II</a>.</p>
 
-[php]section('Propuesta de solución'); [/php]
+<%= section('Propuesta de solución');  %>
 
-Nuevamente, el problema nos da la flexibilidad de elegir que problema modelar, la propuesta es la siguiente:
+<p>Nuevamente, el problema nos da la flexibilidad de elegir que problema modelar, la propuesta es la siguiente:</p>
 
-> Desarrollar una aplicación móvil para el control requisiciones, similar a los dispositivos que utilizan los agentes de venta cuando salen a levantar pedidos.
+<blockquote>Desarrollar una aplicación móvil para el control requisiciones, similar a los dispositivos que utilizan los agentes de venta cuando salen a levantar pedidos.</blockquote>
 
-[php]subsection('El cliente'); [/php]
+<%= subsection('El cliente');  %>
 
-La aplicación móvil deberá cumplir con los siguientes requisitos:
+<p>La aplicación móvil deberá cumplir con los siguientes requisitos:</p>
 
-- La aplicación permitirá consultar la lista de clientes.
-- La aplicación permitirá consultar la lista de productos.
-- La aplicación permitirá registrar pedidos.
-- La aplicación permitirá consultar la lista de pedidos.
-- La aplicación deberá tener la capacidad de trabajar tanto _online_ como _offline_.
-- La aplicación permitirá subir los registros al servidor.
-- La aplicación permitirá contactar al servidor para actualizar catálogos.
+<ul>
+  <li>La aplicación permitirá consultar la lista de clientes.</li>
+  <li>La aplicación permitirá consultar la lista de productos.</li>
+  <li>La aplicación permitirá registrar pedidos.</li>
+  <li>La aplicación permitirá consultar la lista de pedidos.</li>
+  <li>La aplicación deberá tener la capacidad de trabajar tanto _online_ como _offline_.</li>
+  <li>La aplicación permitirá subir los registros al servidor.</li>
+  <li>La aplicación permitirá contactar al servidor para actualizar catálogos.</li>
+</ul>
 
-[php]subsection('El servidor'); [/php]
+<%= subsection('El servidor');  %>
 
-Un Web service desarrollado en PHP que manipula una base de datos MySQL. A continuación la lista de servicios que vamos desarrollar:
+<p>Un Web service desarrollado en PHP que manipula una base de datos MySQL. A continuación la lista de servicios que vamos desarrollar:</p>
 
-- **PutRegisters(requests[], details[])** Recibe los datos de la aplicación móvil y los agrega a la base de datos, en caso de que aun no existan.
-- **GetAllClients()** Retorna al cliente la lista de clientes. Este servicio forma parte de la actualización de catálogos.
-- **GetAllProducts()** Retorna al cliente la lista de productos. Este servicio forma parte de la actualización de catálogos.
+<ul>
+  <li>**PutRegisters(requests[], details[])** Recibe los datos de la aplicación móvil y los agrega a la base de datos, en caso de que aun no existan.</li>
+  <li>**GetAllClients()** Retorna al cliente la lista de clientes. Este servicio forma parte de la actualización de catálogos.</li>
+  <li>**GetAllProducts()** Retorna al cliente la lista de productos. Este servicio forma parte de la actualización de catálogos.</li>
+</ul>
 
-[php]subsection('Requisitos'); [/php]
+<%= subsection('Requisitos');  %>
 
-Para poder realizar esta práctica se necesita lo siguiente:
+<p>Para poder realizar esta práctica se necesita lo siguiente:</p>
 
-- Debian GNU/Linux Wheezy
-- Un servidor LAMP (Linux + Apache + MySQL + PHP). Véase el reporte <a href="/?p=865">II</a>.
-- El SDK de Android instalado y configurado. Véase el reporte <a href="/?p=833">I</a>.
-- Un dispositivo móvil con Android 2.3 o el emulador de Android.
-- IntelliJ IDEA 12.
+<ul>
+  <li>Debian GNU/Linux Wheezy</li>
+  <li>Un servidor LAMP (Linux + Apache + MySQL + PHP). Véase el reporte <a href="/?p=865">II</a>.</li>
+  <li>El SDK de Android instalado y configurado. Véase el reporte <a href="/?p=833">I</a>.</li>
+  <li>Un dispositivo móvil con Android 2.3 o el emulador de Android.</li>
+  <li>IntelliJ IDEA 12.</li>
+</ul>
 
-[php]section('Desarrollo del Servidor');[/php]
+<%= section('Desarrollo del Servidor'); %>
 
-El Web service para esta aplicación es exactamente el mismo que se empleamos en el proyecto anterior (cliente Blackberry). A continuación se muestra el modelo de la base de datos para refrescar la memoria.
+<p>El Web service para esta aplicación es exactamente el mismo que se empleamos en el proyecto anterior (cliente Blackberry). A continuación se muestra el modelo de la base de datos para refrescar la memoria.</p>
 
-[php]figure('bbws_data_model', 'Modelo de datos', 'bbws_data_model', 'png', 'ES');[/php]
+<%= figure('bbws_data_model', 'Modelo de datos', 'bbws_data_model', 'png', 'ES'); %>
 
-Lo relevante de la implementación del Web service lo pueden encontrar en los reportes <a href="/report-iii-wp8-web-services/">III</a> y <a href="/report-iv-bb10-web-service/">IV</a>, colocar nuevamente el código aquí sería redundante y ocuparía mucho espacio.
+<p>Lo relevante de la implementación del Web service lo pueden encontrar en los reportes <a href="/report-iii-wp8-web-services/">III</a> y <a href="/report-iv-bb10-web-service/">IV</a>, colocar nuevamente el código aquí sería redundante y ocuparía mucho espacio.</p>
 
-[php]section('La base de datos local'); [/php]
+<%= section('La base de datos local');  %>
 
-Uno de los requisitos de nuestra aplicación es que debe de funcionar de forma desconectada, por ende, es necesario crear una replica del modelo de datos en nuestra aplicación móvil. A continuación se muestra como se manipulan los datos en de formal local, el SGBD es SQLite.
+<p>Uno de los requisitos de nuestra aplicación es que debe de funcionar de forma desconectada, por ende, es necesario crear una replica del modelo de datos en nuestra aplicación móvil. A continuación se muestra como se manipulan los datos en de formal local, el SGBD es SQLite.</p>
 
-Lo primero es crear las clases necesarias que representaran a nuestras tablas.
+<p>Lo primero es crear las clases necesarias que representaran a nuestras tablas.</p>
 
 <pre lang="java">
 package com.inforscience.requisition.model;
@@ -326,7 +321,7 @@ public class Detail {
 }
 </pre>
 
-Para simplificarnos las cosas vamos a crear un clase auxiliar (un _Helper_) para que realice todas las tareas que tienen que ver con la base de datos, como son la creación de las tablas (en caso de que no existan), inserción de registros y consulta de los mismos:
+<p>Para simplificarnos las cosas vamos a crear un clase auxiliar (un _Helper_) para que realice todas las tareas que tienen que ver con la base de datos, como son la creación de las tablas (en caso de que no existan), inserción de registros y consulta de los mismos:</p>
 
 <pre lang="java">
 package com.inforscience.requisition.model;
@@ -577,7 +572,7 @@ public class DBManager {
 }
 </pre>
 
-Podrán observar que cada uno de los métodos recibe un objecto de tipo _SQLiteDatabase_, este objecto lo creamos en la actividad principal (_MainActivity.java_) de nuestra aplicación y se proporciona al a las actividades restantes. He aquí la parte relevante:
+<p>Podrán observar que cada uno de los métodos recibe un objecto de tipo _SQLiteDatabase_, este objecto lo creamos en la actividad principal (_MainActivity.java_) de nuestra aplicación y se proporciona al a las actividades restantes. He aquí la parte relevante:</p>
 
 <pre lang="java">
 /* Método onCreate() */
@@ -605,11 +600,11 @@ homeActivity.setDatabase(database);
 homeActivity.setShopActivity(shopActivity);
 </pre>
 
-Como su nombre lo indica, el método _openOrCreateDatabase()_ abre nuestra base de datos o la crea en caso de que aun no exista.
+<p>Como su nombre lo indica, el método _openOrCreateDatabase()_ abre nuestra base de datos o la crea en caso de que aun no exista.</p>
 
-[php]section('Comunicación con el Web service');[/php]
+<%= section('Comunicación con el Web service'); %>
 
-Al igual que con Qt, trabajar con Web services en Java es un poco tedioso ya que no hay soporte nativo (¿Lo hay?) para trabajar con ellos. Existen algunas bibliotecas para trabajar con Web services pero son demasiado complejas y lo que necesitamos para esta aplicación es algo sencillo, por ello vamos a crear nuestro propio proxy.
+<p>Al igual que con Qt, trabajar con Web services en Java es un poco tedioso ya que no hay soporte nativo (¿Lo hay?) para trabajar con ellos. Existen algunas bibliotecas para trabajar con Web services pero son demasiado complejas y lo que necesitamos para esta aplicación es algo sencillo, por ello vamos a crear nuestro propio proxy.</p>
 
 <pre lang="java">
 package com.inforscience.requisition.net;
@@ -739,32 +734,32 @@ public class WebService {
 }
 </pre>
 
-Este código es ni más ni menos que el que ocupamos con Blackberry, pero en Java.
+<p>Este código es ni más ni menos que el que ocupamos con Blackberry, pero en Java.</p>
 
-[php]section('El cliente');[/php]
+<%= section('El cliente'); %>
 
-En este apartado vamos a ver como construir la aplicación en Android y cómo se realizan las operaciones.
+<p>En este apartado vamos a ver como construir la aplicación en Android y cómo se realizan las operaciones.</p>
 
-En Android, al igual que con otras plataformas, es posible construir la interfaz directamente desde código usando Java, sin embargo, lo recomendable es separar la interfaz de la lógica de la aplicación ya que esto nos facilitará el mantenimiento de nuestro software. Una interfaz gráfica para Android se puede describir utilizando el lenguaje XML.
+<p>En Android, al igual que con otras plataformas, es posible construir la interfaz directamente desde código usando Java, sin embargo, lo recomendable es separar la interfaz de la lógica de la aplicación ya que esto nos facilitará el mantenimiento de nuestro software. Una interfaz gráfica para Android se puede describir utilizando el lenguaje XML.</p>
 
-En esta ocasión he optado por utilizar el diseñador de interfaces que viene con IntelliJ IDEA, sin embargo, al final el resultado es el mismo, código XML.
+<p>En esta ocasión he optado por utilizar el diseñador de interfaces que viene con IntelliJ IDEA, sin embargo, al final el resultado es el mismo, código XML.</p>
 
-[php]subsection('Creación del proyecto'); [/php]
+<%= subsection('Creación del proyecto');  %>
 
-Para evitar ambigüedades vamos a ilustrar paso a paso cómo crear el proyecto en IntelliJ IDEA.
+<p>Para evitar ambigüedades vamos a ilustrar paso a paso cómo crear el proyecto en IntelliJ IDEA.</p>
 
-[php]figure('androidws_cp_1', 'Página de inicio de IntelliJ IDEA', 'androidws_cp_1', 'png', 'ES');[/php]
-[php]figure('androidws_cp_2', 'Nombre del proyecto', 'androidws_cp_2', 'png', 'ES');[/php]
-[php]figure('androidws_cp_3', 'Nombre del paquete y configuración de dispositivo', 'androidws_cp_3', 'png', 'ES');[/php]
-[php]figure('androidws_cp_4', 'Estamos listos para empezar', 'androidws_cp_4', 'png', 'ES');[/php]
+<%= figure('androidws_cp_1', 'Página de inicio de IntelliJ IDEA', 'androidws_cp_1', 'png', 'ES'); %>
+<%= figure('androidws_cp_2', 'Nombre del proyecto', 'androidws_cp_2', 'png', 'ES'); %>
+<%= figure('androidws_cp_3', 'Nombre del paquete y configuración de dispositivo', 'androidws_cp_3', 'png', 'ES'); %>
+<%= figure('androidws_cp_4', 'Estamos listos para empezar', 'androidws_cp_4', 'png', 'ES'); %>
 
-[php]subsection('La página principal'); [/php]
+<%= subsection('La página principal');  %>
 
-La siguiente figura muestra como lucirá la página principal de nuestra aplicación:
+<p>La siguiente figura muestra como lucirá la página principal de nuestra aplicación:</p>
 
-[php]figure('androidws_home', 'Página principal', 'androidws_home', 'png', 'ES');[/php]
+<%= figure('androidws_home', 'Página principal', 'androidws_home', 'png', 'ES'); %>
 
-El diseño correspondiente en XML es el siguiente:
+<p>El diseño correspondiente en XML es el siguiente:</p>
 
 <pre lang="xml">
 <?xml version="1.0" encoding="utf-8"?>
@@ -815,7 +810,7 @@ El diseño correspondiente en XML es el siguiente:
 </LinearLayout>
 </pre>
 
-El siguiente listado muestra como se programa el comportamiento de los dos botones:
+<p>El siguiente listado muestra como se programa el comportamiento de los dos botones:</p>
 
 <pre lang="java">
 @Override
@@ -900,13 +895,13 @@ public void onCreate(Bundle savedInstanceState)
 </pre>
 
 
-[php]subsection('Registro de pedidos'); [/php]
+<%= subsection('Registro de pedidos');  %>
 
-A continuación se ilustra la interfaz para registrar pedidos.
+<p>A continuación se ilustra la interfaz para registrar pedidos.</p>
 
-[php]figure('androidws_shop', 'Registro de pedidos', 'androidws_shop', 'png', 'ES');[/php]
+<%= figure('androidws_shop', 'Registro de pedidos', 'androidws_shop', 'png', 'ES'); %>
 
-La interfaz esta descrita de la siguiente manera:
+<p>La interfaz esta descrita de la siguiente manera:</p>
 
 <pre lang="xml">
 <?xml version="1.0" encoding="utf-8"?>
@@ -971,7 +966,7 @@ La interfaz esta descrita de la siguiente manera:
 </linearlayout>
 </pre>
 
-La lógica detrás del botón que agrega artículos a la lista ("+") es la siguiente:
+<p>La lógica detrás del botón que agrega artículos a la lista ("+") es la siguiente:</p>
 
 <pre lang="java">
 Button addItemButton = (Button)findViewById(R.id.add_item_button);
@@ -1006,7 +1001,7 @@ addItemButton.setOnClickListener(new View.OnClickListener() {
     });
 </pre>
 
-Ahora para el botón que almacena el pedido en la base de datos:
+<p>Ahora para el botón que almacena el pedido en la base de datos:</p>
 
 <pre lang="java">
 Button saveRequestButton;
@@ -1066,13 +1061,13 @@ saveRequestButton.setOnClickListener(new View.OnClickListener() {
 </pre>
 
 
-[php]subsection('Consulta de pedidos'); [/php]
+<%= subsection('Consulta de pedidos');  %>
 
-Nuestra aplicación también permite visualizar la lista de pedidos que tenemos en nuestra base de datos local.
+<p>Nuestra aplicación también permite visualizar la lista de pedidos que tenemos en nuestra base de datos local.</p>
 
-[php]figure('androidws_query', 'Consulta de pedidos', 'androidws_query', 'png', 'ES');[/php]
+<%= figure('androidws_query', 'Consulta de pedidos', 'androidws_query', 'png', 'ES'); %>
 
-El código XML que describe a esta interfaz es el siguiente:
+<p>El código XML que describe a esta interfaz es el siguiente:</p>
 
 <pre lang="xml">
 <?xml version="1.0" encoding="utf-8"?>
@@ -1108,7 +1103,7 @@ El código XML que describe a esta interfaz es el siguiente:
 </LinearLayout>
 </pre>
 
-Y la lógica detrás del botón "Actualizar" es:
+<p>Y la lógica detrás del botón "Actualizar" es:</p>
 
 <pre lang="java">
 @Override
@@ -1137,33 +1132,32 @@ public void onCreate(Bundle savedInstanceBundle)
 }
 </pre>
 
-Hasta aquí las explicaciones, al final se proporciona el código completo de la aplicación.
+<p>Hasta aquí las explicaciones, al final se proporciona el código completo de la aplicación.</p>
 
 
-[php]section('Código fuente'); [/php]
+<%= section('Código fuente');  %>
 
-El código del servidor y del cliente están disponibles en Bitbucket en las siguientes direcciones:
+<p>El código del servidor y del cliente están disponibles en Bitbucket en las siguientes direcciones:</p>
 
 <a href="https://bitbucket.org/rendon/request_ws" target="_blank">https://bitbucket.org/rendon/request_ws</a>
 <a href="https://bitbucket.org/rendon/requisitionandroid" target="_blank">https://bitbucket.org/rendon/requisitionandroid</a>
 
-O bien pueden clonar los proyectos:
+<p>O bien pueden clonar los proyectos:</p>
 
 <pre theme="slate">
 $ git clone https://rendon@bitbucket.org/rendon/request_ws.git
 $ git clone https://rendon@bitbucket.org/rendon/requisitionandroid.git
 </pre>
 
-La licencia del Web service y de la aplicación cliente es GPLv3.
+<p>La licencia del Web service y de la aplicación cliente es GPLv3.</p>
 
-[php]section('Por hacer'); [/php]
+<%= section('Por hacer');  %>
 
-Mejorar la interfaz gráfica. La personalización de los elementos gráficos es un poco tediosa, al menos en la version 2.3, espero que esto halla mejorado en las versiones más recientes.
+<p>Mejorar la interfaz gráfica. La personalización de los elementos gráficos es un poco tediosa, al menos en la version 2.3, espero que esto halla mejorado en las versiones más recientes.</p>
 
 
-[php]
+<% 
 section('Referencias');
 add_bib('android_doc', 'Android', 'Documentación de Android', 'https://developer.android.com/index.html');
-generate_bib_table();
-[/php]
-
+%>
+<%= generate_bib_table(); %>
