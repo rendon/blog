@@ -1,0 +1,16 @@
+[22:47:47]rendon@debian~$ time ./pe_3_v1 && time ./pe_3_v2 && time ./pe_3_v3
+6857
+
+real	0m0.003s
+user	0m0.004s
+sys	0m0.000s
+6857
+
+real	0m0.003s
+user	0m0.004s
+sys	0m0.000s
+6857
+
+real	0m0.003s
+user	0m0.000s
+sys	0m0.004s

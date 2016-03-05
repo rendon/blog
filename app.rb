@@ -1,9 +1,11 @@
 require 'sinatra'
-require "rdiscount"
+require 'rdiscount'
 
 require_relative 'tex'
+require_relative 'code'
 
 helpers Tex
+helpers Code
 
 get '/' do
   erb :index, locals: { name: "Rafael" }
@@ -14,6 +16,7 @@ get '/posts/:post/?' do
   begin
     erb post
   rescue LoadError, Errno::ENOENT => e
+    puts e.message
     raise Sinatra::NotFound
   end
 end
