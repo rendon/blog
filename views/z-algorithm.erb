@@ -2,15 +2,7 @@
 
 <p>The most easy (and naive) algorithm to solve this problem is to slide off $P$ through $T$ and see if there is a match. Something like this:</p>
 
-<pre lang="cpp" theme="slate">
-for (int i = 0; i + P.length <= T.length; i++) {
-    int j = 0;
-    while (P[j] == T[i+j])
-        j++;
-    if (j == P.length)
-        // We found a match!
-}
-</pre>
+<%= code('z-algorithm-naive-search.cpp') %>
 
 However, much more efficient solutions exists to this problem, the Z algorithm is one of them.
 
@@ -72,32 +64,7 @@ However, much more efficient solutions exists to this problem, the Z algorithm i
 
 <p>Okay, here is an implementation to complement the explanation:</p>
 
-<pre lang="cpp" theme="slate">
-Z[0] = n;
-int l = 0, r = 0;
-for (int k = 1; k < n; k++) {
-    if (r < k) {
-        l = r = k;
-        while (S[r] == S[r-l])
-            r++;
-        Z[k] = r - l;
-    } else {
-        int b = r - k;
-        int j = k - l; // j is k'
-        if (Z[j] < b) {
-            Z[k] = Z[j];
-        } else if (Z[j] > b) {
-            Z[k] = b;
-        } else {
-            l = k;
-            r = k + b;
-            while (S[r] == S[r-l])
-                r++;
-            Z[k] = r - l;
-        }
-    }
-}
-</pre> 
+<%= code('z-algorithm-implementation.cpp') %>
 
 <p>Since $l$ and $r$ never decrease the complexity of this algorithm is $O(n)$.</p>
 
@@ -113,13 +80,13 @@ for (int k = 1; k < n; k++) {
 <h2>Practice problems</h2>
 <p>Here are some problems to put into practice this algorithm:</p>
 
-- <a href="http://codeforces.com/contest/432/problem/D" target="_blank">Codeforces Round #246 Div 2 Problem D: Prefixes and Suffixes</a> | <a href="https://gist.github.com/rendon/0cd66d5891b5758cd382" target="_blank">My solution</a>
-- <a href="http://lightoj.com/volume_showproblem.php?problem=1255" target="_blank">Light OJ: 1255 - Substring Frequency</a> | <a href="https://gist.github.com/rendon/43bbc8f3fbcb8d231c99" target="_blank">My solution</a>
-
+<ul>
+  <li><a href="http://codeforces.com/contest/432/problem/D" target="_blank">Codeforces Round #246 Div 2 Problem D: Prefixes and Suffixes</a> | <a href="https://gist.github.com/rendon/0cd66d5891b5758cd382" target="_blank">My solution</a></li>
+  <li><a href="http://lightoj.com/volume_showproblem.php?problem=1255" target="_blank">Light OJ: 1255 - Substring Frequency</a> | <a href="https://gist.github.com/rendon/43bbc8f3fbcb8d231c99" target="_blank">My solution</a></li>
+</ul>
 
 <%= section("References") %>
 
-<%= add_bib('gusfield', 'Dan Gusfield', 'Linear-time pattern matching. Z-values and Z-algorithm',  'http://www.cs.ucdavis.edu/~gusfield/cs122f10/videolist.html');
-generate_bib_table('EN');
-%>
+<% add_bib('gusfield', 'Dan Gusfield', 'Linear-time pattern matching. Z-values and Z-algorithm',  'http://www.cs.ucdavis.edu/~gusfield/cs122f10/videolist.html') %>
+<%= generate_bib_table('EN') %>
 

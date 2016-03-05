@@ -36,14 +36,7 @@ $ \large n!= \begin{cases} 1 & \text{si n = 0} \\\\ n(n - 1)!& \text{si n > 0} \
 
 <p>Veamos ahora una implementación de esta función en C.</p>
 
-<pre lang="c">
-int factorial(int n)
-{
-    if (n == 0) return 1;
-    else return n * factorial(n - 1);
-}
-</pre>
-
+<%= code('recursion-factorial.c') %>
 
 <p>La condición en la línea 2 es nuestro caso base, el problema se puede resolver directamente sin necesidad de continuar con la recursión. Más adelate cuando generemos permutaciones vera la relación que existe entre la función factorial y el número de permutaciones.</p>
 
@@ -63,16 +56,9 @@ int factorial(int n)
 4. $r = 159  \bmod  6 = 3$, ahora $a = 6$ y $b = 3$.
 5. $r = 6  \bmod  3 = 0$, ahora $a = 3$ y $b = 0$.
 
-<p>En este punto <em>b</em> vale cero y por tanto el algoritmo ha terminado, el último residuo diferente de cero es 3 y por ende el MCD(489, 324) = 3. Veamos una implementación recursiva en C. gcd(Greatest Common Divisor)</p>
+<p>En este punto <em>b</em> vale cero y por tanto el algoritmo ha terminado, el último residuo diferente de cero es 3 y por ende el MCD(489, 324) = 3. Veamos una implementación recursiva en C.</p>
 
-
-<pre lang="c" >
-int gcd(int a, int b) // a > b
-{
-    if (b == 0) return a;
-    else return gcd(b, a % b);
-}
-</pre>
+<%= code('recursion-gcd.c') %>
 
 <%= section("Exponenciación rápida"); %>
 
@@ -84,18 +70,7 @@ int gcd(int a, int b) // a > b
 
 <p>El algoritmo recursivo que aquí se describe se base en la regla de exponenciación que nos dice que $(a^n)^m = a^{nm}$ con la cual podemos reformular $a^n$ como $(a^2)^{n/2} (n \bmod 2)$. Aprovechando esta propiedad se puede diseñar un algoritmo de complejidad $O(\log_{2} n)$.</p>
 
-<pre lang="c" >
-int power(int a, int n)
-{
-    if (n == 0)
-        return 1;
-    if (n%2 == 0)
-        return square(power(a, n / 2)); // square(a) returns a^2
-    else
-        return a * power(a, n - 1);
-}
-</pre>
-
+<%= code('recursion-power.c') %>
 
 <p>Establecemos el caso base en la línea 3 gracias a que por definición cualquier número elevado a una potencia cero es igual a la unidad.</p>
 
@@ -118,13 +93,7 @@ int power(int a, int n)
 
 $ \large f(n) = \begin{cases} 0 & \text{si n = 0} \\\\ 1 & \text{si n = 1} \\\\ f(n - 1) + f(n - 2) & \text{si n > 1} \end{cases} $
 
-<pre lang="c" >
-int fibonacci(unsigned int n)
-{
-    if (n == 0 || n == 1) return n;
-    return fibonacci(n - 1) + fibonacci(n - 2);
-}
-</pre>
+<%= code('recursion-fibonacci.c') %>
 
 <p>Note que el parámetro es de tipo <code>unsigned int</code> para asegurar que <em>n</em> siempre será mayor o igual a cero(el compilador nos advertirá), según lo especifica la función de fibonacci.</p>
 
@@ -146,13 +115,7 @@ int fibonacci(unsigned int n)
 
 <p>La código que se muestra a continuación calcula el valor ubicado en la fila <em>i</em>, columna <em>j</em>  del triángulo de pascal. Cabe decir que esta versión del algoritmo es muy ineficiente pero se muestra por cuestiones didácticas.</p>
 
-<pre lang="c">
-int pascal(int i, int j)
-{
-    if (i == j || j == 1) return 1;
-    return pascal(i - 1, j - 1 + pascal(i - 1, j);
-}
-</pre>
+<%= code('recursion-pascal.c') %>
     
 <!--Búsqueda-->
 <%= section("Búsqueda binaria"); %>
@@ -167,21 +130,7 @@ int pascal(int i, int j)
 
 <p>Una posible implementación de este algoritmo de forma recursiva es la siguiente.</p>
 
-<pre lang="c" >
-bool binary_search(int A[], int v, int l, int u)
-{
-    int m = (l + u)/2;
-    if (l > u)
-        return false;
-    if (v == A[m])
-        return true;
-    else if(v < A[m])
-        return binary_search(A, v, l, m - 1);
-    else
-        return binary_search(A, v, m + 1, u);
-}
-</pre>
-
+<%= code('recursion-binary-search.c') %>
 
 <%= section("Permutaciones"); %>
 
@@ -210,33 +159,8 @@ bool binary_search(int A[], int v, int l, int u)
 
 <p>Esto muestra que podemos reducir el problema a un algoritmo recursivo que para <em>n</em> elementos se deben generar todas las permutaciones formadas por todas las permutaciones de <em>n - 1</em> elementos precedidas del elemento n.</p>
 
+<%= code('recursion-perm.c') %>
 <pre lang="c" >
-// inicialmente se llama  a perm con el total de elementos en el conjunto
-void perm(int n)
-{
-    int i, tmp;
-    // Caso base: A[0..N-1] contiene la permutacion, podemos hacer lo
-    // que sea con ella, que tal imprimirla :)
-    if (n == 0) { 
-        for (i = 0; i < N; i++)
-            printf("%d", A[i]);
-        printf("\n");
-    } else {
-        for (i = 0; i < n; i++) { // Para cada elemento en A
-            tmp = A[n - 1];       // Mandamos el elemento i al final
-            A[n - 1] = A[i];      // del arreglo con un intercambio
-            A[i] = tmp;
-            
-            // Ahora generamos las permutaciones
-            // de los n - 1 elementos restantes
-            perm(n - 1);    
-        
-            tmp = A[n - 1]; // Regresamos el elemento i a su lugar
-            A[n - 1] = A[i];
-            A[i] = tmp;
-        }
-    }
-}
 </pre>
 
 <p>En las líneas 14 a 16 hacemos que el elemento actual pase al final del arreglo mediante un intercambio, dicho intercambio obviamente es para no perder el elemento que esta en la última posición. Esta sección del código corresponden a "anteponer" cada uno de los n elementos y la línea 20 corresponde a generar todas las permutaciones de los <em>n - 1</em> elementos restantes. Quizás notaran que realmente no anteponemos los elementos sino que más bien lo ponemos al final lo cual no altera el funcionamiento del algoritmo. Las permutaciones que genera este algoritmo están desordenadas y es necesario ordenarlos si así lo necesitamos. Existen algoritmos que generan permutaciones "casi" ordenadas pero se los dejo de tarea por si les interesa.</p>
@@ -249,80 +173,19 @@ void perm(int n)
 
 <%= subsection("Factorial"); %>
 
-<pre lang="c">
-int factorial2(int n)
-{
-    int f = 1;
-    for (int i = 2; i <= n; i++) {
-        f *= i;
-    }
-
-    return f;
-}
-</pre>
+<%= code('recursion-factorial2.c') %>
 
 <%= subsection("MCD"); %>
 
-<pre lang="c">
-int gcd2(int a, int b) // a > b
-{
-    int tmp;
-
-    while (b != 0) {
-        tmp = b;
-        b = a % b;
-        a = tmp;
-    }
-
-    return a;
-}
-</pre>
+<%= code('recursion-gcd2.c') %>
 
 <%= subsection("Fibonacci"); %>
 
-<pre lang="c">
-int fibonacci(unsigned int n)
-{
-    int a = 0, b = 1, c = 1, i;
-    if (n == 0)
-        return 0;
-
-    if (n == 1 || n == 2)
-        return 1;
-
-    for (i = 3; i <= n; i++) {
-        a = b;
-        b = c;
-        c = a + b;
-    }
-
-    return c;
-}
-</pre>
+<%= code('recursion-fibonacci-iterative.c') %>
 
 <%= subsection("Exponenciación rápida"); %>
 
-<pre lang="c">
-int power2(int a, int n)
-{
-    int p = 1;
-    if (n == 0)
-        return 1;
-
-    while (n > 0) {
-        if (n % 2 == 1) {
-            p *= a;
-            n--;
-        } else {
-            p *= p;
-            n /= 2;
-        }
-    }
-
-    return p;
-}
-</pre>
-
+<%= code('recursion-power2.c') %>
 
 <p>Algunos no son tan fáciles de portar a iterativo. De manera interna la recursión trabaja con una pila, cada llamada recursiva significa crear una copia de todos los valores actuales en la función y ponerlos en la pila, para después cuando termine la ejecución de la llamada recursiva se puedan restaurar los valores tal y como estaban. En muchos casos es necesario utilizar una pila explícitamente para su versión iterativa.</p>
 
@@ -331,25 +194,19 @@ int power2(int a, int n)
 
 <p>Existen muchos problemas que se definen recursivamente, algunos de ellos son: </p>
 
-- <a href="http://es.wikipedia.org/wiki/Funci%C3%B3n_de_Ackermann">Función de Ackermann</a>
-- <a href="http://es.wikipedia.org/wiki/N%C3%BAmeros_de_Catalan">Números de Catalan</a>
-- <a href="http://es.wikipedia.org/wiki/Torres_de_Han%C3%B3i">Torres de hanoi</a>
-- <a href="http://es.wikipedia.org/wiki/Fractal">Fractales</a>
-- Otros...
+<ol>
+  <li><a href="http://es.wikipedia.org/wiki/Funci%C3%B3n_de_Ackermann">Función de Ackermann</a></li>
+  <li><a href="http://es.wikipedia.org/wiki/N%C3%BAmeros_de_Catalan">Números de Catalan</a></li>
+  <li><a href="http://es.wikipedia.org/wiki/Torres_de_Han%C3%B3i">Torres de hanoi</a></li>
+  <li><a href="http://es.wikipedia.org/wiki/Fractal">Fractales</a></li>
+  <li>Otros...</li>
+</ol>
 
 <%= section("Conclusión"); %>
 
 <p>Resolver problemas es un arte y como todo artista es necesario aprender técnicas que nos permitan mejorar nuestras habilidades, la recursión de una de muchas técnicas que existen para atacar problemas de programación. Técnicas como el backtracking usan, divide y vencerás y búsqueda exhaustiva emplean recursión, entre otras. Este documento abarca solo una pequeña parte del tema de la recursividad, se recomienda al lector indagar más sobre el tema.</p>
 
 <p>Hasta aquí con la recursividad, para más información véase <em>recursión</em>.</p>
-
-<%= section("Código fuente de los ejemplos"); %>
-
-<table border="0">
-    <tr>
-        <td><a href="files/src/src.tar.gz">src.tar.gz</a></td>
-    </tr>
-</table>
 
 <%= section("Referencias"); %>
 
