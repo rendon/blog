@@ -19,21 +19,7 @@
 
 <p>Se observa que si bien obtenemos los dígitos estos se encuentran en orden inverso, por ello invertimos el orden de los dígitos al final del ciclo en el siguiente código:</p>
 
-
-<pre lang="cpp" theme="slate" line="1">
-string to_string(int n)
-{
-    string digits = "";
-
-    while (n > 0) {
-        digits += (char)(n % 10 + '0');
-        n /= 10;
-    }
-
-    reverse(digits.begin(), digits.end());
-    return digits;
-}
-</pre>
+<%= code('numeros-y-strings-to-string.cpp') %>
 
 <p>En este código se ha utilizado el número 10 como divisor lo cual es así ya que la base numérica es decimal. Cambien el 10 por un 2 y vean que sucede... ¿A caso son números binarios lo que veo?, ¿que tal con otras bases en vez de 2 ó 10?</p>
 
@@ -54,18 +40,7 @@ $ \large 354 = 3 * 10^2 + 5 * 10^1 + 4 * 10^0$
 
 <p>Ahora que tenemos las bases podemos pasar al algoritmo en cuestión.</p>
 
-
-<pre lang="cpp" theme="slate" line="1">
-int to_int(string number)
-{
-    int n = 0;
-    for (int i = 0; i < int(number.length()); i++)
-        n = n * 10 + (number[i] - '0');
-
-    return n;
-}
-</pre>
-
+<%= code('numeros-y-strings-to-int.cpp') %>
 
 <p>Como podrán ver son algoritmos muy sencillos y fáciles de entender. Es recomendable aprender muy bien estos algoritmos ya que nunca sabemos cuando los podemos utilizar, además de que siempre es bueno saber el cómo de las cosas :).</p>
 
@@ -73,22 +48,19 @@ int to_int(string number)
 
 
 <blockquote>
-Un número palíndromo es aquel que se puede leer igual en ambas direcciones. El palíndromo más grande formado como producto de 2 número de dos dígitos es 9009 = 91 * 99.
-<br><br>
-Encuentre el palíndromo numérico más grande formado por el producto de 2 números de tres dígitos.
+  <p>Un número palíndromo es aquel que se puede leer igual en ambas direcciones. El palíndromo más grande formado como producto de 2 número de dos dígitos es 9009 = 91 * 99.</p>
+  <br><br>
+  <p>Encuentre el palíndromo numérico más grande formado por el producto de 2 números de tres dígitos.</p>
 </blockquote>
 <p align="right"><em><a href="http://www.projecteuler.net" target="_blank">projecteuler.net</a></em> Problem 4.
 
 
-
 <blockquote>
-El número decimal, 585<sub>10</sub> = 1001001001<sub>2</sub>(binario), es un palíndromo en ambas bases.
-<br><br>
-Encuentre la suma de todos los número, menores que un millón, que son palíndromos en base 10 y en base 2.
-<br><br>
-(Por favor note que el número palíndromo no debe incluir ceros a la izquierda).
-
-
+  <p>El número decimal, 585<sub>10</sub> = 1001001001<sub>2</sub>(binario), es un palíndromo en ambas bases.</p>
+  <br><br>
+<p>Encuentre la suma de todos los número, menores que un millón, que son palíndromos en base 10 y en base 2.</p>
+  <br><br>
+  <p>(Por favor note que el número palíndromo no debe incluir ceros a la izquierda).</p>
 </blockquote>
 <p align="right"><em><a href="http://www.projecteuler.net" target="_blank">projecteuler.net</a></em> Problem 36.
 

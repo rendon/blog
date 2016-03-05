@@ -106,20 +106,7 @@ $ \large n!= \begin{cases} 1 & \text{si n = 0} \\\\ n(n - 1)!& \text{si n > 0} \
 
 <p>Ahora una posible solución.</p>
 
-<pre lang="cpp" theme="slate">
-long long z(long long n)
-{
-    long long zeros = 0;
-    long long  k = 5;
-
-    while (k <= n) {
-        zeros += n / k;
-        k *= 5;
-    }
-
-    return zeros;
-}
-</pre>
+<%= code('factorial-y-ceros-z.cpp') %>
 
 <p>Claro que hay otras formas de solucionar este problema pero creo que esto funciona bien.</p>
 

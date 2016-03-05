@@ -22,7 +22,7 @@
 
 <p>Interesante heee!. Y bien, a pesar de que a primera vista estos dos problemas pueden parecer muy complejos en este artículo les mostrare como emplear algo de teoría de números que nos permitan dar solución a estos problemas de una forma muy sencilla y elegante, tan solo unas cuantas líneas de código.</p>
 
-#Módulo cuando conocemos los factores del dividendo
+<%= section('Módulo cuando conocemos los factores del dividendo') %>
 
 <p>Si conocemos los factores del dividendo entonces se puede aplicar la siguiente propiedad para el módulo:</p>
 
@@ -30,27 +30,9 @@
 
 <p>Por ejemplo, sea <em>n = 105</em> y <em>m = 9</em>, entonces n%m = ((3 % 9) * (5 % 9) * (7 % 9)) % 9 = (3 * 4 * 2) % 9 = 24 % 9 = 6, lo cual es fácil comprobar. Cuando tenemos un número <em>b</em> elevado a una potencia <em>p</em> sabemos que eso equivale a multiplicar la base <em>b</em> un número de veces igual a <em>p</em>, por ejemplo, 3^4 = 3 * 3 * 3 * 3. Entonces podemos aplicar <strong>(1)</strong> para el primer problema <em>(b^p) % m</em>. Como <em>p</em> puede ser muy grande entonces usamos <a href="/posts/recursion" target="_blank">exponenciación por cuadrados repetidos</a>. Una posible implementación en C es la siguiente.</p>
 
+<%= code('big-mod-modpow.c') %>
 
-<pre lang="c">
-int modpow(int b, int p, int m)
-{
-    int pow = 1;
-
-    while (p > 0) {
-        if (p % 2 == 1) {
-            pow = (pow * b) % m;
-        }
-
-        b = (b * b) % m;
-        p /= 2;
-    }
-
-    return pow % m;
-}
-</pre>
-
-
-#Modulo cuando conocemos los dígitos del dividendo
+<%= section('Modulo cuando conocemos los dígitos del dividendo') %>
 
 <p>Del teorema fundamental de la numeración tenemos que cualquier numero se puede obtener a partir de sus dígitos de siguiente manera:</p>
 
@@ -62,34 +44,23 @@ int modpow(int b, int p, int m)
 
 <p>Con toda esta información podemos formular el siguiente algoritmo que resuelve el problema que estamos tratando.</p>
 
-<pre lang="c">
-int mod(const char* digits, int m)
-{
-    int i, n = 0;
-    int size = strlen(digits);
-
-    for (i = 0; i < size; i++) {
-        n = n * 10 + digits[i] - '0';
-        n = n % m;
-    }
-
-    return n % m;
-}
-</pre>
+<%= code('big-mod-mod.c') %>
 
 <p>Si el resultado que devuelve esta función es cero entonces <em>n</em> es divisible por <em>m</em>.</p>
 
 <p>A continuación les dejo algunos problemas para que practiquen:</p>
 
-- [Big mod](http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=5&page=show_problem&problem=310" targer="_blank")
-- [ProjectEuler.net problema 97](http://projecteuler.net/problem=97" targer="_blank")
-- [PowerDigit](http://community.topcoder.com/stat?c=problem_statement&pm=4515" target="_target")
+<ul>
+  <li><a href="http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=5&page=show_problem&problem=310" target="_blank">Big mod</a></li>
+  <li><a href="http://projecteuler.net/problem=97" target="_blank">ProjectEuler.net problema 97</a></li>
+  <li><a href="http://community.topcoder.com/stat?c=problem_statement&pm=4515" target="_target">PowerDigit</a></li>
+</ul></li>
 
-#Conclusión
+<%= section('Conclusión') %>
 
 <p>La teoría de números es muy interesante, es posible dar solución a problemas complejos de manera muy elegante.</p>
 
-#Referencias
+<%= section('Referencias') %>
 
 <table border="0">
 <tr><td>[1]</td><td><em>Art of Programming Contest</em>, 2ed, Ahmed Shamsul Arefin</td></tr>
