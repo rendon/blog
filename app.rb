@@ -20,3 +20,7 @@ get '/posts/:post/?' do
     raise Sinatra::NotFound
   end
 end
+
+get '/public/code/:file/?' do
+  send_file File.join('public', 'code', params[:file]), :type => :text
+end
