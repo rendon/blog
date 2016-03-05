@@ -1,0 +1,2 @@
+PREFIX + C-UP     (resize-pane -U)
+PREFIX + C-DOWN   (resize-pane -D)

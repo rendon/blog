@@ -1,0 +1,16 @@
+# Creación de panel horizontal
+# Combinación     Comando
+PREFIX + "      (split-window)
+
+# Creación de panel vertical
+PREFIX + %      (split-window -h)
+
+# Moverse al siguiente panel
+PREFIX + o      (select-pane -t :.+)
+
+#Moverse al al panel superior, inferior, izquierdo y derecho
+
+PREFIX + UP     (select-pane -U)
+PREFIX + DOWN   (select-pane -D)
+PREFIX + LEFT   (select-pane -L)
+PREFIX + RIGHT  (select-pane -R)

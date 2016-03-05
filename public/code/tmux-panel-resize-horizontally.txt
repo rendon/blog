@@ -1,0 +1,2 @@
+PREFIX + C-LEFT   (resize-pane -L)
+PREFIX + C-RIGHT  (resize-pane -R)

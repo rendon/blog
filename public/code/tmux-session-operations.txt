@@ -1,0 +1,17 @@
+#Crear una sesión:
+$ tmux new -s nombre_de_sesion
+
+#Cerrar sesión:
+PREFIX + d
+
+#o bién:
+$ tmux kill-session -t nombre_de_sesion
+
+#Listar sesiones existentes:
+$ tmux list-sessions
+
+#Abrir sesión cuando solo existe una:
+$ tmux attach
+
+#Abrir una sesión en especifico:
+$ tmux attach -t nombre_de_sesion

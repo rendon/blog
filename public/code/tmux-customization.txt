@@ -1,0 +1,16 @@
+# Soporte para 256 colores.
+set -g default-terminal "screen-256color"
+
+# Cambiar PREFIX a Ctrl + a, más cómodo.
+set-option -g prefix C-a
+unbind-key C-b
+bind-key C-a send-prefix
+
+#Como dividir la pantalla de forma más intuitiva
+# | en vez de %
+bind | split-window -h
+# - en vez de "
+bind - split-window -v
+
+#Cambiando el el atajo para entrar al modo copy.
+bind-key e copy-mode

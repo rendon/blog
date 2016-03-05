@@ -1,0 +1,15 @@
+# Color de fondo y de letra
+set -g status-bg black
+set -g status-fg white
+
+# Leyendas que se deben mostrar
+# A la izquierda el nombre del host
+# y a la derecha la fecha
+set -g status-left '#[fg=green]#H'
+set -g status-right '#[fg=yellow]#(date)'
+
+# Color de la ventana activa
+set-window-option -g window-status-current-bg blue
+
+# Color del panel activo
+set-option -g pane-active-border-fg colour027
