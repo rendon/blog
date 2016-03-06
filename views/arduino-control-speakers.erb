@@ -21,13 +21,13 @@
 
 <p>Use the following code for arduino to read the input from the potentiometer.</p>
 
-<%= code('arduino-control-speakers-read-input.cpp') %>
+<%= code(post, 'read-input.cpp') %>
 
 <p>This program reads the value that we indicate with the potentiometer(a value from 0 to 1023), then transform this value to a scale from 0 to 100, the volume of the speakers.</p>
 
 <p>In the next program we establish serial communication with arduino, reads the appropiate values and and then, adjust the volume of the speakers using `amixer`.</p>
 
-<%= code('arduino-control-speakers-volume.c') %>
+<%= code(post, 'volume.c') %>
 
 <p>Connect the USB cable from arduino to the computer and execute the previous program and we get:</p>
 

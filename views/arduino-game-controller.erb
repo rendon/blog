@@ -12,11 +12,11 @@
 
 <p>We need the following code in <em>wiring</em> to receive instructions from the board.  </p>
 
-<%= code('arduino-game-controller-read-instructions.cpp') %>
+<%= code(post, 'read-instructions.cpp') %>
 
 <p>The previous code reads the button presses and write the appropriate values to the serial channel, we'll read this values from our game. I have implemented a limited version of the game Snake for our purpose, here is the code:</p>
 
-<%= code('arduino-game-controller-snake.cpp') %>
+<%= code(post, 'snake.cpp') %>
 
 <p>Connect the Arduino to the PC and execute the previous program. Here is a screenshot of the game in action.</p>
 

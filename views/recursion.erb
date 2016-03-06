@@ -36,7 +36,7 @@ $ \large n!= \begin{cases} 1 & \text{si n = 0} \\\\ n(n - 1)!& \text{si n > 0} \
 
 <p>Veamos ahora una implementación de esta función en C.</p>
 
-<%= code('recursion-factorial.c') %>
+<%= code(post, 'factorial.c') %>
 
 <p>La condición en la línea 2 es nuestro caso base, el problema se puede resolver directamente sin necesidad de continuar con la recursión. Más adelate cuando generemos permutaciones vera la relación que existe entre la función factorial y el número de permutaciones.</p>
 
@@ -58,7 +58,7 @@ $ \large n!= \begin{cases} 1 & \text{si n = 0} \\\\ n(n - 1)!& \text{si n > 0} \
 
 <p>En este punto <em>b</em> vale cero y por tanto el algoritmo ha terminado, el último residuo diferente de cero es 3 y por ende el MCD(489, 324) = 3. Veamos una implementación recursiva en C.</p>
 
-<%= code('recursion-gcd.c') %>
+<%= code(post, 'gcd.c') %>
 
 <%= section("Exponenciación rápida"); %>
 
@@ -70,7 +70,7 @@ $ \large n!= \begin{cases} 1 & \text{si n = 0} \\\\ n(n - 1)!& \text{si n > 0} \
 
 <p>El algoritmo recursivo que aquí se describe se base en la regla de exponenciación que nos dice que $(a^n)^m = a^{nm}$ con la cual podemos reformular $a^n$ como $(a^2)^{n/2} (n \bmod 2)$. Aprovechando esta propiedad se puede diseñar un algoritmo de complejidad $O(\log_{2} n)$.</p>
 
-<%= code('recursion-power.c') %>
+<%= code(post, 'power.c') %>
 
 <p>Establecemos el caso base en la línea 3 gracias a que por definición cualquier número elevado a una potencia cero es igual a la unidad.</p>
 
@@ -89,11 +89,9 @@ $ \large n!= \begin{cases} 1 & \text{si n = 0} \\\\ n(n - 1)!& \text{si n > 0} \
 
 <p>En términos matemáticos esta sucesión se describe con la siguiente función:</p>
 
-<!-- Doble diagonal inversa porque al parecer el conversor de Markdown escapa caracteres especiales -->
+<%= equation('\large f(n) = \begin{cases} 0 & \text{si n = 0} \\\\ 1 & \text{si n = 1} \\\\ f(n - 1) + f(n - 2) & \text{si n > 1} \end{cases}', 'Fibonacci formula') %>
 
-$ \large f(n) = \begin{cases} 0 & \text{si n = 0} \\\\ 1 & \text{si n = 1} \\\\ f(n - 1) + f(n - 2) & \text{si n > 1} \end{cases} $
-
-<%= code('recursion-fibonacci.c') %>
+<%= code(post, 'fibonacci.c') %>
 
 <p>Note que el parámetro es de tipo <code>unsigned int</code> para asegurar que <em>n</em> siempre será mayor o igual a cero(el compilador nos advertirá), según lo especifica la función de fibonacci.</p>
 
@@ -115,7 +113,7 @@ $ \large f(n) = \begin{cases} 0 & \text{si n = 0} \\\\ 1 & \text{si n = 1} \\\\ 
 
 <p>La código que se muestra a continuación calcula el valor ubicado en la fila <em>i</em>, columna <em>j</em>  del triángulo de pascal. Cabe decir que esta versión del algoritmo es muy ineficiente pero se muestra por cuestiones didácticas.</p>
 
-<%= code('recursion-pascal.c') %>
+<%= code(post, 'pascal.c') %>
     
 <!--Búsqueda-->
 <%= section("Búsqueda binaria"); %>
@@ -130,7 +128,7 @@ $ \large f(n) = \begin{cases} 0 & \text{si n = 0} \\\\ 1 & \text{si n = 1} \\\\ 
 
 <p>Una posible implementación de este algoritmo de forma recursiva es la siguiente.</p>
 
-<%= code('recursion-binary-search.c') %>
+<%= code(post, 'binary-search.c') %>
 
 <%= section("Permutaciones"); %>
 
@@ -159,7 +157,7 @@ $ \large f(n) = \begin{cases} 0 & \text{si n = 0} \\\\ 1 & \text{si n = 1} \\\\ 
 
 <p>Esto muestra que podemos reducir el problema a un algoritmo recursivo que para <em>n</em> elementos se deben generar todas las permutaciones formadas por todas las permutaciones de <em>n - 1</em> elementos precedidas del elemento n.</p>
 
-<%= code('recursion-perm.c') %>
+<%= code(post, 'perm.c') %>
 <pre lang="c" >
 </pre>
 
@@ -173,19 +171,19 @@ $ \large f(n) = \begin{cases} 0 & \text{si n = 0} \\\\ 1 & \text{si n = 1} \\\\ 
 
 <%= subsection("Factorial"); %>
 
-<%= code('recursion-factorial2.c') %>
+<%= code(post, 'factorial2.c') %>
 
 <%= subsection("MCD"); %>
 
-<%= code('recursion-gcd2.c') %>
+<%= code(post, 'gcd2.c') %>
 
 <%= subsection("Fibonacci"); %>
 
-<%= code('recursion-fibonacci-iterative.c') %>
+<%= code(post, 'fibonacci-iterative.c') %>
 
 <%= subsection("Exponenciación rápida"); %>
 
-<%= code('recursion-power2.c') %>
+<%= code(post, 'power2.c') %>
 
 <p>Algunos no son tan fáciles de portar a iterativo. De manera interna la recursión trabaja con una pila, cada llamada recursiva significa crear una copia de todos los valores actuales en la función y ponerlos en la pila, para después cuando termine la ejecución de la llamada recursiva se puedan restaurar los valores tal y como estaban. En muchos casos es necesario utilizar una pila explícitamente para su versión iterativa.</p>
 

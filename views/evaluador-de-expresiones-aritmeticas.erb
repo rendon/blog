@@ -39,7 +39,7 @@ $ \large + A B $
 
 <p>Antes de proceder con la evaluación de expresiones es necesario tener en cuenta que para que el algoritmo funcione correctamente la expresión debe tener una sintaxis correcta, por ejemplo, una distribución de paréntesis adecuada, también es indispensable que la expresión emplee únicamente elementos válidos, es decir, no emplear caracteres que no sean operadores ni operandos como pueden ser <code>"$?\_%#</code>. Es difícil crear una aplicación que tome en cuenta todos los posibles casos de error que pudieran surgir, sin embargo podemos abordar los más comunes, verificar el uso de elementos validos es muy fácil y se consigue con solo iterar por toda la cadena y comprobar que los caracteres sean operadores(+-\*/^) o dígitos(0-9). La siguiente función comprueba el balanceo de paréntesis.</p>
 
-<%= code('evaluador-de-expresiones-aritmeticas-check.c') %>
+<%= code(post, 'check.c') %>
 
 <p>El algoritmo que aquí se emplea utiliza una <em>pila</em>, que es una estructura de datos lineal donde únicamente podemos insertar(push) o eliminar(pop) elementos por uno de sus extremos con la siguiente regla: Último en entrar, primero en salir(LIFO).</p>
 
@@ -47,13 +47,13 @@ $ \large + A B $
 
 <p>La función que se muestra a continuación toma una expresión aritmética que previamente ha sido analizada para comprobar el balance de paréntesis y la convierte a notación posfija.</p>
 
-<%= code('evaluador-de-expresiones-aritmeticas-to-postfix.c') %>
+<%= code(post, 'to-postfix.c') %>
 
 <p>El algoritmo que se emplea en la función anterior lo pueden encontrar en casi cualquier libro de estructuras de datos, generalmente cuando se abordan los temas de recursión o pilas. De todas formas aquí les dejo <a href="http://montcs.bloomu.edu/~bobmon/Information/RPN/infix2rpn.shtml" target="_blank">este link</a> donde pueden encontrar los detalles.</p>
 
 <p>Teniendo la expresión en notación posfija solo nos resta la función que realiza la evaluación.</p>
 
-<%= code('evaluador-de-expresiones-aritmeticas-eval.c') %>
+<%= code(post, 'eval.c') %>
 
 <p>El algoritmo que empleamos para evaluar la expresión posfija consiste en avanzar por la expresión y si el elemento es un operando(dígito) lo ponemos en la pila, pero si es un operador(+-\*/%^) entonces retiramos los dos(las operaciones son binarias) elementos de lo más alto de la pila en orden inverso, es decir, primero el segundo operando y después el primer operando(el ultimo es el primero ;)), realizamos la operación correspondiente y colocamos el resultado en la pila y continuamos analizando la expresión. Siguiendo estos pasos al final quedara la pila con un solo elemento, el resultado.</p>
 

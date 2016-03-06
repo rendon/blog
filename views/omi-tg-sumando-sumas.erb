@@ -1,4 +1,4 @@
-<p>El día de hoy estuve resolviendo <a href="http://www.cmirg.com:8081/traingate/visualiza.php?task=sumsums" target="_blank">este problema</a> (o en <a href="http://www.spoj.com/problems/SUMSUMS/" target="_blank">SPOJ</a>) y les quiero compartir mi solución y un poco del análisis para poder resolverlo.</p>
+<p>El día de hoy estuve resolviendo <a href="http://www.spoj.com/problems/SUMSUMS/" target="_blank">este problema</a> y les quiero compartir mi solución y un poco del análisis para poder resolverlo.</p>
 
 <p>Debido a las restricciones del problema, realizar la simulación no es factible, así que habrá que buscar otra forma. Empecemos por analizar el ejemplo de entrada:</p>
 
@@ -69,7 +69,7 @@ $513 - 171 + 57 - 19 + 7 = 387$
 
 <p>Sin más aquí les dejo mi código:</p>
 
-<%= code('omi-tg-sumando-sumas-sol.cpp') %>
+<%= code(post, 'sol.cpp') %>
 
 <p>Hay que tener mucho cuidado con los desbordamientos en los tipos de datos y con valores negativos, en este caso en particular ayuda mucho utilizar un tipo <code>long long</code>, sin embargo, esto no es suficiente para todos los casos, es por ellos que hay que realizar la operación módulo en varios puntos.</p>
 

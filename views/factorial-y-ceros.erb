@@ -6,10 +6,10 @@
 
 <p>El factorial de un numero $n$ se denota con $n!$ y se define de la siguiente manera: </p>
 
-$ \large n!= \begin{cases} 1 & \text{si n = 0} \\\\ n(n - 1)!& \text{si n > 0} \end{cases} $
+<%= equation('\large n!= \begin{cases} 1 & \text{si n = 0} \\\\ n(n - 1)!& \text{si n > 0} \end{cases}', 'Factorial formula') %>
 
 
-<p>Por ejemplo 5! = 5 \* 4 \* 3 \* 2 \* 1 = 120.</p>
+<p>Por ejemplo 5! = 5 * 4 * 3 * 2 * 1 = 120.</p>
 
 <p>El valor de un factorial es una cantidad que crece extremadamente rápido, incluso para valores de <em>n</em> muy pequeños, por ejemplo 10! = 3628800, para 50! = 30414093201713378043612608166064768844377641568960512000000000000...Esta cantidad es realmente inmensa!. Aquí viene el problema, si se dan cuenta 5! = 120, el cual tiene un cero ( 0 ) al final del numero y además 10! = 3628800 con 2 ceros al final del número resultante, por último 50! tiene 12 ceros al final del número resultante, y aun más, el numero de ceros al final del resultado aumenta cuanto más grande es el valor de <em>n</em>, supongo que si se dieron cuenta, solo por si las dudas lo remarco :).</p>
 
@@ -94,7 +94,7 @@ $ \large n!= \begin{cases} 1 & \text{si n = 0} \\\\ n(n - 1)!& \text{si n > 0} \
 
 <blockquote>"El numero de ceros al final de un numero **n** en base 10 de <em>n! </em> es simplemente la multiplicidad del factor primo 5 en _n!_. Esto se puede determinar con este caso especial de la <a href="http://en.wikipedia.org/wiki/De_Polignac%27s_formula">formula de Polignac</a>:
 
-<%= equation("f(n) = \sum\_{i=1}^k \left \lfloor \frac{n}{5^i} \right \rfloor = \left \lfloor \frac{n}{5} \right \rfloor + \left \lfloor \frac{n}{5^2} \right \rfloor + \left \lfloor \frac{n}{5^3} \right \rfloor + \cdots + \left \lfloor \frac{n}{5^k} \right \rfloor", "polignac_formula"); %>
+<%= equation('f(n) = \sum\_{i=1}^k \left \lfloor \frac{n}{5^i} \right \rfloor = \left \lfloor \frac{n}{5} \right \rfloor + \left \lfloor \frac{n}{5^2} \right \rfloor + \left \lfloor \frac{n}{5^3} \right \rfloor + \cdots + \left \lfloor \frac{n}{5^k} \right \rfloor', "polignac_formula") %>
 
 </blockquote>
 
@@ -106,7 +106,7 @@ $ \large n!= \begin{cases} 1 & \text{si n = 0} \\\\ n(n - 1)!& \text{si n > 0} \
 
 <p>Ahora una posible solución.</p>
 
-<%= code('factorial-y-ceros-z.cpp') %>
+<%= code(post, 'z.cpp') %>
 
 <p>Claro que hay otras formas de solucionar este problema pero creo que esto funciona bien.</p>
 

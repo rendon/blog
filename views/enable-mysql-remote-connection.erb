@@ -11,7 +11,7 @@ tex_set("show_numbers_in_subsubsections", false)
 
 <p>Open the MySQL configuration file(<code>/etc/mysql/my.cnf</code>) and set the <code>bind-address</code> option to <code>0.0.0.0</code>.</p>
 
-<%= code('enable-mysql-remote-connection-my.cnf') %>
+<%= code(post, 'my.cnf') %>
 
 <p>By default only local connections are allowed. <a href="http://dev.mysql.com/doc/refman/5.1/en/server-options.html#option_mysqld_bind-address" target="_blank">see more...</a>.</p>
 
@@ -19,11 +19,11 @@ tex_set("show_numbers_in_subsubsections", false)
 
 <p>Start a session as root in the server, select the mysql database and see the users who can log on in this server and from which hosts.</p>
 
-<%= code('enable-mysql-remote-connection-allow-root.sh') %>
+<%= code(post, 'allow-root.sh') %>
 
 <p>My hostname is intel and default user is root, to allow connections from any host we need to set the hostname to <code>%</code>.</p>
 
-<%= code('enable-mysql-remote-connection-allow-root-cmd.sql') %>
+<%= code(post, 'allow-root-cmd.sql') %>
 
 <p>Restart MySQL server and try a remote connection.</p>
 
@@ -31,7 +31,7 @@ tex_set("show_numbers_in_subsubsections", false)
 
 <p>If remote connection is getting refused, the problem might be your firewall, Debian by default allows all traffic and so I don't need to add any rule to my firewall, to allow traffic to MySQL execute the following command.</p>
 
-<%= code('enable-mysql-remote-connection-allow-traffic.sh') %>
+<%= code(post, 'allow-traffic.sh') %>
 
 <p>Use your firewall to <a href="http://www.cyberciti.biz/faq/unix-linux-mysqld-server-bind-to-more-than-one-ip-address/" target="_blank">allow remote connection only to specific hosts</a>.</p>
 <p>That is all, see you in next post.</p>

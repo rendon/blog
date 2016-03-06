@@ -1,0 +1,21 @@
+SMSServer/
+├── AndroidManifest.xml
+├── ant.properties
+├── bin
+├── build.xml
+├── libs
+├── local.properties
+├── proguard-project.txt
+├── project.properties
+├── res
+│   ├── layout
+│   │   └── main.xml
+│   └── values
+│       └── strings.xml
+└── src
+    └── com
+        └── inforscience
+            └── server
+                └── SMSServer.java
+
+9 directories, 9 files

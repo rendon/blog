@@ -1,11 +1,13 @@
 require 'htmlentities'
 module Code
-  def code(name)
-    text = HTMLEntities.new.encode(File.read(File.join('public', 'code', name)))
+  def code(post, name)
+    src = File.read(File.join('public', 'code', post, name))
+    text = HTMLEntities.new.encode(src)
     "<pre><code>#{text}</code></pre>"
   end
 
-  def src_file(name)
-    "<a href='/#{File.join('public', 'code', name)}' target='_blank'>#{name}</a>"
+  def src_file(post, name)
+    file = File.join('public', 'code', post, name)
+    "<a href='/#{file}' target='_blank'>#{name}</a>"
   end
 end

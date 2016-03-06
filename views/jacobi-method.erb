@@ -26,7 +26,7 @@
 
 <%= section("Implementation in Java"); %>
 
-<%= code('jacobi-method-jacobi.java') %>
+<%= code(post, 'jacobi.java') %>
 
 <%= section("Gauss-Seidel Method"); %>
 
@@ -34,7 +34,7 @@ This is modification of the Jacobi method made by <a href="http://en.wikipedia.o
 
 In the Jacobi method the values of the approximations $x_{i}$ are used up to the next iteration of the method while in the Gauss-Seidel version each approximation $x_{i}$  is used as soon as it's ready, see the code to a better understanding. Since the two methods are very similar I show only the fragment where the codes differ.
 
-<%= code('jacobi-method-gauss-seidel.java') %>
+<%= code(post, 'gauss-seidel.java') %>
 
 The conditions for stopping and convergence are the same for both methods.
 

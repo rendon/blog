@@ -30,7 +30,7 @@
 
 <p>Por ejemplo, sea <em>n = 105</em> y <em>m = 9</em>, entonces n%m = ((3 % 9) * (5 % 9) * (7 % 9)) % 9 = (3 * 4 * 2) % 9 = 24 % 9 = 6, lo cual es fácil comprobar. Cuando tenemos un número <em>b</em> elevado a una potencia <em>p</em> sabemos que eso equivale a multiplicar la base <em>b</em> un número de veces igual a <em>p</em>, por ejemplo, 3^4 = 3 * 3 * 3 * 3. Entonces podemos aplicar <strong>(1)</strong> para el primer problema <em>(b^p) % m</em>. Como <em>p</em> puede ser muy grande entonces usamos <a href="/posts/recursion" target="_blank">exponenciación por cuadrados repetidos</a>. Una posible implementación en C es la siguiente.</p>
 
-<%= code('big-mod-modpow.c') %>
+<%= code(post, 'modpow.c') %>
 
 <%= section('Modulo cuando conocemos los dígitos del dividendo') %>
 
@@ -44,7 +44,7 @@
 
 <p>Con toda esta información podemos formular el siguiente algoritmo que resuelve el problema que estamos tratando.</p>
 
-<%= code('big-mod-mod.c') %>
+<%= code(post, 'mod.c') %>
 
 <p>Si el resultado que devuelve esta función es cero entonces <em>n</em> es divisible por <em>m</em>.</p>
 

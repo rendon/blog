@@ -44,13 +44,13 @@ Tmux es un multiplexor de terminal: posibilita que una o más de terminales, cad
 
 <%= subsection("Con el gestor de paquetes"); %>
 
-<%= code('tmux-install.sh') %>
+<%= code(post, 'install.sh') %>
 
 <%= section("Desde código fuente"); %>
 
 <p>Ve al sitio oficial de tmux(<a href="http://tmux.sourceforge.net/" target="_blank">http://tmux.sourceforge.net</a>) y descarga el código fuente, yo estoy empleando la versión 1.6. Por cierto, tmux depende de <code>libevent</code> y <code>ncurses</code>.</p>
 
-<%= code('tmux-install-from-src.sh') %>
+<%= code(post, 'install-from-src.sh') %>
 
 <%= section("Lo básico"); %>
 
@@ -74,7 +74,7 @@ Tmux tiene un comando para cada acción y una serie de keybindings para ejecutar
 
 <p>Tmux permite dividir el área de trabajo en varias partes, llamadas paneles, estas pueden ser horizontales o verticales.</p>
 
-<%= code('tmux-panel-operations.txt') %>
+<%= code(post, 'panel-operations.txt') %>
 
 <%= figure('hdud1_2', 'Splits', 'hdud1_2', 'png', 'ES'); %>
 
@@ -86,11 +86,11 @@ Tmux tiene un comando para cada acción y una serie de keybindings para ejecutar
 
 <%= subsection("Aumentar o reducir el panel verticalmente."); %>
 
-<%= code('tmux-panel-resize-vertically.txt') %>
+<%= code(post, 'panel-resize-vertically.txt') %>
 
 <%= subsection("Aumentar o reducir el panel horizontalmente."); %>
 
-<%= code('tmux-panel-resize-horizontally.txt') %>
+<%= code(post, 'panel-resize-horizontally.txt') %>
 
 <p>Para cerrar un panel tenemos dos opciones, terminar la sesión en la terminal con el comando exit o presionando <kbd>PREFIX</kbd> + <kbd>x</kbd>, que cierra el panel con previa confirmación.</p>
 
@@ -113,14 +113,14 @@ Tmux tiene un comando para cada acción y una serie de keybindings para ejecutar
 <p>Cuando los paneles no son suficientes o deseamos agrupar las terminales segun su actividad contamos con las ventanas.</p>
 
 <h6>Crear una ventana.</h6>
-<%= code('tmux-new-window.txt') %>
+<%= code(post, 'new-window.txt') %>
 
 <p>Las ventanas tienen nombre y lo podemos modificar con:</p>
 
-<%= code('tmux-rename-window.txt') %>
+<%= code(post, 'rename-window.txt') %>
 
 <h6>Moverse entre ventanas.</h6>
-<%= code('tmux-move-between-windows.txt') %>
+<%= code(post, 'move-between-windows.txt') %>
 
 <%= figure('hdud1_4', 'Ventanas', 'hdud1_4', 'png', 'ES'); %>
 
@@ -133,39 +133,39 @@ Tmux tiene un comando para cada acción y una serie de keybindings para ejecutar
 <p>En otras palabras las sesiones sirven para crear entornos de trabajo personalizados, por ejemplo, si están trabajando en un proyecto y tienes abiertos varios archivos, un terminal interactivo de Ruby o Python, varias ventanas, etc. Si por alguna razón tienes que interrumpir tus actividades, resultaría un poco molesto tener que cerrar archivos, programas, paneles y ventanas, y una hora más tarde cuando regresas a trabajar, restablecer el entorno. La solución es crear una sesión y le asignamos un nombre acorde, si trabajas en más de un proyecto o tarea simplemente crea otra sesión y mantendrás tus áreas de trabajo organizadas.</p>
 Aunque no lo indiquemos explícitamente tmux crea una sesión de forma automática cada vez que lo ejecutamos.
 
-<%= code('tmux-session-operations.txt') %>
+<%= code(post, 'session-operations.txt') %>
 
 <%= section("Configuración y personalización"); %>
 
 <p>Hasta ahora hemos cubierto lo esencial, usando las configuraciones por defecto, sin embargo éstas no siempre son las más cómodas para todos, es por eso que tmux nos admite ser personalizado usando el archivo <code>~/.tmux.conf</code>. A continuación muestro algunas de las opciones disponibles:</p>
 
-<%= code('tmux-customization.txt') %>
+<%= code(post, 'customization.txt') %>
 
 <p>Tmux soporta los modos vi y emacs para moverse dentro de la aplicación, por defecto el modo emacs es activado. Activar modo vi y algunos atajos.</p>
 
-<%= code('tmux-copy.txt') %>
+<%= code(post, 'copy.txt') %>
 
 <p>Con estas opciones activadas, haz lo siguiente para copiar contenido dentro de tmux, <strong>1)</strong> entra en modo copy, <strong>2)</strong> presiona la tecla v para iniciar la selección y muevete con las teclas <kbd>hjkl</kbd>, como en vim, <strong>3)</strong> presiona la tecla y para copiar la selección.</p>
 
 <%= subsection("Moverse entre los paneles de manera similar a vim con los splits."); %>
 
-<%= code('tmux-vim-like-movements.txt') %>
+<%= code(post, 'vim-like-movements.txt') %>
 
 <%= subsection("Cambia el modo de redimencionar paneles."); %>
 
-<%= code('tmux-vim-like-resize.txt') %>
+<%= code(post, 'vim-like-resize.txt') %>
 
 <%= subsection("Configurar la barra de estado."); %>
 
-<%= code('tmux-bar-customization.txt') %>
+<%= code(post, 'bar-customization.txt') %>
 
 <p>Longitud del historial.</p>
 
-<%= code('tmux-history-limit.txt') %>
+<%= code(post, 'history-limit.txt') %>
 
 <p>Recargar configuración con <kbd>PREFIX</kbd> + <kbd>r</kbd>.</p>
 
-<%= code('tmux-reload-conf.txt') %>
+<%= code(post, 'reload-conf.txt') %>
 
 <p>Existen muchas más opciones de configuración pero creo que con esto es suficiente para comenzar.</p>
 
@@ -175,7 +175,7 @@ Aunque no lo indiquemos explícitamente tmux crea una sesión de forma automáti
 
 <p>Hemos visto que para utilizar tmux abrimos una terminal y entonces lo ejecutamos, para hacer que tmux se ejecute automáticamente cuando abrimos una terminal agrega las siguientes líneas al archivo <code>~/.bashrc</code>.</p>
 
-<%= code('tmux-auto-start.sh') %>
+<%= code(post, 'auto-start.sh') %>
 
 <p>Si estamos ejecutando el interprete de comandos en modo interactivo y tenemos soporte para 256 colores entonces ejecutamos tmux.</p>
 
@@ -183,7 +183,7 @@ Aunque no lo indiquemos explícitamente tmux crea una sesión de forma automáti
 
 <p>Estando en el modo copy es posible copiar texto para ser usado en otros paneles o ventanas dentro de tmux, pero no en otras aplicaciones, es decir, el texto copiado en tmux no se puede pegar en firefox, por citar un ejemplo. La siguiente línea soluciona el problema. Es necesario tener instalado el programa <code>xclip</code>.</p>
 
-<%= code('tmux-copy-xclip.txt') %>
+<%= code(post, 'copy-xclip.txt') %>
 
 <p>Funciona de esta manera, entra en modo copy y copia el texto en cuestión tal como ya se ha visto. Sal del modo copy y presiona <kbd>PREFIX</kbd>, suelta y después <kbd>Ctrl</kbd>+<kbd>c</kbd> para colocar el contenido en el portapapeles del sistema.</p>
 
@@ -195,7 +195,7 @@ Aunque no lo indiquemos explícitamente tmux crea una sesión de forma automáti
 
 <p>Para realizar la re asignación emplea el comando <code>xmodmap</code> y agrega lo siguiente en el archivo <code>~/.Xmodmap</code>.</p>
 
-<%= code('tmux-extra-ctrl-key.txt') %>
+<%= code(post, 'extra-ctrl-key.txt') %>
 
 <p>Algunos entornos de escritorio ejecutan este archivo al iniciar, si no es tu caso, agrega el comando <code>xmodmap ~/.Xmodmap</code> al archivo de inicio de tu entorno de escritorio, para openbox el archivo es <code>~/.config/openbox/autostart.sh</code>.</p>
 
