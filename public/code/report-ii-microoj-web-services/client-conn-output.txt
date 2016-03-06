@@ -1,0 +1,5 @@
+. Logs
+.
+.
+{:return=>"4", :"@xmlns:ns1"=>"http://schemas.xmlsoap.org/soap/envelope/"}
+4

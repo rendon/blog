@@ -1,0 +1,18 @@
+  PID TTY          TIME CMD
+    1 ?        00:00:01 init
+    2 ?        00:00:00 kthreadd
+    3 ?        00:00:02 ksoftirqd/0
+    6 ?        00:00:00 migration/0
+    7 ?        00:00:00 watchdog/0
+    8 ?        00:00:00 migration/1
+   10 ?        00:00:02 ksoftirqd/1
+   12 ?        00:00:00 watchdog/1
+    .
+    .
+    .
+28260 ?        00:00:00 apache2
+28383 ?        00:00:00 gvfsd-metadata
+28414 ?        00:02:31 inkscape
+29918 pts/3    00:00:00 bash
+30032 ?        00:00:00 kworker/0:1
+30759 ?        00:00:00 kworker/1:2
