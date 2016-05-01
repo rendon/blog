@@ -3,8 +3,19 @@ module Tex
     "PENDING"
   end
 
-  def figure(a, b, c, d, e)
-    "-- IMG PENDING --"
+  def figure(post, file, options = {})
+    langs = { en: 'Figure ', es: 'Figura ' }
+    lang = options[:lang] || :en
+    if options[:caption]
+      caption = "<p><strong> #{langs[lang]} X.</strong> #{options[:caption]}"
+    end
+
+    %Q(
+    <figure>
+      <img src="/#{File.join('public', 'pictures', post, file)}">
+      #{caption}
+    </figure>
+    )
   end
 
   def cite(id)

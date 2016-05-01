@@ -28,3 +28,10 @@ get '/public/code/:post/:file/?' do
   file = params[:file].downcase
   send_file File.join('public', 'code', post, file), :type => :text
 end
+
+
+get '/public/pictures/:post/:file/?' do
+  post = params[:post].downcase
+  file = params[:file].downcase
+  send_file File.join('public', 'pictures', post, file)
+end

@@ -6,6 +6,10 @@ module Code
     "<pre><code>#{text}</code></pre>"
   end
 
+  def inline_code(src)
+    "<pre><code>#{HTMLEntities.new.encode(src)}</code></pre>"
+  end
+
   def src_file(post, name)
     file = File.join('public', 'code', post, name)
     "<a href='/#{file}' target='_blank'>#{name}</a>"
