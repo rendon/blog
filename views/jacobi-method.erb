@@ -8,11 +8,11 @@
 
 <p>This was the first iterative method to solve systems of linear equations and was devised by <a href="http://en.wikipedia.org/wiki/Carl_Gustav_Jakob_Jacobi" target="_blank">Carl Gustav Jacob Jacobi</a>(1804-1851). Lets define the system of linear equations as:</p>
 
-<%= figure('jacobi_1', 'Equation system', 'jacobi_1', 'png', 'EN'); %>
+<%= figure(post, 'jacobi_1.png', caption: 'Equation system', label: 'jacobi_1', lang: :en); %>
 
 <p>For each row <em>i</em> isolate the $x\_{i}$ variable.</p>
 
-<%= figure('jacobi_2', 'Isolate variables', 'jacobi_2', 'png', 'EN'); %>
+<%= figure(post, 'jacobi_2.png', caption: 'Isolate variables', label: 'jacobi_2', lang: :en); %>
 
 <p>Make an initial approximation of the solution $(x_{1}, x_{2}, x_{3},\ldots,x_{n})$, a good choice is to use zero to all variables. Substitute these values in the rewritten equation and update the values of the approximation. Repeat the process until the answer be acceptable.</p>
 
@@ -42,7 +42,7 @@ The conditions for stopping and convergence are the same for both methods.
 
 If we solve the following system of linear equations we get to the answer at different rates.
 
-<%= figure('jacobi_3', 'Example', 'jacobi_3', 'png', 'EN'); %>
+<%= figure(post, 'jacobi_3.png', caption: 'Example', label: 'jacobi_3', lang: :en); %>
 
 Jacobi's method needs 28 iterations:
 

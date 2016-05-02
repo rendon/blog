@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="602"
+   height="84.742882"
+   id="svg4743"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="z_alg_cases_2c.svg">
+  <defs
+     id="defs4745">
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lend"
+       style="overflow:visible">
+      <path
+         id="path3841"
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker4717"
+       style="overflow:visible">
+      <path
+         id="path4719"
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="5.6"
+     inkscape:cx="97.632833"
+     inkscape:cy="18.993115"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     fit-margin-top="1"
+     fit-margin-right="1"
+     fit-margin-bottom="1"
+     fit-margin-left="1"
+     inkscape:window-width="1916"
+     inkscape:window-height="1041"
+     inkscape:window-x="0"
+     inkscape:window-y="18"
+     inkscape:window-maximized="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4868"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true"
+       originx="1.000003px"
+       originy="11.283712px" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata4748">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-120.23031,-661.08694)">
+    <text
+       xml:space="preserve"
+       style="font-size:80.04666901px;font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Palladio L;-inkscape-font-specification:URW Palladio L Medium"
+       x="420.68488"
+       y="676.75549"
+       id="text3777-6"
+       sodipodi:linespacing="125%"
+       inkscape:transform-center-x="7.0240897"
+       inkscape:transform-center-y="2.971719"><tspan
+         sodipodi:role="line"
+         id="tspan3779-4"
+         x="420.68488"
+         y="676.75549"
+         style="font-size:20.01166725px;font-style:italic;-inkscape-font-specification:URW Palladio L Italic">l</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:80.04666901px;font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Palladio L;-inkscape-font-specification:URW Palladio L Medium"
+       x="616.99933"
+       y="677.76624"
+       id="text3777-7"
+       sodipodi:linespacing="125%"
+       inkscape:transform-center-x="7.0240976"
+       inkscape:transform-center-y="2.9717402"><tspan
+         sodipodi:role="line"
+         id="tspan3779-8"
+         x="616.99933"
+         y="677.76624"
+         style="font-size:20.01166725px;font-style:italic;-inkscape-font-specification:URW Palladio L Italic">r</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.14053309;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 122.09093,722.86479 0,-38.63771 199.25605,0 0,38.63771"
+       id="path3769-7"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:#ed0a08;fill-opacity:0.39215686;stroke:#000000;stroke-width:0.6899541;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:2.0698623, 0.6899541;stroke-dashoffset:0"
+       d="m 251.23031,723.54611 0,-24 70.04083,0 0,24 0,0 0,0"
+       id="path5412-6-7-8"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-opacity:0.39215686000000000;stroke:#000000;stroke-width:1.22545934000000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 251.30614,724.25044 0,-30.01752 70.04084,0 0,30.01752 0,0 0,0"
+       id="path5412"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-opacity:0.39215686000000000;stroke:#000000;stroke-width:1.22545934000000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 122.13322,724.25044 0,-30.01752 70.04083,0 0,30.01752 0,0 0,0"
+       id="path5412-6"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:80.04666901px;font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Palladio L;-inkscape-font-specification:URW Palladio L Medium"
+       x="551.32104"
+       y="744.64972"
+       id="text3777-7-6"
+       sodipodi:linespacing="125%"
+       inkscape:transform-center-x="7.024077"
+       inkscape:transform-center-y="2.9717493"><tspan
+         sodipodi:role="line"
+         id="tspan3779-8-0"
+         x="551.32104"
+         y="744.64972"
+         style="font-size:20.01166725px;font-style:italic;-inkscape-font-specification:URW Palladio L Italic">k</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:80.04666901px;font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Palladio L;-inkscape-font-specification:URW Palladio L Medium"
+       x="251.14606"
+       y="743.11743"
+       id="text3777-7-6-1"
+       sodipodi:linespacing="125%"
+       inkscape:transform-center-x="7.024097"
+       inkscape:transform-center-y="2.9717271"><tspan
+         sodipodi:role="line"
+         id="tspan3779-8-0-2"
+         x="251.14606"
+         y="743.11743"
+         style="font-size:20.01166725px;font-style:italic;-inkscape-font-specification:URW Palladio L Italic">k'</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:80.04666901px;font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Palladio L;-inkscape-font-specification:URW Palladio L Medium"
+       x="211.28282"
+       y="699.59326"
+       id="text5432"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5434"
+         x="211.28282"
+         y="699.59326"
+         style="font-size:20.01166725px;font-style:italic;-inkscape-font-specification:URW Palladio L Italic">α</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:80.04666901px;font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Palladio L;-inkscape-font-specification:URW Palladio L Medium"
+       x="271.31781"
+       y="716.24463"
+       id="text5432-9"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5434-0"
+         x="271.31781"
+         y="716.24463"
+         style="font-size:20.01166725px;font-style:italic;-inkscape-font-specification:URW Palladio L Italic">β</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.14053309;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 421.97558,722.25205 0,-38.6377 199.25605,0 0,38.6377"
+       id="path3769-7-3"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:#ed0a08;fill-opacity:0.39215686;stroke:#000000;stroke-width:0.6899541;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:2.0698623, 0.6899541;stroke-dashoffset:0"
+       d="m 551.23031,723.54611 0,-24 70.04083,0 0,24 0,0 0,0"
+       id="path5412-6-7-8-0"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-opacity:0.39215686000000000;stroke:#000000;stroke-width:1.22545934000000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 551.19079,723.6377 0,-30.01752 70.04084,0 0,30.01752 0,0 0,0"
+       id="path5412-1"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:#ed0a08;fill-opacity:0.39215686000000000;stroke:#000000;stroke-width:0.7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:2.1,0.7;stroke-dashoffset:0"
+       d="m 122.13304,724.25009 0,-24.70398 70.04083,0 0,24.70398 0,0 0,0"
+       id="path5412-6-7"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:80.04666901px;font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Palladio L;-inkscape-font-specification:URW Palladio L Medium"
+       x="511.45782"
+       y="704.23883"
+       id="text5432-4"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5434-6"
+         x="511.45782"
+         y="704.23883"
+         style="font-size:20.01166725px;font-style:italic;-inkscape-font-specification:URW Palladio L Italic">α</tspan></text>
+    <rect
+       style="fill:#000000;stroke:#000000;stroke-width:0;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect2985"
+       width="600"
+       height="3.6361198"
+       x="121.23031"
+       y="720.61432" />
+    <text
+       xml:space="preserve"
+       style="font-size:80.04666901px;font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Palladio L;-inkscape-font-specification:URW Palladio L Medium"
+       x="571.20251"
+       y="715.63184"
+       id="text5432-9-1"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5434-0-0"
+         x="571.20251"
+         y="715.63184"
+         style="font-size:20.01166725px;font-style:italic;-inkscape-font-specification:URW Palladio L Italic">β</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:80.04666901px;font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Palladio L;-inkscape-font-specification:URW Palladio L Medium"
+       x="627.00519"
+       y="719.08942"
+       id="text3777-7-8"
+       sodipodi:linespacing="125%"
+       inkscape:transform-center-x="7.0240715"
+       inkscape:transform-center-y="2.9717582"><tspan
+         sodipodi:role="line"
+         id="tspan3779-8-1"
+         x="627.00519"
+         y="719.08942"
+         style="font-size:20.01166725px;font-style:italic;-inkscape-font-specification:URW Palladio L Italic">x</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:80.04666901px;font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Palladio L;-inkscape-font-specification:URW Palladio L Medium"
+       x="326.83017"
+       y="713.78723"
+       id="text3777-7-8-2"
+       sodipodi:linespacing="125%"
+       inkscape:transform-center-x="7.0240915"
+       inkscape:transform-center-y="2.9717366"><tspan
+         sodipodi:role="line"
+         id="tspan3779-8-1-0"
+         x="326.83017"
+         y="713.78723"
+         style="font-size:20.01166725px;font-style:italic;-inkscape-font-specification:URW Palladio L Italic">y</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:80.04666901px;font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Palladio L;-inkscape-font-specification:URW Palladio L Medium"
+       x="142.14487"
+       y="716.24463"
+       id="text5432-9-5"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5434-0-6"
+         x="142.14487"
+         y="716.24463"
+         style="font-size:20.01166725px;font-style:italic;-inkscape-font-specification:URW Palladio L Italic">β</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:80.04666901px;font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:URW Palladio L;-inkscape-font-specification:URW Palladio L Medium"
+       x="194.75317"
+       y="719.09088"
+       id="text3777-7-8-2-8"
+       sodipodi:linespacing="125%"
+       inkscape:transform-center-x="7.024088"
+       inkscape:transform-center-y="2.9717573"><tspan
+         sodipodi:role="line"
+         id="tspan3779-8-1-0-9"
+         x="194.75317"
+         y="719.09088"
+         style="font-size:20.01166725px;font-style:italic;-inkscape-font-specification:URW Palladio L Italic">w</tspan></text>
+  </g>
+</svg>

@@ -10,7 +10,7 @@
 
 <p>La solución que vamos a tratar en este reporte consiste en lo siguiente. No vamos a crear 1 programa sino 2, un servidor en el dispositivo móvil y un cliente en la PC. El siguiente diagrama puede ayudar a entender mejor la solución.</p>
 
-<%= figure('sms_01', 'Diagrama de la solución', 'sms_01', 'png', 'ES'); %>
+<%= figure(post, 'sms_01.png', caption: 'Diagrama de la solución', label: 'sms_01', lang: :es, width: '50%', height: '50%'); %>
 
 
 <%= subsection('Servidor'); %>
@@ -161,7 +161,7 @@
 
 <p>La dirección del servidor es la dirección IP que tienen el dispositivo móvil, en el puerto 8080, por ejemplo, _http://192.168.1.242:8080_. Esta dirección la tienen que conocer el cliente para poder conectarse.</p>
 
-<%= figure('sms_02', 'Interfaz del servidor de SMS', 'sms_02', 'png', 'ES'); %>
+<%= figure(post, 'sms_02.png', caption: 'Interfaz del servidor de SMS', label: 'sms_02', lang: :es, width: '50%', height: '50%'); %>
 
 <%= section('El cliente'); %>
 
@@ -207,7 +207,7 @@
 
 <%= code(post, 'action-performed.java') %>
 
-<%= figure('sms_03', 'Envío de mensajes', 'sms_03', 'png', 'ES'); %>
+<%= figure(post, 'sms_03.png', caption: 'Envío de mensajes', label: 'sms_03', lang: :es, width: '50%', height: '50%'); %>
 
 <%= subsection('InboxPanel'); %>
 
@@ -215,7 +215,7 @@
 
 <%= code(post, 'sms-monitor.java') %>
 
-<%= figure('sms_04', 'Bandeja de entrada', 'sms_04', 'png', 'ES'); %>
+<%= figure(post, 'sms_04.png', caption: 'Bandeja de entrada', label: 'sms_04', lang: :es, width: '50%', height: '50%'); %>
 
 
 <%= subsection('SentMessagePanel'); %>
@@ -224,13 +224,13 @@
 
 <%= code(post, 'run.java') %>
 
-<%= figure('sms_05', 'Mensajes enviados', 'sms_05', 'png', 'ES'); %>
+<%= figure(post, 'sms_05.png', caption: 'Mensajes enviados', label: 'sms_05', lang: :es, width: '50%', height: '50%'); %>
 
 <%= subsection('Bono'); %>
 
 <p>Al enviar un mensaje el usuario puede introducir el número directamente o presionar el botón con etiqueta "..." para acceder a la lista de contactos del dispositivo. Por cuestiones de seguridad he alterado la imagen puesto que es mi lista de contactos.</p>
 
-<%= figure('sms_06', 'Lista de contactos', 'sms_06', 'png', 'ES'); %>
+<%= figure(post, 'sms_06.png', caption: 'Lista de contactos', label: 'sms_06', lang: :es, width: '50%', height: '50%'); %>
 
 <p>El código es sencillo:</p>
 

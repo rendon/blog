@@ -34,9 +34,9 @@ Tmux es un multiplexor de terminal: posibilita que una o más de terminales, cad
 
 <p>En mis actividades diarias empleo muy a menudo una o más terminales, cuando programo utilizo como mínimo dos, en una tengo abierto vim y en la otra realizo las pruebas. Antes yo solía tener dos terminales abiertas en dos ventanas, usando Ctrl + Tab para moverme entre ellas, pero con el tiempo esto se volvió tedioso y mi vista se cansaba fácilmente debido a los constantes destellos del cambio de ventanas. Investigando un poco conocí GNU Screen, no me gusto. Descubrí tmux y fue exactamente lo que andaba buscando.</p>
 
-<%= figure('hdud1_0', 'Antes', 'hdud1_0', 'png', 'ES'); %>
+<%= figure(post, 'hdud1_0.png', caption: 'Antes', label: 'hdud1_0', lang: :es); %>
 
-<%= figure('hdud1_1', 'Después', 'hdud1_1', 'png', 'ES'); %>
+<%= figure(post, 'hdud1_1.png', caption: 'Después', label: 'hdud1_1', lang: :es); %>
 
 <%= section("Instalación"); %>
 
@@ -76,11 +76,11 @@ Tmux tiene un comando para cada acción y una serie de keybindings para ejecutar
 
 <%= code(post, 'panel-operations.txt') %>
 
-<%= figure('hdud1_2', 'Splits', 'hdud1_2', 'png', 'ES'); %>
+<%= figure(post, 'hdud1_2.png', caption: 'Splits', label: 'hdud1_2', lang: :es); %>
 
 <p>Una combinación muy util para moverse entre paneles es <kbd>PREFIX</kbd> + <kbd>q</kbd>, que enumera cada uno de los paneles por un momento, presiona el numero del panel al cual te quieres trasladar y listo.</p>
 
-<%= figure('hdud1_3', 'Paneles enumerados', 'hdud1_3', 'png', 'ES'); %>
+<%= figure(post, 'hdud1_3.png', caption: 'Paneles enumerados', label: 'hdud1_3', lang: :es); %>
 
 <p>Si necesitas reducir o aumentar el área de un panel lo puedes hacer con las siguientes combinaciones.</p>
 
@@ -122,7 +122,7 @@ Tmux tiene un comando para cada acción y una serie de keybindings para ejecutar
 <h6>Moverse entre ventanas.</h6>
 <%= code(post, 'move-between-windows.txt') %>
 
-<%= figure('hdud1_4', 'Ventanas', 'hdud1_4', 'png', 'ES'); %>
+<%= figure(post, 'hdud1_4.png', caption: 'Ventanas', label: 'hdud1_4', lang: :es); %>
 
 <p>El listado de ventanas activas se muestra en la parte inferior de la pantalla, cada ventana tiene un número que la identifica. Una forma fácil de cambiar de ventana es presionando <kbd>PREFIX</kbd> + numero_de_ventana. Si tienes demasiadas ventanas también es posible buscarlas por su nombre con <kbd>PREFIX</kbd> + <kbd>f</kbd> o bien presionar <kbd>PREFIX</kbd> + <kbd>w</kbd> para mostrar el listado de ventanas.</p>
 

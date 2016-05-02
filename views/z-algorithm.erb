@@ -14,7 +14,7 @@ However, much more efficient solutions exists to this problem, the Z algorithm i
 
 <p>For example, let be T = "cabacadcab", $Z_{3} = 0$, $Z_{4} = 2$ and $Z_{7} = 3$. Obviously $Z_{0}$ is always equal to the length of the string. See figure <%= ref('fig_z_alg_example') %>.</p>
 
-<%= figure('z_alg_example','Z Algorithm example', 'fig_z_alg_example', 'png', 'EN');%>
+<%= figure(post, 'z_alg_example.png', caption: 'Z Algorithm example', label: 'fig_z_alg_example', lang: :en);%>
 
 <%= section("Z Boxes") %>
 
@@ -22,7 +22,7 @@ However, much more efficient solutions exists to this problem, the Z algorithm i
     If $Z_{i} > 0$ a Z-box is a substring that starts at position $i$ and ends at position $i + Z_{i} - 1$, i.e. the substring that matches the prefix of $T$.
 </div>
 
-<%= figure('z_boxes','Z-Boxes', 'fig_z_boxes', 'svg', 'EN') %>
+<%= figure(post, 'z_boxes.svg', caption: 'Z-Boxes', label: 'fig_z_boxes', lang: :en) %>
 
 
 <p>Assume that we have already computed the values of $Z$ upto some $k-1$ and now we need to compute $Z_{k}$. There are four possible cases. In the following pictures $l$ and $r$ denote de start and the end of the last Z-box.</p>
@@ -31,14 +31,14 @@ However, much more efficient solutions exists to this problem, the Z algorithm i
 
 <p>Position $k$ is not contained in the last Z-box. We need to compare character by character to find $Z_{k}$.</p>
 
-<%= figure('z_alg_cases_1','Case 1', 'fig_case_1', 'svg', 'EN');%>
+<%= figure(post, 'z_alg_cases_1.svg', caption: 'Case 1', label: 'fig_case_1', lang: :en);%>
 
 
 <%= subsection("Case 2: $ k $ is within the last Z-box") %>
 
 <p>We'll denote this last Z-box as $\alpha$ and as $\beta$ the box starting at position $k$ and ending at $r$. Since every Z-box matches a prefix, the figure <%=ref('fig_z_alg_case_2');%> depicts our situation.</p>
 
-<%= figure('z_alg_cases_2','Case 2', 'fig_z_alg_case_2', 'svg', 'EN');%>
+<%= figure(post, 'z_alg_cases_2.svg', caption: 'Case 2', label: 'fig_z_alg_case_2', lang: :en);%>
 
 <p>As you can see, $k'$ corresponds to position $k$ in the prefix and we already computed $Z_{k'}$ and so we can leverage this fact. There are three more cases.</p>
 
@@ -47,18 +47,18 @@ However, much more efficient solutions exists to this problem, the Z algorithm i
 
 <p>In this case $Z_{k} = Z_{k'}$.</p>
 
-<%= figure('z_alg_cases_2a','Case 2a', 'fig_z_alg_cases_2a', 'svg', 'EN');%>
+<%= figure(post, 'z_alg_cases_2a.svg', caption: 'Case 2a', label: 'fig_z_alg_cases_2a', lang: :en);%>
 
 
 <%= subsubsection("Case 2b: $ Z_{k'} > |\\beta| $") %>
 
 <p>Let be $x$ the first character that is not contained in the last Z-box and $y$ the first character that is not contained in the prefix, we know one thing, $x \neq y$ and therefore $Z_{k}$ cannot be greater than $Z_{k'}$. Result $Z_{k} = |\beta|$.</p>
 
-<%= figure('z_alg_cases_2b','Case 2b', 'fig_z_alg_cases_2b', 'svg', 'EN');%>
+<%= figure(post, 'z_alg_cases_2b.svg', caption: 'Case 2b', label: 'fig_z_alg_cases_2b', lang: :en);%>
 
 <%= subsubsection("Case 2c: $ Z_{k'} = |\beta| $") %>
 
-<%= figure('z_alg_cases_2c','Case 2c', 'fig_z_alg_cases_2c', 'svg', 'EN');%>
+<%= figure(post, 'z_alg_cases_2c.svg', caption: 'Case 2c', label: 'fig_z_alg_cases_2c', lang: :en);%>
 
 <p>Here we know two things, $x \neq y$  and $y \neq w$. How about $x$ and $w$? We don't know, they may be equal or not. In this case it's necessary to verify.</p>
 

@@ -10,11 +10,11 @@
 
 <p>En la figura <%= ref('dns_wicd_conf'); %> se muestra la forma de configurar una computadora para que utilice un servidor DNS en específico, en el ejemplo se utiliza una IP estática ya que de esta manera tenemos control total sobre las configuraciones, cuando utilizamos un cliente DHCP generalmente tambien se configura el servidor DNS automáticamente .</p>
 
-<%= figure('dns_wicd_conf', 'Configuración de IP estática y servidor DNS con wicd', 'dns_wicd_conf', 'png', 'ES'); %>
+<%= figure(post, 'dns_wicd_conf.png', caption: 'Configuración de IP estática y servidor DNS con wicd', label: 'dns_wicd_conf', lang: :es); %>
 
 <p>La figura <%= ref('dns_network_manager_conf'); %> muestra como realizar la misma conexión utilizando el programa Network Manager, el asistente que podemos encontrar en sistemas con entorno de escritorio GNOME.</p>
 
-<%= figure('dns_network_manager_conf', 'Configuración de IP estática y servidor DNS con Network Manager', 'dns_network_manager_conf', 'png', 'ES'); %>
+<%= figure(post, 'dns_network_manager_conf.png', caption: 'Configuración de IP estática y servidor DNS con Network Manager', label: 'dns_network_manager_conf', lang: :es); %>
 
 <p>El método para especificar el servidor(es) DNS desde la lína de comandos, es utilizando el archivo _/etc/resolv.conf_ para especificar a donde se deben solicitar los nombres. A continuación un ejemplo de como podría lucir este archivo.</p>
 
@@ -56,7 +56,7 @@
 
 <p>Cada vez que alguien intente conectarse a facebook, en servidor de DNS le regresará al cliente la dirección del servidor DNS, en el cual tenemos también ejecutándose un servidor Web, el cual mostrará al cliente una nota informativa del porque se le ha denegado el servicio.</p>
 
-<%= figure('dns_deny_facebook', 'Denegación de acceso a facebook usando DNS', 'dns_deny_facebook', 'png', 'ES'); %>
+<%= figure(post, 'dns_deny_facebook.png', caption: 'Denegación de acceso a facebook usando DNS', label: 'dns_deny_facebook', lang: :es); %>
 
 <p>Esto es todo por esta práctica. DNS es un tema extenso y complejo, en esta práctica solo hemos visto unos ejemplos sencillos, aunque creo que es un buen punto de partida para aprender sobre este tema.</p>
 

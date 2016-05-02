@@ -20,14 +20,14 @@ tex_set("show_numbers_in_subsections", false);
 
 <p>Compute the distance between the two men as they move and take the minimum distance.</p>
 
-<%= figure('ternary_search_1', 'Termnary search example', 'ternary_search_1', 'png', 'EN'); %>
+<%= figure(post, 'ternary_search_1.png', caption: 'Termnary search example', label: 'ternary_search_1', lang: :en); %>
 
 <p>Obviously, we can only take discrete points, and, since the problem ask for an answer with an error less than 1e-6, a brute force approach would take much time, very much. So the strategy is to use ternary search:</p>
 
-<%= figure('ternary_search_2', 'Step 1', 'ternary_search_2', 'png', 'EN'); %>
-<%= figure('ternary_search_3', 'Step 2', 'ternary_search_3', 'png', 'EN'); %>
-<%= figure('ternary_search_4', 'Step 3', 'ternary_search_4', 'png', 'EN'); %>
-<%= figure('ternary_search_5', 'Step 4', 'ternary_search_5', 'png', 'EN'); %>
+<%= figure(post, 'ternary_search_2.png', caption: 'Step 1', label: 'ternary_search_2', lang: :en); %>
+<%= figure(post, 'ternary_search_3.png', caption: 'Step 2', label: 'ternary_search_3', lang: :en); %>
+<%= figure(post, 'ternary_search_4.png', caption: 'Step 3', label: 'ternary_search_4', lang: :en); %>
+<%= figure(post, 'ternary_search_5.png', caption: 'Step 4', label: 'ternary_search_5', lang: :en); %>
 
 <p>And so on. Here is my solution:</p>
 

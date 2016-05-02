@@ -54,7 +54,7 @@
 
 <p>El Web service para esta aplicación es exactamente el mismo que se empleamos en el proyecto anterior (cliente Blackberry). A continuación se muestra el modelo de la base de datos para refrescar la memoria.</p>
 
-<%= figure('bbws_data_model', 'Modelo de datos', 'bbws_data_model', 'png', 'ES'); %>
+<%= figure(post, 'bbws_data_model.png', caption: 'Modelo de datos', label: 'bbws_data_model', lang: :es); %>
 
 <p>Lo relevante de la implementación del Web service lo pueden encontrar en los reportes <a href="/report-iii-wp8-web-services/">III</a> y <a href="/report-iv-bb10-web-service/">IV</a>, colocar nuevamente el código aquí sería redundante y ocuparía mucho espacio.</p>
 
@@ -748,16 +748,16 @@ public class WebService {
 
 <p>Para evitar ambigüedades vamos a ilustrar paso a paso cómo crear el proyecto en IntelliJ IDEA.</p>
 
-<%= figure('androidws_cp_1', 'Página de inicio de IntelliJ IDEA', 'androidws_cp_1', 'png', 'ES'); %>
-<%= figure('androidws_cp_2', 'Nombre del proyecto', 'androidws_cp_2', 'png', 'ES'); %>
-<%= figure('androidws_cp_3', 'Nombre del paquete y configuración de dispositivo', 'androidws_cp_3', 'png', 'ES'); %>
-<%= figure('androidws_cp_4', 'Estamos listos para empezar', 'androidws_cp_4', 'png', 'ES'); %>
+<%= figure(post, 'androidws_cp_1.png', caption: 'Página de inicio de IntelliJ IDEA', label: 'androidws_cp_1', lang: :es); %>
+<%= figure(post, 'androidws_cp_2.png', caption: 'Nombre del proyecto', label: 'androidws_cp_2', lang: :es); %>
+<%= figure(post, 'androidws_cp_3.png', caption: 'Nombre del paquete y configuración de dispositivo', label: 'androidws_cp_3', lang: :es); %>
+<%= figure(post, 'androidws_cp_4.png', caption: 'Estamos listos para empezar', label: 'androidws_cp_4', lang: :es); %>
 
 <%= subsection('La página principal');  %>
 
 <p>La siguiente figura muestra como lucirá la página principal de nuestra aplicación:</p>
 
-<%= figure('androidws_home', 'Página principal', 'androidws_home', 'png', 'ES'); %>
+<%= figure(post, 'androidws_home.png', caption: 'Página principal', label: 'androidws_home', lang: :es); %>
 
 <p>El diseño correspondiente en XML es el siguiente:</p>
 
@@ -899,7 +899,7 @@ public void onCreate(Bundle savedInstanceState)
 
 <p>A continuación se ilustra la interfaz para registrar pedidos.</p>
 
-<%= figure('androidws_shop', 'Registro de pedidos', 'androidws_shop', 'png', 'ES'); %>
+<%= figure(post, 'androidws_shop.png', caption: 'Registro de pedidos', label: 'androidws_shop', lang: :es); %>
 
 <p>La interfaz esta descrita de la siguiente manera:</p>
 
@@ -1065,7 +1065,7 @@ saveRequestButton.setOnClickListener(new View.OnClickListener() {
 
 <p>Nuestra aplicación también permite visualizar la lista de pedidos que tenemos en nuestra base de datos local.</p>
 
-<%= figure('androidws_query', 'Consulta de pedidos', 'androidws_query', 'png', 'ES'); %>
+<%= figure(post, 'androidws_query.png', caption: 'Consulta de pedidos', label: 'androidws_query', lang: :es); %>
 
 <p>El código XML que describe a esta interfaz es el siguiente:</p>
 

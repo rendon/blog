@@ -17,7 +17,7 @@
 <p>El kernel mantiene la lista de procesos en una lista doublemente enlazada donde cada elemento contiene una estructura <code>task_struct</code>. La figura <%= ref('doubly_linked_list'); %> muestra como luce dicha lista.</p>
 
 <%= 
-figure('doubly_linked_list', 'Lista doblemente enlazada de procesos', 'doubly_linked_list', 'svg', 'ES');
+figure(post, 'doubly_linked_list.png', caption: 'Lista doblemente enlazada de procesos', label: 'doubly_linked_list', lang: :es);
  %>
 
 <p>Puesto que un proceso es un programa en ejecución y normalmente la cantidad de procesos es mayor que la cantidad de procesadores (en muchas ocasiones solo uno), éstos tienen que compartir el tiempo de la CPU y es el sistema operativo quien se encarga de coordinar esta actividad. Debido a lo anterior un proceso tiene asociado un <em>estado</em>, que como su nombre lo indica, nos permite determinar que esta haciendo el proceso dentro del sistema operativo, básicamente esta en ejecución o esperando, a continuación una lista de todos los estados posibles en en SO Linux.</p>
@@ -33,7 +33,7 @@ figure('doubly_linked_list', 'Lista doblemente enlazada de procesos', 'doubly_li
 La figura <%= ref('process_states'); %> ilustra las relaciones entre los distintos estados.
 
 <%= 
-figure('process_states', 'Diagrama de flujo de los estados de un proceso', 'process_states', 'svg', 'ES');
+figure(post, 'process_states.svg', caption: 'Diagrama de flujo de los estados de un proceso', label: 'process_states', lang: :es);
  %>
 
 <p>En Linux el primer proceso que se ejecuta es <code>init</code> con PID igual a 1 y es éste el que se encarga de crear al resto de los procesos  necesarios para el funcionamiento del sistema. A su vez, cada nuevo proceso es capaz de crear otros más. No es difícil darse cuenta que este mecanismo forma un árbol de procesos, donde la raíz es el proceso <code>init</code>, los nodos intermedios son aquello diferentes de <code>init</code> y que tienen al menos un proceso hijo, mientras que las hojas son aquellos que no crean nuevos procesos.</p>
@@ -136,11 +136,11 @@ figure('process_states', 'Diagrama de flujo de los estados de un proceso', 'proc
 
 <%= code(post, 'process-tree-gi.c') %>
 
-<p>Manualmente hay que editar un poco la salida para que que sirva como entrada para el visualizador. He aquí el archivo resultante: <a href="../../files/pstree.gi">pstree.gi</a>.</p>
+<p>Manualmente hay que editar un poco la salida para que que sirva como entrada para el visualizador. He aquí el archivo resultante: <%= file(post, 'pstree.gi') %>.</p>
 
 <p>La figura <%= ref("pstree"); %> muestra el resultado.</p>
 
-<%= figure('pstree', 'Árbol de procesos', 'pstree', 'svg', 'ES'); %>
+<%= figure(post, 'pstree.svg', caption: 'Árbol de procesos', label: 'pstree', lang: :es); %>
 
 <%= section('Creación de procesos'); %>
 

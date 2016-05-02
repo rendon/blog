@@ -10,9 +10,16 @@ module Tex
       caption = "<p><strong> #{langs[lang]} X.</strong> #{options[:caption]}"
     end
 
+    width = options[:width] ? "width='#{options[:width]}'" : ''
+    height = options[:height] ? "height='#{options[:height]}'" : ''
+    alt = options[:alt] ? "alt='#{options[:alt]}'" : ''
     %Q(
     <figure>
-      <img src="/#{File.join('public', 'pictures', post, file)}">
+      <img src="/#{File.join('public', 'pictures', post, file)}"
+           #{width}
+           #{height}
+           #{alt}
+      >
       #{caption}
     </figure>
     )

@@ -4,7 +4,7 @@
 
 <%= code(post, 'web-service.php') %>
 
-<%= figure('testws_myservice', 'Our web service', 'testws_myservice', 'png', 'EN'); %>
+<%= figure(post, 'testws_myservice.png', caption: 'Our web service', label: 'testws_myservice', lang: :en); %>
 
 <p>Now, How to test if our Web service is working as expected? Let' see.</p>
 
@@ -12,10 +12,10 @@
 
 <p>This is a greate tool. Given a Web service location, SoapUI generates the needed SOAP messages to send requests to our Web service. Here I show how to test our previous Web service.</p>
 
-<%= figure('testws_soapui_new', 'SoapUI new project', 'testws_soapui_new','png', 'EN'); %>
+<%= figure(post, 'testws_soapui_new.png', caption: 'SoapUI new project', label: 'testws_soapui_new', lang: :en); %>
 
 
-<%= figure('testws_soapui_request', 'Calling our Web service using SoapUI', 'testws_soapui_request', 'png', 'EN'); %>
+<%= figure(post, 'testws_soapui_request.png', caption: 'Calling our Web service using SoapUI', label: 'testws_soapui_request', lang: :en); %>
 
 <%= section("Command line"); %>
 
