@@ -1,9 +1,20 @@
 require 'htmlentities'
-module Code
-  def code(post, name)
+module Codes
+  def code(post, name, options = {})
     src = File.read(File.join('public', 'code', post, name))
     text = HTMLEntities.new.encode(src)
-    "<pre><code>#{text}</code></pre>"
+    caption = ''
+    if options[:caption]
+      caption = "<p><strong>Snippet X</strong>. #{options[:caption]}.</p>"
+    end
+    %Q(
+    <div class='code-snippet'>
+      #{caption}
+      <pre>
+        <code>#{text}</code>
+      </pre>
+    </div>
+    )
   end
 
   def inline_code(src)

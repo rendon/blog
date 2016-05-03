@@ -2,12 +2,12 @@ require 'sinatra'
 require 'rdiscount'
 
 require_relative 'tex'
-require_relative 'code'
+require_relative 'codes'
 require_relative 'posts'
 require_relative 'files'
 
 helpers Tex
-helpers Code
+helpers Codes
 helpers Posts
 helpers Files
 
