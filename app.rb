@@ -12,7 +12,7 @@ helpers Posts
 helpers Files
 
 get '/' do
-  erb :index, locals: { name: "Rafael" }
+  erb :index
 end
 
 get '/posts/:post/?' do
