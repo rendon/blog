@@ -7,7 +7,7 @@ module Tex
     langs = { en: 'Figure ', es: 'Figura ' }
     lang = options[:lang] || :en
     if options[:caption]
-      caption = "<p><strong> #{langs[lang]} X.</strong> #{options[:caption]}"
+      caption = "<p><strong> #{langs[lang]} X.</strong> #{options[:caption]}."
     end
 
     width = options[:width] ? "width='#{options[:width]}'" : ''

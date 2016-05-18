@@ -1,0 +1,7 @@
+<% @title = 'Bridge edges' %>
+Let's talk a little bit about <%= link_to('https://en.wikipedia.org/wiki/Bridge_%28graph_theory%29', 'bridges', target: :blank) %>, like in graph theory. In a nutshell, an edge is called a bridge if its removal increases the number of connected components. In a connected graph, if I were to remove a bridge, it would not be connected anymore, see <%= ref('bridge_edge') %>.
+
+<%= figure(post, 'bridge_edge.svg', caption: 'Graph with a bridge edge', label: 'bridge_edge', lang: :en) %>
+
+Next we're going to explain an algorithm to find bridge edges, developed by <%= link_to('https://en.wikipedia.org/wiki/Robert_Tarjan', 'Robert Tarjan', target: :blank) %>.
+
