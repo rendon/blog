@@ -1,3 +1,7 @@
+body {
+  background-color: #5e5e5e;
+}
+
 #wrapper {
   margin-left: 25px;
 }
@@ -22,4 +26,16 @@ figure {
   p {
     text-align: center;
   }
+}
+
+#navigation-bar {
+  border-radius: 0;
+}
+
+#main-content {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  background-color: white;
+  padding-right: 0;
+  padding-left: 0;
 }
