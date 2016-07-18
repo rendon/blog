@@ -1,6 +1,8 @@
 require 'sinatra'
 require 'rdiscount'
 
+require_relative 'quote'
+
 require_relative 'tex'
 require_relative 'codes'
 require_relative 'posts'
