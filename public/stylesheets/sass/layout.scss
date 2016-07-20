@@ -35,9 +35,11 @@ figure {
 #main-content {
   margin-top: 30px;
   margin-bottom: 30px;
+  min-height: 1000px;
   background-color: white;
   padding-right: 0;
   padding-left: 0;
+  padding-bottom: 30px;
 }
 
 #site-header {
@@ -46,17 +48,16 @@ figure {
   background-color: #222;
   border-bottom: solid 1px #777;
   color: #eee;
-  font-weight: normal;
   font-size: 1.6em;
+  font-weight: normal;
   text-align: center;
   padding-top: 35px;
+  padding-left: 128px;
   padding-bottom: 35px;
   padding-right: 128px;
-  padding-left: 128px;
 }
 
 .quote-text {
-
 }
 
 .quote-author {

@@ -3,5 +3,16 @@ Let's talk a little bit about <%= link_to('https://en.wikipedia.org/wiki/Bridge_
 
 <%= figure(post, 'bridge_edge.svg', caption: 'Graph with a bridge edge', label: 'bridge_edge', lang: :en) %>
 
-Next we're going to explain an algorithm to find bridge edges, developed by <%= link_to('https://en.wikipedia.org/wiki/Robert_Tarjan', 'Robert Tarjan', target: :blank) %>.
+<%= section('Problem') %>
+The problem is <%= link_to('http://lightoj.com/volume_showproblem.php?problem=1026', '1026 - Critical Links', target: :blank) %>, it's literally finding bridge edges, it's a good problem to test your implementation before solving problems where this algorithm is just a part of the solution.
 
+<%= section('Solution') %>
+Next is my implementation in C++:
+
+<%= code(post, 'sol.cpp') %>
+
+I hope it helps, in the references you can find more detailed explanations of the algorithm.
+
+<%= section('References') %>
+<% add_bib('geeksforgeeks', 'GeeksforGeeks', 'Bridges in a graph', 'http://www.geeksforgeeks.org/bridge-in-a-graph/') %>
+<%= generate_bib_table(:en) %>
