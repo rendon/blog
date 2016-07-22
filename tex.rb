@@ -1,6 +1,6 @@
 module Tex
   def ref(id)
-    "PENDING"
+    "<a href='#label_#{id}'><span name='ref_#{id}'>?</span></a>"
   end
 
   def figure(post, file, options = {})
@@ -13,8 +13,9 @@ module Tex
     width = options[:width] ? "width='#{options[:width]}'" : ''
     height = options[:height] ? "height='#{options[:height]}'" : ''
     alt = options[:alt] ? "alt='#{options[:alt]}'" : ''
+    id = options[:label] ? "id='label_#{options[:label]}'" : ''
     %Q(
-    <figure>
+    <figure #{id}>
       <img src="/#{File.join('public', 'pictures', post, file)}"
            #{width}
            #{height}
