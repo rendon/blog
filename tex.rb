@@ -4,10 +4,15 @@ module Tex
   end
 
   def figure(post, file, options = {})
+    @fig_num += 1
     langs = { en: 'Figure ', es: 'Figura ' }
     lang = options[:lang] || :en
     if options[:caption]
-      caption = "<p><strong> #{langs[lang]} X.</strong> #{options[:caption]}."
+      caption = %Q(
+      <p>
+        <strong> #{langs[lang]} #{@fig_num}.</strong> #{options[:caption]}.
+      </p>
+      )
     end
 
     width = options[:width] ? "width='#{options[:width]}'" : ''

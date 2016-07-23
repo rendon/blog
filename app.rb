@@ -18,6 +18,7 @@ get '/' do
 end
 
 get '/posts/:post/?' do
+  @fig_num = 0
   post = params[:post].downcase
   begin
     erb post.to_sym, locals: { post: post }
