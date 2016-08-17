@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'rdiscount'
+require 'ostruct'
 
 require_relative 'quote'
 
@@ -18,7 +19,8 @@ get '/' do
 end
 
 get '/posts/:post/?' do
-  @fig_num = 0
+  # TeX setup
+  @tex = OpenStruct.new(fig_num: 0, bibs: [])
   post = params[:post].downcase
   begin
     erb post.to_sym, locals: { post: post }

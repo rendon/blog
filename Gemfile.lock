@@ -2,12 +2,12 @@ GEM
   remote: https://rubygems.org/
   specs:
     htmlentities (4.3.4)
-    kgio (2.8.0)
+    kgio (2.9.2)
     multi_json (1.12.1)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
-    raindrops (0.10.0)
+    raindrops (0.13.0)
     rdiscount (2.1.8)
     sass (3.4.21)
     sinatra (1.4.7)
