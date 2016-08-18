@@ -14,6 +14,17 @@ helpers Codes
 helpers Posts
 helpers Files
 
+MIME_TYPES = {
+  '.pdf' => 'application/pdf',
+  '.png' => 'image/png',
+  '.jpg' => 'image/jpeg',
+  '.svg' => 'image/svg+xml'
+}.freeze
+
+def mime(file_name)
+  MIME_TYPES[File.extname(file_name.downcase)] || 'text/plain'
+end
+
 get '/' do
   erb :index
 end
@@ -30,21 +41,34 @@ get '/posts/:post/?' do
   end
 end
 
-get '/public/code/:post/:file/?' do
+get '/public/code/:post/:file' do
   post = params[:post].downcase
-  file = params[:file].downcase
-  send_file File.join('public', 'code', post, file), :type => :text
+  begin
+    send_file File.join('public', 'code', post, file), type: mime(params[:file])
+  rescue LoadError, Errno::ENOENT => e
+    puts e.message
+    raise Sinatra::NotFound
+  end
 end
 
-
-get '/public/pictures/:post/:file/?' do
+get '/public/pictures/:post/:file' do
   post = params[:post].downcase
-  file = params[:file].downcase
-  send_file File.join('public', 'pictures', post, file)
+  file = params[:file]
+  begin
+    send_file File.join('public', 'pictures', post, file), type: mime(file)
+  rescue LoadError, Errno::ENOENT => e
+    puts e.message
+    raise Sinatra::NotFound
+  end
 end
 
-get '/public/files/:post/:file/?' do
+get '/public/files/:post/:file' do
   post = params[:post].downcase
-  file = params[:file].downcase
-  send_file File.join('public', 'files', post, file)
+  file = params[:file]
+  begin
+    send_file File.join('public', 'files', post, file), type: mime(file)
+  rescue LoadError, Errno::ENOENT => e
+    puts e.message
+    raise Sinatra::NotFound
+  end
 end

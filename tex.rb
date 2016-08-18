@@ -1,6 +1,8 @@
 module Tex
   def ref(id)
-    "<a href='#label_#{id}'><span name='ref_#{id}'>?</span></a>"
+    %(<a href='#label_#{id}'>
+        <span class='tex-ref' name='ref_#{id}'>?</span>
+      </a>)
   end
 
   def figure(post, file, options = {})
@@ -32,7 +34,9 @@ module Tex
   end
 
   def cite(id)
-    "<a href='#cite_#{id}><span name='cite_#{id}'>?</span></a>"
+    %(<a href='#label_#{id}'>
+        <span class='tex-cite' name='cite_#{id}'>?</span>
+      </a>)
   end
 
   def section(title)
@@ -63,7 +67,7 @@ module Tex
       end
       html += %(
       <tr>
-        <td><a name='#{bib[:label]}'></a>[#{id + 1}]</td>
+        <td><a id='label_#{bib[:label]}'></a>[#{id + 1}]</td>
         <td>#{bib[:author].upcase}, <em>#{bib[:title]}</em>#{available_at}</td>
       </tr>
       )
@@ -79,6 +83,5 @@ module Tex
   end
 
   def tex_set(k, v)
-
   end
 end
