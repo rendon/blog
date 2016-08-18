@@ -43,8 +43,9 @@ end
 
 get '/public/code/:post/:file' do
   post = params[:post].downcase
+  file = params[:file]
   begin
-    send_file File.join('public', 'code', post, file), type: mime(params[:file])
+    send_file File.join('public', 'code', post, file), type: mime(file)
   rescue LoadError, Errno::ENOENT => e
     puts e.message
     raise Sinatra::NotFound

@@ -15,11 +15,11 @@
 
 <%= section('Solución [código]') %>
 <p>Existe más de una forma de dar solución a este problema:</p>
-    
+
 <p>La manera más sencilla es iterar en el rango dado con <i>i</i> y realizar la operación modulo con 3 y 5 y si alguna de ellas resulta verdadera entonces sumamos <i>i</i> a la suma total.</p>
-    
+
 <p>Una segunda aproximación al problema un poco más eficiente consiste en calcular todos los múltiplos de 3 y de 5 menores que 1000 y almacenarlos formando dos conjuntos. Note que ciertos valores pueden ser múltiplos de 3 tanto como de 5, siendo 15 un claro ejemplo, por lo tanto es necesario eliminar las repeticiones(A unión B) para que no se altere la suma final. Después de esto simplemente sumamos todos los elementos de ambos conjuntos.</p>
-    
+
 <p>A continuación se muestran las implementaciones de estas dos estrategias.</p>
 
 <%= code(post, 'a.c') %>
