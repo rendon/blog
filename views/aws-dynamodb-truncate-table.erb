@@ -1,0 +1,15 @@
+<% @title = 'Truncate DynamoDB table' %>
+
+<p>One of the features that I miss from most RDBMS is the ability to easily delete all rows, either via <code>DELETE * FROM MyTable</code> or using <code>TRUNCATE TABLE MyTable</code>. Unfortunately,  DynamoDB does not have such a feature, you have to either, delete your table or remove all items one at a time.</p>
+
+<p> See <%= link_to_post('aws-dynamodb-delete-tables', 'my previous') %> post if you want to know how to delete tables using the AWS SDK with Java. </p>
+
+<p>Sometimes however, deleting your tables is not convenient, for example, you will have to define your schema and specify your capacity settings again, in this case, and if your tables contains just a few tens of records, it's easier to iterate over all your items and remove them.</p>
+
+<p>Without further ado here is my code:</p>
+
+<%= code(post, 'TableCleaner.java') %>
+
+<p>You need to provide the name of your partition key and the range key if your table has one, for example: <code>$ java TableCleaner MyTable:PartionKeyName:RangeKeyName</code>.</p>
+
+<p>Being this the first time that I use the AWS SDK for DynamoDB it took a while figure this out, so I hope it could help you save time.</p>
