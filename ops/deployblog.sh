@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-cd ~/blog
+export BLOG_PATH=$PWD
+cd $BLOG_PATH
+mkdir -p pids logs
 git pull origin master
 killall ruby
 unicorn -c unicorn.rb -D
