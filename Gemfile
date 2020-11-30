@@ -1,8 +1,7 @@
 # A sample Gemfile
 source "https://rubygems.org"
 
-gem 'sinatra'
-gem 'sinatra-json'
+gem 'sinatra', '~> 2.1'
 gem 'sass'
 gem 'rdiscount'
 gem 'unicorn', '~> 4.9'

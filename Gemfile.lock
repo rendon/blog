@@ -4,27 +4,27 @@ GEM
     ffi (1.13.1)
     htmlentities (4.3.4)
     kgio (2.11.3)
-    multi_json (1.15.0)
-    rack (1.6.13)
-    rack-protection (1.5.5)
+    mustermann (1.1.1)
+      ruby2_keywords (~> 0.0.1)
+    rack (2.2.3)
+    rack-protection (2.1.0)
       rack
     raindrops (0.19.1)
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rdiscount (2.2.0.2)
+    ruby2_keywords (0.0.2)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-    sinatra (1.4.8)
-      rack (~> 1.5)
-      rack-protection (~> 1.4)
-      tilt (>= 1.3, < 3)
-    sinatra-json (0.1.0)
-      multi_json (~> 1.0)
-      sinatra (~> 1.0)
+    sinatra (2.1.0)
+      mustermann (~> 1.0)
+      rack (~> 2.2)
+      rack-protection (= 2.1.0)
+      tilt (~> 2.0)
     tilt (2.0.10)
     unicorn (4.9.0)
       kgio (~> 2.6)
@@ -38,8 +38,7 @@ DEPENDENCIES
   htmlentities (~> 4.3, >= 4.3.4)
   rdiscount
   sass
-  sinatra
-  sinatra-json
+  sinatra (~> 2.1)
   unicorn (~> 4.9)
 
 BUNDLED WITH
