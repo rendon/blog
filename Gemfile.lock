@@ -1,19 +1,19 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    ffi (1.9.25)
+    ffi (1.13.1)
     htmlentities (4.3.4)
-    kgio (2.11.2)
-    multi_json (1.13.1)
-    rack (1.6.10)
+    kgio (2.11.3)
+    multi_json (1.15.0)
+    rack (1.6.13)
     rack-protection (1.5.5)
       rack
-    raindrops (0.19.0)
-    rb-fsevent (0.10.3)
-    rb-inotify (0.9.10)
-      ffi (>= 0.5.0, < 2)
-    rdiscount (2.2.0.1)
-    sass (3.5.7)
+    raindrops (0.19.1)
+    rb-fsevent (0.10.4)
+    rb-inotify (0.10.1)
+      ffi (~> 1.0)
+    rdiscount (2.2.0.2)
+    sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -25,8 +25,8 @@ GEM
     sinatra-json (0.1.0)
       multi_json (~> 1.0)
       sinatra (~> 1.0)
-    tilt (2.0.8)
-    unicorn (4.6.2)
+    tilt (2.0.10)
+    unicorn (4.9.0)
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
@@ -40,7 +40,7 @@ DEPENDENCIES
   sass
   sinatra
   sinatra-json
-  unicorn (= 4.6.2)
+  unicorn (~> 4.9)
 
 BUNDLED WITH
-   1.16.4
+   1.17.3
