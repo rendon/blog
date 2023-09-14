@@ -15,6 +15,7 @@ stdout_path "#{ENV['BLOG_PATH']}/logs/unicorn.log"
 # Unicorn socket
 # listen "/tmp/unicorn.[app name].sock"
 listen "/tmp/unicorn.blog.sock"
+listen 8080, :tcp_nopush => true
 
 # Number of processes
 # worker_processes 4
