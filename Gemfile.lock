@@ -7,10 +7,12 @@ GEM
     kgio (2.11.4)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
-    rack (2.2.8.1)
-    rack-protection (3.2.0)
+    rack (3.0.10)
+    rack-protection (4.0.0)
       base64 (>= 0.1.0)
-      rack (~> 2.2, >= 2.2.4)
+      rack (>= 3.0.0, < 4)
+    rack-session (2.0.0)
+      rack (>= 3.0.0)
     raindrops (0.20.1)
     rb-fsevent (0.11.2)
     rb-inotify (0.10.1)
@@ -22,10 +24,11 @@ GEM
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-    sinatra (3.2.0)
+    sinatra (4.0.0)
       mustermann (~> 3.0)
-      rack (~> 2.2, >= 2.2.4)
-      rack-protection (= 3.2.0)
+      rack (>= 3.0.0, < 4)
+      rack-protection (= 4.0.0)
+      rack-session (>= 2.0.0, < 3)
       tilt (~> 2.0)
     tilt (2.3.0)
     unicorn (6.1.0)
@@ -40,8 +43,8 @@ DEPENDENCIES
   htmlentities (~> 4.3, >= 4.3.4)
   rdiscount (~> 2.2.7.1)
   sass
-  sinatra (~> 3.1)
+  sinatra (~> 4.0)
   unicorn (~> 6.1.0)
 
 BUNDLED WITH
-   2.5.6
+   2.5.9
