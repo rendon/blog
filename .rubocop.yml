@@ -1,0 +1,12 @@
+AllCops:
+  Exclude:
+    - public/code/**/*
+# Custom rules
+Metrics/LineLength:
+  Max: 100
+
+Style/HashSyntax:
+  # hash value omission were introduced in ruby 2.1
+  EnforcedShorthandSyntax: never
+  # forces use of explicit hash literal value.
+  SupportedShorthandSyntax: never

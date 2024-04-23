@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Functions for rendering posts.
 module Posts
   def link_to_post(id, name)
     "<a href='/posts/#{id}' target='_blank'>#{name}</a>"

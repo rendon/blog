@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'tilt/erb'
-require 'sass/plugin/rack'
 require './app'
+require 'sass/plugin/rack'
 Sass::Plugin.options[:style] = :compressed
 use Sass::Plugin::Rack
 

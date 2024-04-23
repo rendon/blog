@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Functions for handling files.
 module Files
   def file(post, name, caption = nil)
     caption ||= name

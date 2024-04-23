@@ -1,18 +1,17 @@
+# frozen_string_literal: true
+
 require 'htmlentities'
+
+# Functions to render code snippets.
 module Codes
-  def code(post, name, options = {})
+  def code(post, name, opts = {})
     src = File.read(File.join('public', 'code', post, name))
     text = HTMLEntities.new.encode(src)
-    caption = ''
-    if options[:caption]
-      caption = "<p><strong>Snippet X</strong>. #{options[:caption]}.</p>"
-    end
-    %Q(
+    caption = "<p><strong>Snippet X</strong>. #{opts[:caption]}.</p>" if opts[:caption]
+    %(
     <div class='code-snippet'>
       #{caption}
-      <pre>
-        <code>#{text}</code>
-      </pre>
+      <pre><code>#{text}</code></pre>
     </div>
     )
   end
