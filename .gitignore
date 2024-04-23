@@ -5,3 +5,4 @@ public/stylesheets/layout.css
 .DS_Store
 logs/
 pids/
+.idea/
