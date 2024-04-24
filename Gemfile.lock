@@ -3,7 +3,6 @@ GEM
   specs:
     base64 (0.2.0)
     ffi (1.16.3)
-    htmlentities (4.3.4)
     kgio (2.11.4)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
@@ -40,7 +39,6 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  htmlentities (~> 4.3, >= 4.3.4)
   rdiscount (~> 2.2.7.1)
   sass
   sinatra (~> 4.0)
