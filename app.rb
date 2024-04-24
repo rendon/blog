@@ -31,6 +31,10 @@ get '/' do
   erb :index
 end
 
+get '/favicon.ico' do
+  send_file File.join('public', 'pictures', 'favicon.ico'), type: mime('image/ico')
+end
+
 get '/posts/:post/?' do
   # TeX setup
   @tex = OpenStruct.new(fig_num: 0, bibs: [])
