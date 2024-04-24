@@ -7,8 +7,9 @@
     <title>LetMeThink.mx <%= @title ? " | #{@title}" : '' %></title>
 
     <!-- Bootstrap -->
-    <link href="/stylesheets/bootstrap.css" rel="stylesheet">
+    <link href="/stylesheets/bootstrap-v5.3.3.min.css" rel="stylesheet">
 
+    <!-- Custom CSS -->
     <link href="/stylesheets/layout.css" rel="stylesheet">
 
 
@@ -18,24 +19,24 @@
 
   </head>
   <body>
-    <div class='col-md-2'></div>
-    <div id='main-content' class='col-md-8'>
-      <nav id='navigation-bar' class="navbar navbar-inverse">
-        <div class="navbar-header">
-          <a href="/" class="navbar-brand">LetMeThink.mx</a>
-        </div>
-      </nav>
-      <div id="wrapper">
-        <div class="container-fluid">
-          <%= yield %>
+    <div class='row'>
+      <div class='col-lg-2'></div>
+      <div id='main-content' class='col-lg-8'>
+        <nav id='navigation-bar' class="navbar navbar-expand-lg bg-dark navbar-dark">
+          <div class="container-fluid">
+            <a href="/" class="navbar-brand">LetMeThink.mx</a>
+          </div>
+        </nav>
+        <div id="wrapper">
+          <div class="container-fluid">
+            <%= yield %>
+          </div>
         </div>
       </div>
+      <div class='col-lg-2'></div>
     </div>
-    <div class='col-md-2'></div>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="/javascript/jquery-2.2.0.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="/javascript/bootstrap.js"></script>
+    <script src="/javascript/jquery-3.7.1.min.js"></script>
+    <script src="/javascript/bootstrap-v5.3.3.min.js"></script>
 
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
