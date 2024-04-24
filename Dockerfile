@@ -5,7 +5,7 @@ WORKDIR /home/admin/app
 COPY . .
 USER root
 RUN mkdir -p pids/ logs/
-RUN chown -R admin:admin Gemfile Gemfile.lock pids/ logs/
+RUN chown -R admin:admin Gemfile Gemfile.lock pids/ logs/ public/
 USER admin
 
 RUN rbenv local ${RUBY_VERSION}
