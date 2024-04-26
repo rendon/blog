@@ -35,12 +35,20 @@ get '/favicon.ico' do
   send_file File.join('public', 'pictures', 'favicon.ico'), type: mime('image/ico')
 end
 
+get '/posts/?' do
+  erb :index
+end
+
 get '/posts/:post/?' do
   # TeX setup
   @tex = OpenStruct.new(fig_num: 0, bibs: [])
   post = params[:post].downcase
   begin
-    erb post.to_sym, locals: { post: post }
+    erb :index, {
+      views: "views/#{post}",
+      layout: :"../layout",
+      locals: { post: post }
+    }
   rescue LoadError, Errno::ENOENT => e
     puts e.message
     raise Sinatra::NotFound
