@@ -32,7 +32,7 @@ get '/' do
 end
 
 get '/favicon.ico' do
-  send_file File.join('public', 'pictures', 'favicon.ico'), type: mime('image/ico')
+  send_file File.join('public', 'pictures', 'favicon.ico'), type: 'image/ico'
 end
 
 get '/posts/?' do
