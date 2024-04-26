@@ -1,0 +1,21 @@
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    background-color: #323f51;
+    padding-inline-start: 0;
+}
+
+.navbar-item {
+    margin: 10px;
+    font-size: large;
+    font-weight: bold;
+}
+
+.navbar li {
+    list-style: none;
+}
+
+.content {
+    margin: 0 10px;
+}

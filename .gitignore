@@ -1,7 +1,6 @@
 *.swp
 *.map
 .sass-cache/
-public/stylesheets/layout.css
 .DS_Store
 logs/
 pids/

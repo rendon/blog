@@ -6,37 +6,27 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>LetMeThink.mx <%= @title ? " | #{@title}" : '' %></title>
 
-    <!-- Bootstrap -->
-    <link href="/stylesheets/bootstrap-v5.3.3.min.css" rel="stylesheet">
+    <!-- https://github.com/kognise/water.css -->
+    <link href="/stylesheets/water.base.css" rel="stylesheet">
+    <link href="/stylesheets/water.dark.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
     <link href="/stylesheets/layout.css" rel="stylesheet">
 
-
-    <!-- Highlightjs -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-
   </head>
-  <body>
-    <div class='row'>
-      <div class='col-lg-2'></div>
-      <div id='main-content' class='col-lg-8'>
-        <nav id='navigation-bar' class="navbar navbar-expand-lg bg-dark navbar-dark">
-          <div class="container-fluid">
-            <a href="/" class="navbar-brand">LetMeThink.mx</a>
-          </div>
-        </nav>
-        <div id="wrapper">
-          <div class="container-fluid">
-            <%= yield %>
-          </div>
-        </div>
-      </div>
-      <div class='col-lg-2'></div>
+  <!-- Override water's padding -->
+  <body style='padding: 0 0;'>
+
+    <div>
+      <ul class='navbar'>
+        <li class='navbar-item'><a href="/">LetMeThink.mx</a></li>
+      </ul>
     </div>
+
+    <div class='content'>
+      <%= yield %>
+    </div>
+
     <script src="/javascript/jquery-3.7.1.min.js"></script>
-    <script src="/javascript/bootstrap-v5.3.3.min.js"></script>
 
     <script>
       window.MathJax = {
@@ -48,8 +38,6 @@
 
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-    <script>hljs.highlightAll();</script>
 
     <script src='/javascript/tex.js'></script>
   </body>
