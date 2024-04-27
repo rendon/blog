@@ -19,3 +19,9 @@
 .content {
     margin: 0 10px;
 }
+
+.video {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
