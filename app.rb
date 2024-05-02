@@ -66,6 +66,17 @@ get '/public/code/:post/:file' do
   end
 end
 
+get '/posts/:post/:file' do
+  post = params[:post].downcase
+  file = params[:file]
+  begin
+    send_file File.join('views', post, file), type: mime(file)
+  rescue LoadError, Errno::ENOENT => e
+    puts e.message
+    raise Sinatra::NotFound
+  end
+end
+
 get '/public/pictures/:post/:file' do
   post = params[:post].downcase
   file = params[:file]
