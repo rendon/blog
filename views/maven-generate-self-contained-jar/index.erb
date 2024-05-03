@@ -1,0 +1,52 @@
+<h1 id="maven-generate-self-contained-jar">Maven generate self-contained
+jar</h1>
+<p>2024-05-03 17:17:33 #dev #post</p>
+<p>If your application is meant to run out of the box, it’s convenient
+for the users to get a single file and just execute it. For that, we
+need a way to bundle everything together in a big JAR file The <a
+href="https://maven.apache.org/plugins/maven-shade-plugin/index.html">Shade</a>
+plugin can do just that.</p>
+<p><strong>NOTES</strong>:</p>
+<ul>
+<li>Make sure the plugin is directly under <code>&lt;build&gt;</code>,
+not under <code>&lt;pluginManagement&gt;</code> or other element.</li>
+<li>Update the <code>&lt;mainClass&gt;</code> element accordingly</li>
+</ul>
+<p>Add something like the following to your <code>&lt;build&gt;</code>
+section (within the <code>pom.xml</code> file):</p>
+<pre><code>    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-shade-plugin&lt;/artifactId&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;shade&lt;/goal&gt;
+                        &lt;/goals&gt;
+                        &lt;configuration&gt;
+                            &lt;shadedArtifactAttached&gt;true&lt;/shadedArtifactAttached&gt;
+                            &lt;transformers&gt;
+                                &lt;transformer implementation=&quot;org.apache.maven.plugins.shade.resource.ManifestResourceTransformer&quot;&gt;
+                                    &lt;mainClass&gt;com.myapp.App&lt;/mainClass&gt;
+                                &lt;/transformer&gt;
+                            &lt;/transformers&gt;
+
+                            &lt;artifactSet&gt;
+                                &lt;excludes&gt;
+                                    &lt;exclude&gt;classworlds:classworlds&lt;/exclude&gt;
+                                    &lt;exclude&gt;junit:junit&lt;/exclude&gt;
+                                    &lt;exclude&gt;jmock:*&lt;/exclude&gt;
+                                    &lt;exclude&gt;*:xml-apis&lt;/exclude&gt;
+                                    &lt;exclude&gt;org.apache.maven:lib:tests&lt;/exclude&gt;
+                                    &lt;exclude&gt;log4j:log4j:jar:&lt;/exclude&gt;
+                                &lt;/excludes&gt;
+                            &lt;/artifactSet&gt;
+
+                        &lt;/configuration&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;</code></pre>
+<p>Then build your package as usual (<code>mvn clean package</code>).
+The self-contained jar should be in the <code>target/</code> directory
+with a name like <code>myapp-1.0-SNAPSHOT-shaded.jar</code>.</p>
