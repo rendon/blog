@@ -35,11 +35,7 @@ get '/favicon.ico' do
   send_file File.join('public', 'pictures', 'favicon.ico'), type: 'image/ico'
 end
 
-get '/posts/?' do
-  erb :index
-end
-
-get '/posts/:post/?' do
+get '/:post/?' do
   # TeX setup
   @tex = OpenStruct.new(fig_num: 0, bibs: [])
   post = params[:post].downcase
@@ -66,7 +62,7 @@ get '/public/code/:post/:file' do
   end
 end
 
-get '/posts/:post/:file' do
+get '/:post/:file' do
   post = params[:post].downcase
   file = params[:file]
   begin
