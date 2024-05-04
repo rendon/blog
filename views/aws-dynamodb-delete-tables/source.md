@@ -1,4 +1,4 @@
-# DynamoDB: deleting tables
+# DynamoDB: Delete tables
 I found myself deleting tables manually from the DynamoDB UI and it started to get tedious. Here a small working program to delete tables in Java:
 ```java
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
@@ -64,6 +64,13 @@ public class TableReaper {
 }
 ```
 
-<!-- TODO: Explain how to set up the SDK to compile the program properly.  -->
+See [maven-getting-started](/maven-getting-started) to learn how to set up a project and the AWS SDK.
 
-Just like that.
+## Full source code
+You can find the full program at [aws-dynamodb-delete-tables](https://github.com/rendon/code-samples/tree/master/aws-dynamodb-delete-tables).
+
+Run as follows:
+```sh
+mvn clean package
+java -jar target/ddb-1.0-SNAPSHOT-shaded.jar
+```

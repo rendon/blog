@@ -1,4 +1,4 @@
-# Maven set up a new project
+# Maven: Getting started
 2024-05-03 08:37:10 #dev #tools #post
 ## Install maven
 ```sh
