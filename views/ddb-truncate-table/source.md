@@ -8,38 +8,16 @@ See [ddb-delete-tables](/ddb-delete-tables) if you want to know how to delete ta
 Sometimes however, deleting your tables is not convenient, for example, you will have to define your schema and specify your capacity settings again, in this case, and if your tables contains just a few tens of records, it's easier to remove them one by one.
 
 ```java
-import java.util.Iterator;
-
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
-import com.amazonaws.services.dynamodbv2.document.DynamoDB;
-import com.amazonaws.services.dynamodbv2.document.Table;
-import com.amazonaws.services.dynamodbv2.document.spec.ScanSpec;
-import com.amazonaws.services.dynamodbv2.document.ItemCollection;
-import com.amazonaws.services.dynamodbv2.document.ScanOutcome;
-import com.amazonaws.services.dynamodbv2.document.Item;
-import com.amazonaws.services.dynamodbv2.document.PrimaryKey;
-
-import com.amazonaws.auth.profile.ProfileCredentialsProvider;
-import com.amazonaws.regions.Regions;
-
-/**
- * Truncates table, handy in testing and debugging.
- *
- * Credentials are read from ~/.aws/credentials.
- * See http://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html for more
- * details.
- */
-public class TableCleaner {
+public class App {
     private DynamoDB db;
 
-    public TableCleaner(DynamoDB db) {
+    public App(DynamoDB db) {
         this.db = db;
     }
 
     public static void main(String[] args) throws Exception {
         if (args.length != 1) {
-            System.err.printf("Usage: java TableCleaner <table:partition_key[:range_key]>");
+            System.err.printf("Usage: java App <table:partition_key[:sort_key]>\n");
             System.exit(1);
         }
         AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard()
@@ -47,7 +25,7 @@ public class TableCleaner {
             .withRegion(Regions.US_WEST_2)
             .build();
         DynamoDB db = new DynamoDB(client);
-        new TableCleaner(db).truncateTable(args[0]);
+        new App(db).truncateTable(args[0]);
     }
 
     public void truncateTable(String tableSpec) {
@@ -63,44 +41,44 @@ public class TableCleaner {
         }
     }
 
-    private void truncateTable(String tableName, String hashKeyName, String rangeKeyName) throws Exception {
+    private void truncateTable(String tableName, String partitionKeyName, String sortKeyName) throws Exception {
         Table table = db.getTable(tableName);
         ScanSpec spec = new ScanSpec();
         ItemCollection<ScanOutcome> items = table.scan(spec);
         Iterator<Item> it = items.iterator();
         while (it.hasNext()) {
             Item item = it.next();
-            String hashKey = item.getString(hashKeyName);
-            String rangeKey = item.getString(rangeKeyName);
-            PrimaryKey key = new PrimaryKey( hashKeyName, hashKey, rangeKeyName, rangeKey);
+            String partitionKey = item.getString(partitionKeyName);
+            String sortKey = item.getString(sortKeyName);
+            PrimaryKey key = new PrimaryKey( partitionKeyName, partitionKey, sortKeyName, sortKey);
             table.deleteItem(key);
-            System.out.printf("Deleted item with key: <%s, %s>\n", hashKey, rangeKey);
+            System.out.printf("Deleted item with key: <%s, %s>\n", partitionKey, sortKey);
         }
     }
 
-    private void truncateTable(String tableName, String hashKeyName) throws Exception {
+    private void truncateTable(String tableName, String partitionKeyName) throws Exception {
         Table table = db.getTable(tableName);
         ScanSpec spec = new ScanSpec();
         ItemCollection<ScanOutcome> items = table.scan(spec);
         Iterator<Item> it = items.iterator();
         while (it.hasNext()) {
             Item item = it.next();
-            String hashKey = item.getString(hashKeyName);
-            PrimaryKey key = new PrimaryKey(hashKeyName, hashKey);
+            String partitionKey = item.getString(partitionKeyName);
+            PrimaryKey key = new PrimaryKey(partitionKeyName, partitionKey);
             table.deleteItem(key);
-            System.out.printf("Deleted item with key: %s\n", hashKey);
+            System.out.printf("Deleted item with key: %s\n", partitionKey);
         }
     }
 }
 ```
 
-<!-- TODO: Explain how to set up the SDK to compile the program properly.  -->
-Compile
+## Full source code
+The full program is at [ddb-truncate-table](https://github.com/rendon/code-samples/tree/master/ddb-truncate-table).
 ```sh
-
+mvn package
 ```
 
-You need to provide the name of your partition key and the range key if your table has one, for example:
+You need to provide the name of your partition key and the sort key if your table has one, for example:
 ```sh
-java TableCleaner MyTable:PartionKeyName:RangeKeyName
+java -jar target/ddb-1.0-SNAPSHOT-shaded.jar test-table:key:sort
 ```

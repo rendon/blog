@@ -1,5 +1,10 @@
 <h1 id="dynamodb-delete-tables">DynamoDB: Delete tables</h1>
-<p>2024-05-04 14:24:01 #dev #aws #post</p>
+
+<p class='metadata'>
+    <span class='publication'><span class="fa-solid fa-clock"></span> <em>2024-05-04</em></span>
+    <span class='tags'><span class="fa-solid fa-tag"></span><code>#dev</code> <code>#aws</code> <code>#post</code></span>
+</p>
+
 <p>I found myself deleting tables manually from the DynamoDB UI and it
 started to get tedious. Here a small working program to delete tables in
 Java:</p>
@@ -56,3 +61,4 @@ href="https://github.com/rendon/code-samples/tree/master/ddb-delete-tables">ddb-
 <p>Run as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mvn</span> clean package</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">java</span> <span class="at">-jar</span> target/ddb-1.0-SNAPSHOT-shaded.jar</span></code></pre></div>
+

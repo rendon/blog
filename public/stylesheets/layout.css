@@ -30,3 +30,13 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.metadata {
+    border: solid grey 1px;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.tags {
+    margin-left: 20px;
+}
