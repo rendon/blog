@@ -3,35 +3,25 @@
 <h1 id="cifrar-dispositivos-con-luks">Cifrar dispositivos con LUKS</h1>
 
 <p class='metadata'>
-    <span class='publication'><span class="fa-solid fa-clock"></span> <em>2024-04-26</em></span>
+    <span class='published'><span class="fa-solid fa-clock"></span> <em>2024-04-26</em></span>
+	
     <span class='tags'><span class="fa-solid fa-tag"></span><code>#sysadmin</code> <code>#seguridad</code> <code>#linux</code></span>
 </p>
 
 <div class="video">
 <p><iframe width="560" height="315" src="https://www.youtube.com/embed/YIzfk069uYE?si=4e04fXz5mVrq9L2p" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></p>
 </div>
-<p>Hola a todos, espero que se encuentren bien. Mi nombre es Rafael. En
-este vídeo les muestro como cifrar un dispositivo en Linux para que
-puedan guardar información de manera segura.</p>
-<p>Debo mencionar, que el enfoque de este vídeo es datos personales, es
-decir, una cantidad relativamente pequeña que puede almacenarse en solo
-disco duro.</p>
-<p>Probablemente no sea necesario explicar la importancia de respaldar
-nuestros datos. Sin embargo, quizá menos sabido es que una copia no es
-suficiente. El principio del 3-2-1:</p>
+<p>Hola a todos, espero que se encuentren bien. Mi nombre es Rafael. En este vídeo les muestro como cifrar un dispositivo en Linux para que puedan guardar información de manera segura.</p>
+<p>Debo mencionar, que el enfoque de este vídeo es datos personales, es decir, una cantidad relativamente pequeña que puede almacenarse en solo disco duro.</p>
+<p>Probablemente no sea necesario explicar la importancia de respaldar nuestros datos. Sin embargo, quizá menos sabido es que una copia no es suficiente. El principio del 3-2-1:</p>
 <ul>
 <li>3 copias</li>
 <li>2 medios (por ejemplo, disco duro y USB)</li>
 <li>1 de ellos debe ser externo (por ejemplo, una copia en S3)</li>
 </ul>
-<p>Algo que yo quiero poder hacer es guardar una copia en la casa, o
-encargarla con alguien de confianza, pero esto no es posible si los
-datos no están cifrados ya que alguien podría robar el dispositivo. La
-buena noticia es que ahora puedo justo hacer eso si cifro el medio de
-almacenamiento.</p>
+<p>Algo que yo quiero poder hacer es guardar una copia en la casa, o encargarla con alguien de confianza, pero esto no es posible si los datos no están cifrados ya que alguien podría robar el dispositivo. La buena noticia es que ahora puedo justo hacer eso si cifro el medio de almacenamiento.</p>
 <h2 id="configuración-inicial">Configuración inicial:</h2>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Encuentra tu dispositivo</span></span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Encuentra tu dispositivo</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">lsblk</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Formatea el dispositivo con formato LUKS</span></span>
@@ -52,8 +42,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Cierra dispositivo</span></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cryptsetup close <span class="op">&lt;</span>dispositivo<span class="op">&gt;</span></span></code></pre></div>
 <h2 id="como-usar-tu-dispositivo">Como usar tu dispositivo</h2>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Encuentra tu dispositivo</span></span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Encuentra tu dispositivo</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">lsblk</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Abre dispositivo como &lt;nombre&gt;</span></span>
@@ -70,8 +59,6 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Cierra dispositivo</span></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> cryptsetup close <span class="op">&lt;</span>dispositivo<span class="op">&gt;</span></span></code></pre></div>
 <h2 id="interfaces-gráficas">Interfaces gráficas</h2>
-<p>Debo mencionar que existen interfaces gráficas para hacer todo lo que
-les mostré en este articulo, pero eso lo dejamos para otra ocasión.</p>
-<p>Pues bien, eso es todo. Recuerden guardar muy bien la contraseña.
-Hasta la próxima.</p>
+<p>Debo mencionar que existen interfaces gráficas para hacer todo lo que les mostré en este articulo, pero eso lo dejamos para otra ocasión.</p>
+<p>Pues bien, eso es todo. Recuerden guardar muy bien la contraseña. Hasta la próxima.</p>
 

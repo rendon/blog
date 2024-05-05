@@ -8,7 +8,7 @@ do
         cd "$dir"
         if [[ -f source.md ]]
         then
-            pandoc source.md -t html -o index.erb
+            pandoc --wrap=none source.md -t html -o index.erb
 
             # Format metadata
             ~/projects/blog/bin/fmtmd < index.erb > tmp.erb

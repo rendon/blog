@@ -1,7 +1,8 @@
 <h1 id="maven-getting-started">Maven: Getting started</h1>
 
 <p class='metadata'>
-    <span class='publication'><span class="fa-solid fa-clock"></span> <em>2024-05-03</em></span>
+    <span class='published'><span class="fa-solid fa-clock"></span> <em>2024-05-03</em></span>
+	
     <span class='tags'><span class="fa-solid fa-tag"></span><code>#dev</code> <code>#tools</code> <code>#post</code></span>
 </p>
 
@@ -17,17 +18,13 @@
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> app/</span></code></pre></div>
 <h2 id="set-compiler-release">Set compiler release</h2>
-<p>Open the <code>pom.xml</code> file and update the following
-lines:</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode xml"><code class="sourceCode xml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- E.g., 11, 17, 21, etc. --&gt;</span></span>
+<p>Open the <code>pom.xml</code> file and update the following lines:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- E.g., 11, 17, 21, etc. --&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">maven.compiler.source</span>&gt;21&lt;/<span class="kw">maven.compiler.source</span>&gt;</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">maven.compiler.target</span>&gt;21&lt;/<span class="kw">maven.compiler.target</span>&gt;</span></code></pre></div>
 <h2 id="add-dependencies">Add dependencies</h2>
-<p>Add the following sample dependency to the <code>pom.xml</code>
-file:</p>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode xml"><code class="sourceCode xml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">dependencies</span>&gt;</span>
+<p>Add the following sample dependency to the <code>pom.xml</code> file:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">dependencies</span>&gt;</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  ...</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">dependency</span>&gt;</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">groupId</span>&gt;com.amazonaws&lt;/<span class="kw">groupId</span>&gt;</span>

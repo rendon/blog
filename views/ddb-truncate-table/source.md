@@ -1,5 +1,5 @@
 # Truncate DynamoDB table
-2024-05-04 14:34:22 #dev #aws #post
+2017-05-06 2024-05-04 #dev #aws #post
 
 One of the features that I miss from most RDBMS is the ability to easily delete all rows, either via `DELETE * FROM MyTable` or using `TRUNCATE TABLE MyTable`. Unfortunately, DynamoDB does not have such a feature, you have to either, delete your table or remove all items one at a time.
 

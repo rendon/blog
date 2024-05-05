@@ -1,15 +1,13 @@
 <h1 id="dynamodb-delete-tables">DynamoDB: Delete tables</h1>
 
 <p class='metadata'>
-    <span class='publication'><span class="fa-solid fa-clock"></span> <em>2024-05-04</em></span>
+    <span class='published'><span class="fa-solid fa-clock"></span> <em>2017-05-02</em></span>
+	<span class='updated'><span class="fa-solid fa-clock-rotate-left"></span> <em>2024-05-04</em></span>
     <span class='tags'><span class="fa-solid fa-tag"></span><code>#dev</code> <code>#aws</code> <code>#post</code></span>
 </p>
 
-<p>I found myself deleting tables manually from the DynamoDB UI and it
-started to get tedious. Here a small working program to delete tables in
-Java:</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode java"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> App <span class="op">{</span></span>
+<p>I found myself deleting tables manually from the DynamoDB UI and it started to get tedious. Here a small working program to delete tables in Java:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> App <span class="op">{</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> DynamoDB db<span class="op">;</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="fu">App</span><span class="op">(</span>DynamoDB db<span class="op">)</span> <span class="op">{</span></span>
@@ -53,11 +51,9 @@ class="sourceCode java"><code class="sourceCode java"><span id="cb1-1"><a href="
 <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
 <span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p>See <a href="/maven-getting-started">maven-getting-started</a> to
-learn how to set up a project and the AWS SDK.</p>
+<p>See <a href="/maven-getting-started">maven-getting-started</a> to learn how to set up a project and the AWS SDK.</p>
 <h2 id="full-source-code">Full source code</h2>
-<p>You can find the full program at <a
-href="https://github.com/rendon/code-samples/tree/master/ddb-delete-tables">ddb-delete-tables</a>.</p>
+<p>You can find the full program at <a href="https://github.com/rendon/code-samples/tree/master/ddb-delete-tables">ddb-delete-tables</a>.</p>
 <p>Run as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mvn</span> clean package</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">java</span> <span class="at">-jar</span> target/ddb-1.0-SNAPSHOT-shaded.jar</span></code></pre></div>
