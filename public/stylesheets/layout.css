@@ -46,3 +46,10 @@ body {
 .tags {
     margin-left: 20px;
 }
+
+figure {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

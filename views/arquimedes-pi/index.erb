@@ -1,51 +1,66 @@
-<%= initialize(); %>
-<%= section("Introducción"); %>
+<!-- vim: set spelllang=es_mx: -->
+<h1 id="arquimedes-pi">Arquimedes PI</h1>
 
-<p>En matemáticas <b>$\pi$</b> es una constante cuyo valor es la razón entre el perímetro de un círculo con respecto a su diámetro, es decir, cuantas veces cabe el diámetro en el perímetro del círculo.</p>
+<p class='metadata'>
+    <span class='published'><span class="fa-solid fa-clock"></span> <em>2016-02-23</em></span>
+	<span class='updated'><span class="fa-solid fa-clock-rotate-left"></span> <em>2024-05-05</em></span>
+    <span class='tags'><span class="fa-solid fa-tag"></span><code>#math</code> <code>#dev</code> <code>#post</code></span>
+</p>
 
-<%= figure(post, 'pi_unrolled.gif', caption: 'Razón entre el el perímetro y el diámetro de un círculo', label: 'pi_unrolled', lang: :es); %>
+<h2 id="introducción">Introducción</h2>
+<p>En matemáticas <span class="math inline"><em>π</em></span> es una constante cuyo valor es la razón entre el perímetro de un círculo con respecto a su diámetro, es decir, cuantas veces cabe el diámetro en el perímetro del círculo.</p>
+<figure>
+<img src="pi_unrolled.gif" alt="Razón entre el el perímetro y el diámetro de un círculo" />
+<figcaption aria-hidden="true">Razón entre el el perímetro y el diámetro de un círculo</figcaption>
+</figure>
+<p>Arquímides de Siracusa(c. 287 a. C. ? c. 212 a. C.) fue un matemático griego, físico, ingeniero, inventor y astrónomo. Él fue probablemente el primero en encontrar un método para aproximar el valor de <span class="math inline"><em>π</em></span> de manera iterativa.</p>
+<p>Dada una circunferencia, el método de Arquímides consiste en dibujar un polígono inscrito y otro circunscrito y calculaba el perímetro de ambos polígonos, siendo estos perímetros el límite superior(polígono circunscrito) y límite inferior(polígono inscrito).</p>
+<figure>
+<img src="arquimedes_pi.png" alt="Método de Arquímides para obtener PI" />
+<figcaption aria-hidden="true">Método de Arquímides para obtener PI</figcaption>
+</figure>
+<p>Con base en lo anterior Arquímides pudo determinar el intervalo numérico en el que se encuentra el valor exacto de <span class="math inline"><em>π</em></span>.</p>
+<p><span class="math display">$$3+\frac{10}{71}&lt;\pi&lt;3+\frac{1}{7}$$</span></p>
+<p>Sabemos que el perímetro de una circunferencia es igual a <span class="math inline">2 * <em>π</em> * <em>r</em><em>a</em><em>d</em><em>i</em><em>o</em></span> o <span class="math inline"><em>π</em> * <em>d</em><em>i</em><em>a</em><em>m</em><em>e</em><em>t</em><em>r</em><em>o</em></span> y que el perímetro de un polígono regular de n lados es <span class="math inline"><em>n</em> * <em>l</em><em>o</em><em>n</em><em>g</em><em>i</em><em>t</em><em>u</em><em>d</em><em>D</em><em>e</em><em>L</em><em>a</em><em>d</em><em>o</em></span>. Las siguientes fórmulas obtienen el valor aproximado de <span class="math inline"><em>π</em></span> para para los límites inferior y superior para polígonos inscritos y circunscritos respectivamente.</p>
+<p><span class="math display">$$p = 2rsin(\frac{\theta}{2})n \approx \pi$$</span> <span class="math display">$$p = 2rtan(\frac{\theta}{2})n \approx \pi$$</span></p>
+<p>Donde n es el número de lados del polígono, r el radio de la circunferencia y <span class="math inline"><em>θ</em></span> es el ángulo interno formado por los lados del polígono. Para un caso general podemos asumir que el diámetro del círculo es igual a la unidad, por tanto <span class="math inline">$r=\frac{1}{2}$</span>, reduciendo las anteriores fórmulas a:</p>
+<p><span class="math display">$$p = sin(\frac{\theta}{2})n \approx \pi$$</span></p>
+<p><span class="math display">$$p = tan(\frac{\theta}{2})n \approx \pi$$</span></p>
+<p>Según estas fórmulas solo necesitamos conocer el valor de n, el cual lo sabemos de antemano y el valor de <span class="math inline"><em>θ</em></span>, que calculamos con</p>
+<p><span class="math display">$$\frac{2\pi}{n}~~~~~~siendo~\pi=3.14159$$</span></p>
+<p>En la ecuación se remarca que en esta fórmula debe emplearse el valor de <span class="math inline"><em>π</em></span> con la precisión que empleamos comúnmente para el calculo de <span class="math inline"><em>θ</em></span>.</p>
+<p>Por cierto, si se preguntan de donde resultan las formulas una imagen puede ayudar:</p>
+<figure>
+<img src="perimetro_pi_formulas.png" alt="Derivación de formulas" />
+<figcaption aria-hidden="true">Derivación de formulas</figcaption>
+</figure>
+<p>Cuanto mayor sea el número de lados del polígono mayor sera la precisión del valor de <span class="math display"><em>π</em></span>. Así, por ejemplo, para n = 3, n = 8 y n = 17280 usando un polígono inscrito tenemos que el valor aproximado de <span class="math display"><em>π</em></span> es 2.598076211353316, 3.0614674589207183 y 3.1415926362832276 respectivamente.</p>
+<h2 id="aplicaciónes">Aplicaciónes</h2>
+<p>Hoy por la mañana me levante y por suerte tenía un poco de tiempo libre así que prendí mi ordenador y decidí entrar la arena de Topcoder y practicar un poco(para no quedar en los últimos lugares como siempre) y entonces me encontré con el problema <a href="http://www.topcoder.com/stat?c=problem_statement&amp;pm=1693">Archimedes empleado en el SRM 151</a>. Sinceramente no tuve idea de como resolver el problema, así que investigue un poco y pude resolver el problema. En este post he expuesto lo que encontré, espero que les sirva. Les dejo la solución del problema en C++ por si acaso.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cmath&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Archimedes</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> approximatePi<span class="op">(</span><span class="dt">int</span> numSides<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> pi <span class="op">=</span> acos<span class="op">(-</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        <span class="dt">double</span> angle <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> pi <span class="op">/</span> numSides<span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> numSides <span class="op">*</span> sin<span class="op">(</span>angle <span class="op">/</span> <span class="dv">2</span><span class="op">);</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    Archimedes archimedes<span class="op">;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    cout <span class="op">&lt;&lt;</span> archimedes<span class="op">.</span>approximatePi<span class="op">(</span><span class="dv">4</span><span class="op">)</span> <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h2 id="referencias">Referencias</h2>
+<ul>
+<li>[1] <a href="http://en.wikipedia.org/wiki/Approximations_of_%CF%80">Approximations_of_PI</a></li>
+<li>[2] <a href="http://www.pbs.org/wgbh/nova/physics/approximating-pi.html">approximating-pi</a></li>
+</ul>
 
-<p>Arquímides de Siracusa(c. 287 a. C. ? c. 212 a. C.) fue un matemático griego, físico, ingeniero, inventor y astrónomo. Él fue probablemente el primero en encontrar un método para aproximar el valor de $\pi$ de manera iterativa.</p>
-
-<p>Dada una circunferencia, el método de Arquímides consiste en dibujar un polígono inscrito y otro circunscrito y calculaba el perímetro de ambos polígonos, siendo estos perímetros el límite superior(polígono circunscrito) y límite inferior(polígono inscrito), véase figura <%= ref('arquimedes_pi'); %>.</p>
-
-<%= figure(post, 'arquimedes_pi.png', caption: 'Método de Arquímides para obtener PI', label: 'arquimedes_pi', lang: :es); %>
-
-<p>Con base en lo anterior Arquímides pudo determinar el intervalo numérico en el que se encuentra el valor exacto de $\pi$, ecuación <%= ref("pi_interval"); %>.</p>
-
-<%= equation('3+\frac{10}{71}<\pi<3+\frac{1}{7}', 'pi_interval'); %> 
-
-<p>Sabemos que el perímetro de una circunferencia es igual a $2 * \pi * radio$ o  $\pi * diametro$ y que el perímetro de un polígono regular de <em>n</em> lados es $n * longitudDeLado$. Las fórmulas <%= ref("pi_inf"); %> y <%= ref("pi_sup"); %> obtienen el valor aproximado de $\pi$ para para los límites inferior y superior para polígonos inscritos y circunscritos respectivamente.</p>
-
-<%= equation('p = 2rsin(\frac{\theta}{2})n \approx \pi', 'pi_inf'); %>
-<%= equation('p = 2rtan(\frac{\theta}{2})n \approx \pi', 'pi_sup'); %>
-
-<p>Donde <em>n</em> es el número de lados del polígono, <em>r</em> el radio de la circunferencia y $\theta$ es el ángulo interno formado por los lados del polígono. Para un caso general podemos asumir que el diámetro del círculo es igual a la unidad, por tanto $r=\frac{1}{2}$, reduciendo las fórmulas <%= ref("pi_inf"); %> y <%= ref("pi_sup"); %> a</p>
-
-<%= equation('p = sin(\frac{\theta}{2})n \approx \pi', 'pi_inf_gen'); %>
-<%= equation('p = tan(\frac{\theta}{2})n \approx \pi', 'pi_sup_gen'); %>
-
-
-<p>Según las fórmulas <%= ref("pi_inf_gen"); %> y <%= ref("pi_sup_gen"); %> solo necesitamos conocer el valor de <em>n</em> el cual lo sabemos de antemano  y el valor de $\theta$, que calculamos con </p>
-
-<%= equation('\frac{2\pi}{n}~~~~~~siendo~\pi=3.14159', 'calc_theta'); %>
-
-<p>En la ecuación <%= ref("calc_theta"); %> se remarca que en esta fórmula debe emplearse el valor de $\pi$ con la precisión que empleamos comúnmente para el calculo de $\theta$.</p>
-
-<p>Por cierto, si se preguntan de donde resultan las formulas una imagen puede ayudar.</p>
-
-<%= figure(post, 'perimetro_pi_formulas.png', caption: 'Derivación de formulas', label: 'perimetro_pi_formulas', lang: :es); %>
-
-<p>Cuanto mayor sea el número de lados del polígono mayor sera la precisión del valor de $$\pi$$. Así, por ejemplo, para n = 3, n = 8 y n = 17280 usando un polígono inscrito tenemos que el valor aproximado de $$\pi$$ es 2.598076211353316, 3.0614674589207183 y 3.1415926362832276 respectivamente.</p>
-
-<%= section("Aplicaciónes"); %>
-
-<p>Hoy por la mañana me levante y por suerte tenía un poco de tiempo libre así que prendí mi ordenador y decidí entrar la arena de Topcoder y practicar un poco(para no quedar en los últimos lugares como siempre) y entonces me encontré con el problema <a href="http://www.topcoder.com/stat?c=problem_statement&pm=1693" target="__blank">Archimedes</a> empleado en el SRM 151. Sinceramente no tuve idea de como resolver el problema, no soy muy matemático que digamos, así que investigue un poco y pude resolver el problema. En este post he expuesto lo que encontré, espero que les sirva. Les dejo la solución del problema en C++ por si acaso.</p>
-
-<%= code(post, 'sol.cpp') %>
-
-<%= section("Referencias"); %> 
-<p>[1] <a href="http://en.wikipedia.org/wiki/Approximations_of_%CF%80" target="_blank"> http://en.wikipedia.org/wiki/Approximations_of_%CF%80 </a><br\></p>
-<p>[2] <a href="http://www.pbs.org/wgbh/nova/physics/approximating-pi.html" target="_blank"> http://www.pbs.org/wgbh/nova/physics/approximating-pi.html</a></p>
-
-<%= finalize(); %>
