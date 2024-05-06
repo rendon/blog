@@ -1,0 +1,65 @@
+# Advent of code 2015 - part 1
+<p>I recently found out about <%= link_to('http://adventofcode.com/', 'Advent of Code', target: :blank) %>, and as part of my preparation for this year's event I'm solving the puzzles of the previous event (<%= link_to('http://adventofcode.com/2015', 'adventofcode.com/2015', target: :blank) %>), in this short series I'll publish my solutions with a brief explanation.</p>
+
+<p>A brief explanation about how Advent of Code works, there's one puzzle every day from December 1st to the 25th, each puzzle has two versions so you can earn upto two stars for every puzzle.</p>
+
+## --- Day 1: Not Quite Lisp ---
+<p>Problem description at <%= link_to('http://adventofcode.com/2015/day/1', 'day/1', target: :blank) %>.</p>
+
+### Solution
+<p>For v1: Just use a variable for the current floor, increase by one when we find a `(`, descrease by 1 when we find a `)`.</p>
+
+Embed: `day1_v1.rb`
+
+<p>For v2: Similar to v1, we just need to keep track of the positions.</p>
+
+Embed: `day1_v2.rb`
+
+
+## --- Day 2: I Was Told There Would Be No Math ---
+<p>Problem description at <%= link_to('http://adventofcode.com/2015/day/2', 'day/2', target: :blank) %>.</p>
+
+### Solution
+<p>For v1: Read all lines, parse the three integers and just apply the fomula from the problem description.</p>
+
+Embed: `day2_v1.rb`
+
+<p>For v2: Take the lowest 2 values (out of 3) and compute the perimeter, plus the product of all of them.</p>
+
+Embed: `day2_v2.rb`
+
+## --- Day 3: Perfectly Spherical Houses in a Vacuum ---
+<p>Problem description at <%= link_to('http://adventofcode.com/2015/day/3', 'day/3', target: :blank) %>.</p>
+
+### Solution
+<p>For v1: A simulation problem, update your position in a 2-dimensional grid with every command, use a table to keep track of the unique positions you've been in.</p>
+
+Embed: `day3_v1.rb`
+
+<p>For v2: Likewise, except that you have to alternate commands with Robo-Santa, the first command is for Santa, the second one isfor Robo-Santa, etc.
+
+Embed: `day3_v2.rb`
+
+## --- Day 4: The Ideal Stocking Stuffer ---
+<p>Problem description at <%= link_to('http://adventofcode.com/2015/day/4', 'day/4', target: :blank) %>.</p>
+
+### Solution
+<p>For v1: Well, I just brute-forced this one, used Ruby's `Digest::MD5` to compute the checksum.
+
+Embed: `day4_v1.rb`
+
+<p>For v2: The same as v1, just add one more zero.
+
+Embed: `day4_v2.rb`
+
+## --- Day 5: Doesn't He Have Intern-Elves For This? ---
+<p>Problem description at <%= link_to('http://adventofcode.com/2015/day/5', 'day/5', target: :blank) %>.</p>
+
+### Solution
+<p>For v1: Just follow the instructions <strong>carefully</strong> and you should be able to solve this problem.
+
+Embed: `day5_v1.rb`
+
+<p>For v2: Just follow the instructions <strong>even more carefully</strong>, I was trapped by a moment by a pesky bug in this version.
+
+Embed: `day5_v2.rb`

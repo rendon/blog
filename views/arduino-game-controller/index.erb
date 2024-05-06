@@ -1,34 +1,57 @@
-<% tex_set("show_numbers_in_sections", false); %>
-
-<p>Hi guys!, In my <%= link_to_post('/arduino-control-speakers', 'previous post') %> I described how to build a volume controller with Arduino, using the <strong>termios</strong> API for serial communication in GNU/Linux, well, in this post I use the same concepts to build a simple game controller for the classical game Snake.</p>
-
-<%= section("Let's get started"); %>
-
-<p>We need to build the following circuit:</p>
-
-<%= figure(post, 'game1.jpg', caption: 'Schematic', label: 'game1', lang: :en); %>
-
-<%= figure(post, 'game2.jpg', caption: 'Electronic diagram', label: 'game2', lang: :en); %>
-
-<p>We need the following code in <em>wiring</em> to receive instructions from the board.  </p>
-
-<%= code(post, 'read-instructions.cpp') %>
-
-<p>The previous code reads the button presses and write the appropriate values to the serial channel, we'll read this values from our game. I have implemented a limited version of the game Snake for our purpose, here is the code:</p>
-
-<%= code(post, 'snake.cpp') %>
-
-<p>Connect the Arduino to the PC and execute the previous program. Here is a screenshot of the game in action.</p>
-
-<%= figure(post, 'game3.jpg', caption: 'Game in action', label: 'game3', lang: :en); %>
-
-<p>Game Over! See you in the next post.</p>
-
-<%= section("References"); %>
-
-<p>The schematic and the electronic diagram were designed using <a href="http://fritzing.org/" target="_blank">fritzing</a>.</p>
-
+<p>&lt;% tex_set(“show_numbers_in_sections”, false); %&gt;</p>
+<p>
+Hi guys!, In my &lt;%= link_to_post(‘/arduino-control-speakers’, ‘previous post’) %&gt; I described how to build a volume controller with Arduino, using the <strong>termios</strong> API for serial communication in GNU/Linux, well, in this post I use the same concepts to build a simple game controller for the classical game Snake.
+</p>
+<h2 id="lets-get-started">Let’s get started</h2>
+<p>
+We need to build the following circuit:
+</p>
+<figure>
+<img src="game1.jpg" alt="Schematic" />
+<figcaption aria-hidden="true">Schematic</figcaption>
+</figure>
+<figure>
+<img src="game2.jpg" alt="Electronic diagram" />
+<figcaption aria-hidden="true">Electronic diagram</figcaption>
+</figure>
+<p>
+We need the following code in <em>wiring</em> to receive instructions from the board.
+</p>
+<p>Embed: <code>read-instructions.cpp</code></p>
+<p>
+The previous code reads the button presses and write the appropriate values to the serial channel, we’ll read this values from our game. I have implemented a limited version of the game Snake for our purpose, here is the code:
+</p>
+<p>Embed: <code>snake.cpp</code></p>
+<p>
+Connect the Arduino to the PC and execute the previous program. Here is a screenshot of the game in action.
+</p>
+<figure>
+<img src="game3.jpg" alt="Game in action" />
+<figcaption aria-hidden="true">Game in action</figcaption>
+</figure>
+<p>
+Game Over! See you in the next post.
+</p>
+<h2 id="references">References</h2>
+<p>
+The schematic and the electronic diagram were designed using <a href="http://fritzing.org/" target="_blank">fritzing</a>.
+</p>
 <table>
-  <tr> <td>1</td> <td><a href="http://en.wikibooks.org/wiki/Serial_Programming/Serial_Linux" target="_blank">Serial Programming/Serial Linux</a></td> </tr>
-  <tr> <td>2</td> <td><a href="http://www.arduino.cc/en/Tutorial/Potentiometer" target="_blank">Reading a Potentiometer (analog input)</a></td> </tr>
+<tr>
+<td>
+1
+</td>
+<td>
+<a href="http://en.wikibooks.org/wiki/Serial_Programming/Serial_Linux" target="_blank">Serial Programming/Serial Linux</a>
+</td>
+</tr>
+<tr>
+<td>
+2
+</td>
+<td>
+<a href="http://www.arduino.cc/en/Tutorial/Potentiometer" target="_blank">Reading a Potentiometer (analog input)</a>
+</td>
+</tr>
 </table>
+

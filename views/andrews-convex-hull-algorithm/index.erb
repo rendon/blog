@@ -1,77 +1,150 @@
-<%= tex_set("show_numbers_in_sections", false); %>
-
-<p>Convex hull is a classical problem in computational geometry and often used in programming contests. Today I present to you  the Andrew's algorithm to compute the convex hull from a set of 2D points. </p>
-
-<%= figure(post, 'convex_hull_0.svg', caption: 'Convex Hull', label: 'convex_hull_0', lang: :en); %>
-
-<%= section("Convex Hull"); %>
-<p>Here a definition from Robert Sedgewick lecture notes.</p>
-
+<p>&lt;%= tex_set(“show_numbers_in_sections”, false); %&gt;</p>
+<p>
+Convex hull is a classical problem in computational geometry and often used in programming contests. Today I present to you the Andrew’s algorithm to compute the convex hull from a set of 2D points.
+</p>
+<figure>
+<img src="convex_hull_0.svg" alt="Convex Hull" />
+<figcaption aria-hidden="true">Convex Hull</figcaption>
+</figure>
+<h2 id="convex-hull">Convex Hull</h2>
+<p>
+Here a definition from Robert Sedgewick lecture notes.
+</p>
 <div class="box">
-<p>A set of point is <strong>convex</strong> if for any two points <em>p</em> and <em>q</em> is the set, the line segment <em>pq</em> is completely in the set.</p>
-  
-<p><strong>Convex hull</strong>. Smallest convex set containing all the points.</p>
+<p>
+A set of point is <strong>convex</strong> if for any two points <em>p</em> and <em>q</em> is the set, the line segment <em>pq</em> is completely in the set.
+</p>
+<p>
+<strong>Convex hull</strong>. Smallest convex set containing all the points.
+</p>
 </div>
-
-<%= section("Andrew's algorithm"); %>
-<p>The Andrews's Algorithm splits the convex hull in two parts parts, upper hull and lower hull, here the algorithm.</p>
-
+<h2 id="andrews-algorithm">Andrew’s algorithm</h2>
+<p>
+The Andrews’s Algorithm splits the convex hull in two parts parts, upper hull and lower hull, here the algorithm.
+</p>
 <ol>
-  <li>L and U are lists of points.</li>
-  <li>Sort the set of point by x coordinate in ascending order.</li>
-  <li>Construct the upper hull:</li>
-  <ol>
-    <li>start from the point with smallest x coordinate, if two points has equal x coordinate take the one with the largest y coordinate.</li>
-    <li>Taking the point with the largest y coordinate may cause the hull to become concave, so, check if the current point and the last two in U form a convex triangle, if not, remove the last point in U and try again with the last two, an so on till a convex triangle is found.</li>
-    <li>Add the current pont to U</li>
-  </ol>
-  <li>Construct the lower hull:</li>
-  <ol>
-    <li>start from the point with largest x coordinate, if two points has equal x coordinate take the one with the smallest y coordinate.</li>
-    <li>Taking the point with the smallest y coordinate may cause the hull to become concave, so, check if the current point and the last two in L form a convex triangle, if not, remove the last point in L and try again with the last two, an so on till a convex triangle is found.</li>
-    <li>Add the current pont to L</li>
-  </ol>
-  <li>Join the upper and the lower convex hull.</li>
+<li>
+L and U are lists of points.
+</li>
+<li>
+Sort the set of point by x coordinate in ascending order.
+</li>
+<li>
+Construct the upper hull:
+</li>
+<ol>
+<li>
+start from the point with smallest x coordinate, if two points has equal x coordinate take the one with the largest y coordinate.
+</li>
+<li>
+Taking the point with the largest y coordinate may cause the hull to become concave, so, check if the current point and the last two in U form a convex triangle, if not, remove the last point in U and try again with the last two, an so on till a convex triangle is found.
+</li>
+<li>
+Add the current pont to U
+</li>
 </ol>
-
+<li>
+Construct the lower hull:
+</li>
+<ol>
+<li>
+start from the point with largest x coordinate, if two points has equal x coordinate take the one with the smallest y coordinate.
+</li>
+<li>
+Taking the point with the smallest y coordinate may cause the hull to become concave, so, check if the current point and the last two in L form a convex triangle, if not, remove the last point in L and try again with the last two, an so on till a convex triangle is found.
+</li>
+<li>
+Add the current pont to L
+</li>
+</ol>
+<li>
+Join the upper and the lower convex hull.
+</li>
+</ol>
 <table>
 <tr>
-<td><%= figure(post, 'convex_hull_1.png', caption: 'Step 1', label: 'convex_hull_1', lang: :en); %></td>
-<td><%= figure(post, 'convex_hull_2.png', caption: 'Step 2', label: 'convex_hull_2', lang: :en); %></td>
+<td>
+<figure>
+<img src="convex_hull_1.png" alt="Step 1" />
+<figcaption aria-hidden="true">Step 1</figcaption>
+</figure>
+<td>
+<figure>
+<img src="convex_hull_2.png" alt="Step 2" />
+<figcaption aria-hidden="true">Step 2</figcaption>
+</figure>
 </tr>
 <tr>
-<td><%= figure(post, 'convex_hull_3.png', caption: 'Step 3', label: 'convex_hull_3', lang: :en); %></td>
-<td><%= figure(post, 'convex_hull_4.png', caption: 'Step 4', label: 'convex_hull_4', lang: :en); %></td>
+<td>
+<figure>
+<img src="convex_hull_3.png" alt="Step 3" />
+<figcaption aria-hidden="true">Step 3</figcaption>
+</figure>
+<td>
+<figure>
+<img src="convex_hull_4.png" alt="Step 4" />
+<figcaption aria-hidden="true">Step 4</figcaption>
+</figure>
 </tr>
 <tr>
-<td><%= figure(post, 'convex_hull_5.png', caption: 'Step 5', label: 'convex_hull_5', lang: :en); %></td>
-<td><%= figure(post, 'convex_hull_6.png', caption: 'Step 6', label: 'convex_hull_6', lang: :en); %></td>
+<td>
+<figure>
+<img src="convex_hull_5.png" alt="Step 5" />
+<figcaption aria-hidden="true">Step 5</figcaption>
+</figure>
+<td>
+<figure>
+<img src="convex_hull_6.png" alt="Step 6" />
+<figcaption aria-hidden="true">Step 6</figcaption>
+</figure>
 </tr>
 </table>
-
-<%= section("Sample problem"); %>
-
-<p>A easy problem where you can put in practice this topic is with <a href="http://lightoj.com/volume_showproblem.php?problem=1203" target="_blank">1203 - Guarding Bananas</a> from <a href="http://lightoj.com/" target="_blank">lightoj.com</a>.</p>
-
-<p>To check if three point are convex you can use a vector cross product.</p>
-
+<h2 id="sample-problem">Sample problem</h2>
+<p>
+A easy problem where you can put in practice this topic is with <a href="http://lightoj.com/volume_showproblem.php?problem=1203" target="_blank">1203 - Guarding Bananas</a> from <a href="http://lightoj.com/" target="_blank">lightoj.com</a>.
+</p>
+<p>
+To check if three point are convex you can use a vector cross product.
+</p>
 <table>
 <tr>
-<td><%= figure(post, 'convex_hull_7.png', caption: 'Clockwise', label: 'convex_hull_7', lang: :en); %></td>
-<td><%= figure(post, 'convex_hull_8.png', caption: 'Anticlockwise', label: 'convex_hull_8', lang: :en); %></td>
+<td>
+<figure>
+<img src="convex_hull_7.png" alt="Clockwise" />
+<figcaption aria-hidden="true">Clockwise</figcaption>
+</figure>
+<td>
+<figure>
+<img src="convex_hull_8.png" alt="Anticlockwise" />
+<figcaption aria-hidden="true">Anticlockwise</figcaption>
+</figure>
 </tr>
 </table>
-
-<p>If points A, O and B are in clockwise orientation then $ v \times u$ will be greater than zero, otherwise the result will be less than  zero.</p>
-
-<%= section("Solution to sample problem"); %>
-
-<p>Apply the algorithm to find the convex hull and then, for each point that form the convex hull, compute the angle between it and its left and right points, take the minimum.</p>
-
-<%= code(post, 'sol.cpp') %>
-
-<%= section("References"); %>
+<p>
+If points A, O and B are in clockwise orientation then $ v u$ will be greater than zero, otherwise the result will be less than zero.
+</p>
+<h2 id="solution-to-sample-problem">Solution to sample problem</h2>
+<p>
+Apply the algorithm to find the convex hull and then, for each point that form the convex hull, compute the angle between it and its left and right points, take the minimum.
+</p>
+<p>Embed: <code>sol.cpp</code></p>
+<h2 id="references">References</h2>
 <table border="0">
-  <tr><td>1</td> <td><a href="http://community.topcoder.com/tc?module=Static&d1=tutorials&d2=lineSweep" target="_blank">Line Sweep Algorithms, bmerry</a></td></tr>
-  <tr><td>2</td> <td><a href="http://www.cs.princeton.edu/courses/archive/fall05/cos226/lectures/geometry.pdf" target="_blank">Geometry Lecture, Robert Sedgewick</a></td></tr>
+<tr>
+<td>
+1
+</td>
+<td>
+<a href="http://community.topcoder.com/tc?module=Static&d1=tutorials&d2=lineSweep" target="_blank">Line Sweep Algorithms, bmerry</a>
+</td>
+</tr>
+<tr>
+<td>
+2
+</td>
+<td>
+<a href="http://www.cs.princeton.edu/courses/archive/fall05/cos226/lectures/geometry.pdf" target="_blank">Geometry Lecture, Robert Sedgewick</a>
+</td>
+</tr>
 </table>
+

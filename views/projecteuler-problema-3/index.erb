@@ -1,79 +1,101 @@
-<p>Dentro del conjunto de los <a href="http://es.wikipedia.org/wiki/N%C3%BAmero_natural">números naturales</a>(denotado por $\mathbb{N}$) pueden distinguirse básicamente dos tipos de números: primos y compuestos. Los primos son aquellos que son únicamente divisibles(división exacta) con uno y consigo mismos mientras que los compuestos reciben su nombre debido a que se obtienen como un producto de números primos, factores, los cuales pueden aparecer más de una vez en el producto.</p>
-
-<p>Ejemplos de números primos son 2, 3, 5, 7, 19, etc. Por su parte 4, 6, 9 y 20 son ejemplos de números compuestos. Un algoritmos simple para comprobar la primalidad de un número es apegándose a su definición, es decir, comprobar la divisibilidad de $n$ con $d = 2$  hasta $n - 1$. Próximamente dedicaré un artículo para hablar sobre números primos, por ahora procedamos con el tema de este artículo.</p>
-
-<%= section('Problema') %>
+<p>
+Dentro del conjunto de los <a href="http://es.wikipedia.org/wiki/N%C3%BAmero_natural">números naturales</a>(denotado por <span class="math inline">ℕ</span>) pueden distinguirse básicamente dos tipos de números: primos y compuestos. Los primos son aquellos que son únicamente divisibles(división exacta) con uno y consigo mismos mientras que los compuestos reciben su nombre debido a que se obtienen como un producto de números primos, factores, los cuales pueden aparecer más de una vez en el producto.
+</p>
+<p>
+Ejemplos de números primos son 2, 3, 5, 7, 19, etc. Por su parte 4, 6, 9 y 20 son ejemplos de números compuestos. Un algoritmos simple para comprobar la primalidad de un número es apegándose a su definición, es decir, comprobar la divisibilidad de <span class="math inline"><em>n</em></span> con <span class="math inline"><em>d</em> = 2</span> hasta <span class="math inline"><em>n</em> − 1</span>. Próximamente dedicaré un artículo para hablar sobre números primos, por ahora procedamos con el tema de este artículo.
+</p>
+<h2 id="problema">Problema</h2>
 <blockquote>
-  Los factores primos de 13195 son 5, 7, 13 y 29.<br>
-  Cual es el factor primos mas grande del número 600851475143?
+Los factores primos de 13195 son 5, 7, 13 y 29.<br> Cual es el factor primos mas grande del número 600851475143?
 </blockquote>
-
-<p>Versión original: <a href="http://projecteuler.net/index.php?section=problems&id=3">Problem 3</a> projecteuler.net</p>
-
-
-<%= section('Análisis') %>
-
-<p>Sea $n$ = 600851475143 y $p_{1}, p_{2}, ..., p_{k}$ los factores primos de $n$. El problema se puede replantear como, dado $n$ encuentre los factores primos $p_{1}, p_{2}, ..., p_{k}$ y retorne el mayor de ellos, $p_{k}$. Note que $n$ es divisible entre sus factores, además, si dividimos $n$ sucesivamente entre todos sus factores $n$ se vuelve 1, por ejemplo si $n $ = 30, sus factores primos son 2, 3 y 5, y por lo tanto 30/2 = 15, 15/3 = 5 y 5/5 = 1. Con estas observaciones podemos formular una primera solución:</p>
-
-
-<%= code(post, 'v1.pas') %>
-
-<p>La línea 7 y 8 son importantes, en caso de que $n$ no se convierta en 1 es porque $n$ es primo y por tanto <code>max</code> toma el valor de n.</p>
-
-<p>Para el valor de $n$ de este problema el algoritmo anterior corre bien en tiempo, sin embargo podemos mejorarlo. Sabemos que todos los primos, con excepción del dos, son números impares y por lo tanto después del dos solo es necesario probar la divisibilidad con los números impares, con esta observación el algoritmos queda así:</p>
-
-<%= code(post, 'v2.pas') %>
-
-<p>Las líneas de código se han incrementado pero para el número de cálculos se reducirá prácticamente a la mitad. Una observación más, si $p = n/q$ y $q$ divide a $n$ entonces $p$ también divide a $n$, esta observación nos permite buscar factores primos hasta <code>sqrt(n)</code> y ya no hasta $n - 1$ ya que si $n$ es divisible entre $p$ entonces $n = p * q$ y si $q$ es menor que $p$ entonces $n$ ya habría sido dividido previamente entre $q$ al menos $p$ veces, líneas 11 y 12 en <code>MaxPrimeFactors2(n)</code>. La nueva versión del algoritmo queda así:</p>
-
-<%= code(post, 'v3.pas') %>
-
-<p>Es posible agregar algunas optimizaciones más, aunque las cosas se tornan un poco más complicadas con cada una de ellas. Por ejemplo, sabemos que buscamos factores primos y hasta ahora estamos probando con 2 y después con números impares desde 3 hasta <code>sqrt(n)</code>, sin embargo muchos de esos números impares no son primos, por ende, si solo probaremos la divisibilidad con números primos la tarea se realizaría a mayor velocidad. Le dejo la implementación de esta última observación como ejercicio al lector.</p>
-
-<%= section('Solución [código]') %>
-<p>A continuación las implementaciones de los algoritmos en lenguaje C:</p>
-
-<%= subsection('Versión 1') %>
-<%= code(post, 'v1.c') %>
-
-<%= subsection('Versión 2') %>
-<%= code(post, 'v2.c') %>
-
-<%= subsection('Versión 3') %>
-<%= code(post, 'v3.c') %>
-
-<%= section('Ejecución y rendimiento') %>
-
-<p>El comando <code>time</code> me muestra los siguientes resultados:</p>
-
-<%= code(post, 'ejecucion.txt') %>
-
-<p>Las diferencias en tiempo parecen ser insignificantes, bueno, esto es porque solo estamos trabajando con un número, no obstante, intenten calcular el máximo factor primo desde 2 hasta 10,000 y verán que las diferencias se aprecian mejor.</p>
-
-
-<%= section('Conclusión') %>
-<p>La factorización de números enteros es para nada trivial, hasta ahora no existe un algoritmo para la factorización de enteros con complejidad polinomial. El algoritmo de cifrado <a href="http://es.wikipedia.org/wiki/RSA">RSA</a> se sustenta en esta complejidad.</p>
-
-<%= section('Referencias') %>
+<p>
+Versión original: <a href="http://projecteuler.net/index.php?section=problems&id=3">Problem 3</a> projecteuler.net
+</p>
+<h2 id="análisis">Análisis</h2>
+<p>
+Sea <span class="math inline"><em>n</em></span> = 600851475143 y <span class="math inline"><em>p</em><sub>1</sub>, <em>p</em><sub>2</sub>, ..., <em>p</em><sub><em>k</em></sub></span> los factores primos de <span class="math inline"><em>n</em></span>. El problema se puede replantear como, dado <span class="math inline"><em>n</em></span> encuentre los factores primos <span class="math inline"><em>p</em><sub>1</sub>, <em>p</em><sub>2</sub>, ..., <em>p</em><sub><em>k</em></sub></span> y retorne el mayor de ellos, <span class="math inline"><em>p</em><sub><em>k</em></sub></span>. Note que <span class="math inline"><em>n</em></span> es divisible entre sus factores, además, si dividimos <span class="math inline"><em>n</em></span> sucesivamente entre todos sus factores <span class="math inline"><em>n</em></span> se vuelve 1, por ejemplo si $n $ = 30, sus factores primos son 2, 3 y 5, y por lo tanto 30/2 = 15, 15/3 = 5 y 5/5 = 1. Con estas observaciones podemos formular una primera solución:
+</p>
+<p>Embed: <code>v1.pas</code></p>
+<p>
+La línea 7 y 8 son importantes, en caso de que <span class="math inline"><em>n</em></span> no se convierta en 1 es porque <span class="math inline"><em>n</em></span> es primo y por tanto <code>max</code> toma el valor de n.
+</p>
+<p>
+Para el valor de <span class="math inline"><em>n</em></span> de este problema el algoritmo anterior corre bien en tiempo, sin embargo podemos mejorarlo. Sabemos que todos los primos, con excepción del dos, son números impares y por lo tanto después del dos solo es necesario probar la divisibilidad con los números impares, con esta observación el algoritmos queda así:
+</p>
+<p>Embed: <code>v2.pas</code></p>
+<p>
+Las líneas de código se han incrementado pero para el número de cálculos se reducirá prácticamente a la mitad. Una observación más, si <span class="math inline"><em>p</em> = <em>n</em>/<em>q</em></span> y <span class="math inline"><em>q</em></span> divide a <span class="math inline"><em>n</em></span> entonces <span class="math inline"><em>p</em></span> también divide a <span class="math inline"><em>n</em></span>, esta observación nos permite buscar factores primos hasta <code>sqrt(n)</code> y ya no hasta <span class="math inline"><em>n</em> − 1</span> ya que si <span class="math inline"><em>n</em></span> es divisible entre <span class="math inline"><em>p</em></span> entonces <span class="math inline"><em>n</em> = <em>p</em> * <em>q</em></span> y si <span class="math inline"><em>q</em></span> es menor que <span class="math inline"><em>p</em></span> entonces <span class="math inline"><em>n</em></span> ya habría sido dividido previamente entre <span class="math inline"><em>q</em></span> al menos <span class="math inline"><em>p</em></span> veces, líneas 11 y 12 en <code>MaxPrimeFactors2(n)</code>. La nueva versión del algoritmo queda así:
+</p>
+<p>Embed: <code>v3.pas</code></p>
+<p>
+Es posible agregar algunas optimizaciones más, aunque las cosas se tornan un poco más complicadas con cada una de ellas. Por ejemplo, sabemos que buscamos factores primos y hasta ahora estamos probando con 2 y después con números impares desde 3 hasta <code>sqrt(n)</code>, sin embargo muchos de esos números impares no son primos, por ende, si solo probaremos la divisibilidad con números primos la tarea se realizaría a mayor velocidad. Le dejo la implementación de esta última observación como ejercicio al lector.
+</p>
+<h2 id="solución-código">Solución [código]</h2>
+<p>
+A continuación las implementaciones de los algoritmos en lenguaje C:
+</p>
+<h3 id="versión-1">Versión 1</h3>
+<p>Embed: <code>v1.c</code></p>
+<h3 id="versión-2">Versión 2</h3>
+<p>Embed: <code>v2.c</code></p>
+<h3 id="versión-3">Versión 3</h3>
+<p>Embed: <code>v3.c</code></p>
+<h2 id="ejecución-y-rendimiento">Ejecución y rendimiento</h2>
+<p>
+El comando <code>time</code> me muestra los siguientes resultados:
+</p>
+<p>Embed: <code>ejecucion.txt</code></p>
+<p>
+Las diferencias en tiempo parecen ser insignificantes, bueno, esto es porque solo estamos trabajando con un número, no obstante, intenten calcular el máximo factor primo desde 2 hasta 10,000 y verán que las diferencias se aprecian mejor.
+</p>
+<h2 id="conclusión">Conclusión</h2>
+<p>
+La factorización de números enteros es para nada trivial, hasta ahora no existe un algoritmo para la factorización de enteros con complejidad polinomial. El algoritmo de cifrado <a href="http://es.wikipedia.org/wiki/RSA">RSA</a> se sustenta en esta complejidad.
+</p>
+<h2 id="referencias">Referencias</h2>
 <table border="0">
-    <tr>
-      <td>[1]</td><td>Thomas Koshy, Elementary number theory with applications</td>
-    </tr>
-    <tr>
-      <td>[2]</td><td><a href="http://en.wikipedia.org/wiki/Integer_factorization" target="_blank">http://en.wikipedia.org/wiki/Integer_factorization</a></td>
-    </tr>
+<tr>
+<td>
+[1]
+</td>
+<td>
+Thomas Koshy, Elementary number theory with applications
+</td>
+</tr>
+<tr>
+<td>
+[2]
+</td>
+<td>
+<a href="http://en.wikipedia.org/wiki/Integer_factorization" target="_blank">http://en.wikipedia.org/wiki/Integer_factorization</a>
+</td>
+</tr>
+</table>
+<h2 id="descargas">Descargas</h2>
+<table border="0">
+<tr>
+<td>
+Solución v1:
+</td>
+<td>
+&lt;%= src_file(post, ‘v1.c’) %&gt;
+</td>
+</tr>
+<tr>
+<td>
+Solución v2:
+</td>
+<td>
+&lt;%= src_file(post, ‘v2.c’) %&gt;
+</td>
+</tr>
+<tr>
+<td>
+Solución v3:
+</td>
+<td>
+&lt;%= src_file(post, ‘v3.c’) %&gt;
+</td>
+</tr>
 </table>
 
-
-<%= section('Descargas') %>
-<table border="0">
-    <tr>
-        <td>Solución v1:</td> <td> <%= src_file(post, 'v1.c') %> </td>
-    </tr>
-    <tr>
-        <td>Solución v2:</td> <td> <%= src_file(post, 'v2.c') %> </td>
-    </tr>
-    <tr>
-        <td>Solución v3:</td> <td> <%= src_file(post, 'v3.c') %> </td>
-    </tr>
-</table>

@@ -1,22 +1,21 @@
-<p><a href="http://en.wikipedia.org/wiki/Depth-first_search" target="_blank">Depth-First Search</a> is one of the fundamental algorithms in <a href="https://en.wikipedia.org/wiki/Graph_theory" target="_blank">graph theory</a>. It's a must to know!</p>
+<p>
+<a href="http://en.wikipedia.org/wiki/Depth-first_search" target="_blank">Depth-First Search</a> is one of the fundamental algorithms in <a href="https://en.wikipedia.org/wiki/Graph_theory" target="_blank">graph theory</a>. It’s a must to know!
+</p>
+<p>
+Nowadays it’s a piece of cake, but I did struggle a bit to get my head around this and other graph theory algorithms.
+</p>
+<figure>
+<img src="graph.svg" alt="A graph." />
+<figcaption aria-hidden="true">A graph.</figcaption>
+</figure>
+<h2 id="common-ways-to-represent-graphs-in-a-computer">Common ways to represent graphs in a computer</h2>
+<p>
+The most common representations for graphs are <a href="http://en.wikipedia.org/wiki/Adjacency_matrix" target="_blank">Adjacency matrix</a> and <a href="http://en.wikipedia.org/wiki/Adjacency_list" target="_blank">Adjacency list</a>.
+</p>
+<p>Embed: <code>src-matrix.cpp</code></p>
+<p>Example input (figure 1):</p>
+<p>Embed: <code>input.txt</code></p>
+<p>Example output: Embed: <code>output.txt</code></p>
+<p>Here is the version using adjacency “lists” (not necessarily linked lists).</p>
+<p>Embed: <code>src-list.cpp</code></p>
 
-<p>Nowadays it's a piece of cake, but I did struggle a bit to get my head around this and other graph theory algorithms.</p>
-
-<%= figure(post, 'graph.svg', caption: 'A graph.', label: 'graph', lang: :en) %>
-
-<%= section("Common ways to represent graphs in a computer") %> 
-
-<p>The most common representations for graphs are <a href="http://en.wikipedia.org/wiki/Adjacency_matrix" target="_blank">Adjacency matrix</a> and <a href="http://en.wikipedia.org/wiki/Adjacency_list" target="_blank">Adjacency list</a>.</p>
-
-<%= code(post, 'src-matrix.cpp') %>
-
-Example input (figure 1):
-
-<%= code(post, 'input.txt') %>
-
-Example output:
-<%= code(post, 'output.txt') %>
-
-Here is the version using adjacency "lists" (not necessarily linked lists).
-
-<%= code(post, 'src-list.cpp') %>

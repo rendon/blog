@@ -1,0 +1,175 @@
+<p>Como parte de mi proyecto final estoy estudiando sobre sistemas operativos con un enfoque especial en GNU/Linux, en lo posible voy a ir publicando algunas cosas que me parezcan interesantes y que ojala lo sean para otros más también.</p>
+
+## Proceso
+
+<p>Uno de los primeros temas que se abordan en los libros de sistemas operativos son los <em>procesos</em>, que en términos simples son programas en <em>ejecución</em>. Un programa por si mismo no es un proceso. Podríamos decir que un programa por si solo es una entidad <strong>pasiva</strong> mientras que un proceso es una entidad <strong>activa</strong>, un programa que se esta ejecutando en el sistema y tiene asociado a él más que código ejecutable.</p>
+
+<p>Dentro de los datos que se asocian a un proceso podemos encontrar un identificador de proceso (PID), información sobre el creador del proceso actual (el padre), una lista de los procesos creados por el proceso actual (los hijos), recursos como archivos abiertos, un espacio de memoria para uso particular, entre otros. El sistema operativo necesita toda esta información para poder administrar los procesos de manera correcta.</p>
+
+## Procesos en Linux
+
+<p>En Linux (el kernel) toda la información relacionada a un proceso se almacena en la estructura `task_struct` la cual esta definida en el encabezado <code><linux/sched.h></code> y dentro de sus campos podemos encontrar los siguientes:</p>
+
+Embed: `task-struct.c`
+
+<p>Como podrán apreciar en la última línea, un proceso también mantiene una lista de sus procesos hermanos, aquellos que comparten el mismo padre.</p>
+
+<p>El kernel mantiene la lista de procesos en una lista doublemente enlazada donde cada elemento contiene una estructura `task_struct`. La figura <%= ref('doubly_linked_list'); %> muestra como luce dicha lista.</p>
+
+<%= 
+figure(post, 'doubly_linked_list.png', caption: 'Lista doblemente enlazada de procesos', label: 'doubly_linked_list', lang: :es);
+ %>
+
+<p>Puesto que un proceso es un programa en ejecución y normalmente la cantidad de procesos es mayor que la cantidad de procesadores (en muchas ocasiones solo uno), éstos tienen que compartir el tiempo de la CPU y es el sistema operativo quien se encarga de coordinar esta actividad. Debido a lo anterior un proceso tiene asociado un <em>estado</em>, que como su nombre lo indica, nos permite determinar que esta haciendo el proceso dentro del sistema operativo, básicamente esta en ejecución o esperando, a continuación una lista de todos los estados posibles en en SO Linux.</p>
+
+<ul>
+	<li>TASK_RUNNING: El proceso esta en ejecución.</li>
+	<li>TASK_INTERRUPTIBLE: El proceso esta durmiendo (bloqueado), esperando que se cumpla alguna condición, por ejemplo, cuando se espera a que el usuario realice una acción.</li>
+	<li>TASK_UNINTERRUPTIBLE: Similar al TASK_INTERRUPTIBLE con la diferencia que en este estado el proceso no responde a las señales, por ejemplo, cuando queremos que un procesos espere cierta cantidad de tiempo.</li>
+	<li>__TASK_TRACED: El proceso esta siendo rastreado por otro proceso, por ejemplo, por un depurador.</li>
+	<li>__TASK_STOPPED: El proceso a termina su ejecución</li>
+</ul>
+
+La figura <%= ref('process_states'); %> ilustra las relaciones entre los distintos estados.
+
+<%= 
+figure(post, 'process_states.svg', caption: 'Diagrama de flujo de los estados de un proceso', label: 'process_states', lang: :es);
+ %>
+
+<p>En Linux el primer proceso que se ejecuta es `init` con PID igual a 1 y es éste el que se encarga de crear al resto de los procesos  necesarios para el funcionamiento del sistema. A su vez, cada nuevo proceso es capaz de crear otros más. No es difícil darse cuenta que este mecanismo forma un árbol de procesos, donde la raíz es el proceso `init`, los nodos intermedios son aquello diferentes de `init` y que tienen al menos un proceso hijo, mientras que las hojas son aquellos que no crean nuevos procesos.</p>
+
+## Consultar información de procesos
+
+<p>A continuación veremos como obtener información a cerca de los procesos desde el punto de vista del administrador del sistema como desde el punto de vista del desarrollador.</p>
+
+### Utilizando el comando ps
+
+<p>El comando `ps` obtiene y reporta información de los procesos en el sistema en un determinado instante (snapshot). `ps` soporta varias opciones que nos permiten filtrar justo la información que necesitamos, veamos algunos ejemplos.</p>
+
+<p>Listar todos los procesos en el sistema: `ps -e`</p>
+
+Embed: `ps-e.txt`
+
+<p>Mostrar los procesos en forma de arbol: `ps -ejH`</p>
+Embed: `ps-ejh.txt`
+
+<p>Mostrar los procesos creados por el usuario <em>root</em>:</p>
+
+Embed: `root-processes.txt`
+
+<p>Es posible especificar que campos debe contener el reporte, por ejemplo: `ps -eo pid,class,rtprio,pri,psr,pcpu,stat,comm`</p>
+
+Embed: `ps-eo.txt`
+
+<p>El significado de las opciones es el siguiente:</p>
+
+<ul>
+  <li><em>pid</em>: El identificador de proceso.</li>
+  <li><em>class</em>: Clase de planificación del proceso, e.g:</li>
+  <ul>
+    <li>`-` no ha sido reportado
+    <li>`FF` proviene de SCHED_FIFO, una cola de espera normal, el primero en llegar es el primero en salir.
+    <li>`RR`  proviene de SCHED_RR, utiliza un algoritmo <a href="https://en.wikipedia.org/wiki/Round-robin" target="_blank">Round robin</a>.
+    <li>`IDL` proviene  SCHED_IDLE, para procesos con prioridad muy baja.
+    <li>`?` el valor no se conoce.
+  </ul>
+  <li><em>rtprio</em>: Prioridad en tiempo real.</li>
+  <li><em>pri</em>: Prioridad del proceso, valores más pequeños significan prioridad más alta.</li>
+  <li><em>psr</em>: A que procesador se encuentra asignado el proceso.</li>
+  <li><em>pcpu</em>: Porcentaje de uso de la CPU.</li>
+  <li><em>stat</em>: Estado del proceso:</li>
+  <ul>
+    <li>`D`   Esperando. No interrumpible.</li>
+    <li>`R`   En ejecución o en la cola de ejecución.</li>
+    <li>`S`   Esperando. Interrumpible.</li>
+    <li>`T`   Parado.</li>
+    <li>`X`   Muerto (nunca debería de ser visto).</li>
+    <li>`Z`   Difunto (zombie), el proceso ha terminado pero no ha sido reclamado por quien lo creo, su padre.</li>
+  </ul>
+  <li> <em>comm</em>: Nombre del comando.</li>
+</ul>
+
+
+<p>Para más información véase la documentación (`man ps`). Otro comando que puede ser útil es `top`, cuya funcionalidad es similar a `ps` en cuanto a la información que despliega, la diferencia es que `top` se mantiene actualizando la información constantemente.</p>
+
+### Desde C
+
+<p>Para obtener información sobre el proceso actual utilizaremos la macro `current`, cuya implementación varia entre plataformas. El siguiente listado muestra como moverse desde el proceso actual hasta la raíz:</p>
+
+Embed: `current-macro.c`
+
+<p>Para un determinado proceso podemos obtener la lista de sus procesos hijo de la siguiente manera:</p>
+
+Embed: `get-child-list.c`
+
+
+#### Visualizar el árbol de procesos
+
+<p>Con las premisas que hemos visto podemos extraer algo de información significativa de nuestro sistema operativo, lo primero que se me ocurrió es simular lo que hace el comando `pstree`. El siguiente código realiza un recorrido primero en profundidad (<a href="https://en.wikipedia.org/wiki/Depth-first_search" target="_blank">DFS</a>) para obtener el árbol de procesos de nuestro sistema:</p>
+
+Embed: `process-tree.c`
+
+<p>Este código corresponde a un módulo cargable del nucleo (<a href="http://en.wikipedia.org/wiki/Loadable_kernel_module" target="_blank">LKM</a>) y se compila con el siguiente archivo Makefile:</p>
+
+Embed: `makefile`
+
+<p>No se si esta sea la mejor manera de experimentar con el kernel pero funciona, y por ahora eso es más importante. Veamos como funciona.</p>
+
+<p>Insertar el módulo:</p>
+
+Embed: `insert-mod.sh`
+
+<p>Visualizar los resultados:</p>
+
+Embed: `dmesg.sh`
+
+<p>Aquí el resultado en mi máquina:</p>
+
+Embed: `process-tree-output.txt`
+
+<p>Para descargar el módulo del kernel ejecuta el siguiente comando:</p>
+
+Embed: `rmmod.sh`
+
+#### Visualizar el árbol de procesos de forma gráfica
+<p>Una vez que logre extraer el árbol se me ocurrió generarlo en un formato adecuado para que pudiese visualizarlo de forma gráfica apoyándome de una herramienta que desarrolle para visualizar grafos (<a href="https://github.com/rendon/graph_illustrator/" target="_blank">Graph Illustrator</a>). He aquí la nueva versión:</p>
+
+Embed: `process-tree-gi.c`
+
+<p>Manualmente hay que editar un poco la salida para que que sirva como entrada para el visualizador. He aquí el archivo resultante: <%= file(post, 'pstree.gi') %>.</p>
+
+<p>La figura <%= ref("pstree"); %> muestra el resultado.</p>
+
+![Árbol de procesos](pstree.svg)
+
+## Creación de procesos
+
+<p>En sistemas UNIX la creación de nuevos procesos se realiza en dos pasos. Primero se bifurca el proceso actual utilizando la función `fork()`, la cual crea una copia del proceso actual, la única diferencia entre estos dos procesos es el PID, el cual es único. El segundo paso consiste en reemplazar el espacio de memoria del nuevo proceso con el código ejecutable del programa que se quiere ejecutar e inmediatamente iniciar la ejecución, esto se logra con la función `exec()`.</p>
+
+Embed: `fork-example.c`
+
+
+<p>Notarán que he utilizado `execlp()` en vez de `exec()`, esto es porque en realidad `exec()` es un familia de funciones, la cuales son <em>front ends</em> para la función `execve()`.</p>
+
+<p>El código funciona de la siguiente manera:</p>
+
+<ul>
+  <li>Cuando se realiza la bifurcación se crea una copia del proceso actual y ambos procesos continúan su ejecución en la siguiente instrucción.</li>
+  <li>Debido a que el hijo es una copia del padre debe existir un mecanismos para diferenciarlos y este es que el valor de `pid` en el hijo es igual al cero (el cero no es un PID válido puesto que a `init` le corresponde el 1 y todos los demás PIDs deben ser mayores a él) y en el proceso padre el valor de `pid` es igual al verdadero PID del nuevo proceso.</li>
+  <li>Una vez que sabemos como diferenciar a los dos procesos podemos reemplazar al proceso hijo con el programa que pretendemos ejecutar.</li>
+  <li>El proceso padre puede continuar con su ejecución o bien esperar que que el hijo termine, lo cual dependerá de la tarea que se este realizando, para esperar a que el hijo termine utilizamos la función `wait()`.</li>
+</ul>
+
+<p>Por último veamos un ejemplo un poco más elaborado, un mini emulador de terminal:</p>
+
+Embed: `cli-example.c`
+
+<p>En este ejemplo básicamente leemos la línea de texto que el usuario introduce y se paramos el nombre del comando de los parámetros y además verificamos si el comando debe ejecutarse en <em>background</em> (el comando finaliza con un ampersand), después de esto creamos un nuevo proceso y utilizamos la función `execlp()` para ejecutar al comando en cuestión, el cual debe existir en el sistema.</p>
+
+<p>Este programa esta bien limitado y tiene varías fallas, el único propósito es dar una mejor idea de como se crean procesos y no de crear una copia de Bash :).</p>
+
+<% 
+add_bib("lkd_rl", "Robert Love", "Linux Kernel Development, 3rd Ed.");
+add_bib("osc_9th", "Silberschatz et al.", "Operating System Concepts, 9th Ed.");
+%>
+

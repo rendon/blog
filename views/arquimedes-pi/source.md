@@ -1,6 +1,6 @@
 <!-- vim: set spelllang=es_mx: -->
 
-# Arquimedes PI
+# Arquímedes PI
 2016-02-23 2024-05-05 #math #dev #post
 
 ## Introducción
@@ -11,11 +11,11 @@ En matemáticas $\pi$ es una constante cuyo valor es la razón entre el perímet
 
 Arquímides de Siracusa(c. 287 a. C. ? c. 212 a. C.) fue un matemático griego, físico, ingeniero, inventor y astrónomo. Él fue probablemente el primero en encontrar un método para aproximar el valor de $\pi$ de manera iterativa.
 
-Dada una circunferencia, el método de Arquímides consiste en dibujar un polígono inscrito y otro circunscrito y calculaba el perímetro de ambos polígonos, siendo estos perímetros el límite superior(polígono circunscrito) y límite inferior(polígono inscrito).
+Dada una circunferencia, el método de Arquímedes consiste en dibujar un polígono inscrito y otro circunscrito y calculaba el perímetro de ambos polígonos, siendo estos perímetros el límite superior(polígono circunscrito) y límite inferior(polígono inscrito).
 
-![Método de Arquímides para obtener PI](arquimedes_pi.png)
+![Método de Arquímedes para obtener PI](arquimedes_pi.png)
 
-Con base en lo anterior Arquímides pudo determinar el intervalo numérico en el que se encuentra el valor exacto de $\pi$.
+Con base en lo anterior Arquímedes pudo determinar el intervalo numérico en el que se encuentra el valor exacto de $\pi$.
 
 $$3+\frac{10}{71}<\pi<3+\frac{1}{7}$$
 

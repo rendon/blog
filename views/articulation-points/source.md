@@ -1,0 +1,34 @@
+<%= tex_set("show_numbers_in_sections", false); %>
+
+## Welcome
+
+<p>Hey guys! Currently I am training for a programming contest and I have no time to publish. I am learning many interesting topics about algorithms and programming and I want to share that with you. However, to write an article consumes much of my time and I'm devising a format that is both brief and useful: Algorithm or Data structure, brief info, sample problem, solution and references.</p>
+
+## Articulation points
+
+<p>Today's topic is about <a href="http://en.wikipedia.org/wiki/Graph_theory" target="_blank">graph theory</a>, articulation points. Here a <a href="http://www.cs.umd.edu/~samir/451/bc.ps" target="_blank">brief info from Dave Mount</a>:</p>
+
+<div class="box">
+  <p><strong>Articulation Points and Biconnected Graphs:</strong> Today we discuss another application of DFS, this time to a problem on undirected graphs. Let <em>G = (V, E)</em> be a <strong> connected</strong> undirected graph. Consider de following definitions.</p>
+
+  <p><strong>Articulation Point( or Cut Vertex):</strong> Is any vertex whose removal(together with the removal of any incident edges) results in a disconnected graph.</p>
+</div>
+
+![Articulation points example](artpoints.svg)
+
+## Sample problem
+
+<p>A problem where you can put in practice this topic is <a href="http://lightoj.com/volume_showproblem.php?problem=1063" target="_blank">1063 Ant Hills</a> from <a href="http://lightoj.com" target="_blank">lightoj.com</a>.</p>
+
+## Solution to sample problem
+
+Embed: `sol.cpp`
+
+## References
+
+<table border="0">
+  <tr><td>1</td>   <td><a href="http://www.cs.umd.edu/~samir/451/bc.ps" target="_blank">Articulation Points and Biconnected Components</a></td></tr>
+  <tr><td>2</td>   <td><a href="http://www.ibluemojo.com/school/articul_algorithm.html" target="_blank">Articulation Points Detection Algorithm</a></td></tr>
+  <tr><td>3</td><td><a href="http://en.wikipedia.org/wiki/Biconnected_component" target="_blank">Biconnected component</a></td></tr>
+</table>
+

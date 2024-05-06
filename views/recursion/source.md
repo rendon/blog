@@ -1,0 +1,215 @@
+<p>La recursión es una técnica de diseño de algoritmos muy útil que permite formular soluciones de forma natural a un gran número de problemas. En este documento trato de dar una breve introducción a este tema mediante algunos sencillos ejemplos. Se proporciona una breve descripción del problema, el análisis de la solucion recursiva y además el código de la solución con el fin de que al lector le sea posible poner en práctica cada algoritmo de manera inmediata.</p>
+
+
+<blockquote>
+En ciencias de la computación, la recursión es una técnica de diseño de algoritmos donde un método, procedimiento o función hace llamadas a sí mismo, evitando caer en un ciclo infinito, ya que el algoritmo debe terminar en algun momento, una caracteristica de todo algoritmo.
+</blockquote>
+
+
+<p>Un algoritmo recursivo consiste en simplificar un problema en cada llamada recursiva y que a su vez tiene una solución muy parecida a la original.</p>
+
+
+<p>Como ya se dijo, nuestro algoritmo debe terminar en algún momento, es decir, debe existir un estado donde el problema es lo bastante simple para ser resuelto directamente sin necesidad de seguir con las llamadas recursivas. A este estado se le conoce como <em>caso base</em>. Cada algoritmo recursivo debe tener al menos un caso base.</p>
+
+
+<p>Los algoritmos recursivos están muy relacionados con otra técnica de diseño de algoritmos: divide y vencerás. Un algoritmo divide y venceras consite en dividir un problem complejo en subproblemas del mismo tipo más simples, resolver cada uno de ellos y por último combinar las subsoluciones para dar lugar a la solución del problema original. Más adelante veremos un ejemplo.</p>
+
+
+## Ejemplos de problemas recursivos
+
+<p>Si una imagen dice más que mil palabras entonces un código también.</p>
+
+
+## Factorial
+
+<p>La función factorial tiene la siguiente definición:</p>
+
+
+$$n!= \begin{cases} 1 & \text{si n = 0} \\\\ n(n - 1)!& \text{si n > 0} \end{cases} $$
+
+
+<p>Antes de proceder con la implementación veamos un ejemplo para ver como se comporta esta función. Sea <em>n = 4</em>.</p>
+
+
+<em>4! = 4 * 3! = 4 * (3 * 2!) = 4 * (3 * (2 * 1!)) = 4 * (3 * (2 * (1 * <b>0!</b>))) = 4 * (3 * (2 * (1 * <b>1</b>))) = 24.</em>
+
+
+<p>Veamos ahora una implementación de esta función en C.</p>
+
+Embed: `factorial.c`
+
+<p>La condición en la línea 2 es nuestro caso base, el problema se puede resolver directamente sin necesidad de continuar con la recursión. Más adelate cuando generemos permutaciones vera la relación que existe entre la función factorial y el número de permutaciones.</p>
+
+
+## Máximo común divisor
+
+<p>En matemáticas el máximo común divisor de dos o más números diferentes de cero es el máximo entero que divide a estos mismos de manera exacta, es decir, con residuo igual a cero. A continuación se describe el método de euclides para determinar el MCD de dos números.</p>
+
+
+<p>Dados dos números $a$ y $b$ tal que $a>b$, el método de Euclides para encontrar el MCD de estos dos números consiste en obtener el residuo de la división entera de <em>a</em> sobre <em>b</em>, $r = a \bmod b$, ahora <em>a</em> pasa a ser <em>b</em> y <em>b</em> pasa a ser <em>r</em>. Estos pasos se repiten hasta encontrar un residuo igual a cero. El último residuo diferente de cero es el MCD que buscamos.</p>
+
+<p>Un ejemplo siempre ayuda. Sea $a=489$ y $b = 324$.</p>
+
+1. $r = 489  \bmod  324 = 165$ ahora $a = 324$ y $b = 165$.
+2. $r = 324  \bmod  165 = 159$, ahora $a = 165$ y $b = 159$.
+3. $r = 165  \bmod  159 = 6$, ahora $a = 159$ y $b = 6$.
+4. $r = 159  \bmod  6 = 3$, ahora $a = 6$ y $b = 3$.
+5. $r = 6  \bmod  3 = 0$, ahora $a = 3$ y $b = 0$.
+
+<p>En este punto <em>b</em> vale cero y por tanto el algoritmo ha terminado, el último residuo diferente de cero es 3 y por ende el MCD(489, 324) = 3. Veamos una implementación recursiva en C.</p>
+
+Embed: `gcd.c`
+
+## Exponenciación rápida
+
+<p>Dados dos números $a$ y $b$, $a^b$ es equivalente a multiplicar $a$ por sí misma $n$ veces. En términos matemáticos esto es exponenciación. Se pide un algoritmo que obtenga $a^n$ de manera eficiente.</p>
+
+<p>Al parecer es un problema muy simple, basta con iterar <em>n</em> veces multiplicando <em>a</em> por sí misma, resultando en un algoritmo lineal respecto a <em>n</em>.</p>
+
+<p>Un algoritmo lineal tiene un buen desempeño sin embargo existen problemas donde donde esto no es suficiente, uno de esos problemas es calcular el modulo (`%` en C/C++, Java, y otros lenguajes) de un número $a^n \bmod k$ donde $a^n$ es un número muy muy grande. Este problema lo abordaré en otro artículo, de momento enfoquemonos en la exponenciación.</p>
+
+<p>El algoritmo recursivo que aquí se describe se base en la regla de exponenciación que nos dice que $(a^n)^m = a^{nm}$ con la cual podemos reformular $a^n$ como $(a^2)^{n/2} (n \bmod 2)$. Aprovechando esta propiedad se puede diseñar un algoritmo de complejidad $O(\log_{2} n)$.</p>
+
+Embed: `power.c`
+
+<p>Establecemos el caso base en la línea 3 gracias a que por definición cualquier número elevado a una potencia cero es igual a la unidad.</p>
+
+## Sucesión de Fibonacci
+
+<p>Leonardo de Pisa, matemático italiano que vivió en el siglo XIII, también conocido como Fibonacci, describió una sucesión numérica cuyos primeros dos valores son 0 y 1. Cada elemento posterior se obtiene como la suma de los dos elementos anteriores, así los primeros 7 elementos de la sucesión son:</p>
+
+0, 1, 1, 2, 3, 5, 8, ...
+
+
+<p>Fibonacci describió dicha sucesión como la solución al siguiente problema.</p>
+
+<blockquote>
+"Un criador de conejos, en cierto mes no tiene ningún conejo(mes cero), al mes compra un par de conejos(macho y hembra) bebes(mes 1), al mes los conejos ya son adultos y la coneja se embaraza(mes 2), al mes la pareja pare un par de conejos(macho y hembra nuevamente) y ahora se tienen dos parejas de conejos(mes 3), la coneja de la pareja original se vuelve a embarazar y al siguiente mes pare otro par de conejos(macho y hembra, siempre sera así :D), y ya tenemos 3 pares de conejos(mes 4). La coneja de la pareja original vuelve a embarazarse y ademas la coneja de la primera partición, que ya es adulta, se embaraza también. Al mes cada pareja pare una pareja de conejos y ahora la población asciende a 5 parejas(mes 5). Las dos conejas del paso anterior se vuelven a embarazar y la coneja de la segunda partición ya es adulta y también se se embaraza dando lugar a 3 nuevos pares de conejos al siguiente mes que sumados a los ya existentes ahora tenemos 8 parejas(mes 6), y así sucesivamente."
+</blockquote>
+
+<p>En términos matemáticos esta sucesión se describe con la siguiente función:</p>
+
+$$f(n) = \begin{cases} 0 & \text{si n = 0} \\\\ 1 & \text{si n = 1} \\\\ f(n - 1) + f(n - 2) & \text{si n > 1} \end{cases}$$
+
+Embed: `fibonacci.c`
+
+<p>Note que el parámetro es de tipo `unsigned int` para asegurar que <em>n</em> siempre será mayor o igual a cero(el compilador nos advertirá), según lo especifica la función de fibonacci.</p>
+
+## Triangulo de pascal
+
+<p>El <a href="http://es.wikipedia.org/wiki/Tri%C3%A1ngulo_de_Pascal">triangulo de pascal</a> es un arreglo triangular que contiene en la fila <em>n</em> los coeficientes binomiales que resultan al desarrollar $(a + b)^n$. Las primeras 6 filas de este triangulo son:</p>
+
+<pre>
+1
+1 1
+1 2 1
+1 3 3 1
+1 4 6 4 1
+1 5 10 10 5 1
+</pre>
+
+
+<p>Inicialmente se empieza con un solo elemento, el 1 el punto más alto del triángulo. Para cada renglón posterior se coloca un 1 en cada extremo del renglón y el resto de los términos se calculan como la suma del elemento superior izquierdo más el elemento superior, es decir `P(i, j) = P(i - 1, j - 1) + P(i - 1, j)`. Nos encontramos nuevamente con una función recursiva. Sabemos que el valor en la primer y última columna de cada fila es igual a 1 y con ello formulamos nuestro caso base como `P(i, 1) = 1` y `P(i, j) == 1` si `i = j`.</p>
+
+<p>La código que se muestra a continuación calcula el valor ubicado en la fila <em>i</em>, columna <em>j</em>  del triángulo de pascal. Cabe decir que esta versión del algoritmo es muy ineficiente pero se muestra por cuestiones didácticas.</p>
+
+Embed: `pascal.c`
+    
+<!--Búsqueda-->
+## Búsqueda binaria
+
+<p>Sea <em>A[0...n -1]</em> un arreglo de elementos ordenados, existe un algoritmo de búsqueda que permite encontrar(si existe) un elemento en el arreglo con complejidad O(log (n)). Este algoritmo es conocido como búsqueda binaria ya que en cada paso reduce el campo de búsqueda a la mitad. Para este ejemplo <em>A</em> contiene números enteros aunque puede ser cualquier tipo de dato, salvo algunas pequeñas diferencias.</p>
+
+<p>La búsqueda binaria trabaja más o menos así: sea <em>v</em> el valor que buscamos y <em>A</em> un arreglo con los  elementos sobre los que realizaremos la búsqueda, ordenados en forma ascendente(en orden descendente no implica mayor complicación). Nos colocamos a la mitad del arreglo que contiene los elementos, es decir <em>A[A.size/2]</em>, comparamos el valor que se encuentra en esta posición con <em>v</em>, y pueden suceder tres casos, si son iguales entonces ya encontramos lo que andabamos buscando y termina la búsqueda de manera satisfactoria, si <em>v</em> es mayor entonces el valor que buscamos posiblemente se encuentra en la segunda mitad, es decir <em>A[A.size/2 + 1]</em> a <em>A[A.size - 1]</em>, y podemos estar seguros de que no se encuentra en la primera mitad gracias a que los elementos están ordenados. Si <em>v</em> es menor entonces descartamos la segunda mitad dejando a la primera mitad como la posible contenedora de <em>v</em>. Hecho esto hemos reducido el campo de búsqueda a la mitad, se descarta una de las mitades y repetimos el mismo procedimiento con la mitad restante, hasta encontrar el elemento que buscamos o hasta que comprobar que el elemento buscado no se encuentra en <em>A</em>.</p>
+
+<p>Quizás una imagen ayuda un poco a entender este procedimiento.</p>
+
+![Búsqueda Binaria](binary_search.png)
+
+<p>Una posible implementación de este algoritmo de forma recursiva es la siguiente.</p>
+
+Embed: `binary-search.c`
+
+## Permutaciones
+
+<p>Dada una lista de elementos sin que se repita ninguno de ellos se pide encontrar el número de permutaciones de dichos elementos y mostrar dichas permutaciones.</p>
+
+<p>Una permutación no es mas que el reordenamiento de un cierto número de objetos. Cuando se pide generar todas las permutaciones de un conjunto de elementos(al hablar de conjunto se sabe que no debe haber elementos repetidos) el problema se reduce a generar todas las reordenaciones posibles tales que no halla dos reordenaciones idénticas. Por ejemplo, el conjunto `{1, 2, 3}` tiene 6 permutaciones que son `{1, 2, 3}, {1, 3, 2}, {2, 1, 3}, {2, 3, 1}, {3, 1, 2} ,{3, 2, 1}`.</p>
+
+<p>El problema nos solicita dos cosas, primero, el número de permutaciones, y segundo, cuales son dichas permutaciones. La primera petición es muy fácil, ya lo hemos hecho anteriormente, se trata de la función factorial que desarrollamos como primer ejemplo de recursión que calcula ni más ni menos el número de permutaciones para un conjunto de <em>n</em> elementos.</p>
+
+<p>La segunda parte del problema es un poquito más complicada, así que procedamos con el análisis del problema. Veamos el las permutaciones para conjuntos de 1, 2 y 3 elementos.</p>
+
+<table class="article_table">
+    <tr>
+        <td>{1} = </td> <td>{1}</td>
+    </tr>
+    <tr>
+        <td>{1, 2} = </td> <td>{1, 2}, {2, 1}</td>
+    </tr>
+    <tr>
+        <td>{1, 2, 3} =  </td> <td>{1, 2, 3}, {1, 3, 2}, <br>{2, 1, 3}, {2, 3, 1}, <br>{3, 1, 2}, {3, 2, 1}</td>
+    </tr>
+</table>
+
+
+<p>Para un elemento la única permutación es sí mismo. Para dos elementos colocamos el primer elemento seguido por el segundo para la primera permutación y después invertimos el orden para obtener la segunda permutación. Ponga atención en las permutaciones del conjunto de 3 elementos. Note que primero se generan todas las permutaciones que empiezan con el primer elemento, después las que empiezan con el segundo elemento y de igual manera para el tercer elemento. Además note que existen dos permutaciones diferentes que empiezan con el primer elemento, dos que empiezan con el segundo elemento y dos para el tercero, una para cada permutación de los dos elementos restantes. </p>
+
+<p>Esto muestra que podemos reducir el problema a un algoritmo recursivo que para <em>n</em> elementos se deben generar todas las permutaciones formadas por todas las permutaciones de <em>n - 1</em> elementos precedidas del elemento n.</p>
+
+Embed: `perm.c`
+<pre lang="c" >
+</pre>
+
+<p>En las líneas 14 a 16 hacemos que el elemento actual pase al final del arreglo mediante un intercambio, dicho intercambio obviamente es para no perder el elemento que esta en la última posición. Esta sección del código corresponden a "anteponer" cada uno de los n elementos y la línea 20 corresponde a generar todas las permutaciones de los <em>n - 1</em> elementos restantes. Quizás notaran que realmente no anteponemos los elementos sino que más bien lo ponemos al final lo cual no altera el funcionamiento del algoritmo. Las permutaciones que genera este algoritmo están desordenadas y es necesario ordenarlos si así lo necesitamos. Existen algoritmos que generan permutaciones "casi" ordenadas pero se los dejo de tarea por si les interesa.</p>
+
+<!--Conclusión-->
+## Recursión vs Iteración
+
+<p>Todo algoritmo recursivo puede ser implementado en forma iterativa, y viceversa. Esta afirmación no fue muy aceptada por mí en un principio, pero ahora, con un poquito más de entendimiento, les puedo decir que es verdad. Para que se convenzan veamos como lucen las versiones iterativas de algunos problemas antes mencionados.</p>
+
+
+### Factorial
+
+Embed: `factorial2.c`
+
+### MCD
+
+Embed: `gcd2.c`
+
+### Fibonacci
+
+Embed: `fibonacci-iterative.c`
+
+### Exponenciación rápida
+
+Embed: `power2.c`
+
+<p>Algunos no son tan fáciles de portar a iterativo. De manera interna la recursión trabaja con una pila, cada llamada recursiva significa crear una copia de todos los valores actuales en la función y ponerlos en la pila, para después cuando termine la ejecución de la llamada recursiva se puedan restaurar los valores tal y como estaban. En muchos casos es necesario utilizar una pila explícitamente para su versión iterativa.</p>
+
+
+## Otros problemas recursivos
+
+<p>Existen muchos problemas que se definen recursivamente, algunos de ellos son: </p>
+
+<ol>
+  <li><a href="http://es.wikipedia.org/wiki/Funci%C3%B3n_de_Ackermann">Función de Ackermann</a></li>
+  <li><a href="http://es.wikipedia.org/wiki/N%C3%BAmeros_de_Catalan">Números de Catalan</a></li>
+  <li><a href="http://es.wikipedia.org/wiki/Torres_de_Han%C3%B3i">Torres de hanoi</a></li>
+  <li><a href="http://es.wikipedia.org/wiki/Fractal">Fractales</a></li>
+  <li>Otros...</li>
+</ol>
+
+## Conclusión
+
+<p>Resolver problemas es un arte y como todo artista es necesario aprender técnicas que nos permitan mejorar nuestras habilidades, la recursión de una de muchas técnicas que existen para atacar problemas de programación. Técnicas como el backtracking usan, divide y vencerás y búsqueda exhaustiva emplean recursión, entre otras. Este documento abarca solo una pequeña parte del tema de la recursividad, se recomienda al lector indagar más sobre el tema.</p>
+
+<p>Hasta aquí con la recursividad, para más información véase <em>recursión</em>.</p>
+
+## Referencias
+
+<table border="0">
+    <tr> <td>[1]</td> <td>Dasgupta, C. H. Papadimitriou, and U. V. Vazirani, <b>Algorithms</b> 2006.</td> </tr>
+    <tr> <td>[2]</td> <td>Luis E. Vargas Azcona, <b>Problemas y algoritmos.</b></td> </tr>
+    <tr> <td>[3]</td> <td>Steven Halim, <b>Competitive programming.</b></td> </tr>
+</table>

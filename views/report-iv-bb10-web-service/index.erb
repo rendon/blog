@@ -1,159 +1,166 @@
-<p>Este reporte corresponde al proyecto número 4 de la asignatura Desarrollo de Aplicaciones para Tecnologías Móviles.</p>
-
+<p>
+Este reporte corresponde al proyecto número 4 de la asignatura Desarrollo de Aplicaciones para Tecnologías Móviles.
+</p>
 <div style="padding: 10px; border: 1px solid red;">
-  <strong>NOTA</strong>
-  <p>El Web service que vamos a utilizar no es el mismo que el del proyecto anterior (cliente Windows Phone), se han hecho algunas modificaciones al modelo de datos y por lo tanto al Web service, para cumplir con las observaciones hechas por el profesor:</p>
-
-  <ul>
-    <li>El cliente no debe de modificar los catálogos (clientes y productos), únicamente agregar registros.</li>
-    <li>La aplicación cliente no debe tener una réplica completa de la base de datos, únicamente los datos de los registros que se han realizado con la misma.</li>
-  </ul>
+<strong>NOTA</strong>
+<p>
+El Web service que vamos a utilizar no es el mismo que el del proyecto anterior (cliente Windows Phone), se han hecho algunas modificaciones al modelo de datos y por lo tanto al Web service, para cumplir con las observaciones hechas por el profesor:
+</p>
+<ul>
+<li>
+El cliente no debe de modificar los catálogos (clientes y productos), únicamente agregar registros.
+</li>
+<li>
+La aplicación cliente no debe tener una réplica completa de la base de datos, únicamente los datos de los registros que se han realizado con la misma.
+</li>
+</ul>
 </div>
-
-<%= section('Definición del problema'); %>
-
-<blockquote>Desarrollar un Web service (en el lenguaje que más les agrade) capaz de manipular una base de datos a petición del cliente, en este caso, el cliente será una aplicación móvil para la plataforma Blackberry 10.</blockquote>
-
-<%= section('Definiciones'); %>
-
-<p>Como este reporte forma parte de una serie de reportes, vamos a omitir la teoría sobre Web services puesto que ya se abordo en el reporte número <a href="/?p=865">II</a>.</p>
-
-<%= section('Propuesta de solución'); %>
-
-<p>Nuevamente, el problema nos da la flexibilidad de elegir que problema modelar, la propuesta es la siguiente:</p>
-
-<blockquote>Desarrollar una aplicación móvil para el control requisiciones, similar a los dispositivos que utilizan los agentes de venta cuando salen a levantar pedidos.</blockquote>
-
-<%= subsection('El cliente'); %>
-
-<p>La aplicación móvil deberá cumplir con los siguientes requisitos:</p>
-
+<h2 id="definición-del-problema">Definición del problema</h2>
+<blockquote>
+Desarrollar un Web service (en el lenguaje que más les agrade) capaz de manipular una base de datos a petición del cliente, en este caso, el cliente será una aplicación móvil para la plataforma Blackberry 10.
+</blockquote>
+<h2 id="definiciones">Definiciones</h2>
+<p>
+Como este reporte forma parte de una serie de reportes, vamos a omitir la teoría sobre Web services puesto que ya se abordo en el reporte número <a href="/?p=865">II</a>.
+</p>
+<h2 id="propuesta-de-solución">Propuesta de solución</h2>
+<p>
+Nuevamente, el problema nos da la flexibilidad de elegir que problema modelar, la propuesta es la siguiente:
+</p>
+<blockquote>
+Desarrollar una aplicación móvil para el control requisiciones, similar a los dispositivos que utilizan los agentes de venta cuando salen a levantar pedidos.
+</blockquote>
+<h3 id="el-cliente">El cliente</h3>
+<p>
+La aplicación móvil deberá cumplir con los siguientes requisitos:
+</p>
 <ul>
-  <li>La aplicación permitirá consultar la lista de clientes.</li>
-  <li>La aplicación permitirá consultar la lista de productos.</li>
-  <li>La aplicación permitirá registrar pedidos.</li>
-  <li>La aplicación permitirá consultar la lista de pedidos.</li>
-  <li>La aplicación deberá tener la capacidad de trabajar tanto _online_ como _offline_.</li>
-  <li>La aplicación permitirá subir los registros al servidor.</li>
-  <li>La aplicación permitirá contactar al servidor para actualizar catálogos.</li>
+<li>
+La aplicación permitirá consultar la lista de clientes.
+</li>
+<li>
+La aplicación permitirá consultar la lista de productos.
+</li>
+<li>
+La aplicación permitirá registrar pedidos.
+</li>
+<li>
+La aplicación permitirá consultar la lista de pedidos.
+</li>
+<li>
+La aplicación deberá tener la capacidad de trabajar tanto <em>online</em> como <em>offline</em>.
+</li>
+<li>
+La aplicación permitirá subir los registros al servidor.
+</li>
+<li>
+La aplicación permitirá contactar al servidor para actualizar catálogos.
+</li>
 </ul>
-
-<%= subsection('El servidor'); %>
-
-<p>Un Web service desarrollado en PHP que manipula una base de datos MySQL. A continuación la lista de servicios que vamos desarrollar:</p>
-
+<h3 id="el-servidor">El servidor</h3>
+<p>
+Un Web service desarrollado en PHP que manipula una base de datos MySQL. A continuación la lista de servicios que vamos desarrollar:
+</p>
 <ul>
-  <li>**PutRegisters(requests[], details[])** Recibe los datos de la aplicación móvil y los agrega a la base de datos, en caso de que aun no existan.</li>
-  <li>**GetAllClients()** Retorna al cliente la lista de clientes. Este servicio forma parte de la actualización de catálogos.</li>
-  <li>**GetAllProducts()** Retorna al cliente la lista de productos. Este servicio forma parte de la actualización de catálogos.</li>
+<li>
+<strong>PutRegisters(requests[], details[])</strong> Recibe los datos de la aplicación móvil y los agrega a la base de datos, en caso de que aun no existan.
+</li>
+<li>
+<strong>GetAllClients()</strong> Retorna al cliente la lista de clientes. Este servicio forma parte de la actualización de catálogos.
+</li>
+<li>
+<strong>GetAllProducts()</strong> Retorna al cliente la lista de productos. Este servicio forma parte de la actualización de catálogos.
+</li>
 </ul>
-
-<%= section('Requisitos'); %>
-
-<p>Para poder realizar esta práctica se necesita lo siguiente:</p>
-
+<h2 id="requisitos">Requisitos</h2>
+<p>
+Para poder realizar esta práctica se necesita lo siguiente:
+</p>
 <ul>
-  <li>Debian GNU/Linux Wheezy</li>
-  <li>Un servidor LAMP (Linux + Apache + MySQL + PHP), ya vimos como configurar uno del reporte número 2.</li>
-  <li>Momentics IDE 2.0, fue mi primera opción pero después cambie a Qt Creator, solo lo incluyo porque al instalar éste IDE se descargan todas las bibliotecas necesarias.</li>
-  <li>Qt 5 y Qt Creator, versiones beta (<a href="http://qt-project.org/downloads" target="_blank">http://qt-project.org/downloads</a>), solo descarga e instala con el clásico "Next, Next, Next...".</li>
-  <li>El simulador de Blackberry (<a href="https://developer.blackberry.com/devzone/develop/simulator/simulator_installing.html" target="_blank">developer.blackberry.com/devzone/develop/simulator/simulator_installing.html</a>).</li>
+<li>
+Debian GNU/Linux Wheezy
+</li>
+<li>
+Un servidor LAMP (Linux + Apache + MySQL + PHP), ya vimos como configurar uno del reporte número 2.
+</li>
+<li>
+Momentics IDE 2.0, fue mi primera opción pero después cambie a Qt Creator, solo lo incluyo porque al instalar éste IDE se descargan todas las bibliotecas necesarias.
+</li>
+<li>
+Qt 5 y Qt Creator, versiones beta (<a href="http://qt-project.org/downloads" target="_blank">http://qt-project.org/downloads</a>), solo descarga e instala con el clásico “Next, Next, Next…”.
+</li>
+<li>
+El simulador de Blackberry (<a href="https://developer.blackberry.com/devzone/develop/simulator/simulator_installing.html" target="_blank">developer.blackberry.com/devzone/develop/simulator/simulator_installing.html</a>).
+</li>
 </ul>
-
-<%= subsection('Instalación del simulador'); %>
-
-<p>El simulador es una imagen de disco que podemos usar con VMware Player (<a href="https://www.vmware.com" target="_blank">www.vmware.com</a>), simplemente instala VMware Player y carga la imagen del simulador.</p>
-
-<p>El simulador consume muchos recursos, por defecto el simulador buscará una tarjeta de gráficos en nuestro sistema, si no contamos con una nos encontraremos con esto:</p>
-
-<%= 
-figure(post, 'bbws_start_service_screen.png', caption: 'El emulador no arranca', label: 'bbws_start_service_screen', lang: :es);
- %>
-
-<p>La solución es entrar en uno de los modos seguros, en mi caso he optado por la resolución de pantalla 720x720 y modo seguro (opción 5).</p>
-
-<%= 
-figure(post, 'bbws_start_service_screen_sol.png', caption: 'Elige el modo seguro si no se cuenta con una tarjeta gráfica', label: 'bbws_start_service_screen_sol', lang: :es);
- %>
-
-
-<%= subsection('Configuración de Qt Creator'); %>
-
-<p>Qt Creator ya viene con soporte para BlackBerry, sin embargo habrá que configurar algunas cosas. Vamos a asumir que Momentics IDE fue instalado en el directorio _/opt/bbndk_ y Qt fue instalado en _/opt/qt5_.</p>
-
-<p>Vamos a ejecutar Qt Creator desde la consola, pero antes vamos a ejecutar un script de configuración que viene incluido con Momentics IDE.</p>
-
+<h3 id="instalación-del-simulador">Instalación del simulador</h3>
+<p>
+El simulador es una imagen de disco que podemos usar con VMware Player (<a href="https://www.vmware.com" target="_blank">www.vmware.com</a>), simplemente instala VMware Player y carga la imagen del simulador.
+</p>
+<p>
+El simulador consume muchos recursos, por defecto el simulador buscará una tarjeta de gráficos en nuestro sistema, si no contamos con una nos encontraremos con esto:
+</p>
+<p>&lt;%= figure(post, ‘bbws_start_service_screen.png’, caption: ‘El emulador no arranca’, label: ‘bbws_start_service_screen’, lang: :es); %&gt;</p>
+<p>
+La solución es entrar en uno de los modos seguros, en mi caso he optado por la resolución de pantalla 720x720 y modo seguro (opción 5).
+</p>
+<p>&lt;%= figure(post, ‘bbws_start_service_screen_sol.png’, caption: ‘Elige el modo seguro si no se cuenta con una tarjeta gráfica’, label: ‘bbws_start_service_screen_sol’, lang: :es); %&gt;</p>
+<h3 id="configuración-de-qt-creator">Configuración de Qt Creator</h3>
+<p>
+Qt Creator ya viene con soporte para BlackBerry, sin embargo habrá que configurar algunas cosas. Vamos a asumir que Momentics IDE fue instalado en el directorio <em>/opt/bbndk</em> y Qt fue instalado en <em>/opt/qt5</em>.
+</p>
+<p>
+Vamos a ejecutar Qt Creator desde la consola, pero antes vamos a ejecutar un script de configuración que viene incluido con Momentics IDE.
+</p>
 <pre theme="slate">
 /opt/bbndk/bbndk-env_10_2_0_1155.sh
 /opt/qt5/Tools/QtCreator/bin/qtcreator
 </pre>
-
-<p>El script de configuración exporta algunas variables de entorno que Qt Creator necesita para ubicar las herramientas necesarias. Una vez abierto Qt Creator, vamos a agregar el compilador: Tools -> Options ->  Build & Run.</p>
-
-<%= 
-figure(post, 'bbws_qtcreator_qcc.png', caption: 'Configuración del compilador para BlackBerry', label: 'bbws_qtcreator_qcc', lang: :es);
- %>
-
-<p>Ahora hay que configurar el simulador: Tool -> Options -> Devices -> Add...:</p>
-
-<%= 
-figure(post, 'bbws_qtcreator_add_sim_1.png', caption: 'Agrega un nuevo dispositivo tipo BlackBerry', label: 'bbws_qtcreator_add_sim_1', lang: :es);
- %>
-
-<p>Especificamos la IP del simulador:</p>
-
-<%= 
-figure(post, 'bbws_qtcreator_add_sim_2.png', caption: 'Detección del simulador', label: 'bbws_qtcreator_add_sim_2', lang: :es);
- %>
-
-<%= 
-figure(post, 'bbws_qtcreator_add_sim_3.png', caption: 'Detección del simulador', label: 'bbws_qtcreator_add_sim_3', lang: :es);
- %>
-
-<%= 
-figure(post, 'bbws_qtcreator_add_sim_4.png', caption: 'Detección del simulador', label: 'bbws_qtcreator_add_sim_4', lang: :es);
- %>
-
-<p>La IP la podemos encontrar en la parte inferior derecha del simulador:</p>
-
-<%= 
-figure(post, 'bbws_simulator_ip.png', caption: 'IP del simulador', label: 'bbws_simulator_ip', lang: :es);
- %>
-
-<p>Ahora deberíamos poder probar una aplicación "¡Hola, mundo!":</p>
-
-<%=  figure(post, 'bbws_hello_world_1.png', caption: 'Nuevo proyecto, Paso 1', label: 'bbws_hello_world_1', lang: :es);  %>
-<%=  figure(post, 'bbws_hello_world_2.png', caption: 'Nuevo proyecto, Paso 2', label: 'bbws_hello_world_2', lang: :es);  %>
-<%=  figure(post, 'bbws_hello_world_3.png', caption: 'Nuevo proyecto, Paso 3', label: 'bbws_hello_world_3', lang: :es);  %>
-<%=  figure(post, 'bbws_hello_world_4.png', caption: 'Nuevo proyecto, Paso 4', label: 'bbws_hello_world_4', lang: :es);  %>
-<%=  figure(post, 'bbws_hello_world_5.png', caption: 'Nuevo proyecto, Paso 5', label: 'bbws_hello_world_5', lang: :es);  %>
-<%=  figure(post, 'bbws_hello_world_6.png', caption: 'Nuevo proyecto, Paso 6', label: 'bbws_hello_world_6', lang: :es);  %>
-
-<p>Para más información sobre la configuración del entorno véase:</p>
-
-- <a href="http://qt-project.org/wiki/Setting-up-Qt-Creator-for-BlackBerry-and-QNX" target="_blank">http://qt-project.org/wiki/Setting-up-Qt-Creator-for-BlackBerry-and-QNX</a>
-- <a href="https://developer.blackberry.com/native/documentation/core/qt_porting_tools.html" target="_blank">https://developer.blackberry.com/native/documentation/core/qt_porting_tools.html</a>
-
-
-<%= section('Desarrollo del servidor'); %>
-
-<p>En el reporte anterior ya vimos como crear y registrar servicios en PHP usando NuSOAP, por ello vamos a mostrar únicamente lo esencial.</p>
-
-<%= subsection('El modelo de datos'); %>
-
-<p>Nuestra base de datos consiste de 4 tablas, Cliente, Producto, Pedido y Detalle.</p>
-
-<%= 
-figure(post, 'bbws_data_model.png', caption: 'Modelo de datos', label: 'bbws_data_model', lang: :es);
- %>
-
-<p>**NOTA:** Con el código fuente incluyo el modelo de la base de datos, fue diseñado utilizando MySQL Workbench y por lo tanto podrán exportar la base de datos desde ahí.</p>
-
-<%= subsection('Los servicios'); %>
-
-<p>El web service no difiere mucho del que utilizamos en el proyecto anterior, se ha agregado el servicio _GetAllProducts_ y  el servicio _Synchronize_ ha sido reemplazado con _PutRegisters_.</p>
-
-
+<p>
+El script de configuración exporta algunas variables de entorno que Qt Creator necesita para ubicar las herramientas necesarias. Una vez abierto Qt Creator, vamos a agregar el compilador: Tools -&gt; Options -&gt; Build &amp; Run.
+</p>
+<p>&lt;%= figure(post, ‘bbws_qtcreator_qcc.png’, caption: ‘Configuración del compilador para BlackBerry’, label: ‘bbws_qtcreator_qcc’, lang: :es); %&gt;</p>
+<p>
+Ahora hay que configurar el simulador: Tool -&gt; Options -&gt; Devices -&gt; Add…:
+</p>
+<p>&lt;%= figure(post, ‘bbws_qtcreator_add_sim_1.png’, caption: ‘Agrega un nuevo dispositivo tipo BlackBerry’, label: ‘bbws_qtcreator_add_sim_1’, lang: :es); %&gt;</p>
+<p>
+Especificamos la IP del simulador:
+</p>
+<p>&lt;%= figure(post, ‘bbws_qtcreator_add_sim_2.png’, caption: ‘Detección del simulador’, label: ‘bbws_qtcreator_add_sim_2’, lang: :es); %&gt;</p>
+<p>&lt;%= figure(post, ‘bbws_qtcreator_add_sim_3.png’, caption: ‘Detección del simulador’, label: ‘bbws_qtcreator_add_sim_3’, lang: :es); %&gt;</p>
+<p>&lt;%= figure(post, ‘bbws_qtcreator_add_sim_4.png’, caption: ‘Detección del simulador’, label: ‘bbws_qtcreator_add_sim_4’, lang: :es); %&gt;</p>
+<p>
+La IP la podemos encontrar en la parte inferior derecha del simulador:
+</p>
+<p>&lt;%= figure(post, ‘bbws_simulator_ip.png’, caption: ‘IP del simulador’, label: ‘bbws_simulator_ip’, lang: :es); %&gt;</p>
+<p>
+Ahora deberíamos poder probar una aplicación “¡Hola, mundo!”:
+</p>
+<p>&lt;%= figure(post, ‘bbws_hello_world_1.png’, caption: ‘Nuevo proyecto, Paso 1’, label: ‘bbws_hello_world_1’, lang: :es); %&gt; &lt;%= figure(post, ‘bbws_hello_world_2.png’, caption: ‘Nuevo proyecto, Paso 2’, label: ‘bbws_hello_world_2’, lang: :es); %&gt; &lt;%= figure(post, ‘bbws_hello_world_3.png’, caption: ‘Nuevo proyecto, Paso 3’, label: ‘bbws_hello_world_3’, lang: :es); %&gt; &lt;%= figure(post, ‘bbws_hello_world_4.png’, caption: ‘Nuevo proyecto, Paso 4’, label: ‘bbws_hello_world_4’, lang: :es); %&gt; &lt;%= figure(post, ‘bbws_hello_world_5.png’, caption: ‘Nuevo proyecto, Paso 5’, label: ‘bbws_hello_world_5’, lang: :es); %&gt; &lt;%= figure(post, ‘bbws_hello_world_6.png’, caption: ‘Nuevo proyecto, Paso 6’, label: ‘bbws_hello_world_6’, lang: :es); %&gt;</p>
+<p>
+Para más información sobre la configuración del entorno véase:
+</p>
+<ul>
+<li><a href="http://qt-project.org/wiki/Setting-up-Qt-Creator-for-BlackBerry-and-QNX" target="_blank">http://qt-project.org/wiki/Setting-up-Qt-Creator-for-BlackBerry-and-QNX</a></li>
+<li><a href="https://developer.blackberry.com/native/documentation/core/qt_porting_tools.html" target="_blank">https://developer.blackberry.com/native/documentation/core/qt_porting_tools.html</a></li>
+</ul>
+<h2 id="desarrollo-del-servidor">Desarrollo del servidor</h2>
+<p>
+En el reporte anterior ya vimos como crear y registrar servicios en PHP usando NuSOAP, por ello vamos a mostrar únicamente lo esencial.
+</p>
+<h3 id="el-modelo-de-datos">El modelo de datos</h3>
+<p>
+Nuestra base de datos consiste de 4 tablas, Cliente, Producto, Pedido y Detalle.
+</p>
+<p>&lt;%= figure(post, ‘bbws_data_model.png’, caption: ‘Modelo de datos’, label: ‘bbws_data_model’, lang: :es); %&gt;</p>
+<p>
+<strong>NOTA:</strong> Con el código fuente incluyo el modelo de la base de datos, fue diseñado utilizando MySQL Workbench y por lo tanto podrán exportar la base de datos desde ahí.
+</p>
+<h3 id="los-servicios">Los servicios</h3>
+<p>
+El web service no difiere mucho del que utilizamos en el proyecto anterior, se ha agregado el servicio <em>GetAllProducts</em> y el servicio <em>Synchronize</em> ha sido reemplazado con <em>PutRegisters</em>.
+</p>
 <pre lang="php">
 function GetAllProducts()
 {
@@ -219,25 +226,37 @@ function PutRegisters($RequestItems, $DetailItems)
     return count($requests) + count($details);
 }
 </pre>
-
-<p>La actualización de los datos con el servidor se ha simplificado puesto que ahora no tenemos que crear nuevos clientes.</p>
-
-<%= section('La base de datos local'); %>
-
-<p>Puesto que nuestra aplicación cliente deberá funcionar también en modo _offline_, debe existir una réplica del modelo de datos en el cliente. En esta ocasión utilizaremos SQLite. Las entidades son las siguientes:</p>
-
+<p>
+La actualización de los datos con el servidor se ha simplificado puesto que ahora no tenemos que crear nuevos clientes.
+</p>
+<h2 id="la-base-de-datos-local">La base de datos local</h2>
+<p>
+Puesto que nuestra aplicación cliente deberá funcionar también en modo <em>offline</em>, debe existir una réplica del modelo de datos en el cliente. En esta ocasión utilizaremos SQLite. Las entidades son las siguientes:
+</p>
 <ul>
-  <li>**Client** Representa a la tabla Cliente.</li>
-  <li>**Request** Representa a la table Pedido.</li>
-  <li>**Detail** Representa a la tabla Detalle.</li>
-  <li>**Product** Representa a la tabla Detalle.</li>
-  <li><del>**Key** Tabla auxiliar para almacenar las claves primarias de las tablas restantes.</del> Debido a las modificaciones ya no es necesaria.</li>
+<li>
+<strong>Client</strong> Representa a la tabla Cliente.
+</li>
+<li>
+<strong>Request</strong> Representa a la table Pedido.
+</li>
+<li>
+<strong>Detail</strong> Representa a la tabla Detalle.
+</li>
+<li>
+<strong>Product</strong> Representa a la tabla Detalle.
+</li>
+<li>
+<del>
+<strong>Key</strong> Tabla auxiliar para almacenar las claves primarias de las tablas restantes.
+</del>
+Debido a las modificaciones ya no es necesaria.
+</li>
 </ul>
-
-<%= subsection('Inicialización de la base de datos'); %>
-
-<p>Cuando la aplicación inicia se debe preparar la base de datos, en caso de no existir ésta es creada. Dentro de la clase _Backend_ podrán encontrar el siguiente código:</p>
-
+<h3 id="inicialización-de-la-base-de-datos">Inicialización de la base de datos</h3>
+<p>
+Cuando la aplicación inicia se debe preparar la base de datos, en caso de no existir ésta es creada. Dentro de la clase <em>Backend</em> podrán encontrar el siguiente código:
+</p>
 <pre lang="cpp">
 bool Backend::initDataBase()
 {
@@ -287,13 +306,13 @@ bool Backend::initDataBase()
     return true;
 }
 </pre>
-
-<%= subsection('Operaciones con la base de datos'); %>
-
-<p>Para simplificar la lógica de la aplicación se crearon varias funciones auxiliares para las diferentes operaciones, como son insertar registros, consultas, etc.</p>
-
-<p>Inserción de registros:</p>
-
+<h3 id="operaciones-con-la-base-de-datos">Operaciones con la base de datos</h3>
+<p>
+Para simplificar la lógica de la aplicación se crearon varias funciones auxiliares para las diferentes operaciones, como son insertar registros, consultas, etc.
+</p>
+<p>
+Inserción de registros:
+</p>
 <pre lang="cpp">
 bool Backend::insertClient(int id, QString name, QString middleName,
                            QString lastName, QString address)
@@ -360,9 +379,7 @@ bool Backend::insertDetail(int idRequest, int idProduct, int amount)
     return true;
 }
 </pre>
-
-Consulta de registros:
-
+<p>Consulta de registros:</p>
 <pre lang="cpp">
 QVector<Client> Backend::selectClients()
 {
@@ -442,15 +459,16 @@ QVector<Detail> Backend::selectDetails()
     return details;
 }
 </pre>
-
-<p>Creo que no hay necesidad de explicar el código ya que se explica a sí mismo.</p>
-
-<%= section('Comunicación con el Web service'); %>
-
-<p>Qt no proporciona mucho soporte para trabajar con Web services (¿Me equivoco?) pero si lo necesario para comunicarnos con el servidor, para extraer los datos de los mensajes que nos regrese el servidor habrá que ensuciarnos las manos un poquito.</p>
-
-<p>Vamos a ilustrar la comunicación con uno de los servicios, _GetAllClients_, el resto de las operaciones son similares. Primero creamos un método llamado _queryClients()_, el cual envía la solicitud al servidor con el mensaje adecuado:</p>
-
+<p>
+Creo que no hay necesidad de explicar el código ya que se explica a sí mismo.
+</p>
+<h2 id="comunicación-con-el-web-service">Comunicación con el Web service</h2>
+<p>
+Qt no proporciona mucho soporte para trabajar con Web services (¿Me equivoco?) pero si lo necesario para comunicarnos con el servidor, para extraer los datos de los mensajes que nos regrese el servidor habrá que ensuciarnos las manos un poquito.
+</p>
+<p>
+Vamos a ilustrar la comunicación con uno de los servicios, <em>GetAllClients</em>, el resto de las operaciones son similares. Primero creamos un método llamado <em>queryClients()</em>, el cual envía la solicitud al servidor con el mensaje adecuado:
+</p>
 <pre lang="cpp">
 void Backend::queryClients()
 {
@@ -463,9 +481,9 @@ void Backend::queryClients()
     networkManager->post(request, MSG_GET_ALL_CLIENTS.toAscii());
 }
 </pre>
-
-<p>El valor de `WS_URL` en nuestro caso es `http://192.168.1.200/request_ws/index.php`, la constante `MSG_GET_ALL_CLIENTS` almacena el mensaje SOAP que solicita la lista de clientes:</p>
-
+<p>
+El valor de <code>WS_URL</code> en nuestro caso es <code>http://192.168.1.200/request_ws/index.php</code>, la constante <code>MSG_GET_ALL_CLIENTS</code> almacena el mensaje SOAP que solicita la lista de clientes:
+</p>
 <pre lang="xml">
 <?xml version="1.0"?>
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:req="Request">
@@ -475,9 +493,9 @@ void Backend::queryClients()
   </soapenv:Body>
 </soapenv:Envelope>
 </pre>
-
-<p>La comunicación con el servidor se realiza de manera asíncrona, el método que recibirá la respuesta del servidor es _getClientsFinished()_:</p>
-
+<p>
+La comunicación con el servidor se realiza de manera asíncrona, el método que recibirá la respuesta del servidor es <em>getClientsFinished()</em>:
+</p>
 <pre lang="cpp">
 void Backend::getClientsFinished(QNetworkReply *reply)
 {
@@ -496,9 +514,9 @@ void Backend::getClientsFinished(QNetworkReply *reply)
     loadClientsToList();
 }
 </pre>
-
-<p>El contenido de la variable _response_ almacena la respuesta del servidor en formato XML, por lo que hay que procesarla para obtener los datos que nos interesan, esto se realiza en el método _toClientArray()_, que devuelve una lista de clientes:</p>
-
+<p>
+El contenido de la variable <em>response</em> almacena la respuesta del servidor en formato XML, por lo que hay que procesarla para obtener los datos que nos interesan, esto se realiza en el método <em>toClientArray()</em>, que devuelve una lista de clientes:
+</p>
 <pre lang="cpp">
 QVector<Client> Backend::toClientArray(QString message)
 {
@@ -530,26 +548,24 @@ QVector<Client> Backend::toClientArray(QString message)
     return list;
 }
 </pre>
-
-<p>En el código anterior nos apoyamos de la clase <a href="https://qt-project.org/doc/qt-4.8/qxmlstreamreader.html" target="_blank">QXmlStreamReader</a> para extraer los valores.</p>
-
-
-<%= section('El cliente'); %>
-
-<p>Ahora veamos como crear una aplicación para BlackBerry que consuma nuestros servicios. El código es un poco extenso así que se explicarán únicamente las partes más importantes.</p>
-
-<p>Hasta hace poco la tecnología empleada para crear aplicaciones BlackBerry era Java, sin embargo, en un intento por permanecer en el mercado, Blackberry ha apostado también por los dispositivos _touch_ y ha reemplazado Java por C++, la tecnología se conoce como <a href="http://developer.blackberry.com/native/" target="_blank">Cascades</a>, un framework basado en <a href="https://www.qt.io/developers/" target="_blank">Qt</a> y <a href="http://qt-project.org/doc/qt-5.0/qtqml/qtqml-index.html" target="_blank">QML</a>  para diseñar interfaces gráficas de manera nativa. </p>
-
-<%= subsection('La página principal'); %>
-
-<p>Así lucirá la página principal de nuestra aplicación:</p>
-
-<%= 
-figure(post, 'bbws_app_home.png', caption: 'Página principal de la aplicación', label: 'bbws_app_home', lang: :es);
- %>
-
-<p>El diseño de esta página en QML es el siguiente:</p>
-
+<p>
+En el código anterior nos apoyamos de la clase <a href="https://qt-project.org/doc/qt-4.8/qxmlstreamreader.html" target="_blank">QXmlStreamReader</a> para extraer los valores.
+</p>
+<h2 id="el-cliente-1">El cliente</h2>
+<p>
+Ahora veamos como crear una aplicación para BlackBerry que consuma nuestros servicios. El código es un poco extenso así que se explicarán únicamente las partes más importantes.
+</p>
+<p>
+Hasta hace poco la tecnología empleada para crear aplicaciones BlackBerry era Java, sin embargo, en un intento por permanecer en el mercado, Blackberry ha apostado también por los dispositivos <em>touch</em> y ha reemplazado Java por C++, la tecnología se conoce como <a href="http://developer.blackberry.com/native/" target="_blank">Cascades</a>, un framework basado en <a href="https://www.qt.io/developers/" target="_blank">Qt</a> y <a href="http://qt-project.org/doc/qt-5.0/qtqml/qtqml-index.html" target="_blank">QML</a> para diseñar interfaces gráficas de manera nativa.
+</p>
+<h3 id="la-página-principal">La página principal</h3>
+<p>
+Así lucirá la página principal de nuestra aplicación:
+</p>
+<p>&lt;%= figure(post, ‘bbws_app_home.png’, caption: ‘Página principal de la aplicación’, label: ‘bbws_app_home’, lang: :es); %&gt;</p>
+<p>
+El diseño de esta página en QML es el siguiente:
+</p>
 <pre lang="javascript">
 Tab {
     title: "Inicio"
@@ -615,17 +631,14 @@ Tab {
     }
 }
 </pre>
-
-<%= subsection('Registro de pedidos'); %>
-
-<p>La siguiente imagen muestra la interfaz de usuario para registrar nuevos pedidos.</p>
-
-<%= 
-figure(post, 'bbws_app_shop.png', caption: 'Registro de pedidos', label: 'bbws_app_shop', lang: :es);
- %>
-
-<p>El diseño de la interfaz en QML es el siguiente:</p>
-
+<h3 id="registro-de-pedidos">Registro de pedidos</h3>
+<p>
+La siguiente imagen muestra la interfaz de usuario para registrar nuevos pedidos.
+</p>
+<p>&lt;%= figure(post, ‘bbws_app_shop.png’, caption: ‘Registro de pedidos’, label: ‘bbws_app_shop’, lang: :es); %&gt;</p>
+<p>
+El diseño de la interfaz en QML es el siguiente:
+</p>
 <pre lang="javascript">
 Tab {
     title: "Pedidos"
@@ -777,9 +790,9 @@ Tab {
     }
 }
 </pre>
-
-<p>Cuando el usuario presiona el botón para guardar el pedido, se invoca al método _saveReqeust()_ de la clase Backend con el ID del cliente para que almacene el pedido en la base de datos, la lista de artículos artículos se almacena en la clase Backend, por lo que no hay necesidad de enviársela. Aquí el código:</p>
-
+<p>
+Cuando el usuario presiona el botón para guardar el pedido, se invoca al método <em>saveReqeust()</em> de la clase Backend con el ID del cliente para que almacene el pedido en la base de datos, la lista de artículos artículos se almacena en la clase Backend, por lo que no hay necesidad de enviársela. Aquí el código:
+</p>
 <pre lang="cpp">
 bool Backend::saveRequest(QString idClient)
 {
@@ -826,17 +839,14 @@ bool Backend::saveRequest(QString idClient)
     return true;
 }
 </pre>
-
-<%= subsection('Consulta de pedidos'); %>
-
-<p>Nuestra aplicación también permite consultar la lista de pedidos, aquí la interfaz:</p>
-
-<%= 
-figure(post, 'bbws_app_query.png', caption: 'Consulta de pedidos', label: 'bbws_app_query', lang: :es);
- %>
-
-<p>El diseño en QML es el siguiente:</p>
-
+<h3 id="consulta-de-pedidos">Consulta de pedidos</h3>
+<p>
+Nuestra aplicación también permite consultar la lista de pedidos, aquí la interfaz:
+</p>
+<p>&lt;%= figure(post, ‘bbws_app_query.png’, caption: ‘Consulta de pedidos’, label: ‘bbws_app_query’, lang: :es); %&gt;</p>
+<p>
+El diseño en QML es el siguiente:
+</p>
 <pre lang="javascript">
 Tab {
     imageSource: "asset:///pictures/search.png"
@@ -911,9 +921,9 @@ Tab {
     }
 }
 </pre>
-
-<p>La lógica detrás de esta operación se encuentra en el método _loadRequestsToList()_:</p>
-
+<p>
+La lógica detrás de esta operación se encuentra en el método <em>loadRequestsToList()</em>:
+</p>
 <pre lang="cpp">
 void Backend::loadRequestsToList()
 {
@@ -952,19 +962,17 @@ void Backend::loadRequestsToList()
     }
 }
 </pre>
-
-<p>El objeto *_requestModel* esta **enlazado** a un objeto <a href="http://developer.blackberry.com/native/reference/cascades/bb__cascades__listview.html" target="_blank">ListView</a> en la interfaz gráfica, por lo que los cambios que le ocurren al objeto *_requestModel* se reflejan automáticamente en el ListView.</p>
-
-<%= subsection('Subir los registros al servidor'); %>
-
-<p>Para esta operación solo tenemos que presionar un botón y se nos mostrará una barra de progreso que simulará el progreso de la operación.</p>
-
-<%= 
-figure(post, 'bbws_app_upload.png', caption: 'Envío de pedidos al servidor', label: 'bbws_app_upload', lang: :es);
- %>
-
-<p>El código que realiza esta operación es el siguiente:</p>
-
+<p>
+El objeto *_requestModel* esta <strong>enlazado</strong> a un objeto <a href="http://developer.blackberry.com/native/reference/cascades/bb__cascades__listview.html" target="_blank">ListView</a> en la interfaz gráfica, por lo que los cambios que le ocurren al objeto *_requestModel* se reflejan automáticamente en el ListView.
+</p>
+<h3 id="subir-los-registros-al-servidor">Subir los registros al servidor</h3>
+<p>
+Para esta operación solo tenemos que presionar un botón y se nos mostrará una barra de progreso que simulará el progreso de la operación.
+</p>
+<p>&lt;%= figure(post, ‘bbws_app_upload.png’, caption: ‘Envío de pedidos al servidor’, label: ‘bbws_app_upload’, lang: :es); %&gt;</p>
+<p>
+El código que realiza esta operación es el siguiente:
+</p>
 <pre lang="cpp">
 void Backend::putRegisters()
 {
@@ -979,9 +987,9 @@ void Backend::putRegisters()
     _progressIndicator->setValue(50);
 }
 </pre>
-
-<p>El método _formattedRegisters()_ consulta los registros necesario y los estructura en un formato SOAP para que el servidor pueda interpretar los datos que le enviamos:</p>
-
+<p>
+El método <em>formattedRegisters()</em> consulta los registros necesario y los estructura en un formato SOAP para que el servidor pueda interpretar los datos que le enviamos:
+</p>
 <pre lang="cpp">
 QString Backend::formattedRegisters()
 {
@@ -1028,15 +1036,13 @@ QString Backend::formattedRegisters()
     return message;
 }
 </pre>
-
-<p>La actualización de catálogos es muy similar.</p>
-
-<%= 
-figure(post, 'bbws_app_download.png', caption: 'Actualización de catálogos', label: 'bbws_app_download', lang: :es);
- %>
-
-<p>Como lo indica el texto del botón, esta operación borra los registros de la base de datos local y actualiza los catálogos con el servidor, he aquí el código:</p>
-
+<p>
+La actualización de catálogos es muy similar.
+</p>
+<p>&lt;%= figure(post, ‘bbws_app_download.png’, caption: ‘Actualización de catálogos’, label: ‘bbws_app_download’, lang: :es); %&gt;</p>
+<p>
+Como lo indica el texto del botón, esta operación borra los registros de la base de datos local y actualiza los catálogos con el servidor, he aquí el código:
+</p>
 <pre lang="cpp">
 void Backend::updateCatalogs()
 {
@@ -1053,9 +1059,9 @@ void Backend::updateCatalogs()
     queryProducts();
 }
 </pre>
-
-<p>La operación _queryClients()_ ya la vimos anteriormente cuando explicamos la comunicación con el Web service, solo falta mostrar como se obtiene la lista de productos:</p>
-
+<p>
+La operación <em>queryClients()</em> ya la vimos anteriormente cuando explicamos la comunicación con el Web service, solo falta mostrar como se obtiene la lista de productos:
+</p>
 <pre lang="javascript">
 void Backend::queryProducts()
 {
@@ -1082,38 +1088,28 @@ void Backend::getProductsFinished(QNetworkReply *reply)
     loadProductsToList();
 }
 </pre>
-
-
-<p>Y bueno, mi intención  no es abrumarlos con mucho código, creo que las partes más importantes ya se han explicado. Al final se proporciona el código completo para que prueben la aplicación si así lo desean.</p>
-
-
-<%= section('Código fuente'); %>
-
-<p>El código tanto del cliente como del servidor están disponibles en Bitbucket en las siguientes direcciones:</p>
-
-<a href="https://bitbucket.org/rendon/request_ws" target="_blank">https://bitbucket.org/rendon/request_ws</a>
-<a href="https://bitbucket.org/rendon/requisition_bb10" target="_blank">https://bitbucket.org/rendon/requisition_bb10</a>
-
-<p>O bien pueden clonar los proyectos:</p>
-
+<p>
+Y bueno, mi intención no es abrumarlos con mucho código, creo que las partes más importantes ya se han explicado. Al final se proporciona el código completo para que prueben la aplicación si así lo desean.
+</p>
+<h2 id="código-fuente">Código fuente</h2>
+<p>
+El código tanto del cliente como del servidor están disponibles en Bitbucket en las siguientes direcciones:
+</p>
+<p><a href="https://bitbucket.org/rendon/request_ws" target="_blank">https://bitbucket.org/rendon/request_ws</a> <a href="https://bitbucket.org/rendon/requisition_bb10" target="_blank">https://bitbucket.org/rendon/requisition_bb10</a></p>
+<p>
+O bien pueden clonar los proyectos:
+</p>
 <pre lang="bash" theme="slate">
 $ git clone https://rendon@bitbucket.org/rendon/request_ws.git
 $ git clone https://rendon@bitbucket.org/rendon/requisition_bb10.git
 </pre>
-
-<p>La licencia del Web service y del la aplicación cliente es GPLv3.</p>
-
-<%= section('Por hacer');  %>
-
-<p>Esta es la primara vez que utilizo Qt para algo más que un simple "Hola, mundo!", y la primera vez que utilizo QML, seguramente existe una mejor manera de realizar las cosas, Qt emplea el patrón de diseño <a href="http://qt-project.org/doc/qt-4.8/modelview.html" target="_blank">Model View</a>, sin embargo, al ser la primera vez, me enfoque más en que las cosas funcionaran. Lo cierto es que apegarse a un patrón de diseño ayuda a dar mantenimiento a nuestro software de forma más fácil.</p>
-
-<%= section('Referencias');  %>
-
-<% 
-add_bib('bb_doc', 'BlackBerry', 'Documentación de Cascades', 'http://developer.blackberry.com/native/documentation/cascades/');
-add_bib('qt_project', 'Qt Project', 'Documentación de Qt', 'https://www.qt.io/developers/');
-%>
-<%= generate_bib_table();
- %>
-
+<p>
+La licencia del Web service y del la aplicación cliente es GPLv3.
+</p>
+<p>&lt;%= section(‘Por hacer’); %&gt;</p>
+<p>
+Esta es la primara vez que utilizo Qt para algo más que un simple “Hola, mundo!”, y la primera vez que utilizo QML, seguramente existe una mejor manera de realizar las cosas, Qt emplea el patrón de diseño <a href="http://qt-project.org/doc/qt-4.8/modelview.html" target="_blank">Model View</a>, sin embargo, al ser la primera vez, me enfoque más en que las cosas funcionaran. Lo cierto es que apegarse a un patrón de diseño ayuda a dar mantenimiento a nuestro software de forma más fácil.
+</p>
+<p>&lt;%= section(‘Referencias’); %&gt;</p>
+<p>&lt;% add_bib(‘bb_doc’, ‘BlackBerry’, ‘Documentación de Cascades’, ‘http://developer.blackberry.com/native/documentation/cascades/’); add_bib(‘qt_project’, ‘Qt Project’, ‘Documentación de Qt’, ‘https://www.qt.io/developers/’); %&gt; &lt;%= generate_bib_table(); %&gt;</p>
 

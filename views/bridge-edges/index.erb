@@ -1,20 +1,25 @@
-<% @title = 'Bridge edges' %>
-Let's talk a little bit about <%= link_to('https://en.wikipedia.org/wiki/Bridge_%28graph_theory%29', 'bridges', target: :blank) %>, like in graph theory. In a nutshell, an edge is called a bridge if its removal increases the number of connected components. In a connected graph, if I were to remove a bridge, it would not be connected anymore, see <%= ref('bridge_edge') %>.
+<h1 id="bridge-edges">Bridge edges</h1>
 
-<%= figure(post, 'bridge_edge.svg', caption: 'Graph with a bridge edge', label: 'bridge_edge', lang: :en) %>
+<p class='metadata'>
+    <span class='published'><span class="fa-solid fa-clock"></span> <em>Let’s</em></span>
+	
+    <span class='tags'><span class="fa-solid fa-tag"></span></span>
+</p>
 
-<%= section('Problem') %>
-The problem is <%= link_to('http://lightoj.com/volume_showproblem.php?problem=1026', '1026 - Critical Links', target: :blank) %>, it's literally finding bridge edges, it's a good problem to test your implementation before solving problems where this algorithm is just a part of the solution.
+<figure>
+<img src="bridge_edge.svg" alt="Graph with a bridge edge" />
+<figcaption aria-hidden="true">Graph with a bridge edge</figcaption>
+</figure>
+<h2 id="problem">Problem</h2>
+<p>The problem is &lt;%= link_to(‘http://lightoj.com/volume_showproblem.php?problem=1026’, ‘1026 - Critical Links’, target: :blank) %&gt;, it’s literally finding bridge edges, it’s a good problem to test your implementation before solving problems where this algorithm is just a part of the solution.</p>
+<h2 id="solution">Solution</h2>
+<p>Next is my implementation in C++:</p>
+<p>Embed: <code>sol.cpp</code></p>
+<p>I hope it helps, in the references you can find more detailed explanations of the algorithm.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="http://www.geeksforgeeks.org/bridge-in-a-graph/">Bridges in a graph</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Bridge_(graph_theory)">Bridge (graph theory)</a></li>
+</ul>
+<p>&lt;%= generate_bib_table(:en) %&gt;</p>
 
-<%= section('Solution') %>
-Next is my implementation in C++:
-
-<%= code(post, 'sol.cpp') %>
-
-I hope it helps, in the references you can find more detailed explanations of the algorithm.
-
-<%= section('References') %>
-<% add_bib('geeksforgeeks', 'GeeksforGeeks', 'Bridges in a graph', 'http://www.geeksforgeeks.org/bridge-in-a-graph/') %>
-<% add_bib('wikipedia', 'Wikipedia', 'Bridge (graph theory)', 'https://en.wikipedia.org/wiki/Bridge_(graph_theory)') %>
-
-<%= generate_bib_table(:en) %>

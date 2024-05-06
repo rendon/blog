@@ -1,0 +1,9 @@
+<p>I have been treating to use MySQL Workbench to design some database schemas these days, but it does crash so often that I decided to install it from the source hoping to find a more stable version, however I faced this problem:</p>
+
+Embed: `make-error.txt`
+
+<p>I found the solution <a href="http://blog.csdn.net/kumu_linux/article/details/7957449" target="_blank" title="Solution">here</a>:</p>
+
+<%= inline_code('cp /usr/bin/libtool /home/user/Downloads/workbench/mysql-workbench-gpl-5.2.44-src/ext/antlr-runtime/') %>
+
+<p>I hope it helps!</p>

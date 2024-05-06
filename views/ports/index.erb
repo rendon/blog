@@ -1,21 +1,22 @@
-<% @title = 'Ports' %>
+<h1 id="ports">Ports</h1>
 
-<%= section("Ports") %>
+<p class='metadata'>
+    <span class='published'><span class="fa-solid fa-clock"></span> <em></em></span>
+	
+    <span class='tags'><span class="fa-solid fa-tag"></span></span>
+</p>
 
-<%= subsection('Open up SSH port (or any other port)') %>
-
+<h3 id="open-up-ssh-port-or-any-other-port">Open up SSH port (or any other port)</h3>
 <pre>
 sudo iptables -A INPUT -p tcp -s 10.0.0.0/24 --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 </pre>
-
-<%= subsection('Delete rules') %>
+<h3 id="delete-rules">Delete rules</h3>
 First off, you can delete ALL the rules using:
 <pre>
 sudo iptables -F
 </pre>
-
-But that's probably not what you want. In order to delete specific rules first get the list of existing rules:
+But that’s probably not what you want. In order to delete specific rules first get the list of existing rules:
 <pre>
 $ sudo iptables -S
 .
@@ -29,17 +30,10 @@ $ sudo iptables -S
 .
 .
 </pre>
-
 Then remove the rule you want:
 <pre>
 $ sudo iptables -D INPUT -s 10.0.0.0/24 -p tcp -m tcp --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 </pre>
+<h2 id="references">References</h2>
+<p>&lt;% add_bib(‘do_iptables_open’, ‘DigitalOcean’, ‘Iptables Essentials: Common Firewall Rules and Commands’, ‘https://www.digitalocean.com/community/tutorials/iptables-essentials-common-firewall-rules-and-commands’); add_bib(‘do_iptables_delete’, ‘DigitalOcean’, ‘How To List and Delete Iptables Firewall Rules’, ‘https://www.digitalocean.com/community/tutorials/how-to-list-and-delete-iptables-firewall-rules’); %&gt;</p>
 
-
-<%= section('References') %>
-<%
-add_bib('do_iptables_open', 'DigitalOcean', 'Iptables Essentials: Common Firewall Rules and Commands', 'https://www.digitalocean.com/community/tutorials/iptables-essentials-common-firewall-rules-and-commands');
-add_bib('do_iptables_delete', 'DigitalOcean', 'How To List and Delete Iptables Firewall Rules', 'https://www.digitalocean.com/community/tutorials/how-to-list-and-delete-iptables-firewall-rules');
-%>
-
-<%= generate_bib_table(); %>

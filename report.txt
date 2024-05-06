@@ -1,0 +1,146 @@
+adventofcode2015-part1
+/home/rafael/projects/blog/views
+aho-corasick
+/home/rafael/projects/blog/views
+all
+/home/rafael/projects/blog/views
+andrews-convex-hull-algorithm
+/home/rafael/projects/blog/views
+arduino-control-speakers
+/home/rafael/projects/blog/views
+arduino-game-controller
+/home/rafael/projects/blog/views
+arquimedes-pi
+[WARNING] Could not convert TeX math 3+\frac{10}{71}<\pi<3+\frac{1}{7}, rendering as TeX
+[WARNING] Could not convert TeX math p = 2rsin(\frac{\theta}{2})n \approx \pi, rendering as TeX
+[WARNING] Could not convert TeX math p = 2rtan(\frac{\theta}{2})n \approx \pi, rendering as TeX
+[WARNING] Could not convert TeX math r=\frac{1}{2}, rendering as TeX
+[WARNING] Could not convert TeX math p = sin(\frac{\theta}{2})n \approx \pi, rendering as TeX
+[WARNING] Could not convert TeX math p = tan(\frac{\theta}{2})n \approx \pi, rendering as TeX
+[WARNING] Could not convert TeX math \frac{2\pi}{n}~~~~~~siendo~\pi=3.14159, rendering as TeX
+/home/rafael/projects/blog/views
+articulation-points
+/home/rafael/projects/blog/views
+a-star
+/home/rafael/projects/blog/views
+bash
+/home/rafael/projects/blog/views
+big-mod
+/home/rafael/projects/blog/views
+bridge-edges
+/home/rafael/projects/blog/views
+cf-172
+/home/rafael/projects/blog/views
+cf-174
+/home/rafael/projects/blog/views
+cifrar-dispositivo-con-luks
+/home/rafael/projects/blog/views
+ddb-delete-tables
+/home/rafael/projects/blog/views
+ddb-truncate-table
+/home/rafael/projects/blog/views
+de-poligonos-y-estrellas
+[WARNING] Could not convert TeX math (r, 1\frac{2\pi}{N}), (r, 2\frac{2\pi}{N}), \ldots , (r, N\frac{2\pi}{N}), rendering as TeX
+/home/rafael/projects/blog/views
+dns-server-gnu-linux
+/home/rafael/projects/blog/views
+enable-mysql-remote-connection
+/home/rafael/projects/blog/views
+eulerian-tour
+/home/rafael/projects/blog/views
+evaluador-de-expresiones-aritmeticas
+/home/rafael/projects/blog/views
+factorial-y-ceros
+[WARNING] Could not convert TeX math n!= \begin{cases} 1 & \text{si n = 0} \\\\ n(n - 1)!& \text{si n > 0} \end{cases}, rendering as TeX
+[WARNING] Could not convert TeX math f(n) = \sum\_{i=1}^k \left \lfloor \frac{n}{5^i} \right \rfloor = \left \lfloor \frac{n}{5} \right \rfloor + \left \lfloor \frac{n}{5^2} \right \rfloor + \left \lfloor \frac{n}{5^3} \right \rfloor + \cdots + \left \lfloor \frac{n}{5^k} \right \rfloor, rendering as TeX
+/home/rafael/projects/blog/views
+fibonacci-nuevamente
+[WARNING] Could not convert TeX math F\_{n} = \left[\frac{\varphi^{n}}{\sqrt{5}}\right], rendering as TeX
+[WARNING] Could not convert TeX math \varphi = \frac{1 + \sqrt{5}}{2}, rendering as TeX
+[WARNING] Could not convert TeX math F\_{10} = \left[\frac{\varphi^{10}}{\sqrt{5}}\right] \approx 55.0036361232 \rightarrow 55, rendering as TeX
+/home/rafael/projects/blog/views
+gimp-scripting
+/home/rafael/projects/blog/views
+good-words
+/home/rafael/projects/blog/views
+huffman-coding
+/home/rafael/projects/blog/views
+jacobi-method
+/home/rafael/projects/blog/views
+java-data-compression
+/home/rafael/projects/blog/views
+java-rw-json-jackson
+/home/rafael/projects/blog/views
+maven-generate-self-contained-jar
+/home/rafael/projects/blog/views
+maven-getting-started
+/home/rafael/projects/blog/views
+mysql-workbench-libtool-problem
+/home/rafael/projects/blog/views
+numeros-y-strings
+/home/rafael/projects/blog/views
+omi-tg-sumando-sumas
+/home/rafael/projects/blog/views
+oop_principles
+/home/rafael/projects/blog/views
+pix
+/home/rafael/projects/blog/views
+ports
+/home/rafael/projects/blog/views
+post
+/home/rafael/projects/blog/views
+procesos
+/home/rafael/projects/blog/views
+projecteuler-problema-1
+/home/rafael/projects/blog/views
+projecteuler-problema-2
+/home/rafael/projects/blog/views
+projecteuler-problema-3
+/home/rafael/projects/blog/views
+recipe-001-floyd-warshall
+/home/rafael/projects/blog/views
+recipe-002-dfs
+/home/rafael/projects/blog/views
+recipe-003-bfs
+/home/rafael/projects/blog/views
+recipe-004-peasant-multiplication
+/home/rafael/projects/blog/views
+recursion
+[WARNING] Could not convert TeX math n!= \begin{cases} 1 & \text{si n = 0} \\\\ n(n - 1)!& \text{si n > 0} \end{cases} , rendering as TeX
+[WARNING] Could not convert TeX math f(n) = \begin{cases} 0 & \text{si n = 0} \\\\ 1 & \text{si n = 1} \\\\ f(n - 1) + f(n - 2) & \text{si n > 1} \end{cases}, rendering as TeX
+/home/rafael/projects/blog/views
+report-iii-wp8-web-services
+/home/rafael/projects/blog/views
+report-ii-microoj-web-services
+/home/rafael/projects/blog/views
+report-i-send-sms
+/home/rafael/projects/blog/views
+report-iv-bb10-web-service
+/home/rafael/projects/blog/views
+report-v-android-web-service
+/home/rafael/projects/blog/views
+resetear-contrasenia-del-root
+/home/rafael/projects/blog/views
+setup-android-sdk
+/home/rafael/projects/blog/views
+setup-dhcp-server
+/home/rafael/projects/blog/views
+setup-jdk
+/home/rafael/projects/blog/views
+setup-lamp
+/home/rafael/projects/blog/views
+setup-ruby-on-rails
+/home/rafael/projects/blog/views
+ternary-search
+/home/rafael/projects/blog/views
+testing-a-web-service
+/home/rafael/projects/blog/views
+tmux
+/home/rafael/projects/blog/views
+toposort
+/home/rafael/projects/blog/views
+vimrepress
+/home/rafael/projects/blog/views
+z-algorithm
+/home/rafael/projects/blog/views
+/home/rafael/projects/blog/views/z-algorithm

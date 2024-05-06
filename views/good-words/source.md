@@ -1,0 +1,20 @@
+
+<p>Hi! Welcome to my first post in English :).</p>
+
+<p>Today was held the first World Finals Warmup 2012 and I was reading(don't solving) the problems and I found a very interesting fact in <a href="http://uva.onlinejudge.org/contests/296-e6f9c1dc/12437.html">problem E</a>, Good Words, and well that is what I'll write in this post.</p>
+
+<blockquote>
+Suppose a word consisting of only 0 and 1 is called good if there is no adjacent one in the word. We are asked to find good words of length n.
+</blockquote>
+
+<p>At first the problem may appear difficult but actually it can be solved with a little insight: initially we have <em>n</em> spaces, the first good word is the one formed by only '0's, ok?, if you decide the first digit to be '0' then you can fill up the remaining <em>n-1</em> as we like respecting the condition of no two adjacent '1's, now if you decide the first digit to be '1' then the second digit must be '0' and now we face with the problem of the first case but with <em>n-2</em>. If we are able to find all possible good words for <em>n = 1</em> and <em>n = 2</em> we'll be able to get the answer for any <em>n</em> greater that two with W<sub>n</sub> = W<sub>n-1</sub> + W<sub>n-2</sub>.</p>
+
+<table class="table">
+  <tr><th><strong>n</strong></th><th><strong>Good words</strong></th></tr>
+  <tr><td>1</td><td>0, 1</td></tr>
+  <tr><td>2</td><td>00, 01, 10</td></tr>
+  <tr><td>3</td><td>000, 001, 010, 100, 101000, 001, 010, 100, 101</td></tr>
+</table>
+
+<p>The first thing that came to my mind was use dynamic programming but all indicates that in many occasions is very important don't rush out with the first idea since is very likely  isn't the best. Well, this is all for this post, I will see you in next post!The first thing that came to my mind was use dynamic programming but all indicates that in many occasions is very important don't rush out with the first idea since is very likely  isn't the best. Well, this is all for this post, I will see you in next post!</p>
+

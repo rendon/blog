@@ -1,74 +1,83 @@
-<p>I've been working with Web services these days for some college projects. Here are some interesting ways to test your web service.</p>
+<p>
+I’ve been working with Web services these days for some college projects. Here are some interesting ways to test your web service.
+</p>
+<p>
+Supponse this is our Web service:
+</p>
+<p>Embed: <code>web-service.php</code></p>
+<figure>
+<img src="testws_myservice.png" alt="Our web service" />
+<figcaption aria-hidden="true">Our web service</figcaption>
+</figure>
+<p>
+Now, How to test if our Web service is working as expected? Let’ see.
+</p>
+<h2 id="soapui">SoapUI</h2>
+<p>
+This is a greate tool. Given a Web service location, SoapUI generates the needed SOAP messages to send requests to our Web service. Here I show how to test our previous Web service.
+</p>
+<figure>
+<img src="testws_soapui_new.png" alt="SoapUI new project" />
+<figcaption aria-hidden="true">SoapUI new project</figcaption>
+</figure>
+<figure>
+<img src="testws_soapui_request.png" alt="Calling our Web service using SoapUI" />
+<figcaption aria-hidden="true">Calling our Web service using SoapUI</figcaption>
+</figure>
+<h2 id="command-line">Command line</h2>
+<p>
+Using the command line always let us understand better how the stuffs works :).
+</p>
+<p>
+Put the following request message in a file called <em>request.xml</em>:
+</p>
+<p>Embed: <code>request.xml</code></p>
+<h3 id="using-wget">Using Wget</h3>
+<p>
+Issue the following command to test our Web service:
+</p>
+<p>Embed: <code>wget.sh</code></p>
+<p>
+The content the file <em>response.xml</em> should be something like this:
+</p>
+<p>Embed: <code>wget-output.xml</code></p>
+<p>
+This is the same response shown in picture &lt;%= ref(‘testws_soapui_request’); %&gt;, unindented though.
+</p>
+<h3 id="using-curl">Using cURL</h3>
+<p>
+Here is the curl version:
+</p>
+<p>Embed: <code>curl.sh</code></p>
+<p>
+The content of the <em>out.xml</em> file must be the same as the previous example.
+</p>
+<h3 id="using-telnet">Using telnet</h3>
+<p>
+Here I show you how you can send an HTTP POST request to our WS using telnet:
+</p>
+<p>Embed: <code>telnet.sh</code></p>
+<p>
+DON’T FORGET to specify the content length!
+</p>
+<h2 id="using-java">Using Java</h2>
+<p>
+Well, this is useful too, specially if you are developing a Java application.
+</p>
+<p>Embed: <code>testws.java</code></p>
+<h2 id="using-c-with-qt">Using C++ with Qt</h2>
+<p>
+I used this too:
+</p>
+<p>Embed: <code>testws-qt.cpp</code></p>
+<p>
+The methods <em>testService()</em> and <em>testFinished()</em> are <a href="http://qt-project.org/doc/qt-5.0/qtcore/signalsandslots.html">SLOTS</a>.
+</p>
+<h2 id="whats-next">What’s next?</h2>
+<p>
+So far we have seen only how to test the connection to the Web service, the next step would be to extract the information we need from the response message, is not that hard, search for XML parser for your language, for Qt I’ve used <a href="http://doc.qt.io/qt-5/qxmlstreamreader.html" target="_blank">QXmlStreamReader</a>.
+</p>
+<p>
+I hope this be helpful.
+</p>
 
-<p>Supponse this is our Web service:</p>
-
-<%= code(post, 'web-service.php') %>
-
-<%= figure(post, 'testws_myservice.png', caption: 'Our web service', label: 'testws_myservice', lang: :en); %>
-
-<p>Now, How to test if our Web service is working as expected? Let' see.</p>
-
-<%= section("SoapUI"); %>
-
-<p>This is a greate tool. Given a Web service location, SoapUI generates the needed SOAP messages to send requests to our Web service. Here I show how to test our previous Web service.</p>
-
-<%= figure(post, 'testws_soapui_new.png', caption: 'SoapUI new project', label: 'testws_soapui_new', lang: :en); %>
-
-
-<%= figure(post, 'testws_soapui_request.png', caption: 'Calling our Web service using SoapUI', label: 'testws_soapui_request', lang: :en); %>
-
-<%= section("Command line"); %>
-
-<p>Using the command line always let us understand better how the stuffs works :). </p>
-
-<p>Put the following request message in a file called <em>request.xml</em>:</p>
-
-<%= code(post, 'request.xml') %>
-
-<%= subsection("Using Wget"); %>
-
-<p>Issue the following command to test our Web service:</p>
-
-<%= code(post, 'wget.sh') %>
-
-<p>The content the file <em>response.xml</em> should be something like this:</p>
-
-<%= code(post, 'wget-output.xml') %>
-
-<p>This is the same response shown in picture <%= ref('testws_soapui_request'); %>, unindented though.</p>
-
-<%= subsection("Using cURL"); %>
-
-<p>Here is the curl version:</p>
-
-<%= code(post, 'curl.sh') %>
-
-<p>The content of the <em>out.xml</em> file must be the same as the previous example.</p>
-
-<%= subsection("Using telnet"); %>
-
-<p>Here I show you how you can send an HTTP POST request to our WS using telnet:</p>
-
-<%= code(post, 'telnet.sh') %>
-
-<p>DON'T FORGET to specify the content length!</p>
-
-<%= section("Using Java"); %>
-
-<p>Well, this is useful too, specially if you are developing a Java application.</p>
-
-<%= code(post, 'testws.java') %>
-
-<%= section("Using C++ with Qt"); %>
-
-<p>I used this too:</p>
-
-<%= code(post, 'testws-qt.cpp') %>
-
-<p>The methods <em>testService()</em> and <em>testFinished()</em> are <a href="http://qt-project.org/doc/qt-5.0/qtcore/signalsandslots.html">SLOTS</a>.</p>
-
-<%= section("What's next?"); %>
-
-<p>So far we have seen only how to test the connection to the Web service, the next step would be to extract the information we need from the response message, is not that hard, search for XML parser for your language, for Qt I've used <a href="http://doc.qt.io/qt-5/qxmlstreamreader.html" target="_blank">QXmlStreamReader</a>.</p>
-
-<p>I hope this be helpful.</p>
