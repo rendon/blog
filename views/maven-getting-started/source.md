@@ -45,4 +45,4 @@ mvn package
 java -cp target/app-1.0-SNAPSHOT.jar com.test.app.App
 ```
 
-[[maven-generate-self-contained-jar]]
+You might also like [[maven-generate-self-contained-jar]].

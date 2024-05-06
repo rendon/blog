@@ -49,7 +49,7 @@ public class App {
 }
 ```
 
-See [maven-getting-started](/maven-getting-started) to learn how to set up a project and the AWS SDK.
+See [[maven-getting-started]] to learn how to set up a project and the AWS SDK.
 
 ## Full source code
 You can find the full program at [ddb-delete-tables](https://github.com/rendon/code-samples/tree/master/ddb-delete-tables).

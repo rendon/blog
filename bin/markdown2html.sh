@@ -8,11 +8,16 @@ do
         cd "$dir"
         if [[ -f source.md ]]
         then
-            pandoc --wrap=none source.md -t html -o index.erb
+            # Convert markdown links
+            ~/projects/blog/bin/link < source.md > out1
+
+            pandoc --wrap=none -f markdown out1 -t html -o out2
 
             # Format metadata
-            ~/projects/blog/bin/fmtmd < index.erb > tmp.erb
-            mv tmp.erb index.erb
+            ~/projects/blog/bin/fmtmd < out2 > out3
+            mv out3 index.erb
+
+            rm out*
         fi
         cd -
     fi
