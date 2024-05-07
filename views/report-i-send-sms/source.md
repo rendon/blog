@@ -46,8 +46,8 @@
 
 <ul>
   <li>Un dispositivo móvil con sistema operativo Android 2.3 (probablemente funcione con versiones posteriores)</li>
-  <li><%= link_to_post('/setup-jdk', 'El SDK de Java configurado') %>.</li>
-  <li><%= link_to_post('/setup-android-sdk', 'El SDK de Android configurado') %>.</li>
+  <li>[El SDK de Java configurado](/setup-jdk).</li>
+  <li>[El SDK de Android configurado](/setup-android-sdk).</li>
   <li>Opcional: IntelliJ IDEA 12 Comunity Edition, `http://www.jetbrains.com/idea/`.</li>
   <li>Conocimientos intermedios de Java.</li>
   <li>Un sistema operativo GNU/Linux Debian, utilizaremos la versión 7, denominada Wheezy.</li>

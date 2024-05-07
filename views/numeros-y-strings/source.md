@@ -11,7 +11,7 @@
 
 ## Descomponer número en dígitos
 
-<p>El algoritmo para este problema es muy sencillo y se basa en divisiones y residuos(véase <%= link_to_post('/big-mod', 'Big Mod') %> para más información. Veamos un ejemplo.</p>
+<p>El algoritmo para este problema es muy sencillo y se basa en divisiones y residuos(véase [Big Mod](/big-mod) para más información. Veamos un ejemplo.</p>
 
 ![Descomposición de un número en dígitos](descomposicion_digitos.png)
 

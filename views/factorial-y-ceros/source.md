@@ -122,7 +122,7 @@ Embed: `z.cpp`
 <table border="0">
   <tr>
     <td>factorial_zeros.cpp</td>
-    <td> <%= src_file(post, 'z.cpp') %></td>
+    <td> [z.cpp](z.cpp)</td>
   </tr>
 </table>
 

@@ -10,7 +10,7 @@
 
 ## Definiciones
 
-<p>Como este reporte forma parte de una serie de reportes, vamos a omitir la teoría sobre Web services puesto que ya se abordo en el reporte número <%= link_to_post('/report-ii-microoj-web-services', 'II') %>.</p>
+<p>Como este reporte forma parte de una serie de reportes, vamos a omitir la teoría sobre Web services puesto que ya se abordo en el reporte número [II](/report-ii-microoj-web-services).</p>
 
 ## Propuesta de solución
 

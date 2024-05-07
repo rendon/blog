@@ -56,7 +56,7 @@
 
 ![Modelo de datos](bbws_data_model.png)
 
-<p>Lo relevante de la implementación del Web service lo pueden encontrar en los reportes <%= link_to_post('/report-iii-wp8-web-services/', 'III') %> y <%= link_to_post('/report-iv-bb10-web-service/', 'IV') %>, colocar nuevamente el código aquí sería redundante y ocuparía mucho espacio.</p>
+<p>Lo relevante de la implementación del Web service lo pueden encontrar en los reportes [III](/report-iii-wp8-web-services/) y [IV](/report-iv-bb10-web-service/), colocar nuevamente el código aquí sería redundante y ocuparía mucho espacio.</p>
 
 <%= section('La base de datos local');  %>
 

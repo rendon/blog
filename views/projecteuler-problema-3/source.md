@@ -68,12 +68,12 @@ Embed: `ejecucion.txt`
 ## Descargas
 <table border="0">
     <tr>
-        <td>Solución v1:</td> <td> <%= src_file(post, 'v1.c') %> </td>
+        <td>Solución v1:</td> <td> [v1.c](v1.c) </td>
     </tr>
     <tr>
-        <td>Solución v2:</td> <td> <%= src_file(post, 'v2.c') %> </td>
+        <td>Solución v2:</td> <td> [v2.c](v2.c) </td>
     </tr>
     <tr>
-        <td>Solución v3:</td> <td> <%= src_file(post, 'v3.c') %> </td>
+        <td>Solución v3:</td> <td> [v3.c](v3.c) </td>
     </tr>
 </table>

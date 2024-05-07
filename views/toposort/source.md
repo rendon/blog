@@ -12,7 +12,7 @@ Embed: `src.cpp`
 <ol>
   <li>If task $u$ has to be done before task $v$ create a directed edge from $v$ to $u$.</li>
   <li>Create a table $visited[]$ such that $visited[u]$ is true if node $u$ has been visited.</li>
-  <li>Run a <%= link_to_post('recipe-002-dfs', 'Depth-First Search') %> on all nodes that has not been visited yet and print the nodes in reverse order, we can do that by printing node $u$ before leaving the recursive function.</li>
+  <li>Run a [Depth-First Search](recipe-002-dfs) on all nodes that has not been visited yet and print the nodes in reverse order, we can do that by printing node $u$ before leaving the recursive function.</li>
 </ol>
 
 <p>The resulting sequence of nodes is a valid ordering. Notice that it's possible to have multiple valid solutions.</p>

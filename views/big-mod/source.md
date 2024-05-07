@@ -37,7 +37,7 @@ Embed: `modpow.c`
 
 $$N=d\_{n-1}b^{n-1} +...+ d\_{1}b^{1} + d\_{0}b^{0}$$
 
-<p>Véase <%= link_to_post('/numeros-y-strings', 'como convertir números a string y viceversa para más información') %>. Además existe otra propiedad similar a <%= ref("multiply_mod"); %> pero para la suma.</p>
+<p>Véase [como convertir números a string y viceversa para más información](/numeros-y-strings). Además existe otra propiedad similar a <%= ref("multiply_mod"); %> pero para la suma.</p>
 
 $$(a + b + c) \bmod m = ((a \bmod m) + (b \bmod m) + (c \bmod m)) \bmod m$$
 
