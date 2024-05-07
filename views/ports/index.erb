@@ -1,17 +1,17 @@
 <h1 id="ports">Ports</h1>
 
 <p class='metadata'>
-    <span class='published'><span class="fa-solid fa-clock"></span> <em></em></span>
-	
-    <span class='tags'><span class="fa-solid fa-tag"></span></span>
+    <span class='published'><span class="fa-solid fa-clock"></span> <em>2017-10-14</em></span>
+	<span class='updated'><span class="fa-solid fa-clock-rotate-left"></span> <em>2024-05-06</em></span>
+    <span class='tags'><span class="fa-solid fa-tag"></span><code>#sysadmin</code> <code>#post</code></span>
 </p>
 
-<h3 id="open-up-ssh-port-or-any-other-port">Open up SSH port (or any other port)</h3>
+<h2 id="open-up-ssh-port-or-any-other-port">Open up SSH port (or any other port)</h2>
 <pre>
 sudo iptables -A INPUT -p tcp -s 10.0.0.0/24 --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 sudo iptables -A OUTPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 </pre>
-<h3 id="delete-rules">Delete rules</h3>
+<h2 id="delete-rules">Delete rules</h2>
 First off, you can delete ALL the rules using:
 <pre>
 sudo iptables -F
@@ -35,5 +35,8 @@ Then remove the rule you want:
 $ sudo iptables -D INPUT -s 10.0.0.0/24 -p tcp -m tcp --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 </pre>
 <h2 id="references">References</h2>
-<p>&lt;% - <a href="https://www.digitalocean.com/community/tutorials/iptables-essentials-common-firewall-rules-and-commands">Iptables Essentials: Common Firewall Rules and Commands</a> - <a href="https://www.digitalocean.com/community/tutorials/how-to-list-and-delete-iptables-firewall-rules">How To List and Delete Iptables Firewall Rules</a> %&gt;</p>
+<ul>
+<li><a href="https://www.digitalocean.com/community/tutorials/iptables-essentials-common-firewall-rules-and-commands">Iptables Essentials: Common Firewall Rules and Commands</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-list-and-delete-iptables-firewall-rules">How To List and Delete Iptables Firewall Rules</a></li>
+</ul>
 

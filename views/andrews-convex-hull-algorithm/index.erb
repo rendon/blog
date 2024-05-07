@@ -1,4 +1,11 @@
-<p>&lt;%= tex_set(“show_numbers_in_sections”, false); %&gt;</p>
+<h1 id="andrews-convex-hull-algorithm">Andrew’s Convex Hull Algorithm</h1>
+
+<p class='metadata'>
+    <span class='published'><span class="fa-solid fa-clock"></span> <em>2016-02-23</em></span>
+	<span class='updated'><span class="fa-solid fa-clock-rotate-left"></span> <em>2024-05-06</em></span>
+    <span class='tags'><span class="fa-solid fa-tag"></span><code>#algorithms</code> <code>#data-structures</code> <code>#post</code></span>
+</p>
+
 <p>
 Convex hull is a classical problem in computational geometry and often used in programming contests. Today I present to you the Andrew’s algorithm to compute the convex hull from a set of 2D points.
 </p>
@@ -127,24 +134,126 @@ If points A, O and B are in clockwise orientation then $ v u$ will be greater th
 <p>
 Apply the algorithm to find the convex hull and then, for each point that form the convex hull, compute the angle between it and its left and right points, take the minimum.
 </p>
-<p>Embed: <code>sol.cpp</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cmath&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;algorithm&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#define x</span><span class="op">()</span><span class="pp"> </span>first</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#define y</span><span class="op">()</span><span class="pp"> </span>second</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> std<span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;</span> point<span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">double</span> PI <span class="op">=</span> acos<span class="op">(-</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span>point<span class="op">&gt;</span> P<span class="op">;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>vector<span class="op">&lt;</span>point<span class="op">&gt;</span> H<span class="op">;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> cross<span class="op">(</span><span class="at">const</span> point <span class="op">&amp;</span>o<span class="op">,</span> <span class="at">const</span> point <span class="op">&amp;</span>a<span class="op">,</span> <span class="at">const</span> point <span class="op">&amp;</span>b<span class="op">)</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> a1 <span class="op">=</span> a<span class="op">.</span>x<span class="op">()</span> <span class="op">-</span> o<span class="op">.</span>x<span class="op">();</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> b1 <span class="op">=</span> a<span class="op">.</span>y<span class="op">()</span> <span class="op">-</span> o<span class="op">.</span>y<span class="op">();</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> a2 <span class="op">=</span> b<span class="op">.</span>x<span class="op">()</span> <span class="op">-</span> o<span class="op">.</span>x<span class="op">();</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> b2 <span class="op">=</span> b<span class="op">.</span>y<span class="op">()</span> <span class="op">-</span> o<span class="op">.</span>y<span class="op">();</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a1 <span class="op">*</span>  b2 <span class="op">-</span> a2 <span class="op">*</span> b1<span class="op">;</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> dist<span class="op">(</span><span class="at">const</span> point <span class="op">&amp;</span>a<span class="op">,</span> <span class="at">const</span> point <span class="op">&amp;</span>b<span class="op">)</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> dx <span class="op">=</span> b<span class="op">.</span>x<span class="op">()</span> <span class="op">-</span> a<span class="op">.</span>x<span class="op">();</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> dy <span class="op">=</span> b<span class="op">.</span>y<span class="op">()</span> <span class="op">-</span> a<span class="op">.</span>y<span class="op">();</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sqrt<span class="op">(</span>dx <span class="op">*</span> dx <span class="op">+</span> dy <span class="op">*</span> dy<span class="op">);</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span> <span class="op">**</span>argv<span class="op">)</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> t<span class="op">,</span> tc<span class="op">,</span> n<span class="op">,</span> i<span class="op">,</span> k<span class="op">,</span> pos<span class="op">,</span> next<span class="op">,</span> prev<span class="op">,</span> x<span class="op">,</span> y<span class="op">,</span> sign<span class="op">;</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> ch<span class="op">;</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> ans<span class="op">,</span> a<span class="op">,</span> b<span class="op">,</span> c<span class="op">;</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    vector<span class="op">&lt;</span>point<span class="op">&gt;::</span>iterator it<span class="op">;</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    scanf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">&amp;</span>t<span class="op">);</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span>tc <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> tc <span class="op">&lt;=</span> t<span class="op">;</span> tc<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>        scanf<span class="op">(</span><span class="st">&quot;</span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> <span class="op">&amp;</span>n<span class="op">);</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>        P<span class="op">.</span>resize<span class="op">(</span>n<span class="op">);</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>            sign <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> y <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span> <span class="op">((</span>ch <span class="op">=</span> getchar<span class="op">())</span> <span class="op">!=</span> <span class="ch">&#39; &#39;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="op">(</span>ch <span class="op">==</span> <span class="ch">&#39;-&#39;</span><span class="op">)</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>                    sign <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>                    x <span class="op">=</span> x <span class="op">*</span> <span class="dv">10</span> <span class="op">+</span> ch <span class="op">-</span> <span class="ch">&#39;0&#39;</span><span class="op">;</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>            x <span class="op">*=</span> sign<span class="op">;</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>            sign <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span> <span class="op">((</span>ch <span class="op">=</span> getchar<span class="op">())</span> <span class="op">!=</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="op">(</span>ch <span class="op">==</span> <span class="ch">&#39;-&#39;</span><span class="op">)</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>                    sign <span class="op">=</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>                    y <span class="op">=</span> y <span class="op">*</span> <span class="dv">10</span> <span class="op">+</span> ch <span class="op">-</span> <span class="ch">&#39;0&#39;</span><span class="op">;</span></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>            y <span class="op">*=</span> sign<span class="op">;</span></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>            P<span class="op">[</span>i<span class="op">].</span>first  <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>            P<span class="op">[</span>i<span class="op">].</span>second <span class="op">=</span> y<span class="op">;</span></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>        sort<span class="op">(</span>P<span class="op">.</span>begin<span class="op">(),</span> P<span class="op">.</span>end<span class="op">());</span></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>        it <span class="op">=</span> unique<span class="op">(</span>P<span class="op">.</span>begin<span class="op">(),</span> P<span class="op">.</span>end<span class="op">());</span></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>        P<span class="op">.</span>resize<span class="op">(</span>it <span class="op">-</span> P<span class="op">.</span>begin<span class="op">());</span></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>        n <span class="op">=</span> P<span class="op">.</span>size<span class="op">();</span></span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>n <span class="op">&lt;</span> <span class="dv">3</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>            printf<span class="op">(</span><span class="st">&quot;Case </span><span class="sc">%d</span><span class="st">: 0.0000000</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> tc<span class="op">);</span></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>        H<span class="op">.</span>resize<span class="op">(</span>n <span class="op">+</span> n<span class="op">);</span></span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a>        k <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span> <span class="op">(</span>k <span class="op">&gt;=</span> <span class="dv">2</span> <span class="op">&amp;&amp;</span> cross<span class="op">(</span>H<span class="op">[</span>k<span class="op">-</span><span class="dv">2</span><span class="op">],</span> H<span class="op">[</span>k<span class="op">-</span><span class="dv">1</span><span class="op">],</span> P<span class="op">[</span>i<span class="op">])</span> <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">)</span> k<span class="op">--;</span></span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>            H<span class="op">[</span>k<span class="op">++]</span> <span class="op">=</span> P<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> n <span class="op">-</span> <span class="dv">2</span><span class="op">,</span> pos <span class="op">=</span> k <span class="op">+</span> <span class="dv">1</span><span class="op">;</span>  i <span class="op">&gt;=</span> <span class="dv">0</span><span class="op">;</span> i<span class="op">--)</span> <span class="op">{</span></span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span> <span class="op">(</span>k <span class="op">&gt;=</span> pos <span class="op">&amp;&amp;</span> cross<span class="op">(</span>H<span class="op">[</span>k<span class="op">-</span><span class="dv">2</span><span class="op">],</span> H<span class="op">[</span>k<span class="op">-</span><span class="dv">1</span><span class="op">],</span> P<span class="op">[</span>i<span class="op">])</span> <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">)</span> k<span class="op">--;</span></span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>            H<span class="op">[</span>k<span class="op">++]</span> <span class="op">=</span> P<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a>        k<span class="op">--;</span></span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>        H<span class="op">.</span>resize<span class="op">(</span>k<span class="op">);</span></span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a>        ans <span class="op">=</span> PI<span class="op">;</span></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> k<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>            next <span class="op">=</span> <span class="op">(</span>i<span class="op">+</span><span class="dv">1</span><span class="op">)%</span>k<span class="op">;</span></span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a>            prev <span class="op">=</span> <span class="op">(</span>k<span class="op">+</span>i<span class="op">-</span><span class="dv">1</span><span class="op">)%</span>k<span class="op">;</span></span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>            a <span class="op">=</span> dist<span class="op">(</span>H<span class="op">[</span>prev<span class="op">],</span> H<span class="op">[</span>next<span class="op">]);</span></span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>            b <span class="op">=</span> dist<span class="op">(</span>H<span class="op">[</span>prev<span class="op">],</span> H<span class="op">[</span>i<span class="op">]);</span></span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>            c <span class="op">=</span> dist<span class="op">(</span>H<span class="op">[</span>next<span class="op">],</span> H<span class="op">[</span>i<span class="op">]);</span></span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>            <span class="dt">double</span> beta <span class="op">=</span> acos<span class="op">((</span>b<span class="op">*</span>b <span class="op">+</span> c<span class="op">*</span>c <span class="op">-</span> a<span class="op">*</span>a<span class="op">)/(</span><span class="dv">2</span><span class="op">*</span>b<span class="op">*</span>c<span class="op">));</span></span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a>            ans <span class="op">=</span> min<span class="op">(</span>ans<span class="op">,</span> beta<span class="op">);</span></span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">&quot;Case </span><span class="sc">%d</span><span class="st">: </span><span class="sc">%.10lf\n</span><span class="st">&quot;</span><span class="op">,</span> tc<span class="op">,</span> ans<span class="op">*</span><span class="dv">180</span><span class="op">/</span>PI<span class="op">);</span></span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h2 id="references">References</h2>
-<table border="0">
-<tr>
-<td>
-1
-</td>
-<td>
-<a href="http://community.topcoder.com/tc?module=Static&d1=tutorials&d2=lineSweep" target="_blank">Line Sweep Algorithms, bmerry</a>
-</td>
-</tr>
-<tr>
-<td>
-2
-</td>
-<td>
-<a href="http://www.cs.princeton.edu/courses/archive/fall05/cos226/lectures/geometry.pdf" target="_blank">Geometry Lecture, Robert Sedgewick</a>
-</td>
-</tr>
-</table>
+<ol type="1">
+<li><a href="http://community.topcoder.com/tc?module=Static&d1=tutorials&d2=lineSweep" target="_blank">Line Sweep Algorithms, bmerry</a></li>
+<li><a href="http://www.cs.princeton.edu/courses/archive/fall05/cos226/lectures/geometry.pdf" target="_blank">Geometry Lecture, Robert Sedgewick</a></li>
+</ol>
 

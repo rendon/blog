@@ -17,7 +17,7 @@ En Linux (el kernel) toda la información relacionada a un proceso se almacena e
 Como podrán apreciar en la última línea, un proceso también mantiene una lista de sus procesos hermanos, aquellos que comparten el mismo padre.
 </p>
 <p>
-El kernel mantiene la lista de procesos en una lista doublemente enlazada donde cada elemento contiene una estructura <code>task_struct</code>. La figura &lt;%= ref(‘doubly_linked_list’); %&gt; muestra como luce dicha lista.
+El kernel mantiene la lista de procesos en una lista doublemente enlazada donde cada elemento contiene una estructura <code>task_struct</code>. La figura muestra como luce dicha lista.
 </p>
 <p>&lt;%= figure(post, ‘doubly_linked_list.png’, caption: ‘Lista doblemente enlazada de procesos’, label: ‘doubly_linked_list’, lang: :es); %&gt;</p>
 <p>
@@ -40,7 +40,7 @@ __TASK_TRACED: El proceso esta siendo rastreado por otro proceso, por ejemplo, p
 __TASK_STOPPED: El proceso a termina su ejecución
 </li>
 </ul>
-<p>La figura &lt;%= ref(‘process_states’); %&gt; ilustra las relaciones entre los distintos estados.</p>
+<p>La figura ilustra las relaciones entre los distintos estados.</p>
 <p>&lt;%= figure(post, ‘process_states.svg’, caption: ‘Diagrama de flujo de los estados de un proceso’, label: ‘process_states’, lang: :es); %&gt;</p>
 <p>
 En Linux el primer proceso que se ejecuta es <code>init</code> con PID igual a 1 y es éste el que se encarga de crear al resto de los procesos necesarios para el funcionamiento del sistema. A su vez, cada nuevo proceso es capaz de crear otros más. No es difícil darse cuenta que este mecanismo forma un árbol de procesos, donde la raíz es el proceso <code>init</code>, los nodos intermedios son aquello diferentes de <code>init</code> y que tienen al menos un proceso hijo, mientras que las hojas son aquellos que no crean nuevos procesos.
@@ -179,7 +179,7 @@ Una vez que logre extraer el árbol se me ocurrió generarlo en un formato adecu
 Manualmente hay que editar un poco la salida para que que sirva como entrada para el visualizador. He aquí el archivo resultante: &lt;%= file(post, ‘pstree.gi’) %&gt;.
 </p>
 <p>
-La figura &lt;%= ref(“pstree”); %&gt; muestra el resultado.
+La figura muestra el resultado.
 </p>
 <figure>
 <img src="/procesos/pstree.svg" alt="Árbol de procesos" />

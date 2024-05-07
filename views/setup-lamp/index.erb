@@ -1,28 +1,20 @@
-&lt;% title = ‘Configurar Entorno LAMP’ %&gt;
-<p>
-Como parte de un reporte de proyecto necesito un manual sobre como instalar y configurar un entorno LAMP (Linux + Apache + MySQL + PHP), si bien es cierto que en Internet hay gran cantidad de tutoriales, para mi reporte necesito una fuente confiable, algo de lo que este yo seguro de que funciona, y como dice el dicho, si quieres algo bien hecho, hazlo tu mismo. En este tutorial vamos a ver como obtener y configurar un entorno LAMP en GNU/Linux Debian Wheezy.
-</p>
+<!-- vim: set spelllang=es_mx: -->
+<h2 id="configurar-entorno-lamp">Configurar Entorno LAMP</h2>
+<p>Como parte de un reporte de proyecto necesito un manual sobre como instalar y configurar un entorno LAMP (Linux + Apache + MySQL + PHP), si bien es cierto que en Internet hay gran cantidad de tutoriales, para mi reporte necesito una fuente confiable, algo de lo que este yo seguro de que funciona, y como dice el dicho, si quieres algo bien hecho, hazlo tu mismo. En este tutorial vamos a ver como obtener y configurar un entorno LAMP en GNU/Linux Debian Wheezy.</p>
 <h2 id="instalación">Instalación</h2>
-<p>
-Si tienes bien configurados tus repositorios lo único que tienes que hacer es ejecutar el siguiente comando como usuario root:
-</p>
-<p>Embed: <code>install.sh</code></p>
-<p>
-El comando anterior instala y configura el servidor HTTP Apache, version 2.x, el servidor MySQL (actualmente la versión 5.x), la versión 5.x del lenguaje PHP y por último el módulo que permite manipular bases de datos MySQL desde PHP.
-</p>
-<p>
-Por defecto Apache y MySQL estan configurados para ejecutarse cada vez que iniciemos el sistema, sin embargo esto llega a consumir muchos recursos, los siguientes comandos harán que los servicios se inicien de forma manual.
-</p>
-<p>Embed: <code>remove-services.sh</code></p>
-<p>
-Para iniciar y/o apagar Apache utiliza estos comandos:
-</p>
-<p>Embed: <code>start-stop-apache.sh</code></p>
+<p>Si tienes bien configurados tus repositorios lo único que tienes que hacer es ejecutar el siguiente comando como usuario root:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">apt-get</span> install apache2 mysql-server php5 php5-mysql</span></code></pre></div>
+<p>El comando anterior instala y configura el servidor HTTP Apache, version 2.x, el servidor MySQL (actualmente la versión 5.x), la versión 5.x del lenguaje PHP y por último el módulo que permite manipular bases de datos MySQL desde PHP.</p>
+<p>Por defecto Apache y MySQL estan configurados para ejecutarse cada vez que iniciemos el sistema, sin embargo esto llega a consumir muchos recursos, los siguientes comandos harán que los servicios se inicien de forma manual.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">update-rc.d</span> <span class="at">-f</span> apache2 remove</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">update-rc.d</span> <span class="at">-f</span> mysql remove</span></code></pre></div>
+<p>Para iniciar y/o apagar Apache utiliza estos comandos:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">service</span> apache2 start</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">service</span> apache2 stop</span></code></pre></div>
 <p>
 Para MySQL:
 </p>
-<p>Embed: <code>start-stop-mysql.sh</code></p>
-<p>
-Todo esto como usuario root, por supuesto.
-</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">service</span> mysql start</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">service</span> mysql stop</span></code></pre></div>
+<p>Todo esto como usuario root, por supuesto.</p>
 

@@ -1,22 +1,31 @@
+<!-- vim: set spelllang=es_mx: -->
+<h1 id="reporte-v-android-web-service">Reporte V: Android web service</h1>
+
+<p class='metadata'>
+    <span class='published'><span class="fa-solid fa-clock"></span> <em>2016-02-23</em></span>
+	<span class='updated'><span class="fa-solid fa-clock-rotate-left"></span> <em>2024-05-06</em></span>
+    <span class='tags'><span class="fa-solid fa-tag"></span><code>#dev</code> <code>#school</code> <code>#post</code></span>
+</p>
+
 <p>
 Este reporte corresponde al proyecto número 5 de la asignatura Desarrollo de Aplicaciones para Tecnologías Móviles.
 </p>
-<p>&lt;%= section(‘Definición del problema’); %&gt;</p>
+<h2 id="definición-del-problema">Definición del problema</h2>
 <blockquote>
 Desarrollar un Web service (en el lenguaje que más les agrade) capaz de manipular una base de datos a petición del cliente, en este caso, el cliente será una aplicación móvil para la plataforma Android.
 </blockquote>
-<p>&lt;%= section(‘Definiciones’); %&gt;</p>
+<h2 id="definiciones">Definiciones</h2>
 <p>
 Como este reporte forma parte de una serie de reportes, vamos a omitir la teoría sobre Web services puesto que ya se abordo en el reporte número <a href="/?p=865">II</a>.
 </p>
-<p>&lt;%= section(‘Propuesta de solución’); %&gt;</p>
+<h2 id="propuesta-de-solución">Propuesta de solución</h2>
 <p>
 Nuevamente, el problema nos da la flexibilidad de elegir que problema modelar, la propuesta es la siguiente:
 </p>
 <blockquote>
 Desarrollar una aplicación móvil para el control requisiciones, similar a los dispositivos que utilizan los agentes de venta cuando salen a levantar pedidos.
 </blockquote>
-<p>&lt;%= subsection(‘El cliente’); %&gt;</p>
+<h3 id="el-cliente">El cliente</h3>
 <p>
 La aplicación móvil deberá cumplir con los siguientes requisitos:
 </p>
@@ -43,7 +52,7 @@ La aplicación permitirá subir los registros al servidor.
 La aplicación permitirá contactar al servidor para actualizar catálogos.
 </li>
 </ul>
-<p>&lt;%= subsection(‘El servidor’); %&gt;</p>
+<h3 id="el-servidor">El servidor</h3>
 <p>
 Un Web service desarrollado en PHP que manipula una base de datos MySQL. A continuación la lista de servicios que vamos desarrollar:
 </p>
@@ -58,7 +67,7 @@ Un Web service desarrollado en PHP que manipula una base de datos MySQL. A conti
 <strong>GetAllProducts()</strong> Retorna al cliente la lista de productos. Este servicio forma parte de la actualización de catálogos.
 </li>
 </ul>
-<p>&lt;%= subsection(‘Requisitos’); %&gt;</p>
+<h3 id="requisitos">Requisitos</h3>
 <p>
 Para poder realizar esta práctica se necesita lo siguiente:
 </p>
@@ -90,7 +99,7 @@ El Web service para esta aplicación es exactamente el mismo que se empleamos en
 <p>
 Lo relevante de la implementación del Web service lo pueden encontrar en los reportes <a href="/report-iii-wp8-web-services/">III</a> y <a href="/report-iv-bb10-web-service/">IV</a>, colocar nuevamente el código aquí sería redundante y ocuparía mucho espacio.
 </p>
-<p>&lt;%= section(‘La base de datos local’); %&gt;</p>
+<h2 id="la-base-de-datos-local">La base de datos local</h2>
 <p>
 Uno de los requisitos de nuestra aplicación es que debe de funcionar de forma desconectada, por ende, es necesario crear una replica del modelo de datos en nuestra aplicación móvil. A continuación se muestra como se manipulan los datos en de formal local, el SGBD es SQLite.
 </p>
@@ -766,7 +775,7 @@ public class WebService {
 <p>
 Este código es ni más ni menos que el que ocupamos con Blackberry, pero en Java.
 </p>
-<h2 id="el-cliente">El cliente</h2>
+<h2 id="el-cliente-1">El cliente</h2>
 <p>
 En este apartado vamos a ver como construir la aplicación en Android y cómo se realizan las operaciones.
 </p>
@@ -776,12 +785,12 @@ En Android, al igual que con otras plataformas, es posible construir la interfaz
 <p>
 En esta ocasión he optado por utilizar el diseñador de interfaces que viene con IntelliJ IDEA, sin embargo, al final el resultado es el mismo, código XML.
 </p>
-<p>&lt;%= subsection(‘Creación del proyecto’); %&gt;</p>
+<h3 id="creación-del-proyecto">Creación del proyecto</h3>
 <p>
 Para evitar ambigüedades vamos a ilustrar paso a paso cómo crear el proyecto en IntelliJ IDEA.
 </p>
 <p><img src="/report-v-android-web-service/androidws_cp_1.png" alt="Página de inicio de IntelliJ IDEA" /> <img src="/report-v-android-web-service/androidws_cp_2.png" alt="Nombre del proyecto" /> <img src="/report-v-android-web-service/androidws_cp_3.png" alt="Nombre del paquete y configuración de dispositivo" /> <img src="/report-v-android-web-service/androidws_cp_4.png" alt="Estamos listos para empezar" /></p>
-<p>&lt;%= subsection(‘La página principal’); %&gt;</p>
+<h3 id="la-página-principal">La página principal</h3>
 <p>
 La siguiente figura muestra como lucirá la página principal de nuestra aplicación:
 </p>
@@ -924,7 +933,7 @@ public void onCreate(Bundle savedInstanceState)
 
 }
 </pre>
-<p>&lt;%= subsection(‘Registro de pedidos’); %&gt;</p>
+<h3 id="registro-de-pedidos">Registro de pedidos</h3>
 <p>
 A continuación se ilustra la interfaz para registrar pedidos.
 </p>
@@ -1091,7 +1100,7 @@ saveRequestButton.setOnClickListener(new View.OnClickListener() {
     }
 });
 </pre>
-<p>&lt;%= subsection(‘Consulta de pedidos’); %&gt;</p>
+<h3 id="consulta-de-pedidos">Consulta de pedidos</h3>
 <p>
 Nuestra aplicación también permite visualizar la lista de pedidos que tenemos en nuestra base de datos local.
 </p>
@@ -1167,7 +1176,7 @@ public void onCreate(Bundle savedInstanceBundle)
 <p>
 Hasta aquí las explicaciones, al final se proporciona el código completo de la aplicación.
 </p>
-<p>&lt;%= section(‘Código fuente’); %&gt;</p>
+<h2 id="código-fuente">Código fuente</h2>
 <p>
 El código del servidor y del cliente están disponibles en Bitbucket en las siguientes direcciones:
 </p>
@@ -1182,9 +1191,12 @@ $ git clone https://rendon@bitbucket.org/rendon/requisitionandroid.git
 <p>
 La licencia del Web service y de la aplicación cliente es GPLv3.
 </p>
-<p>&lt;%= section(‘Por hacer’); %&gt;</p>
+<h2 id="por-hacer">Por hacer</h2>
 <p>
 Mejorar la interfaz gráfica. La personalización de los elementos gráficos es un poco tediosa, al menos en la version 2.3, espero que esto halla mejorado en las versiones más recientes.
 </p>
-<p>&lt;% section(‘Referencias’); - <a href="https://developer.android.com/index.html">Documentación de Android</a> %&gt;</p>
+<h2 id="referencias">Referencias</h2>
+<ul>
+<li><a href="https://developer.android.com/index.html">Documentación de Android</a></li>
+</ul>
 
