@@ -1,4 +1,7 @@
 <!-- vim: set spelllang=es_mx: -->
+# Factorial y ceros
+2016-02-18 2024-05-07 #algorithms #math #post
+
 ## Introducción
 
 <p>Hoy vamos a platicar acerca de los factoriales, en particular de un problema muy interesante que de primera vista puede parecer muy complicado resolver. Adelante, veamos de que trata esto.</p>

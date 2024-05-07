@@ -1,4 +1,6 @@
 <!-- vim: set spelllang=es_mx: -->
+# De poligonos y estrellas
+2016-02-18 2024-05-07 #math #computer-graphics #algorithms #post
 
 <p>Hace algun tiempo tuve la necesidad de desarrollar una aplicación en Java que dibujara polígonos regulares y estrellas de $n$ lados y $n$ picos respectivamente para una materia en la escuela. En un principio me fue difícil solucionar este problema pero al final encontré la manera. A continuación comento en que consiste la solución.</p>
  

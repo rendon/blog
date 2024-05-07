@@ -1,3 +1,6 @@
+# Recipe 002: Depth-First Search (DFS)
+2016-02-18 2024-05-07 #algorithms #data-structures #post
+
 <p><a href="http://en.wikipedia.org/wiki/Depth-first_search" target="_blank">Depth-First Search</a> is one of the fundamental algorithms in <a href="https://en.wikipedia.org/wiki/Graph_theory" target="_blank">graph theory</a>. It's a must to know!</p>
 
 <p>Nowadays it's a piece of cake, but I did struggle a bit to get my head around this and other graph theory algorithms.</p>

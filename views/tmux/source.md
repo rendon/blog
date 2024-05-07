@@ -1,3 +1,7 @@
+<!-- vim: set spelllang=es_mx: -->
+
+# Tmux
+2016-02-18 2024-05-07 #sysadmin #tools #post
 
 <p><strong>NOTA</strong>: Este artículo fue publicado originalmente en <a href="http://revista.atixlibre.org/?p=259" target="_blank">ATIX</a>, revista de software libre.</p>
 

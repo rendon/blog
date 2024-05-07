@@ -1,3 +1,6 @@
+<!-- vim: set spelllang=es_mx: -->
+
+# Evaluador de expresiones matematicas
 <p>Suponga que tiene la siguiente expresión aritmética: `3*(5*6/3)^(2+5)+1`. ¿Cuál es el resultado? Si aplicamos las reglas de precedencia adecuadas el resultado es 30000001.</p>
 
 <p>En este articulo se plantea el problema de idear un algoritmo que permita evaluar este tipo de expresiones en un ordenador. A continuación se presenta una posible solución bastante sencilla y eficiente.</p>

@@ -1,3 +1,8 @@
+<!-- vim: set spelllang=es_mx: -->
+
+# Procesos
+2016-02-18 2024-05-07 #dev #sysadmin #linux #post
+
 <p>Como parte de mi proyecto final estoy estudiando sobre sistemas operativos con un enfoque especial en GNU/Linux, en lo posible voy a ir publicando algunas cosas que me parezcan interesantes y que ojala lo sean para otros más también.</p>
 
 ## Proceso

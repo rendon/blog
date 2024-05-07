@@ -1,3 +1,6 @@
+# Set up DHCP server
+2016-02-18 2024-05-07 #sysadmin #linux #post
+
 <p>DHCP stands for Dynamic Host Configuration Protocol, a network protocol used to automatically configure hosts in a network. There are some concepts you need to know to understand what is a DHCP server.</p>
 
 <p>A subnetwork has some settings that indentify their hosts and itself from other subnetworks, settings such as <a href="http://en.wikipedia.org/wiki/Subnetwork#Network_addressing_and_routing" target="_blank">network address</a>, <a href="http://en.wikipedia.org/wiki/Subnet_mask" target="_blank">subnet mask</a>, <a href="http://en.wikipedia.org/wiki/Default_gateway" target="_blank">gateway</a>, <a href="http://en.wikipedia.org/wiki/IP_address" target="_blank">IP</a>, etc. Each host connected to a subnetwork must have at least an IP and subnet mask address, a gateway address to comunicate out with other subnetworks, and possibly one or more DNS server addresses to go out to the Internet. In a small network is not a problem setting up each PC manually, but if the network has one or two hundred PCs or the users don't know anything about networks and only wish to connect to the internet things get complicated.</p>

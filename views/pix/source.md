@@ -1,4 +1,5 @@
 <!-- vim: set spelllang=es_mx: -->
+
 # Pix
 2016-02-18 2024-05-01 #dev #graphics #java #cpp
 
@@ -8,11 +9,11 @@ El lenguaje de programación que utilizamos en clase es Java, sin embargo, en mi
 
 ## Capturas de pantalla
 
-![Pix 1](/pix//pix/pix-1.png)
+![Pix 1](/pix/pix-1.png)
 
-![Pix 2](/pix//pix/pix-2.png)
+![Pix 2](/pix/pix-2.png)
 
-![Pix 3](/pix//pix/pix-3.png)
+![Pix 3](/pix/pix-3.png)
 
 ## Codigo fuente
 

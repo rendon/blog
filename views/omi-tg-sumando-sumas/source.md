@@ -1,3 +1,8 @@
+<!-- vim: set spelllang=es_mx: -->
+
+# OMI Training Gate: Sumando sumas
+2016-02-18 2024-05-07 #algorithms #data-structures #post
+
 <p>El día de hoy estuve resolviendo <a href="http://www.spoj.com/problems/SUMSUMS/" target="_blank">este problema</a> y les quiero compartir mi solución y un poco del análisis para poder resolverlo.</p>
 
 <p>Debido a las restricciones del problema, realizar la simulación no es factible, así que habrá que buscar otra forma. Empecemos por analizar el ejemplo de entrada:</p>

@@ -1,3 +1,6 @@
+# Recipe 001: Floyd-Warshall
+2016-02-18 2024-05-07 #algorithms #data-structures #post
+
 <p>Compute the minimum distance between all the nodes in a graph.</p>
 
 Embed: `src.cpp`

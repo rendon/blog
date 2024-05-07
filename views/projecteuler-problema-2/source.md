@@ -1,3 +1,8 @@
+<!-- vim: set spelllang=es_mx: -->
+
+# ProjectEuler - Problema 2
+2016-02-18 2024-05-07 #algorithms #data-structures #post
+
 <p>La sucesión de fibonacci es muy famosa y es común encontrarla en problemas de concursos de programación. Un problema clásico para ejemplificar la <a href="/?p=35" target="_blank">recursión</a> y uno de los problemas más sencillos para demostrar el poder de la <em>programación dinámica</em>. El inventor de dicha secuencia fue el matemático italiano <a href="http://en.wikipedia.org/wiki/Fibonacci">Leonardo de pisa</a> y se define de la siguiente forma.</p>
 
 $ \large f(n) =  \begin{cases} 0 & \text{si n = 0} \\ 1 & \text{si n = 1} \\\\ f(n - 1) + f(n - 2) & \text{si n > 1} \end{cases} $

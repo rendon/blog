@@ -1,3 +1,5 @@
+# Big Mod
+2016-02-18 2024-05-07 #math #algorithms #post
 
 <p>En una división entera se distinguen cuatro elementos, <em>dividendo</em>, <em>divisor</em>, <em>cociente</em> y <em>módulo o residuo</em>. Donde el dividendo es la cantidad a dividir, divisor el valor contra el cual se hara la división, el resultado es el cociente y residuo la cantidad sobrante. Por ejemplo, sea <em>n</em> = 123 y <em>d</em> = 4, al realizar la división obtenemos un cociente <em>c</em> igual a 30 y un residuo <em>r</em> igual a 3.</p>
 

@@ -1,6 +1,7 @@
 <!-- vim: set spelllang=es_mx: -->
 
 # Bash
+2016-02-18 2024-05-07 #sysadmin #linux #post
 
 <p><strong>NOTA</strong>: Este artículo fue publicado originalmente en <a href="http://revista.atixlibre.org/?p=271" target="_blank">ATIX</a>, revista de software libre.</p>
 

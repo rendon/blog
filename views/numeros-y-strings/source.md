@@ -1,3 +1,6 @@
+<!-- vim: set spelllang=es_mx: -->
+# Números y cadenas
+2016-02-18 2024-05-07 #algorithms #data-structures #post
 
 ## Introducción
 

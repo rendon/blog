@@ -1,3 +1,6 @@
+# Topological sorting
+2016-02-18 2024-05-07 #algorithms #post
+
 <p>Let's start this topic with an example, we have some tasks to do, some tasks are independent of each other, but some tasks depend on other tasks and those tasks must be done before these tasks. We can model this problem with a graph, the tasks are vertices and the dependencies are edges. Topological sorting is an algorithm that helps us to find an ordering of tasks such that for every task $u$ that has to be done before task $v$, $u$ comes before $v$ in the ordering.</p>
 
 <p>Topological sorting works on <a href="http://en.wikipedia.org/wiki/Directed_acyclic_graph" target="_blank">DAGs</a>, that is, graphs wit no cycles, if the graph contains a cycle it's impossible to find a solutions. For example, if task $A$ depends on task $B$ and task $B$ depends on task $A$ then it's impossible to determine which task has to be done first, see <a href="http://en.wikipedia.org/wiki/Chicken_or_the_egg" target="_blank">Chicken or Egg</a>.</p>

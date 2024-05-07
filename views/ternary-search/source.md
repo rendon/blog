@@ -1,4 +1,7 @@
-<p>Hi! This time I going to talk about a new technique I've just learned, <a href="http://en.wikipedia.org/wiki/Ternary_search" target="_blank">Ternary Search</a>.</p>
+# Ternary search
+2016-02-18 2024-05-07 #algorithms #post
+
+Hi! This time I going to talk about a new technique I've just learned, <a href="http://en.wikipedia.org/wiki/Ternary_search" target="_blank">Ternary Search</a>.
 
 ## Ternary search
 

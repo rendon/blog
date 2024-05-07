@@ -1,3 +1,8 @@
+<!-- vim: set spelllang=es_mx: -->
+
+# ProjectEuler - Problema 3
+2016-02-18 2024-05-07 #algorithms #data-structures #post
+
 <p>Dentro del conjunto de los <a href="http://es.wikipedia.org/wiki/N%C3%BAmero_natural">números naturales</a>(denotado por $\mathbb{N}$) pueden distinguirse básicamente dos tipos de números: primos y compuestos. Los primos son aquellos que son únicamente divisibles(división exacta) con uno y consigo mismos mientras que los compuestos reciben su nombre debido a que se obtienen como un producto de números primos, factores, los cuales pueden aparecer más de una vez en el producto.</p>
 
 <p>Ejemplos de números primos son 2, 3, 5, 7, 19, etc. Por su parte 4, 6, 9 y 20 son ejemplos de números compuestos. Un algoritmos simple para comprobar la primalidad de un número es apegándose a su definición, es decir, comprobar la divisibilidad de $n$ con $d = 2$  hasta $n - 1$. Próximamente dedicaré un artículo para hablar sobre números primos, por ahora procedamos con el tema de este artículo.</p>

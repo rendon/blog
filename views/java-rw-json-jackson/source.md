@@ -1,3 +1,6 @@
+# Read and write JSON documents in Java with Jackson
+2016-02-18 2024-05-07 #dev #java #post
+
 <p>I'm working on my <a href="https://github.com/rendon/graph_illustrator/" target="_blank">graph tool</a> and I just changed the file format to JSON, then the need to read and write JSON from and to a file.</p>
 
 <p>What I needed was a lightweight library to parse and export JSON content, nothing fancy ... wait, with support for pretty printing, please. I ended up with Jackson, not exactly lightweight, but it did the job.</p>

@@ -1,3 +1,6 @@
+# Z algorithm
+2016-02-18 2024-05-07 #algorithms #post
+
 <p>String matching is a very common problem, given a text $T$ and a pattern $P$ find the occurrences of $P$ in $T$. This problem doesn't need too much introduction.</p>
 
 <p>The most easy (and naive) algorithm to solve this problem is to slide off $P$ through $T$ and see if there is a match. Something like this:</p>

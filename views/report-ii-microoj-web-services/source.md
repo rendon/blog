@@ -1,3 +1,8 @@
+<!-- vim: set spelllang=es_mx: -->
+
+# Reporte II: MicroOJ & servicios Web
+2016-02-18 2024-05-07 #dev #post
+
 <p>Este es el reporte correspondiente al proyecto número 2 de la materia Desarrollo de Aplicaciones para Tecnologías Móviles.</p>
 
 ## Definición del Problema

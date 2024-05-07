@@ -1,3 +1,8 @@
+<!-- vim: set spelllang=es_mx: -->
+
+# Installar SDK de java
+2016-02-18 2024-05-07 #dev #java #post
+
 <p>Como parte de un reporte de proyecto necesito un manual sobre como instalar y configurar el SDK de Java, si bien es cierto que en Internet hay gran cantidad de tutoriales, para mi reporte necesito una fuente confiable, algo de lo que este yo seguro de que funciona, y como dice el dicho, si quieres algo bien hecho hazlo tu mismo. En éste artículo vamos a indicar como obtener y configurar el JDK en el sistema operativo GNU/Linux Debian Wheezy.</p>
 
 <p><strong>NOTA:</strong> Vamos a partir del supuesto de que no existe una instalación previa del JDK, si es así, asegúrate de desinstalarla porque puede ocasionar problemas, puedes apoyarte de <em>synaptic</em>.</p>

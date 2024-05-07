@@ -1,3 +1,7 @@
+<!-- vim: set spelllang=es_mx: -->
+# Instalar servidor de DNS en Linux
+2016-02-18 2024-05-07 #sysadmin #linux #post
+
 ## Introducción 
 
 <p>Las siglas DNS son la iniciales de _Domain Name System_, Sistema de Nombres de Dominio, es una base de datos distribuida y jerarquica, que almacena asignaciones de nombres de dominio a varios tipos de datos, como son direcciones IP. Un sistema de DNS permite emplear nombres faciles de recordar, tal como www.misitioweb.com, para localizar computadoras y otros recursos en una red TCP/IP.<%= cite('wp_dns') + cite('ms_dns') + cite('archlinux_dnsmasq') %></p>

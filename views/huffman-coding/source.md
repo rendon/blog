@@ -1,3 +1,6 @@
+# Huffman encoding
+2016-02-18 2024-05-07 #algorithms #data-structures #post
+
 <p>Data compression is an interesting topic, and at last I had some time to explore this topic a little bit.</p>
 
 <p>To keep things simple, we are going to compress text, characters that can be represented in 8 bits, a typical `char` type (usually) in C/C++.</p>

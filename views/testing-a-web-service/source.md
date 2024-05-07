@@ -1,3 +1,6 @@
+# Testing a Web service
+2016-02-18 2024-05-07 #dev #post
+
 <p>I've been working with Web services these days for some college projects. Here are some interesting ways to test your web service.</p>
 
 <p>Supponse this is our Web service:</p>
@@ -6,7 +9,7 @@ Embed: `web-service.php`
 
 ![Our web service](/testing-a-web-service/testws_myservice.png)
 
-<p>Now, How to test if our Web service is working as expected? Let' see.</p>
+<p>Now, how to test if our Web service is working as expected? Let' see.</p>
 
 ## SoapUI
 

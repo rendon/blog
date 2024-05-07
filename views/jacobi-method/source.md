@@ -1,3 +1,5 @@
+# Jacobi method
+2016-02-18 2024-05-07 #algorithms #math #post
 
 <p>Systems of linear equations are very important and has many applications in real life, from the most obvious to find the intersection point of many linear equations in the plane, upto the analysis of electronic circuits with Kirchhoff's laws or traffic flow in streets. </p>
 
