@@ -1,29 +1,29 @@
 # Jacobi method
 2016-02-18 2024-05-07 #algorithms #math #post
 
-<p>Systems of linear equations are very important and has many applications in real life, from the most obvious to find the intersection point of many linear equations in the plane, upto the analysis of electronic circuits with Kirchhoff's laws or traffic flow in streets. </p>
+Systems of linear equations are very important and has many applications in real life, from the most obvious to find the intersection point of many linear equations in the plane, upto the analysis of electronic circuits with Kirchhoff's laws or traffic flow in streets. 
 
-<p>I am not an expert in this topics but currently we are studying this topic  in my numerical methods course, since the course is about "numerical" methods, we don't study the Gaussian elimination method because it is more algebraic, instead we study Jacobi method. I am going to explain briefly the idea of the method and I give you a simple implementation in Java.</p>
+I am not an expert in this topics but currently we are studying this topic  in my numerical methods course, since the course is about "numerical" methods, we don't study the Gaussian elimination method because it is more algebraic, instead we study Jacobi method. I am going to explain briefly the idea of the method and I give you a simple implementation in Java.
 
 ## Jacobi method
 
-<p>This was the first iterative method to solve systems of linear equations and was devised by <a href="http://en.wikipedia.org/wiki/Carl_Gustav_Jakob_Jacobi" target="_blank">Carl Gustav Jacob Jacobi</a>(1804-1851). Lets define the system of linear equations as:</p>
+This was the first iterative method to solve systems of linear equations and was devised by [Carl Gustav Jacob Jacobi](http://en.wikipedia.org/wiki/Carl_Gustav_Jakob_Jacobi)(1804-1851). Lets define the system of linear equations as:
 
 ![Equation system](/jacobi-method/jacobi_1.png)
 
-<p>For each row <em>i</em> isolate the $x\_{i}$ variable.</p>
+For each row *i* isolate the $x\_{i}$ variable.
 
 ![Isolate variables](/jacobi-method/jacobi_2.png)
 
-<p>Make an initial approximation of the solution $(x_{1}, x_{2}, x_{3},\ldots,x_{n})$, a good choice is to use zero to all variables. Substitute these values in the rewritten equation and update the values of the approximation. Repeat the process until the answer be acceptable.</p>
+Make an initial approximation of the solution $(x_{1}, x_{2}, x_{3},\ldots,x_{n})$, a good choice is to use zero to all variables. Substitute these values in the rewritten equation and update the values of the approximation. Repeat the process until the answer be acceptable.
 
 ## Stop condition
 
-<p>You can stop the iterations when $ |x\_{n+1} - x\_{n}| \leq \epsilon$ for all $x\_{i}$, $n$ is the number of iterations.</p>
+You can stop the iterations when $ |x\_{n+1} - x\_{n}| \leq \epsilon$ for all $x\_{i}$, $n$ is the number of iterations.
 
 ## Convergence condition
 
-<p>Only if  the coefficient matrix is <a href="http://en.wikipedia.org/wiki/Diagonally_dominant_matrix" target="_target">diagonally dominant</a> the method can guarantee a convergence to the solution. Sometimes the convergence can be achieved even if the conditions are not satisfied, but there is no guarantee.</p>
+Only if  the coefficient matrix is [diagonally dominant](http://en.wikipedia.org/wiki/Diagonally_dominant_matrix) the method can guarantee a convergence to the solution. Sometimes the convergence can be achieved even if the conditions are not satisfied, but there is no guarantee.
 
 ## Implementation in Java
 
@@ -31,7 +31,7 @@ Embed: `jacobi.java`
 
 ## Gauss-Seidel Method
 
-This is modification of the Jacobi method made by <a href="http://en.wikipedia.org/wiki/Carl_Friedrich_Gauss" target="_blank">Carl Friedrich Gauss</a> and <a href="http://en.wikipedia.org/wiki/Philipp_Ludwig_von_Seidel" target="_blank">Philipp L. Seidel</a> that can converge in less iterations than Jacobi method. 
+This is modification of the Jacobi method made by [Carl Friedrich Gauss](http://en.wikipedia.org/wiki/Carl_Friedrich_Gauss) and [Philipp L. Seidel](http://en.wikipedia.org/wiki/Philipp_Ludwig_von_Seidel) that can converge in less iterations than Jacobi method. 
 
 In the Jacobi method the values of the approximations $x_{i}$ are used up to the next iteration of the method while in the Gauss-Seidel version each approximation $x_{i}$  is used as soon as it's ready, see the code to a better understanding. Since the two methods are very similar I show only the fragment where the codes differ.
 
@@ -64,6 +64,6 @@ I think these methods are easier to remember than the Gaussian elimination metho
 ## References
 
 <table border="0">
-  <tr><td>1</td>   <td><a href="http://college.cengage.com/mathematics/larson/elementary_linear/5e/students/ch08-10/chap_10_2.pdf" target="_blank">Iterative methods for solving linear systems</a></td></tr>
-  <tr><td>2</td>   <td><a href="http://en.wikipedia.org/wiki/Jacobi_method" target="_blank">Jacobi method, Wikipedia</a></td></tr>
+  <tr><td>1</td>   <td>[Iterative methods for solving linear systems](http://college.cengage.com/mathematics/larson/elementary_linear/5e/students/ch08-10/chap_10_2.pdf)</td></tr>
+  <tr><td>2</td>   <td>[Jacobi method, Wikipedia](http://en.wikipedia.org/wiki/Jacobi_method)</td></tr>
 </table>

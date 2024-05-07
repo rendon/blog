@@ -1,15 +1,15 @@
 # Advent of code 2015 - part 1
 2016-12-01 2024-05-06 #algorithms #data-structures #post
 
-<p>I recently found out about [Advent of Code](http://adventofcode.com/), and as part of my preparation for this year's event I'm solving the puzzles of the previous event ([adventofcode.com/2015](http://adventofcode.com/2015)), in this short series I'll publish my solutions with a brief explanation.</p>
+I recently found out about [Advent of Code](http://adventofcode.com/), and as part of my preparation for this year's event I'm solving the puzzles of the previous event ([adventofcode.com/2015](http://adventofcode.com/2015)), in this short series I'll publish my solutions with a brief explanation.
 
-<p>A brief explanation about how Advent of Code works, there's one puzzle every day from December 1st to the 25th, each puzzle has two versions so you can earn upto two stars for every puzzle.</p>
+A brief explanation about how Advent of Code works, there's one puzzle every day from December 1st to the 25th, each puzzle has two versions so you can earn upto two stars for every puzzle.
 
 ## Day 1: Not Quite Lisp
-<p>Problem description: [day/1](http://adventofcode.com/2015/day/1).</p>
+Problem description: [day/1](http://adventofcode.com/2015/day/1).
 
 ### Solution
-<p>For v1: Just use a variable for the current floor, increase by one when we find a `(`, descrease by 1 when we find a `)`.</p>
+For v1: Just use a variable for the current floor, increase by one when we find a `(`, descrease by 1 when we find a `)`.
 
 ```ruby
 #!/usr/bin/env ruby
@@ -26,7 +26,7 @@ end
 puts floor
 ```
 
-<p>For v2: Similar to v1, we just need to keep track of the positions.</p>
+For v2: Similar to v1, we just need to keep track of the positions.
 
 ```ruby
 #!/usr/bin/env ruby
@@ -48,10 +48,10 @@ end
 
 
 ## Day 2: I Was Told There Would Be No Math
-<p>Problem description: [day/2](http://adventofcode.com/2015/day/2).</p>
+Problem description: [day/2](http://adventofcode.com/2015/day/2).
 
 ### Solution
-<p>For v1: Read all lines, parse the three integers and just apply the fomula from the problem description.</p>
+For v1: Read all lines, parse the three integers and just apply the fomula from the problem description.
 
 ```ruby
 paper = 0
@@ -64,7 +64,7 @@ end
 puts paper
 ```
 
-<p>For v2: Take the lowest 2 values (out of 3) and compute the perimeter, plus the product of all of them.</p>
+For v2: Take the lowest 2 values (out of 3) and compute the perimeter, plus the product of all of them.
 
 ```ruby
 ribbon = 0
@@ -77,10 +77,10 @@ puts ribbon
 ```
 
 ## Day 3: Perfectly Spherical Houses in a Vacuum
-<p>Problem description: [day/3](http://adventofcode.com/2015/day/3).</p>
+Problem description: [day/3](http://adventofcode.com/2015/day/3).
 
 ### Solution
-<p>For v1: A simulation problem, update your position in a 2-dimensional grid with every command, use a table to keep track of the unique positions you've been in.</p>
+For v1: A simulation problem, update your position in a 2-dimensional grid with every command, use a table to keep track of the unique positions you've been in.
 
 ```ruby
 grid = {[0, 0] => true}
@@ -126,7 +126,7 @@ puts grid.length
 ```
 
 ## Day 4: The Ideal Stocking Stuffer
-<p>Problem description: [day/4](http://adventofcode.com/2015/day/4).</p>
+Problem description: [day/4](http://adventofcode.com/2015/day/4).
 
 ### Solution
 <p>For v1: Well, I just brute-forced this one, used Ruby's `Digest::MD5` to compute the checksum.
@@ -168,10 +168,10 @@ end
 ```
 
 ## Day 5: Doesn't He Have Intern-Elves For This?
-<p>Problem description: [day/5](http://adventofcode.com/2015/day/5).</p>
+Problem description: [day/5](http://adventofcode.com/2015/day/5).
 
 ### Solution
-<p>For v1: Just follow the instructions <strong>carefully</strong> and you should be able to solve this problem.
+<p>For v1: Just follow the instructions **carefully** and you should be able to solve this problem.
 
 ```ruby
 def nice?(word)
@@ -207,7 +207,7 @@ end
 puts File.readlines('input.txt').select {|w| nice?(w.chomp) }.length
 ```
 
-<p>For v2: Just follow the instructions <strong>even more carefully</strong>, I was trapped by a moment by a pesky bug in this version.
+<p>For v2: Just follow the instructions **even more carefully**, I was trapped by a moment by a pesky bug in this version.
 
 ```ruby
 def nice?(word)

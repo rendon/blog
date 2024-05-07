@@ -2,7 +2,7 @@
 # Reporte V: Android web service
 2016-02-23 2024-05-06 #dev #school #post
 
-<p>Este reporte corresponde al proyecto número 5 de la asignatura Desarrollo de Aplicaciones para Tecnologías Móviles.</p>
+Este reporte corresponde al proyecto número 5 de la asignatura Desarrollo de Aplicaciones para Tecnologías Móviles.
 
 ## Definición del problema
 
@@ -10,17 +10,17 @@
 
 ## Definiciones
 
-<p>Como este reporte forma parte de una serie de reportes, vamos a omitir la teoría sobre Web services puesto que ya se abordo en el reporte número <a href="/?p=865">II</a>.</p>
+Como este reporte forma parte de una serie de reportes, vamos a omitir la teoría sobre Web services puesto que ya se abordo en el reporte número [II](/?p=865).
 
 ## Propuesta de solución
 
-<p>Nuevamente, el problema nos da la flexibilidad de elegir que problema modelar, la propuesta es la siguiente:</p>
+Nuevamente, el problema nos da la flexibilidad de elegir que problema modelar, la propuesta es la siguiente:
 
 <blockquote>Desarrollar una aplicación móvil para el control requisiciones, similar a los dispositivos que utilizan los agentes de venta cuando salen a levantar pedidos.</blockquote>
 
 ### El cliente
 
-<p>La aplicación móvil deberá cumplir con los siguientes requisitos:</p>
+La aplicación móvil deberá cumplir con los siguientes requisitos:
 
 <ul>
   <li>La aplicación permitirá consultar la lista de clientes.</li>
@@ -34,7 +34,7 @@
 
 ### El servidor
 
-<p>Un Web service desarrollado en PHP que manipula una base de datos MySQL. A continuación la lista de servicios que vamos desarrollar:</p>
+Un Web service desarrollado en PHP que manipula una base de datos MySQL. A continuación la lista de servicios que vamos desarrollar:
 
 <ul>
   <li>**PutRegisters(requests[], details[])** Recibe los datos de la aplicación móvil y los agrega a la base de datos, en caso de que aun no existan.</li>
@@ -44,29 +44,29 @@
 
 ### Requisitos
 
-<p>Para poder realizar esta práctica se necesita lo siguiente:</p>
+Para poder realizar esta práctica se necesita lo siguiente:
 
 <ul>
   <li>Debian GNU/Linux Wheezy</li>
-  <li>Un servidor LAMP (Linux + Apache + MySQL + PHP). Véase el reporte <a href="/?p=865">II</a>.</li>
-  <li>El SDK de Android instalado y configurado. Véase el reporte <a href="/?p=833">I</a>.</li>
+  <li>Un servidor LAMP (Linux + Apache + MySQL + PHP). Véase el reporte [II](/?p=865).</li>
+  <li>El SDK de Android instalado y configurado. Véase el reporte [I](/?p=833).</li>
   <li>Un dispositivo móvil con Android 2.3 o el emulador de Android.</li>
   <li>IntelliJ IDEA 12.</li>
 </ul>
 
 ## Desarrollo del Servidor
 
-<p>El Web service para esta aplicación es exactamente el mismo que se empleamos en el proyecto anterior (cliente Blackberry). A continuación se muestra el modelo de la base de datos para refrescar la memoria.</p>
+El Web service para esta aplicación es exactamente el mismo que se empleamos en el proyecto anterior (cliente Blackberry). A continuación se muestra el modelo de la base de datos para refrescar la memoria.
 
 ![Modelo de datos](/report-v-android-web-service/bbws_data_model.png)
 
-<p>Lo relevante de la implementación del Web service lo pueden encontrar en los reportes [III](/report-iii-wp8-web-services/) y [IV](/report-iv-bb10-web-service/), colocar nuevamente el código aquí sería redundante y ocuparía mucho espacio.</p>
+Lo relevante de la implementación del Web service lo pueden encontrar en los reportes [III](/report-iii-wp8-web-services/) y [IV](/report-iv-bb10-web-service/), colocar nuevamente el código aquí sería redundante y ocuparía mucho espacio.
 
 ## La base de datos local
 
-<p>Uno de los requisitos de nuestra aplicación es que debe de funcionar de forma desconectada, por ende, es necesario crear una replica del modelo de datos en nuestra aplicación móvil. A continuación se muestra como se manipulan los datos en de formal local, el SGBD es SQLite.</p>
+Uno de los requisitos de nuestra aplicación es que debe de funcionar de forma desconectada, por ende, es necesario crear una replica del modelo de datos en nuestra aplicación móvil. A continuación se muestra como se manipulan los datos en de formal local, el SGBD es SQLite.
 
-<p>Lo primero es crear las clases necesarias que representaran a nuestras tablas.</p>
+Lo primero es crear las clases necesarias que representaran a nuestras tablas.
 
 <pre lang="java">
 package com.inforscience.requisition.model;
@@ -325,7 +325,7 @@ public class Detail {
 }
 </pre>
 
-<p>Para simplificarnos las cosas vamos a crear un clase auxiliar (un _Helper_) para que realice todas las tareas que tienen que ver con la base de datos, como son la creación de las tablas (en caso de que no existan), inserción de registros y consulta de los mismos:</p>
+Para simplificarnos las cosas vamos a crear un clase auxiliar (un _Helper_) para que realice todas las tareas que tienen que ver con la base de datos, como son la creación de las tablas (en caso de que no existan), inserción de registros y consulta de los mismos:
 
 <pre lang="java">
 package com.inforscience.requisition.model;
@@ -576,7 +576,7 @@ public class DBManager {
 }
 </pre>
 
-<p>Podrán observar que cada uno de los métodos recibe un objecto de tipo _SQLiteDatabase_, este objecto lo creamos en la actividad principal (_MainActivity.java_) de nuestra aplicación y se proporciona al a las actividades restantes. He aquí la parte relevante:</p>
+Podrán observar que cada uno de los métodos recibe un objecto de tipo _SQLiteDatabase_, este objecto lo creamos en la actividad principal (_MainActivity.java_) de nuestra aplicación y se proporciona al a las actividades restantes. He aquí la parte relevante:
 
 <pre lang="java">
 /* Método onCreate() */
@@ -604,11 +604,11 @@ homeActivity.setDatabase(database);
 homeActivity.setShopActivity(shopActivity);
 </pre>
 
-<p>Como su nombre lo indica, el método _openOrCreateDatabase()_ abre nuestra base de datos o la crea en caso de que aun no exista.</p>
+Como su nombre lo indica, el método _openOrCreateDatabase()_ abre nuestra base de datos o la crea en caso de que aun no exista.
 
 ## Comunicación con el Web service
 
-<p>Al igual que con Qt, trabajar con Web services en Java es un poco tedioso ya que no hay soporte nativo (¿Lo hay?) para trabajar con ellos. Existen algunas bibliotecas para trabajar con Web services pero son demasiado complejas y lo que necesitamos para esta aplicación es algo sencillo, por ello vamos a crear nuestro propio proxy.</p>
+Al igual que con Qt, trabajar con Web services en Java es un poco tedioso ya que no hay soporte nativo (¿Lo hay?) para trabajar con ellos. Existen algunas bibliotecas para trabajar con Web services pero son demasiado complejas y lo que necesitamos para esta aplicación es algo sencillo, por ello vamos a crear nuestro propio proxy.
 
 <pre lang="java">
 package com.inforscience.requisition.net;
@@ -738,19 +738,19 @@ public class WebService {
 }
 </pre>
 
-<p>Este código es ni más ni menos que el que ocupamos con Blackberry, pero en Java.</p>
+Este código es ni más ni menos que el que ocupamos con Blackberry, pero en Java.
 
 ## El cliente
 
-<p>En este apartado vamos a ver como construir la aplicación en Android y cómo se realizan las operaciones.</p>
+En este apartado vamos a ver como construir la aplicación en Android y cómo se realizan las operaciones.
 
-<p>En Android, al igual que con otras plataformas, es posible construir la interfaz directamente desde código usando Java, sin embargo, lo recomendable es separar la interfaz de la lógica de la aplicación ya que esto nos facilitará el mantenimiento de nuestro software. Una interfaz gráfica para Android se puede describir utilizando el lenguaje XML.</p>
+En Android, al igual que con otras plataformas, es posible construir la interfaz directamente desde código usando Java, sin embargo, lo recomendable es separar la interfaz de la lógica de la aplicación ya que esto nos facilitará el mantenimiento de nuestro software. Una interfaz gráfica para Android se puede describir utilizando el lenguaje XML.
 
-<p>En esta ocasión he optado por utilizar el diseñador de interfaces que viene con IntelliJ IDEA, sin embargo, al final el resultado es el mismo, código XML.</p>
+En esta ocasión he optado por utilizar el diseñador de interfaces que viene con IntelliJ IDEA, sin embargo, al final el resultado es el mismo, código XML.
 
 ### Creación del proyecto
 
-<p>Para evitar ambigüedades vamos a ilustrar paso a paso cómo crear el proyecto en IntelliJ IDEA.</p>
+Para evitar ambigüedades vamos a ilustrar paso a paso cómo crear el proyecto en IntelliJ IDEA.
 
 ![Página de inicio de IntelliJ IDEA](/report-v-android-web-service/androidws_cp_1.png)
 ![Nombre del proyecto](/report-v-android-web-service/androidws_cp_2.png)
@@ -759,11 +759,11 @@ public class WebService {
 
 ### La página principal
 
-<p>La siguiente figura muestra como lucirá la página principal de nuestra aplicación:</p>
+La siguiente figura muestra como lucirá la página principal de nuestra aplicación:
 
 ![Página principal](/report-v-android-web-service/androidws_home.png)
 
-<p>El diseño correspondiente en XML es el siguiente:</p>
+El diseño correspondiente en XML es el siguiente:
 
 <pre lang="xml">
 <?xml version="1.0" encoding="utf-8"?>
@@ -814,7 +814,7 @@ public class WebService {
 </LinearLayout>
 </pre>
 
-<p>El siguiente listado muestra como se programa el comportamiento de los dos botones:</p>
+El siguiente listado muestra como se programa el comportamiento de los dos botones:
 
 <pre lang="java">
 @Override
@@ -901,11 +901,11 @@ public void onCreate(Bundle savedInstanceState)
 
 ### Registro de pedidos
 
-<p>A continuación se ilustra la interfaz para registrar pedidos.</p>
+A continuación se ilustra la interfaz para registrar pedidos.
 
 ![Registro de pedidos](/report-v-android-web-service/androidws_shop.png)
 
-<p>La interfaz esta descrita de la siguiente manera:</p>
+La interfaz esta descrita de la siguiente manera:
 
 <pre lang="xml">
 <?xml version="1.0" encoding="utf-8"?>
@@ -970,7 +970,7 @@ public void onCreate(Bundle savedInstanceState)
 </linearlayout>
 </pre>
 
-<p>La lógica detrás del botón que agrega artículos a la lista ("+") es la siguiente:</p>
+La lógica detrás del botón que agrega artículos a la lista ("+") es la siguiente:
 
 <pre lang="java">
 Button addItemButton = (Button)findViewById(R.id.add_item_button);
@@ -1005,7 +1005,7 @@ addItemButton.setOnClickListener(new View.OnClickListener() {
     });
 </pre>
 
-<p>Ahora para el botón que almacena el pedido en la base de datos:</p>
+Ahora para el botón que almacena el pedido en la base de datos:
 
 <pre lang="java">
 Button saveRequestButton;
@@ -1067,11 +1067,11 @@ saveRequestButton.setOnClickListener(new View.OnClickListener() {
 
 ### Consulta de pedidos
 
-<p>Nuestra aplicación también permite visualizar la lista de pedidos que tenemos en nuestra base de datos local.</p>
+Nuestra aplicación también permite visualizar la lista de pedidos que tenemos en nuestra base de datos local.
 
 ![Consulta de pedidos](/report-v-android-web-service/androidws_query.png)
 
-<p>El código XML que describe a esta interfaz es el siguiente:</p>
+El código XML que describe a esta interfaz es el siguiente:
 
 <pre lang="xml">
 <?xml version="1.0" encoding="utf-8"?>
@@ -1107,7 +1107,7 @@ saveRequestButton.setOnClickListener(new View.OnClickListener() {
 </LinearLayout>
 </pre>
 
-<p>Y la lógica detrás del botón "Actualizar" es:</p>
+Y la lógica detrás del botón "Actualizar" es:
 
 <pre lang="java">
 @Override
@@ -1136,28 +1136,28 @@ public void onCreate(Bundle savedInstanceBundle)
 }
 </pre>
 
-<p>Hasta aquí las explicaciones, al final se proporciona el código completo de la aplicación.</p>
+Hasta aquí las explicaciones, al final se proporciona el código completo de la aplicación.
 
 
 ## Código fuente
 
-<p>El código del servidor y del cliente están disponibles en Bitbucket en las siguientes direcciones:</p>
+El código del servidor y del cliente están disponibles en Bitbucket en las siguientes direcciones:
 
-<a href="https://bitbucket.org/rendon/request_ws" target="_blank">https://bitbucket.org/rendon/request_ws</a>
-<a href="https://bitbucket.org/rendon/requisition_android" target="_blank">https://bitbucket.org/rendon/requisition_android</a>
+[https://bitbucket.org/rendon/request_ws](https://bitbucket.org/rendon/request_ws)
+[https://bitbucket.org/rendon/requisition_android](https://bitbucket.org/rendon/requisition_android)
 
-<p>O bien pueden clonar los proyectos:</p>
+O bien pueden clonar los proyectos:
 
 <pre theme="slate">
 $ git clone https://rendon@bitbucket.org/rendon/request_ws.git
 $ git clone https://rendon@bitbucket.org/rendon/requisitionandroid.git
 </pre>
 
-<p>La licencia del Web service y de la aplicación cliente es GPLv3.</p>
+La licencia del Web service y de la aplicación cliente es GPLv3.
 
 ## Por hacer
 
-<p>Mejorar la interfaz gráfica. La personalización de los elementos gráficos es un poco tediosa, al menos en la version 2.3, espero que esto halla mejorado en las versiones más recientes.</p>
+Mejorar la interfaz gráfica. La personalización de los elementos gráficos es un poco tediosa, al menos en la version 2.3, espero que esto halla mejorado en las versiones más recientes.
 
 
 ## Referencias

@@ -1,15 +1,15 @@
 # Recipe 002: Depth-First Search (DFS)
 2016-02-18 2024-05-07 #algorithms #data-structures #post
 
-<p><a href="http://en.wikipedia.org/wiki/Depth-first_search" target="_blank">Depth-First Search</a> is one of the fundamental algorithms in <a href="https://en.wikipedia.org/wiki/Graph_theory" target="_blank">graph theory</a>. It's a must to know!</p>
+[Depth-First Search](http://en.wikipedia.org/wiki/Depth-first_search) is one of the fundamental algorithms in [graph theory](https://en.wikipedia.org/wiki/Graph_theory). It's a must to know!
 
-<p>Nowadays it's a piece of cake, but I did struggle a bit to get my head around this and other graph theory algorithms.</p>
+Nowadays it's a piece of cake, but I did struggle a bit to get my head around this and other graph theory algorithms.
 
 ![A graph.](/recipe-002-dfs/graph.svg)
 
 ## Common ways to represent graphs in a computer 
 
-<p>The most common representations for graphs are <a href="http://en.wikipedia.org/wiki/Adjacency_matrix" target="_blank">Adjacency matrix</a> and <a href="http://en.wikipedia.org/wiki/Adjacency_list" target="_blank">Adjacency list</a>.</p>
+The most common representations for graphs are [Adjacency matrix](http://en.wikipedia.org/wiki/Adjacency_matrix) and [Adjacency list](http://en.wikipedia.org/wiki/Adjacency_list).
 
 Embed: `src-matrix.cpp`
 

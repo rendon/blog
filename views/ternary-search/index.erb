@@ -6,31 +6,21 @@
     <span class='tags'><span class="fa-solid fa-tag"></span><code>#algorithms</code> <code>#post</code></span>
 </p>
 
-<p>Hi! This time I going to talk about a new technique I’ve just learned, <a href="http://en.wikipedia.org/wiki/Ternary_search" target="_blank">Ternary Search</a>.</p>
+<p>Hi! This time I going to talk about a new technique I’ve just learned, <a href="http://en.wikipedia.org/wiki/Ternary_search">Ternary Search</a>.</p>
 <h2 id="ternary-search-1">Ternary search</h2>
-<p>
-Ternary search is a technique similar to <a href="http://en.wikipedia.org/wiki/Binary_search_algorithm" target="_blank">Binary Search</a> and is important since ternary search could success in situations where the binary search would fail. Time ago I was very criticized in the <a href="http://codeforces.com" target="_blank">Codeforces</a> forum for arguing that has no sense to use ternary search if it is not more efficient than binary search. Is not about efficiency but –said the others. Actually I meant to ternary search in arrays, to reduce the search space to a third part, etc. Now I understand what they were talking about.
-</p>
+<p>Ternary search is a technique similar to <a href="http://en.wikipedia.org/wiki/Binary_search_algorithm">Binary Search</a> and is important since ternary search could success in situations where the binary search would fail. Time ago I was very criticized in the <a href="http://codeforces.com">Codeforces</a> forum for arguing that has no sense to use ternary search if it is not more efficient than binary search. Is not about efficiency but –said the others. Actually I meant to ternary search in arrays, to reduce the search space to a third part, etc. Now I understand what they were talking about.</p>
 <h2 id="sample-problem">Sample problem</h2>
-<p>
-You can solve the <a href="http://lightoj.com/volume_showproblem.php?problem=1146" target="_blank">1146 - Closest Distance</a> problem from <a href="http://lightoj.com" target="_blank">lightoj.com</a> with this technique.
-</p>
+<p>You can solve the <a href="http://lightoj.com/volume_showproblem.php?problem=1146">1146 - Closest Distance</a> problem from <a href="http://lightoj.com">lightoj.com</a> with this technique.</p>
 <h2 id="solution-to-sample-problem">Solution to sample problem</h2>
 <h3 id="basic-idea">Basic idea</h3>
-<p>
-Compute the distance between the two men as they move and take the minimum distance.
-</p>
+<p>Compute the distance between the two men as they move and take the minimum distance.</p>
 <figure>
 <img src="/ternary-search/ternary_search_1.png" alt="Termnary search example" />
 <figcaption aria-hidden="true">Termnary search example</figcaption>
 </figure>
-<p>
-Obviously, we can only take discrete points, and, since the problem ask for an answer with an error less than 1e-6, a brute force approach would take much time, very much. So the strategy is to use ternary search:
-</p>
+<p>Obviously, we can only take discrete points, and, since the problem ask for an answer with an error less than 1e-6, a brute force approach would take much time, very much. So the strategy is to use ternary search:</p>
 <p><img src="/ternary-search/ternary_search_2.png" alt="Step 1" /> <img src="/ternary-search/ternary_search_3.png" alt="Step 2" /> <img src="/ternary-search/ternary_search_4.png" alt="Step 3" /> <img src="/ternary-search/ternary_search_5.png" alt="Step 4" /></p>
-<p>
-And so on. Here is my solution:
-</p>
+<p>And so on. Here is my solution:</p>
 <p>Embed: <code>sol.cpp</code></p>
 <h2 id="references">References</h2>
 <table border="0">
@@ -39,7 +29,7 @@ And so on. Here is my solution:
 1
 </td>
 <td>
-<a href="http://en.wikipedia.org/wiki/Ternary_search" target="_blank">Ternary search</a>
+<a href="http://en.wikipedia.org/wiki/Ternary_search">Ternary search</a>
 </td>
 </tr>
 <tr>
@@ -47,7 +37,7 @@ And so on. Here is my solution:
 2
 </td>
 <td>
-<a href="http://codeforces.com/blog/entry/3560#comment-71935" target="_blank">Codeforces discussion about ternary search</a>
+<a href="http://codeforces.com/blog/entry/3560#comment-71935">Codeforces discussion about ternary search</a>
 </td>
 </tr>
 <tr>
@@ -55,7 +45,7 @@ And so on. Here is my solution:
 3
 </td>
 <td>
-<a href="http://apps.topcoder.com/forums/?module=Thread&threadID=506787&start=0&mc=27#507870" target="_blank">Topcoder discussion about ternary search</a>
+<a href="http://apps.topcoder.com/forums/?module=Thread&amp;threadID=506787&amp;start=0&amp;mc=27#507870">Topcoder discussion about ternary search</a>
 </td>
 </tr>
 </table>

@@ -7,95 +7,62 @@
     <span class='tags'><span class="fa-solid fa-tag"></span><code>#dev</code> <code>#android</code> <code>#post</code></span>
 </p>
 
-<p>
-Como parte de un reporte de proyecto necesito un manual sobre como instalar y configurar el SDK de Java, si bien es cierto que en Internet hay gran cantidad de tutoriales, para mi reporte necesito una fuente confiable, algo de lo que este yo seguro de que funciona, y como dice el dicho, si quieres algo bien hecho hazlo tu mismo. En este tutorial vamos a ver como obtener y configurar el Android SDK en GNU/Linux Debian Wheezy.
-</p>
+<p>Como parte de un reporte de proyecto necesito un manual sobre como instalar y configurar el SDK de Java, si bien es cierto que en Internet hay gran cantidad de tutoriales, para mi reporte necesito una fuente confiable, algo de lo que este yo seguro de que funciona, y como dice el dicho, si quieres algo bien hecho hazlo tu mismo. En este tutorial vamos a ver como obtener y configurar el Android SDK en GNU/Linux Debian Wheezy.</p>
 <h2 id="descargar-el-android-sdk">Descargar el Android SDK</h2>
-<p>
-Ve a la pagina principal para desarrolladores android y en la sección SDK (<a href="https://developer.android.com/sdk/index.html">https://developer.android.com/sdk/index.html</a>) descarga la versión para Linux que corresponda a tu plataforma(32 o 64 bits). Hay dos formas de trabajar con android, con un plugin para Eclipse (ADT Bundle) o desde la línea de comandos (SDK Tools Only), nosotros vamos a emplear ésta última opción pues es ideal para familiarizarse con el SDK.
-</p>
-<p>
-El archivo tiene un nombre parecido a <code>android-sdk_r22.x.x-linux.tgz</code> y pesa aproximadamente 100 MB.
-</p>
+<p>Ve a la pagina principal para desarrolladores android y en la sección SDK (<a href="https://developer.android.com/sdk/index.html">https://developer.android.com/sdk/index.html</a>) descarga la versión para Linux que corresponda a tu plataforma(32 o 64 bits). Hay dos formas de trabajar con android, con un plugin para Eclipse (ADT Bundle) o desde la línea de comandos (SDK Tools Only), nosotros vamos a emplear ésta última opción pues es ideal para familiarizarse con el SDK. El archivo tiene un nombre parecido a <code>android-sdk_r22.x.x-linux.tgz</code> y pesa aproximadamente 100 MB.</p>
 <h2 id="instalación">Instalación</h2>
-<p>
-El archivo que acabamos de descargar contiene los binarios del SDK, por lo que no habra que compilar nada, únicamente descomprimirlo en un directorio adecuado, en nuestro caso lo haremos en el directorio <code>/opt</code>. Como usuario <strong>root</strong> ejecuta los siguientes comandos.
-</p>
+<p>El archivo que acabamos de descargar contiene los binarios del SDK, por lo que no habra que compilar nada, únicamente descomprimirlo en un directorio adecuado, en nuestro caso lo haremos en el directorio <code>/opt</code>. Como usuario <strong>root</strong> ejecuta los siguientes comandos.</p>
 <pre lang="bash" theme="slate">
 mv /home/usuario/descargas/android-sdk_r22.x.x-linux.tgz /opt
 cd /opt
 tar xvf android-sdk_r22.x.x-linux.tgz
 </pre>
-<p>
-El último comando debio crear un direcotorio con el nombre <code>android-sdk-linux</code> dentro del directorio <code>/opt</code>.
-</p>
+<p>El último comando debio crear un direcotorio con el nombre <code>android-sdk-linux</code> dentro del directorio <code>/opt</code>.</p>
 <h2 id="registrar-el-sdk-en-la-variable-de-entorno-path">Registrar el SDK en la variable de entorno PATH</h2>
-<p>
-La variable de entorno PATH es es una variable especial ya que almacena los nombres de los directorios donde el sistema busca los programas instalados, nosotros vamos a registrar el SDK para que cuando ejecutamos algun programa del SDK, el sistema sepa donde encontrarlo. Abrimos el archivo <code>.bashrc</code> ubicado en el directorio home y agregamos la siguiente línea.
-</p>
+<p>La variable de entorno PATH es es una variable especial ya que almacena los nombres de los directorios donde el sistema busca los programas instalados, nosotros vamos a registrar el SDK para que cuando ejecutamos algun programa del SDK, el sistema sepa donde encontrarlo. Abrimos el archivo <code>.bashrc</code> ubicado en el directorio home y agregamos la siguiente línea.</p>
 <pre lang="bash" theme="slate">
 export PATH="${PATH}:/opt/android-sdk-linux/tools:/opt/android-sdk-linux/platform-tools"
 </pre>
 <h2 id="descargar-la-api">Descargar la API</h2>
-<p>
-Una API es una interfaz que proporciona facilidades a los desarrolladores para que puedan crear aplicaciones sin tanto problema puesto que abstrae la complejidad y el desarrollador se concentra más en el <em>qué</em> y no en el <em>cómo</em>. La API de Android es una colección de classes en Java que por defecto no se incluyen el archivo que descargamos y será necesario descargarlas de internet. En la línea de comandos ejecuta el comando <code>android</code>, les aparecerá la siguiente ventana.
-</p>
+<p>Una API es una interfaz que proporciona facilidades a los desarrolladores para que puedan crear aplicaciones sin tanto problema puesto que abstrae la complejidad y el desarrollador se concentra más en el <em>qué</em> y no en el <em>cómo</em>. La API de Android es una colección de classes en Java que por defecto no se incluyen el archivo que descargamos y será necesario descargarlas de internet. En la línea de comandos ejecuta el comando <code>android</code>, les aparecerá la siguiente ventana.</p>
 <figure>
 <img src="/setup-android-sdk/android_sdk_01.png" alt="Administrador del Android SDK" />
 <figcaption aria-hidden="true">Administrador del Android SDK</figcaption>
 </figure>
-<p>
-Nosotros vamos a desarrollar una aplicación para la versión 2.3 de Android (Versión 10 de la API) por lo que selecionaremos esa opción y procederemos a descargar.
-</p>
+<p>Nosotros vamos a desarrollar una aplicación para la versión 2.3 de Android (Versión 10 de la API) por lo que selecionaremos esa opción y procederemos a descargar.</p>
 <h2 id="ant">Ant</h2>
-<p>
-Ant es una herramienta para administrar la compilación de aplicaciones Java, esta no se incluye en el SDK de Android y es necesario que se instale. En la línea de comandos ejecuta el siguiente comando como <strong>root</strong>.
-</p>
+<p>Ant es una herramienta para administrar la compilación de aplicaciones Java, esta no se incluye en el SDK de Android y es necesario que se instale. En la línea de comandos ejecuta el siguiente comando como <strong>root</strong>.</p>
 <pre lang="bash" theme="slate">
 apt-get install ant
 </pre>
 <h2 id="crear-una-máquina-virtual-para-las-pruebas">Crear una máquina virtual para las pruebas</h2>
-<p>
-El SDK de android incluye un emulador quen nos permite desarrollar aplicaciones incluso si no tenemos un dispositivo con sistema operativo Android, o simplemente para no hacer trabajar mucho a tu smartphone. Para utilizar el emulador primero debenos crear un dispositivo virtual. En la línea de comandos ejecuta el comando <code>android avd</code> y nos aparecerá la siguiente ventana.
-</p>
+<p>El SDK de android incluye un emulador quen nos permite desarrollar aplicaciones incluso si no tenemos un dispositivo con sistema operativo Android, o simplemente para no hacer trabajar mucho a tu smartphone. Para utilizar el emulador primero debenos crear un dispositivo virtual. En la línea de comandos ejecuta el comando <code>android avd</code> y nos aparecerá la siguiente ventana.</p>
 <figure>
 <img src="/setup-android-sdk/android_sdk_02.png" alt="Creación de un dispositivo virtual" />
 <figcaption aria-hidden="true">Creación de un dispositivo virtual</figcaption>
 </figure>
-<p>
-Elegimos la opción “New” para crear un dispositivo virtual, en esa ventana proporcionamos el nombre para el dispositivo y utilizamos los valores que se muestran en la imagen.
-</p>
+<p>Elegimos la opción “New” para crear un dispositivo virtual, en esa ventana proporcionamos el nombre para el dispositivo y utilizamos los valores que se muestran en la imagen.</p>
 <figure>
 <img src="/setup-android-sdk/android_sdk_03.png" alt="Creación de un dispositivo virtual" />
 <figcaption aria-hidden="true">Creación de un dispositivo virtual</figcaption>
 </figure>
-<p>
-Para ejecutar el emulador con la imagen recien creada utiliza el siguiente comando en una terminal.
-</p>
+<p>Para ejecutar el emulador con la imagen recien creada utiliza el siguiente comando en una terminal.</p>
 <pre lang="bash" theme="slate">
 emulator @Gingebread2
 </pre>
 <h2 id="configurar-un-dispositivo-real">Configurar un dispositivo real</h2>
-<p>
-Al final de cuentas lo que pretendemos es ejecutar nuestras aplicaciones en un dispositivo de verdad, para ello es necesario realizar algunas configuraciones para que el sistema operativo reconozca nuestro dispositivo. Como usuario root vamos a crear un archivo llamado <code>51-android.rules</code> dentro del directorio <code>/etc/udev/rules.d/</code> con el siguiente contenido.
-</p>
+<p>Al final de cuentas lo que pretendemos es ejecutar nuestras aplicaciones en un dispositivo de verdad, para ello es necesario realizar algunas configuraciones para que el sistema operativo reconozca nuestro dispositivo. Como usuario root vamos a crear un archivo llamado <code>51-android.rules</code> dentro del directorio <code>/etc/udev/rules.d/</code> con el siguiente contenido.</p>
 <pre lang="bash" theme="slate">
 SUBSYSTEM=="usb", ATTR{idVendor}=="0bb4", MODE="0666", GROUP="plugdev"
 </pre>
-<p>
-El id <strong>0bb4</strong> corresponde a los dispositivos HTC. Vease la documentación oficial en <a href="https://developer.android.com/tools/device.html">https://developer.android.com/tools/device.html</a> para saber el id de otros dispositivos y más información sobre este tema.
-</p>
+<p>El id <strong>0bb4</strong> corresponde a los dispositivos HTC. Vease la documentación oficial en <a href="https://developer.android.com/tools/device.html">https://developer.android.com/tools/device.html</a> para saber el id de otros dispositivos y más información sobre este tema.</p>
 <h2 id="verificación">Verificación</h2>
-<p>
-Solo resta verificar si todo esta correcto. Para ello vamos a crear un proyecto “¡Hola mundo!”. Dentro de una terminal posicionate en tu directorio home y ejecuta los siguiente comandos.
-</p>
+<p>Solo resta verificar si todo esta correcto. Para ello vamos a crear un proyecto “¡Hola mundo!”. Dentro de una terminal posicionate en tu directorio home y ejecuta los siguiente comandos.</p>
 <pre lang="bash" theme="slate">
 mkdir HolaMundo
 android create project --target android-10 -n HolaMundo -a HolaMundo -k com.inforscience.test -p ./HolaMundo
 </pre>
-<p>
-El significado de los parametros del comando anterior es el siguiente:
-</p>
+<p>El significado de los parametros del comando anterior es el siguiente:</p>
 <ul>
 <li>
 <code>--target</code> Para qué versión de Android será la aplicación, en nuestro caso es Android 2.3, <code>target-10</code> porque es la versión 10 de API.
@@ -113,22 +80,16 @@ El significado de los parametros del comando anterior es el siguiente:
 <code>-p</code> Folder del proyecto.
 </li>
 </ul>
-<p>
-Para compilar e instalar la aplicación de prueba ejecuta los siguientes comandos.
-</p>
+<p>Para compilar e instalar la aplicación de prueba ejecuta los siguientes comandos.</p>
 <pre lang="bash" theme="slate">
 cd HolaMundo
 ant debug
 ant debug install
 </pre>
-<p>
-El último comando buscará algún dispositivo Android conectado al sistema o una máquina virtual activa e instalará el programa ahí.
-</p>
+<p>El último comando buscará algún dispositivo Android conectado al sistema o una máquina virtual activa e instalará el programa ahí.</p>
 <figure>
 <img src="/setup-android-sdk/android_sdk_04.png" alt="Aplicación HolaMundo corriendo en el emulador Android" />
 <figcaption aria-hidden="true">Aplicación HolaMundo corriendo en el emulador Android</figcaption>
 </figure>
-<p>
-Ahora estamos listos para empezar a desarrollar para Android. ¡Suerte!
-</p>
+<p>Ahora estamos listos para empezar a desarrollar para Android. ¡Suerte!</p>
 

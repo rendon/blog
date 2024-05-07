@@ -3,48 +3,48 @@
 # ProjectEuler - Problema 2
 2016-02-18 2024-05-07 #algorithms #data-structures #post
 
-<p>La sucesión de fibonacci es muy famosa y es común encontrarla en problemas de concursos de programación. Un problema clásico para ejemplificar la <a href="/?p=35" target="_blank">recursión</a> y uno de los problemas más sencillos para demostrar el poder de la <em>programación dinámica</em>. El inventor de dicha secuencia fue el matemático italiano <a href="http://en.wikipedia.org/wiki/Fibonacci">Leonardo de pisa</a> y se define de la siguiente forma.</p>
+La sucesión de fibonacci es muy famosa y es común encontrarla en problemas de concursos de programación. Un problema clásico para ejemplificar la [recursión](/?p=35) y uno de los problemas más sencillos para demostrar el poder de la *programación dinámica*. El inventor de dicha secuencia fue el matemático italiano [Leonardo de pisa](http://en.wikipedia.org/wiki/Fibonacci) y se define de la siguiente forma.
 
 $ \large f(n) =  \begin{cases} 0 & \text{si n = 0} \\ 1 & \text{si n = 1} \\\\ f(n - 1) + f(n - 2) & \text{si n > 1} \end{cases} $
 
-<p>Existe mucha información al respecto, la cual recomiendo explorar si desean ampliar su conocimiento a cerca de esta función.</p>
+Existe mucha información al respecto, la cual recomiendo explorar si desean ampliar su conocimiento a cerca de esta función.
 
 ## Problema
 <blockquote>
-  <p>Cada término en la sucesión de Fibonacci se obtiene al sumar los dos términos anteriores. Empezando con 1 y 2, los primeros 10 términos serían:</p>
+  Cada término en la sucesión de Fibonacci se obtiene al sumar los dos términos anteriores. Empezando con 1 y 2, los primeros 10 términos serían:
 <br><br>
     1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...
 <br><br>
-<p>Considerando los términos en la sucesión de Fibonacci cuyos valores no exceden los cuatro millones, encuentre la suma de los términos que son pares.</p>
+Considerando los términos en la sucesión de Fibonacci cuyos valores no exceden los cuatro millones, encuentre la suma de los términos que son pares.
 </blockquote>
 
-<p>Versión original: <a href="http://projecteuler.net/index.php?section=problems&id=2">Problem 2</a></p>
+Versión original: [Problem 2](http://projecteuler.net/index.php?section=problems&id=2)
 
 ## Análisis
 
-<p>Identificamos bien que es lo que se nos esta pidiendo. Se pide generar cierta cantidad de términos de la sucesión de Fibonacci empezando con 1 y 2 y terminar cuando encontremos un término que exceda los cuatro millones, el cual no deberá ser tomado en cuenta. De estos términos debemos tomar aquellos que son pares y sumarlos, la suma es el valor que estamos buscando.</p>
+Identificamos bien que es lo que se nos esta pidiendo. Se pide generar cierta cantidad de términos de la sucesión de Fibonacci empezando con 1 y 2 y terminar cuando encontremos un término que exceda los cuatro millones, el cual no deberá ser tomado en cuenta. De estos términos debemos tomar aquellos que son pares y sumarlos, la suma es el valor que estamos buscando.
 
-<p>Generar términos de la sucesión de Fibonacci no representa ninguna complicación por lo que pasamos directamente a la implementación de la solución.</p>
+Generar términos de la sucesión de Fibonacci no representa ninguna complicación por lo que pasamos directamente a la implementación de la solución.
 
 
 ## Solución
 
-<p>A pesar de que la sucesión de Fibonacci es recursiva por naturaleza es bien sabido que la implementación iterativa es por mucho más eficiente que su correspondiente recursiva. A continuación mi implementación.</p>
+A pesar de que la sucesión de Fibonacci es recursiva por naturaleza es bien sabido que la implementación iterativa es por mucho más eficiente que su correspondiente recursiva. A continuación mi implementación.
 
 Embed: `sol.c`
 
 
 ## Conclusión
-<p>Hay mucho de que hablar de la sucesión de Fibonacci, mucho se ha escrito sobre ella y no estaría mal si investigan por su cuenta. Pueden empezar por implementar la versión recursiva. Hasta la próxima.</p>
+Hay mucho de que hablar de la sucesión de Fibonacci, mucho se ha escrito sobre ella y no estaría mal si investigan por su cuenta. Pueden empezar por implementar la versión recursiva. Hasta la próxima.
 
 ## Referencias
 
 <table border="0">
     <tr>
-        <td>[1]</td><td><a href="http://en.wikipedia.org/wiki/Fibonacci_number" target="_blank">http://en.wikipedia.org/wiki/Fibonacci_number</a></td>
+        <td>[1]</td><td>[http://en.wikipedia.org/wiki/Fibonacci_number](http://en.wikipedia.org/wiki/Fibonacci_number)</td>
     </tr>
     <tr>
-        <td>[2]</td><td><a href="http://projecteuler.net" target="_blank">http://projecteuler.net</a></td>
+        <td>[2]</td><td>[http://projecteuler.net](http://projecteuler.net)</td>
     </tr>
 </table>
 

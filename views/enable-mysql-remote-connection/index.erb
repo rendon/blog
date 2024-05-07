@@ -6,41 +6,20 @@
     <span class='tags'><span class="fa-solid fa-tag"></span><code>#sysadmin</code> <code>#post</code></span>
 </p>
 
-<p>
-In this post I’ll show you how to allow remote connections to MySQL server, just in case, my distro is Debian GNU/Linux. I am assuming that MySQL server and MySQL client are already installed in the server and client side respectively.
-</p>
-<p>
-Enabling remote connections has several security issues and you should think about it before you proceed.
-</p>
+<p>In this post I’ll show you how to allow remote connections to MySQL server, just in case, my distro is Debian GNU/Linux. I am assuming that MySQL server and MySQL client are already installed in the server and client side respectively.</p>
+<p>Enabling remote connections has several security issues and you should think about it before you proceed.</p>
 <h2 id="step-1-accept-tcpip-connections-from-any-host">Step 1: Accept TCP/IP connections from any host</h2>
-<p>
-Open the MySQL configuration file(<code>/etc/mysql/my.cnf</code>) and set the <code>bind-address</code> option to <code>0.0.0.0</code>.
-</p>
+<p>Open the MySQL configuration file(<code>/etc/mysql/my.cnf</code>) and set the <code>bind-address</code> option to <code>0.0.0.0</code>.</p>
 <p>Embed: <code>my.cnf</code></p>
-<p>
-By default only local connections are allowed. <a href="http://dev.mysql.com/doc/refman/5.1/en/server-options.html#option_mysqld_bind-address" target="_blank">see more…</a>.
-</p>
+<p>By default only local connections are allowed. <a href="http://dev.mysql.com/doc/refman/5.1/en/server-options.html#option_mysqld_bind-address">see more…</a>.</p>
 <h2 id="step-2-allow-root-user-to-log-on-from-any-host">Step 2: Allow root user to log on from any host</h2>
-<p>
-Start a session as root in the server, select the mysql database and see the users who can log on in this server and from which hosts.
-</p>
+<p>Start a session as root in the server, select the mysql database and see the users who can log on in this server and from which hosts.</p>
 <p>Embed: <code>allow-root.sh</code></p>
-<p>
-My hostname is intel and default user is root, to allow connections from any host we need to set the hostname to <code>%</code>.
-</p>
+<p>My hostname is intel and default user is root, to allow connections from any host we need to set the hostname to <code>%</code>.</p>
 <p>Embed: <code>allow-root-cmd.sql</code></p>
-<p>
-Restart MySQL server and try a remote connection.
-</p>
+<p>Restart MySQL server and try a remote connection.</p>
 <h2 id="cant-connect-yet">Can’t connect yet?</h2>
-<p>
-If remote connection is getting refused, the problem might be your firewall, Debian by default allows all traffic and so I don’t need to add any rule to my firewall, to allow traffic to MySQL execute the following command.
-</p>
+<p>If remote connection is getting refused, the problem might be your firewall, Debian by default allows all traffic and so I don’t need to add any rule to my firewall, to allow traffic to MySQL execute the following command.</p>
 <p>Embed: <code>allow-traffic.sh</code></p>
-<p>
-Use your firewall to <a href="http://www.cyberciti.biz/faq/unix-linux-mysqld-server-bind-to-more-than-one-ip-address/" target="_blank">allow remote connection only to specific hosts</a>.
-</p>
-<p>
-That is all, see you in next post.
-</p>
+<p>Use your firewall to <a href="http://www.cyberciti.biz/faq/unix-linux-mysqld-server-bind-to-more-than-one-ip-address/">allow remote connection only to specific hosts</a>. That is all, see you in next post.</p>
 

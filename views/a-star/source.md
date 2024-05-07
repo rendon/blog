@@ -1,12 +1,12 @@
 # A* search algorithm
 2016-02-18 2024-05-06 #algorithms #data-structures #post
 
-I've been trying to implement the <a href="http://en.wikipedia.org/wiki/A*_search_algorithm" target="_blank">A*</a> algorithm and solve at least one problem with it, however, almost all sources of information are abstract and give only high level details, but I've got it!
+I've been trying to implement the [A*](http://en.wikipedia.org/wiki/A*_search_algorithm) algorithm and solve at least one problem with it, however, almost all sources of information are abstract and give only high level details, but I've got it!
 
-I don't have much time so I'm just going to leave a problem and a working solution that implements the A* algorithm. For the theory you can count on <a href="http://en.wikipedia.org/wiki/A*_search_algorithm" target="_blank">Wikipedia</a>.
+I don't have much time so I'm just going to leave a problem and a working solution that implements the A* algorithm. For the theory you can count on [Wikipedia](http://en.wikipedia.org/wiki/A*_search_algorithm).
 
 ## Problem
-<a href="http://lightoj.com/volume_showproblem.php?problem=1139" target="_blank">1139 - 8 Puzzle</a>
+[1139 - 8 Puzzle](http://lightoj.com/volume_showproblem.php?problem=1139)
 
 ## Solution
 Here's the full code:

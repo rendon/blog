@@ -5,21 +5,21 @@ I took part in Codeforces 174 Division II and here are my solutions for some of 
 
 ## A. Cows and primitive roots
 
-<a href="http://www.codeforces.com/contest/284/problem/A" title="Cows and primitive roots">Problem description</a>.
+[Cows and primitive roots](http://www.codeforces.com/contest/284/problem/A).
 
 ### Solution:
 
 #### Complicated version:
 
-<p>Stick to the problem definition and make the tests, we need a modpow function. Complexity: $O(n^2)$.</p>
+Stick to the problem definition and make the tests, we need a modpow function. Complexity: $O(n^2)$.
 
 Embed: `a.cpp`
 
-<p>This problem took me about an hour, I am out of practice, I didn't remember well how to implement the modpow function and I wanted to do it by myself.</p>
+This problem took me about an hour, I am out of practice, I didn't remember well how to implement the modpow function and I wanted to do it by myself.
 
 #### Simplified version:
 
-<p>I found this formula in <a href="http://en.wikipedia.org/wiki/Primitive_root_modulo_n#Finding_primitive_roots" title="Primitive roots">wikipedia</a>:</p>
+I found this formula in [Primitive roots](http://en.wikipedia.org/wiki/Primitive_root_modulo_n#Finding_primitive_roots):
 
 <blockquote>
 The number of primitive roots modulo n, if there are any, is equal to
@@ -32,36 +32,36 @@ Embed: `a-simple.cpp`
 
 ## B. Cows and Poker Game
 
-<a href="http://www.codeforces.com/contest/284/problem/B" title="Cows and Poker Game">Problem description</a>.
+[Cows and Poker Game](http://www.codeforces.com/contest/284/problem/B).
 
 ### Solution:
 
-<p>Count the occurrences of 'F's and 'A's. If the occurrences of 'I' is 0 the answer is the number of occurences of 'A's, if the occurrences of 'I' is exactly 1 the answer is 1, in other case the answer is 0. This is the solution that I sent during the contest. Complexity: $O(n)$.</p>
+Count the occurrences of 'F's and 'A's. If the occurrences of 'I' is 0 the answer is the number of occurences of 'A's, if the occurrences of 'I' is exactly 1 the answer is 1, in other case the answer is 0. This is the solution that I sent during the contest. Complexity: $O(n)$.
 
 Embed: `b.cpp`
 
 ## C. Cows and Sequence
 
-<a href="http://www.codeforces.com/contest/284/problem/C" title="Cows and Sequence">Problem description</a>.
+[Cows and Sequence](http://www.codeforces.com/contest/284/problem/C).
 
 ### Solution:
 
-<p>I wasn't able to solve this problem during the contest, the idea described here is from the editorial and my implementation is based on <a href="http://www.codeforces.com/profile/Efremov_licesos" target="_blank">Efremov_licesos</a>'s solution.</p>
+I wasn't able to solve this problem during the contest, the idea described here is from the editorial and my implementation is based on [Efremov_licesos](http://www.codeforces.com/profile/Efremov_licesos)'s solution.
 
-<p>**Q**: If the solution is described in the editorial Why to write about it again? </p>
+**Q**: If the solution is described in the editorial Why to write about it again? 
 
-<p>**A**: Because sometimes the solutions described in the editorials are very abstract and it's almost always hard to understand other contestants' solutions(many contestants are very intelligent but their code is cryptic and ugly ...no offense).</p>
+**A**: Because sometimes the solutions described in the editorials are very abstract and it's almost always hard to understand other contestants' solutions(many contestants are very intelligent but their code is cryptic and ugly ...no offense).
 
-<p>If the operations were only 1 and 2 you can solve the problem keeping the sum of the additions to existing elements or new elements. The hard part is operation 3, How to know what is the value of the last element after some aditions? The idea is to use two arrays, an array B to store the new values($k_i$), and an array A to store the additions(operation 1). A picture is worth a thousand words.</p>
+If the operations were only 1 and 2 you can solve the problem keeping the sum of the additions to existing elements or new elements. The hard part is operation 3, How to know what is the value of the last element after some aditions? The idea is to use two arrays, an array B to store the new values($k_i$), and an array A to store the additions(operation 1). A picture is worth a thousand words.
 
 ![](/cf-174/cf174d2_c_0.png)
 
-<p>The value of the last element is `(A[n] * n) - (A[n] * (n-1)) + B[n]`, or graphically.</p>
+The value of the last element is `(A[n] * n) - (A[n] * (n-1)) + B[n]`, or graphically.
 
 ![](/cf-174/cf174d2_c_1.png)
 
-<p>I hope with this the code be more understandable.</p>
-<p>Complexity: $O(n)$.</p>
+I hope with this the code be more understandable.
+Complexity: $O(n)$.
 
 Embed: `c.cpp`
 

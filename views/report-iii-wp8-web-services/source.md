@@ -3,29 +3,29 @@
 # Reporte III: Windows Phone 8 & Web services
 2016-02-24 2024-05-06 #dev #web-services #post
 
-<p>Tengo que decir que no soy un usuario Windows, pero en esta situación no tuve elección.</p>
+Tengo que decir que no soy un usuario Windows, pero en esta situación no tuve elección.
 
-<p>Este reporte corresponde al proyecto número 3 de la asignatura Desarrollo de Aplicaciones para Tecnologías Móviles.</p>
+Este reporte corresponde al proyecto número 3 de la asignatura Desarrollo de Aplicaciones para Tecnologías Móviles.
 
 ## Definición del problema
 
-<p>Este proyecto consiste en lo siguiente:</p>
+Este proyecto consiste en lo siguiente:
 
 <blockquote>Desarrollar un Web service (en el lenguaje que más les agrade) capaz de manipular una base de datos a petición del cliente, en este caso, el cliente será una aplicación móvil para la plataforma Windows Phone 8.</blockquote>
 
 ## Definiciones
 
-<p>Como este reporte forma parte de una serie de reportes, vamos a omitir la teoría sobre Web services puesto que ya se abordo en el reporte número [II](/report-ii-microoj-web-services).</p>
+Como este reporte forma parte de una serie de reportes, vamos a omitir la teoría sobre Web services puesto que ya se abordo en el reporte número [II](/report-ii-microoj-web-services).
 
 ## Propuesta de solución
 
-<p>Nuevamente, el problema nos da la flexibilidad de elegir que problema modelar, la propuesta es la siguiente:</p>
+Nuevamente, el problema nos da la flexibilidad de elegir que problema modelar, la propuesta es la siguiente:
 
 </blockquote>Desarrollar una aplicación móvil para el control requisiciones, similar a los dispositivos que utilizan los agentes de venta cuando salen a levantar pedidos.</blockquote>
 
 ### El cliente
 
-<p>La aplicación móvil deberá cumplir con los siguientes requisitos:</p>
+La aplicación móvil deberá cumplir con los siguientes requisitos:
 
 <ul>
   <li>La aplicación permitirá registrar clientes a la base de datos.</li>
@@ -38,9 +38,9 @@
 
 ### El servidor
 
-<p>Un Web service desarrollado en PHP que manipula una base de datos MySQL.</p>
+Un Web service desarrollado en PHP que manipula una base de datos MySQL.
 
-<p>A continuación la lista de servicios que vamos desarrollar:</p>
+A continuación la lista de servicios que vamos desarrollar:
 
 <ul>
   <li>**Synchronize(clients[], requests[], details[])** Recibe los datos de la aplicación móvil y realiza la sincronización.</li>
@@ -51,27 +51,27 @@
 
 ## Requisitos
 
-<p>Para poder realizar esta práctica se necesita lo siguiente:</p>
+Para poder realizar esta práctica se necesita lo siguiente:
 
 <ul>
-  <li>Un servidor WAMP (Windows + Apache + MySQL + PHP), <a href="http://www.wampserver.com/en/">http://www.wampserver.com/en/</a>.</li>
+  <li>Un servidor WAMP (Windows + Apache + MySQL + PHP), [http://www.wampserver.com/en/](http://www.wampserver.com/en/).</li>
   <li>Visual Studio 2012 Professional</li>
-  <li>Windows Phone 8 SDK (<a href="http://dev.windowsphone.com/en-us/downloadsdk">http://dev.windowsphone.com/en-us/downloadsdk</a>)</li>
+  <li>Windows Phone 8 SDK ([http://dev.windowsphone.com/en-us/downloadsdk](http://dev.windowsphone.com/en-us/downloadsdk))</li>
 </ul>
 
-<p>Considero que es algo básico y no hay necesidad de explicar como instalar estas herramientas. Si es el caso, quizás aun no es el momento para seguir esta práctica.</p>
+Considero que es algo básico y no hay necesidad de explicar como instalar estas herramientas. Si es el caso, quizás aun no es el momento para seguir esta práctica.
 
 ## Desarrollo del servidor
 
-<p>En el reporte anterior ya vimos como crear y registrar servicios en PHP usando NuSOAP, por ello vamos a mostrar únicamente lo esencial.</p>
+En el reporte anterior ya vimos como crear y registrar servicios en PHP usando NuSOAP, por ello vamos a mostrar únicamente lo esencial.
 
 ### El modelo de datos
 
-<p>Nuestra base de datos consiste de 3 tablas, Cliente, Pedido y Detalle.</p>
+Nuestra base de datos consiste de 3 tablas, Cliente, Pedido y Detalle.
 
 ![El modelo de datos](/report-iii-wp8-web-services/ws_wp8_01.png)
 
-<p>**NOTA:** Con el código fuente incluyo el modelo de la base de datos, fue diseñado utilizando MySQL Workbench y por lo tanto podrán exportar la base de datos desde ahí.</p>
+**NOTA:** Con el código fuente incluyo el modelo de la base de datos, fue diseñado utilizando MySQL Workbench y por lo tanto podrán exportar la base de datos desde ahí.
 
 ### Synchronize
 
@@ -159,9 +159,9 @@ function Synchronize($ClientItems, $RequestItems, $DetailItems)
     return count($clients) + count($requests) + count($details);
 }
 </pre>
-<p>Los argumentos de esta función son arreglos. Algo curioso que me encontré es que estos arreglos deben tener más de un elemento para que PHP los reconozca como tal, por ello, lo primero que hacemos es convertir la entrada a un formato conveniente.</p>
+Los argumentos de esta función son arreglos. Algo curioso que me encontré es que estos arreglos deben tener más de un elemento para que PHP los reconozca como tal, por ello, lo primero que hacemos es convertir la entrada a un formato conveniente.
 
-<p>Lo que sigue es realizar la sincronización. Esta parte me resulto interesante y al parecer es un tema complicado. Mi algoritmo es muy sencillo y no esta optimizado, pero funciona (más me vale :) ).</p>
+Lo que sigue es realizar la sincronización. Esta parte me resulto interesante y al parecer es un tema complicado. Mi algoritmo es muy sencillo y no esta optimizado, pero funciona (más me vale :) ).
 
 <ul>
     <li>1 Para cada cliente que en la lista que recibimos, verificamos si ya existe en la base de datos:
@@ -176,9 +176,9 @@ function Synchronize($ClientItems, $RequestItems, $DetailItems)
     </li>
 </ul>
 
-<p>Nuestra aplicación móvil no permite modificar detalles de los pedidos, por lo tanto, en el algoritmos anterior no necesitamos verificar hasta los detalles.</p>
+Nuestra aplicación móvil no permite modificar detalles de los pedidos, por lo tanto, en el algoritmos anterior no necesitamos verificar hasta los detalles.
 
-<p>El servicio se registra de la siguiente manera:</p>
+El servicio se registra de la siguiente manera:
 
 <pre lang="php">
 $server->register('Synchronize',
@@ -197,7 +197,7 @@ $server->register('Synchronize',
 
 ### GetAllClients
 
-<p>Después de que la aplicación móvil manda los datos al servidor para la sincronización, ésta borra su base de datos y la vuelve a construir pero ahora con los datos del servidor. Quizás no lo más adecuado pero si lo más fácil.</p>
+Después de que la aplicación móvil manda los datos al servidor para la sincronización, ésta borra su base de datos y la vuelve a construir pero ahora con los datos del servidor. Quizás no lo más adecuado pero si lo más fácil.
 
 <pre lang="php">
 function GetAllClients()
@@ -226,7 +226,7 @@ function GetAllClients()
 }
 </pre>
 
-<p>El servicio se registra de la siguiente manera:</p>
+El servicio se registra de la siguiente manera:
 
 <pre lang="php">
 $server->register('GetAllClients',
@@ -242,7 +242,7 @@ $server->register('GetAllClients',
 
 ### GetAllRequests
 
-<p>El código para este servicio es el siguiente:</p>
+El código para este servicio es el siguiente:
 
 <pre lang="php">
 function GetAllRequests()
@@ -269,7 +269,7 @@ function GetAllRequests()
 }
 </pre>
 
-<p>Y el registro del servicio es el siguiente:</p>
+Y el registro del servicio es el siguiente:
 
 <pre lang="php">
 $server->register('GetAllRequests',
@@ -285,7 +285,7 @@ $server->register('GetAllRequests',
 
 ### GetAllDetails
 
-<p>El código es similar a los dos anteriores:</p>
+El código es similar a los dos anteriores:
 
 <pre lang="php">
 function GetAllDetails()
@@ -314,7 +314,7 @@ function GetAllDetails()
 }
 </pre>
 
-<p>Y su respectivo registro:</p>
+Y su respectivo registro:
 
 <pre lang="php">
 $server->register('GetAllDetails',
@@ -328,13 +328,13 @@ $server->register('GetAllDetails',
 );
 </pre>
 
-<p>Al final se proporciona el código fuente completo.</p>
+Al final se proporciona el código fuente completo.
 
 ## La base de datos local
 
-<p>Puesto que nuestra aplicación cliente deberá funcionar también en modo _offline_, debe existir una réplica del modelo de datos en el cliente. Para ello vamos a utilizar lo que se conoce como **LINQ to SQL**, una tecnología que permite trabajar con tablas en forma de clases.</p>
+Puesto que nuestra aplicación cliente deberá funcionar también en modo _offline_, debe existir una réplica del modelo de datos en el cliente. Para ello vamos a utilizar lo que se conoce como **LINQ to SQL**, una tecnología que permite trabajar con tablas en forma de clases.
 
-<p>Las clases que representan a la base de datos local son las siguientes:</p>
+Las clases que representan a la base de datos local son las siguientes:
 
 <ul>
   <li>**Client** Representa a la tabla Cliente (o sea, obvio :) )</li>
@@ -343,11 +343,11 @@ $server->register('GetAllDetails',
   <li>**Key** Tabla auxiliar para almacenar las claves primarias de las tablas restantes.</li>
 </ul>
 
-<p>Las claves primarias de la base de datos del servidor son de tipo _autoincrement_, sin embargo, para poder realizar la sincronización fue necesario hacer algunos ajustes, digamos que las claves primarias de la base de datos local **no son** autoincrement, por ello la necesida de la tabla _Key_.</p>
+Las claves primarias de la base de datos del servidor son de tipo _autoincrement_, sin embargo, para poder realizar la sincronización fue necesario hacer algunos ajustes, digamos que las claves primarias de la base de datos local **no son** autoincrement, por ello la necesida de la tabla _Key_.
 
-<p>El código de las clases es simple, aunque algo extenso. Por ello no lo vamos a listar aquí.</p>
+El código de las clases es simple, aunque algo extenso. Por ello no lo vamos a listar aquí.
 
-<p>Para construir la base de datos a partir de las clases vamos a utilizar la clase `DataContext`. El siguiente código arma la base de datos:</p>
+Para construir la base de datos a partir de las clases vamos a utilizar la clase `DataContext`. El siguiente código arma la base de datos:
 
 <pre lang="csharp">
     public class RequisitionDataContext : DataContext
@@ -365,7 +365,7 @@ $server->register('GetAllDetails',
     }
 </pre>
 
-<p>La estructura de la base de datos ya esta, pero aun no ha sido creada, eso lo realizaremos en el momento que la aplicación inicie su ejecución. En el archivo _App.xaml.cs_, al final del constructor pegamos el siguiente código:</p>
+La estructura de la base de datos ya esta, pero aun no ha sido creada, eso lo realizaremos en el momento que la aplicación inicie su ejecución. En el archivo _App.xaml.cs_, al final del constructor pegamos el siguiente código:
 
 <pre lang="csharp">
 string cs = RequisitionDataContext.DBConnectionString;
@@ -380,38 +380,38 @@ using(RequisitionDataContext db = new RequisitionDataContext(cs))
 }
 </pre>
 
-<p>Creamos la base de datos solo en caso de que no haya sido creada aún.</p>
+Creamos la base de datos solo en caso de que no haya sido creada aún.
 
-<p>El resto de las operaciones se describirán en la siguiente sección.</p>
+El resto de las operaciones se describirán en la siguiente sección.
 
 ## Desarrollo del cliente
 
-<p>En este apartado vamos a ver a grandes rasgos cómo esta compuesta nuestra aplicación móvil.</p>
+En este apartado vamos a ver a grandes rasgos cómo esta compuesta nuestra aplicación móvil.
 
 ### Creación del proyecto
 
-<p>Bien, lo primero es crear el proyecto: File -> New Project -> C# -> Windows Phone 8.</p>
+Bien, lo primero es crear el proyecto: File -> New Project -> C# -> Windows Phone 8.
 
-<p>A continuación se muestra como debe lucir la estructura del proyecto (en la imagen se muestra la estructura final):</p>
+A continuación se muestra como debe lucir la estructura del proyecto (en la imagen se muestra la estructura final):
 
 ![Nuestro proyecto en el Explorador de soluciones](/report-iii-wp8-web-services/ws_wp8_02.png)
 
-<p>Mi intención era emplear el patrón de diseño MVVM pero al parecer termine implementando la lógica en la parte del View. Será para la próxima.</p>
+Mi intención era emplear el patrón de diseño MVVM pero al parecer termine implementando la lógica en la parte del View. Será para la próxima.
 
 ### Conexión al Web service
 
-<p>Visual Studio tiene la opción de generar el código fuente necesario para comunicarnos con un Web service, vamos al explorador de soluciones, click derecho sobre nuestro proyecto, elegimos la opción "Add service reference", nos aparecerá la siguiente ventana:</p>
+Visual Studio tiene la opción de generar el código fuente necesario para comunicarnos con un Web service, vamos al explorador de soluciones, click derecho sobre nuestro proyecto, elegimos la opción "Add service reference", nos aparecerá la siguiente ventana:
 
 ![Conexión al Web service](/report-iii-wp8-web-services/ws_wp8_03.png)
 
 
 ### La pagina principal
 
-<p>La siguiente imagen muestra la pagina principal de la aplicación:</p>
+La siguiente imagen muestra la pagina principal de la aplicación:
 
 ![Pagina principal](/report-iii-wp8-web-services/ws_wp8_04.png)
 
-<p>El diseño correspondiente en XAML (archivo _MainPage.xaml_):</p>
+El diseño correspondiente en XAML (archivo _MainPage.xaml_):
 
 <pre lang="xml">
 <!--LayoutRoot is the root grid where all page content is placed-->
@@ -492,11 +492,11 @@ using(RequisitionDataContext db = new RequisitionDataContext(cs))
 
 ### Alta de clientes
 
-<p>La siguiente imagen muestra la interfaz para dar de alta a los clientes.</p>
+La siguiente imagen muestra la interfaz para dar de alta a los clientes.
 
 ![Alta de clientes](/report-iii-wp8-web-services/ws_wp8_05.png)
 
-<p>El diseño correspondiente en XAML (archivo _View/AddClientView.xaml_):</p>
+El diseño correspondiente en XAML (archivo _View/AddClientView.xaml_):
 
 <pre lang="xml">
 <!--LayoutRoot is the root grid where all page content is placed-->
@@ -584,7 +584,7 @@ using(RequisitionDataContext db = new RequisitionDataContext(cs))
 </Grid>
 </pre>
 
-<p>El código que se encarga de crear el nuevo cliente es el siguiente:</p>
+El código que se encarga de crear el nuevo cliente es el siguiente:
 
 <pre lang="csharp">
 private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -636,11 +636,11 @@ private void Button_Click_1(object sender, RoutedEventArgs e)
 
 ### Consulta de Clientes
 
-<p>La siguiente imagen muestra la interfaz para la consulta de clientes.</p>
+La siguiente imagen muestra la interfaz para la consulta de clientes.
 
 ![Consulta de clientes](/report-iii-wp8-web-services/ws_wp8_06.png)
 
-<p>El diseño correspondiente en XAML (archivo _View/QueryClientView.xaml_):</p>
+El diseño correspondiente en XAML (archivo _View/QueryClientView.xaml_):
 
 <pre lang="xml">
 <!--LayoutRoot is the root grid where all page content is placed-->
@@ -731,7 +731,7 @@ private void Button_Click_1(object sender, RoutedEventArgs e)
 </Grid>
 </pre>
 
-<p>Los datos que se muestran en la consulta son cargados de la base de datos en el momento que accedemos a la página:</p>
+Los datos que se muestran en la consulta son cargados de la base de datos en el momento que accedemos a la página:
 
 <pre lang="csharp">
 protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -753,15 +753,15 @@ protected override void OnNavigatedTo(NavigationEventArgs e)
 }
 </pre>
 
-<p>Los elementos la interfaz están enlazados (Data binding) a los elementos de la colección _ClientItems_.</p>
+Los elementos la interfaz están enlazados (Data binding) a los elementos de la colección _ClientItems_.
 
 ### Registro de pedidos
 
-<p>La siguiente imagen muestra la interfaz para el registro de pedidos:</p>
+La siguiente imagen muestra la interfaz para el registro de pedidos:
 
 ![Consulta de clientes](/report-iii-wp8-web-services/ws_wp8_07.png)
 
-<p>El diseño correspondiente en XAML (archivo _View/ShopView.xaml_):</p>
+El diseño correspondiente en XAML (archivo _View/ShopView.xaml_):
 
 <pre lang="xml">
 <!--LayoutRoot is the root grid where all page content is placed-->
@@ -840,7 +840,7 @@ protected override void OnNavigatedTo(NavigationEventArgs e)
 </Grid>
 </pre>
 
-<p>El código que se encarga de almacenar los pedidos es el siguiente:</p>
+El código que se encarga de almacenar los pedidos es el siguiente:
 
 <pre lang="csharp">
 private void saveRequisitionButton_Click_1(object sender, RoutedEventArgs e)
@@ -945,11 +945,11 @@ private void saveRequisitionButton_Click_1(object sender, RoutedEventArgs e)
 
 ### Consulta de pedidos
 
-<p>La siguiente imagen muestra la interfaz para la consulta de pedidos:</p>
+La siguiente imagen muestra la interfaz para la consulta de pedidos:
 
 ![Consulta de pedidos](/report-iii-wp8-web-services/ws_wp8_08.png)
 
-<p>El diseño correspondiente en XAML (archivo _View/QueryShopView.xaml_):</p>
+El diseño correspondiente en XAML (archivo _View/QueryShopView.xaml_):
 
 <pre lang="xml">
 <!--LayoutRoot is the root grid where all page content is placed-->
@@ -1051,7 +1051,7 @@ private void saveRequisitionButton_Click_1(object sender, RoutedEventArgs e)
 </Grid>
 </pre>
 
-<p>La lógica detras de esta operación se muestra en el siguiente listado:</p>
+La lógica detras de esta operación se muestra en el siguiente listado:
 
 <pre lang="csharp">
 protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -1138,9 +1138,9 @@ private ObservableCollection<RequestReport> processReports(MyWebService.RequestD
 
 ### La sincronización con el servidor
 
-<p>Esta operación consiste de varios métodos, en parte porque la comunicación con el Web service se realiza de manera asíncrona, vemos el código y después explicamos lo que sea necesario. </p>
+Esta operación consiste de varios métodos, en parte porque la comunicación con el Web service se realiza de manera asíncrona, vemos el código y después explicamos lo que sea necesario. 
 
-<p>En el constructor damos de alta los métodos que se encargarán de tratar con las respuestas del Web service.</p>
+En el constructor damos de alta los métodos que se encargarán de tratar con las respuestas del Web service.
 <pre lang="csharp">
 private MyWebService.RequestPortTypeClient ws;
 // Constructor
@@ -1156,7 +1156,7 @@ public MainPage()
 }
 </pre>
 
-<p>Y ahora sí la sincronización: </p>
+Y ahora sí la sincronización: 
 
 <pre lang="csharp">
 private void syncOperation_Click_1(object sender, EventArgs e)
@@ -1331,7 +1331,7 @@ void ws_GetAllDetailsCompleted(object sender, MyWebService.GetAllDetailsComplete
 }
 </pre>
 
-<p>Nótese que casi al final de la sincronización se actualizan las claves primarias, el método `updateKeys()` es el siguiente:</p>
+Nótese que casi al final de la sincronización se actualizan las claves primarias, el método `updateKeys()` es el siguiente:
 
 <pre lang="csharp">
 private void updateKeys()
@@ -1376,14 +1376,14 @@ private void updateKeys()
 }
 </pre>
 
-<p>Hasta aquí la explicación. Hay muchas cosas que no se abordaron aquí pero si las más importantes, en la siguiente sección se indica como obtener el código fuente para probar la aplicación.</p>
+Hasta aquí la explicación. Hay muchas cosas que no se abordaron aquí pero si las más importantes, en la siguiente sección se indica como obtener el código fuente para probar la aplicación.
 
 ## Código fuente
 
-<p>El código tanto del cliente como del servidor están disponibles en Bitbucket en las siguientes direcciones:</p>
+El código tanto del cliente como del servidor están disponibles en Bitbucket en las siguientes direcciones:
 
-<a href="https://bitbucket.org/rendon/request_ws" target="_blank">https://bitbucket.org/rendon/request_ws</a>
-<a href="https://bitbucket.org/rendon/requisition_wp8" target="_blank">https://bitbucket.org/rendon/requisition_wp8</a>
+[https://bitbucket.org/rendon/request_ws](https://bitbucket.org/rendon/request_ws)
+[https://bitbucket.org/rendon/requisition_wp8](https://bitbucket.org/rendon/requisition_wp8)
 
 O bien pueden clonar los proyectos:
 <pre lang="bash" theme="slate">
@@ -1391,15 +1391,15 @@ $ git clone https://rendon@bitbucket.org/rendon/request_ws.git
 $ git clone https://rendon@bitbucket.org/rendon/requisition_wp8.git
 </pre>
 
-<p>La licencia del Web service es GPLv3.</p>
+La licencia del Web service es GPLv3.
 
-<p>La licencia de la aplicación cliente es GPLv3, con una posible excepción del código generado por Visual Studio para comunicarnos con el Web service, del cual desconozco que políticas se apliquen.</p>
+La licencia de la aplicación cliente es GPLv3, con una posible excepción del código generado por Visual Studio para comunicarnos con el Web service, del cual desconozco que políticas se apliquen.
 
 ## Por hacer
 
-<p>Este trabajo no cumplió del todo con lo que el profesor solicito, en parte porque no entendí problema en su totalidad. En el siguiente reporte se explica cual fue el problema. </p>
+Este trabajo no cumplió del todo con lo que el profesor solicito, en parte porque no entendí problema en su totalidad. En el siguiente reporte se explica cual fue el problema. 
 
-<p>Queda de tarea para el lector corregir el problema para que cumpla con lo que el profesor pidió, no es muy complicado. </p>
+Queda de tarea para el lector corregir el problema para que cumpla con lo que el profesor pidió, no es muy complicado. 
 
 ## Referencias
 

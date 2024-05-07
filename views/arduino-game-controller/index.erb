@@ -6,13 +6,9 @@
     <span class='tags'><span class="fa-solid fa-tag"></span><code>#dev</code> <code>#hardware</code> <code>#post</code></span>
 </p>
 
-<p>
-Hi guys!, In my <a href="/arduino-control-speakers">previous post</a> I described how to build a volume controller with Arduino, using the <strong>termios</strong> API for serial communication in GNU/Linux, well, in this post I use the same concepts to build a simple game controller for the classical game Snake.
-</p>
+<p>Hi guys!, In my <a href="/arduino-control-speakers">previous post</a> I described how to build a volume controller with Arduino, using the <strong>termios</strong> API for serial communication in GNU/Linux, well, in this post I use the same concepts to build a simple game controller for the classical game Snake.</p>
 <h2 id="lets-get-started">Let’s get started</h2>
-<p>
-We need to build the following circuit:
-</p>
+<p>We need to build the following circuit:</p>
 <figure>
 <img src="/arduino-game-controller/game1.jpg" alt="Schematic" />
 <figcaption aria-hidden="true">Schematic</figcaption>
@@ -21,9 +17,7 @@ We need to build the following circuit:
 <img src="/arduino-game-controller/game2.jpg" alt="Electronic diagram" />
 <figcaption aria-hidden="true">Electronic diagram</figcaption>
 </figure>
-<p>
-We need the following code in <em>wiring</em> to receive instructions from the board.
-</p>
+<p>We need the following code in <em>wiring</em> to receive instructions from the board.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> DOWN  <span class="op">=</span> <span class="dv">8</span><span class="op">;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> LEFT  <span class="op">=</span> <span class="dv">6</span><span class="op">;</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> UP    <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
@@ -69,9 +63,7 @@ We need the following code in <em>wiring</em> to receive instructions from the b
 <span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>        delay<span class="op">(</span><span class="dv">40</span><span class="op">);</span></span>
 <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p>
-The previous code reads the button presses and write the appropriate values to the serial channel, we’ll read this values from our game. I have implemented a limited version of the game Snake for our purpose, here is the code:
-</p>
+<p>The previous code reads the button presses and write the appropriate values to the serial channel, we’ll read this values from our game. I have implemented a limited version of the game Snake for our purpose, here is the code:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Compile with: g++ -Wall -o snake snake.cpp -lcurses</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;ncurses.h&gt;</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></span>
@@ -292,22 +284,16 @@ The previous code reads the button presses and write the appropriate values to t
 <span id="cb2-218"><a href="#cb2-218" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-219"><a href="#cb2-219" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> EXIT_SUCCESS<span class="op">;</span></span>
 <span id="cb2-220"><a href="#cb2-220" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p>
-Connect the Arduino to the PC and execute the previous program. Here is a screenshot of the game in action.
-</p>
+<p>Connect the Arduino to the PC and execute the previous program. Here is a screenshot of the game in action.</p>
 <figure>
 <img src="/arduino-game-controller/game3.jpg" alt="Game in action" />
 <figcaption aria-hidden="true">Game in action</figcaption>
 </figure>
-<p>
-Game Over! See you in the next post.
-</p>
+<p>Game Over! See you in the next post.</p>
 <h2 id="references">References</h2>
-<p>
-The schematic and the electronic diagram were designed using <a href="http://fritzing.org/" target="_blank">fritzing</a>.
-</p>
+<p>The schematic and the electronic diagram were designed using <a href="http://fritzing.org/">fritzing</a>.</p>
 <ol type="1">
-<li><a href="http://en.wikibooks.org/wiki/Serial_Programming/Serial_Linux" target="_blank">Serial Programming/Serial Linux</a></li>
-<li><a href="http://www.arduino.cc/en/Tutorial/Potentiometer" target="_blank">Reading a Potentiometer (analog input)</a></li>
+<li><a href="http://en.wikibooks.org/wiki/Serial_Programming/Serial_Linux">Serial Programming/Serial Linux</a></li>
+<li><a href="http://www.arduino.cc/en/Tutorial/Potentiometer">Reading a Potentiometer (analog input)</a></li>
 </ol>
 

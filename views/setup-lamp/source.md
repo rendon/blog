@@ -28,7 +28,7 @@ service apache2 start
 service apache2 stop
 ```
 
-<p>Para MySQL:</p>
+Para MySQL:
 
 ```sh
 service mysql start

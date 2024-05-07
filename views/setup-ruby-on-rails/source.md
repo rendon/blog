@@ -7,7 +7,7 @@ Como parte de un reporte de proyecto necesito un manual sobre como instalar y co
 
 ## Instalación de Ruby
 
-<p>Lo primero va ser instalar Ruby, Debian Wheezy incluye la versión 1.9.3.</p>
+Lo primero va ser instalar Ruby, Debian Wheezy incluye la versión 1.9.3.
 
 <pre lang="bash" theme="slate">
 apt-get install ruby
@@ -15,23 +15,23 @@ apt-get install ruby
 
 ## RVM - Ruby Version Manager
 
-<p>Trabajar con Ruby puede llegar a ser problemático por que es muy común tener que instalar paquetes y para ello se requiere tener permisos administrativos, peor aun, en ocasiones necesitamos trabajar con más de una versión de ruby para diferentes proyectos, y es cuando empiezan los conflictos. RVM, permite crear entornos independientes de Ruby que permiten trabajar con diferentes versiones de Ruby, cada cual con sus paquetes y configuraciones, ver <a href="https://rvm.io/">rvm.io</a> para más información.</p>
+Trabajar con Ruby puede llegar a ser problemático por que es muy común tener que instalar paquetes y para ello se requiere tener permisos administrativos, peor aun, en ocasiones necesitamos trabajar con más de una versión de ruby para diferentes proyectos, y es cuando empiezan los conflictos. RVM, permite crear entornos independientes de Ruby que permiten trabajar con diferentes versiones de Ruby, cada cual con sus paquetes y configuraciones, ver [rvm.io](https://rvm.io/) para más información.
 
-<p>Primero necesitamos `curl`.</p>
+Primero necesitamos `curl`.
 
 <pre lang="bash" theme="slate">
 sudo apt-get install curl
 </pre>
 
-<p>Ahora instalamos RVM.</p>
+Ahora instalamos RVM.
 
 <pre lang="bash" theme="slate">
 curl -L get.rvm.io | bash -s stable --auto
 </pre>
 
-<p>El comando anterior instala RVM en el directorio home del usuario, por lo que no afecta las configuraciones de otros usuarios.</p>
+El comando anterior instala RVM en el directorio home del usuario, por lo que no afecta las configuraciones de otros usuarios.
 
-<p>Vamos a necesitar de otros paquetes por lo que hay que instalarlos, como usuario <strong>root</strong> ejecuta el siguiente comando.</p>
+Vamos a necesitar de otros paquetes por lo que hay que instalarlos, como usuario **root** ejecuta el siguiente comando.
 
 <pre lang="bash" theme="slate">
 apt-get install build-essential openssl libreadline6 libreadline6-dev \
@@ -42,13 +42,13 @@ subversion pkg-config
 
 ## Ruby
 
-<p>Para nuestro proyecto vamos a utilizar la version 2.0 de Ruby, la cual instalamos con el siguiente comando, para esto <strong>no</strong> necesitamos estar como usuario root.</p>
+Para nuestro proyecto vamos a utilizar la version 2.0 de Ruby, la cual instalamos con el siguiente comando, para esto **no** necesitamos estar como usuario root.
 
 <pre lang="bash" theme="slate">
 rvm install 2.0.0
 </pre>
 
-<p>Esto tardará un poco. Ahora vamos a activar la versión 2.0 por defecto.</p>
+Esto tardará un poco. Ahora vamos a activar la versión 2.0 por defecto.
 
 <pre lang="bash" theme="slate">
 ruby -v
@@ -57,7 +57,7 @@ rvm --default use 2.0.0-p247
 
 ## Rails
 
-<p>La versión más reciente del Ruby On Rails es la 4.0, ésta es la que vamos autilizar para nuestro proyecto.</p>
+La versión más reciente del Ruby On Rails es la 4.0, ésta es la que vamos autilizar para nuestro proyecto.
 
 <pre lang="bash" theme="slate">
 gem install rails -v 4.0.0

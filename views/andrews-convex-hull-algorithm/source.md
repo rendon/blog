@@ -1,21 +1,21 @@
 # Andrew's Convex Hull Algorithm
 2016-02-23 2024-05-06 #algorithms #data-structures #post
 
-<p>Convex hull is a classical problem in computational geometry and often used in programming contests. Today I present to you  the Andrew's algorithm to compute the convex hull from a set of 2D points. </p>
+Convex hull is a classical problem in computational geometry and often used in programming contests. Today I present to you  the Andrew's algorithm to compute the convex hull from a set of 2D points. 
 
 ![Convex Hull](/andrews-convex-hull-algorithm/convex_hull_0.svg)
 
 ## Convex Hull
-<p>Here a definition from Robert Sedgewick lecture notes.</p>
+Here a definition from Robert Sedgewick lecture notes.
 
 <div class="box">
-<p>A set of point is <strong>convex</strong> if for any two points <em>p</em> and <em>q</em> is the set, the line segment <em>pq</em> is completely in the set.</p>
+A set of point is **convex** if for any two points *p* and *q* is the set, the line segment *pq* is completely in the set.
   
-<p><strong>Convex hull</strong>. Smallest convex set containing all the points.</p>
+**Convex hull**. Smallest convex set containing all the points.
 </div>
 
 ## Andrew's algorithm
-<p>The Andrews's Algorithm splits the convex hull in two parts parts, upper hull and lower hull, here the algorithm.</p>
+The Andrews's Algorithm splits the convex hull in two parts parts, upper hull and lower hull, here the algorithm.
 
 <ol>
   <li>L and U are lists of points.</li>
@@ -52,9 +52,9 @@
 
 ## Sample problem
 
-<p>A easy problem where you can put in practice this topic is with <a href="http://lightoj.com/volume_showproblem.php?problem=1203" target="_blank">1203 - Guarding Bananas</a> from <a href="http://lightoj.com/" target="_blank">lightoj.com</a>.</p>
+A easy problem where you can put in practice this topic is with [1203 - Guarding Bananas](http://lightoj.com/volume_showproblem.php?problem=1203) from [lightoj.com](http://lightoj.com/).
 
-<p>To check if three point are convex you can use a vector cross product.</p>
+To check if three point are convex you can use a vector cross product.
 
 <table>
 <tr>
@@ -63,11 +63,11 @@
 </tr>
 </table>
 
-<p>If points A, O and B are in clockwise orientation then $ v \times u$ will be greater than zero, otherwise the result will be less than  zero.</p>
+If points A, O and B are in clockwise orientation then $ v \times u$ will be greater than zero, otherwise the result will be less than  zero.
 
 ## Solution to sample problem
 
-<p>Apply the algorithm to find the convex hull and then, for each point that form the convex hull, compute the angle between it and its left and right points, take the minimum.</p>
+Apply the algorithm to find the convex hull and then, for each point that form the convex hull, compute the angle between it and its left and right points, take the minimum.
 
 ```cpp
 #include <cstdio>
@@ -190,5 +190,5 @@ int main(int argc, char **argv)
 ```
 
 ## References
-1. <a href="http://community.topcoder.com/tc?module=Static&d1=tutorials&d2=lineSweep" target="_blank">Line Sweep Algorithms, bmerry</a>
-2. <a href="http://www.cs.princeton.edu/courses/archive/fall05/cos226/lectures/geometry.pdf" target="_blank">Geometry Lecture, Robert Sedgewick</a>
+1. [Line Sweep Algorithms, bmerry](http://community.topcoder.com/tc?module=Static&d1=tutorials&d2=lineSweep)
+2. [Geometry Lecture, Robert Sedgewick](http://www.cs.princeton.edu/courses/archive/fall05/cos226/lectures/geometry.pdf)

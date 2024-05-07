@@ -3,7 +3,7 @@
 # Bash
 2016-02-18 2024-05-07 #sysadmin #linux #post
 
-<p><strong>NOTA</strong>: Este artículo fue publicado originalmente en <a href="http://revista.atixlibre.org/?p=271" target="_blank">ATIX</a>, revista de software libre.</p>
+**NOTA**: Este artículo fue publicado originalmente en [ATIX](http://revista.atixlibre.org/?p=271), revista de software libre.
 
 ![](/bash/hdud2_0.png)
 
@@ -11,15 +11,15 @@
 El Bourne Again Shell es el poderoso interprete de comandos por defecto en la mayoría de los sistemas UNIX y una herramienta indispensable de todo desarrollador.
 </blockquote>
 
-<p>Alguna vez la única manera de interactuar con un ordenador fue mediante comandos, hasta que se inventaron las interfaces gráficas. Hoy día abundan las GUIs y se han desarrollado programas para casi cualquier propósito, sin embargo, diferente a lo que muchos podrían pensar, la línea de comandos no ha muerto, grandiosas aplicaciones aun se desarrollan en esta modalidad, `git`, `ffmpeg`, `vim`, `wicd`, `ncmpcpp`, `mplayer`, `alsamixer`, frameworks como Ruby on Rails, Play Web y DJango, además del gran número de comandos clásicos para la administración del sistema operativo. </p>
+Alguna vez la única manera de interactuar con un ordenador fue mediante comandos, hasta que se inventaron las interfaces gráficas. Hoy día abundan las GUIs y se han desarrollado programas para casi cualquier propósito, sin embargo, diferente a lo que muchos podrían pensar, la línea de comandos no ha muerto, grandiosas aplicaciones aun se desarrollan en esta modalidad, `git`, `ffmpeg`, `vim`, `wicd`, `ncmpcpp`, `mplayer`, `alsamixer`, frameworks como Ruby on Rails, Play Web y DJango, además del gran número de comandos clásicos para la administración del sistema operativo. 
 
-<p>Como administradores y/o desarrolladores el interprete de comandos no es opcional, es y seguirá siendo nuestro pan de cada día. Bash es un interprete de comandos y un lenguaje de programación, el Bourne Again Shell es  la versión del Bourne Shell creada por el proyecto GNU.</p>
+Como administradores y/o desarrolladores el interprete de comandos no es opcional, es y seguirá siendo nuestro pan de cada día. Bash es un interprete de comandos y un lenguaje de programación, el Bourne Again Shell es  la versión del Bourne Shell creada por el proyecto GNU.
 
-<p>Este artículo no es un tutorial sobre comandos UNIX ni un manual de referencia con descripciones exhaustivas sino más bien una guía rápida específicamente a cerca de Bash. Al final proporciono algunas referencias para profundizar sobre los temas si a así lo desean.</p>
+Este artículo no es un tutorial sobre comandos UNIX ni un manual de referencia con descripciones exhaustivas sino más bien una guía rápida específicamente a cerca de Bash. Al final proporciono algunas referencias para profundizar sobre los temas si a así lo desean.
 
 ## Inicio de sesión
 
-<p>El primer paso a dar es invocar el comando bash, el cual obedece la sintaxis `bash [opciones] [archivo]`, los elementos entre corchetes son opcionales. Lo más probable es que Bash sea interprete de comandos por defecto y no tendrá que ejecutarlo ya que el emulador de terminal lo ejecuta por usted, aunque no esta demás saber algunas cosas.</p>
+El primer paso a dar es invocar el comando bash, el cual obedece la sintaxis `bash [opciones] [archivo]`, los elementos entre corchetes son opcionales. Lo más probable es que Bash sea interprete de comandos por defecto y no tendrá que ejecutarlo ya que el emulador de terminal lo ejecuta por usted, aunque no esta demás saber algunas cosas.
 Opciones:
 
 <pre theme="slate">
@@ -35,13 +35,13 @@ Opciones:
     Termina el análisis de los parámetros.
 </pre>
 
-<p><strong>Listado 1.</strong> Opciones del comando bash.</p>
+**Listado 1.** Opciones del comando bash.
 
-<p>Si se indica el nombre de un archivo como argumento bash lo interpretará como un script(se verá más adelante) e intentará ejecutarlo. </p>
+Si se indica el nombre de un archivo como argumento bash lo interpretará como un script(se verá más adelante) e intentará ejecutarlo. 
 
 ## Configuración de entorno
 
-<p>Bash admite personalización y lo hace mediante archivos de configuración:</p>
+Bash admite personalización y lo hace mediante archivos de configuración:
 
 <ul>
 <li>`/etc/profile`. Se ejecuta automáticamente al iniciar sesión. </li>
@@ -49,19 +49,19 @@ Opciones:
 <li>`~/.bashrc`.  Se utiliza en en situaciones distintas al inicio de sesión. </li>
 </ul>
 
-<p>A continuación muestro algunos ejemplos de configuración.</p>
+A continuación muestro algunos ejemplos de configuración.
 
 ### Personalizar el prompt
 
-<p>El prompt es el indicador que le precede a todo lo que tecleamos en la terminal, por ejemplo, `rendon@intel:~$` o `root@intel:~#`. El contenido del prompt se almacena en la variable de entorno `PS1`,  veamos dos ejemplos:</p>
-<p>El más común:</p>
+El prompt es el indicador que le precede a todo lo que tecleamos en la terminal, por ejemplo, `rendon@intel:~$` o `root@intel:~#`. El contenido del prompt se almacena en la variable de entorno `PS1`,  veamos dos ejemplos:
+El más común:
 
 <pre theme="slate">
 $ export PS1='\u@\h:\w$ '
 usuario@host:directorio_actual$   #resultado
 </pre>
 
-<p>Con colores:</p>
+Con colores:
 
 <pre lang="bash" theme="slate">
 PS1='[\e[0;32m][\t][\e[1;34m]\u[\e[0;37m][\e[1;37m]@\h~$ [\e[1;37m]'
@@ -69,7 +69,7 @@ PS1='[\e[0;32m][\t][\e[1;34m]\u[\e[0;37m][\e[1;37m]@\h~$ [\e[1;37m]'
 
 ![Prompt con colores](/bash/hdud2_1.png)
 
-<p>En la definición del prompt se han utilizados algunos valores especiales para obtener información del sistema, tales como la hora, nombre de usuario,  host, directorio actual,  entre otras.</p>
+En la definición del prompt se han utilizados algunos valores especiales para obtener información del sistema, tales como la hora, nombre de usuario,  host, directorio actual,  entre otras.
 
 <pre theme="slate">
 \u Nombre del usuario actual.
@@ -79,13 +79,13 @@ PS1='[\e[0;32m][\t][\e[1;34m]\u[\e[0;37m][\e[1;37m]@\h~$ [\e[1;37m]'
 \w Directorio actual.
 </pre>
 
-<p><strong>Listado 2</strong>. Valores especiales.</p>
+**Listado 2**. Valores especiales.
 
-<p>En [2] encontrarán bastante información sobre el prompt y los colores.</p>
+En [2] encontrarán bastante información sobre el prompt y los colores.
 
 ### Variables de entorno
 
-<p>Las variables de entorno son datos que utiliza el sistema operativo o ciertas aplicaciones para ubicar recursos, por ejemplo, la variable `PATH` contiene un listado de directorios de donde el SO tiene que buscar programas, o `JAVA_HOME` que almacena la dirección del directorio de instalación de Java, `PS1` que ya se vio en la sección anterior. El comando export permite declarar variables de entorno.</p>
+Las variables de entorno son datos que utiliza el sistema operativo o ciertas aplicaciones para ubicar recursos, por ejemplo, la variable `PATH` contiene un listado de directorios de donde el SO tiene que buscar programas, o `JAVA_HOME` que almacena la dirección del directorio de instalación de Java, `PS1` que ya se vio en la sección anterior. El comando export permite declarar variables de entorno.
 
 <pre lang="bash" theme="slate">
 export JAVA_HOME="/usr/local/jdk1.7.0_09"
@@ -94,7 +94,7 @@ export PATH="${PATH}:/usr/local/mis_programas"
 
 ### Alias
 
-<p>Los alias son a grandes rasgos atajos para comandos que nos ayudan a no teclear tanto o dar nombres más significativos a ciertas acciones, ejemplos:</p>
+Los alias son a grandes rasgos atajos para comandos que nos ayudan a no teclear tanto o dar nombres más significativos a ciertas acciones, ejemplos:
 
 <pre lang="bash" theme="slate">
 alias apt-get="sudo apt-get"
@@ -102,24 +102,24 @@ alias grep="grep --color=always"
 alias ls='ls $LS_OPTIONS'
 </pre>
 
-<p>Al intentar ejecutar `grep` lo que realmente se ejecuta es `grep --color=always` y así con los demás comandos.</p>
+Al intentar ejecutar `grep` lo que realmente se ejecuta es `grep --color=always` y así con los demás comandos.
 
 ### Modos de edición
 
-<p>Bash tiene dos modos de edición, emacs y vi, que permiten trabajar de manera más eficiente y cómoda con el interprete. El modo por defecto es emacs. Una de las ventajas de estos modos de edición es que permiten trabajar sin retirar las manos de su posición básica.</p>
+Bash tiene dos modos de edición, emacs y vi, que permiten trabajar de manera más eficiente y cómoda con el interprete. El modo por defecto es emacs. Una de las ventajas de estos modos de edición es que permiten trabajar sin retirar las manos de su posición básica.
 
-<p>Para habilitar estos modos de edición emplea los siguientes comandos, ya sea en modo interactivo o en el archivo de configuración para hacer el cambio permanente.</p>
+Para habilitar estos modos de edición emplea los siguientes comandos, ya sea en modo interactivo o en el archivo de configuración para hacer el cambio permanente.
 
 <pre theme="slate">
 set -o vi
 set -o emacs
 </pre>
 
-<p>En [3] y [4] puede encontrar una lista detallada de comandos para los modos vi y emacs respectivamente.</p>
+En [3] y [4] puede encontrar una lista detallada de comandos para los modos vi y emacs respectivamente.
 
 ## Redireccionamiento
 
-<p>El funcionamiento básico de todo programa es recibir una entrada, procesar los datos y producir una salida. En los sistemas UNIX existen dos tipos de salida, normal y de errores. Por defecto la entrada corresponde al teclado y la salida a la pantalla.</p>
+El funcionamiento básico de todo programa es recibir una entrada, procesar los datos y producir una salida. En los sistemas UNIX existen dos tipos de salida, normal y de errores. Por defecto la entrada corresponde al teclado y la salida a la pantalla.
 
 <table>
 <tr><th>Descriptor de archivo</th>   <th>Nombre</th>   <th>Abreviación</th>   <th>Por defecto</th></tr>
@@ -128,14 +128,14 @@ set -o emacs
 <tr><td>2</td>   <td>Error estándar</td>    <td>stderr</td>   <td>Pantalla</td></tr>
 </table>
 
-<p><strong>Tabla 1</strong>. Entradas y salidas en UNIX.</p>
+**Tabla 1**. Entradas y salidas en UNIX.
 
-<p>La redirección de datos permite modificar el comportamiento normal de los programas con respecto a la entrada y salida de datos, a continuación un resumen con ejemplos de algunos  tipos de redirección:</p>
+La redirección de datos permite modificar el comportamiento normal de los programas con respecto a la entrada y salida de datos, a continuación un resumen con ejemplos de algunos  tipos de redirección:
 
 ### comando > archivo
 
-<p>Redirecciona la salida de comando a archivo(el archivo se sobrescribe).</p>
-<p>Ej.</p>
+Redirecciona la salida de comando a archivo(el archivo se sobrescribe).
+Ej.
 
 <pre lang="bash" theme="slate">
 $ ls -1 > salida.txt
@@ -143,8 +143,8 @@ $ ls -1 > salida.txt
 
 ### comando < archivo
 
-<p>El comando toma la entrada desde archivo.</p>
-<p>Ej.</p>
+El comando toma la entrada desde archivo.
+Ej.
 
 <pre lang="bash" theme="slate">
 $ bc < entrada.txt
@@ -152,20 +152,20 @@ $ bc < entrada.txt
 
 ### comando >> archivo
 
-<p>Redirecciona la salida de comando a archivo(el archivo no se sobrescribe, se agrega al final).</p>
-<p>Ej.</p>
+Redirecciona la salida de comando a archivo(el archivo no se sobrescribe, se agrega al final).
+Ej.
 
 <pre lang="bash" theme="slate">
 $ ls imagenes/ > archivos.txt
 $ ls videos/ >> archivos.txt
 </pre>
 
-<p><em>archivos.txt</em> contiene el listado de archivos en imágenes y también los del directorio videos.</p>
+*archivos.txt* contiene el listado de archivos en imágenes y también los del directorio videos.
 
 ### comando << marca
 
-<p>Conocido como here document, todo texto que se tecleé después de marca hasta encontrar nuevamente a marca se tomará como la entrada del programa, marca no forma parte de la entrada.</p>
-<p>Ej.</p>
+Conocido como here document, todo texto que se tecleé después de marca hasta encontrar nuevamente a marca se tomará como la entrada del programa, marca no forma parte de la entrada.
+Ej.
 
 
 <pre lang="bash" theme="slate">
@@ -175,12 +175,12 @@ $cat > salida.txt <<EOF
 >EOF
 </pre>
 
-<p>El texto entre `EOF` y `EOF` se almacena en el archivo `salida.txt`.</p>
+El texto entre `EOF` y `EOF` se almacena en el archivo `salida.txt`.
 
 ### comando &lt;&lt;&lt; cadena
 
-<p>Conocido como <em>here string</em>, "cadena" es tomada como entrada de "comando", muy útil.</p>
-<p>Ej. </p>
+Conocido como *here string*, "cadena" es tomada como entrada de "comando", muy útil.
+Ej. 
 
 <pre lang="bash" theme="slate">
 $ bc <<< "(2^10 + 6)/2"
@@ -188,8 +188,8 @@ $ bc <<< "(2^10 + 6)/2"
 
 ### comando n&gt;archivo
 
-<p>Redirecciona la salida que normalmente iría al descriptor de archivo <em>n</em> a archivo.</p>
-<p>Ej. </p>
+Redirecciona la salida que normalmente iría al descriptor de archivo *n* a archivo.
+Ej. 
 
 <pre theme="slate">
 $ gcc > error.txt
@@ -203,12 +203,12 @@ $ cat error.txt
   compilation terminated.
 </pre>
 
-<p>El primer ejemplo de redirección no funciona y el archivo `error.txt` esta vació porque los mensajes de error de `gcc` van dirigidos al descriptor de errores(2) y no al descriptor de salida(1). El segundo ejemplo logra su objetivo.</p>
+El primer ejemplo de redirección no funciona y el archivo `error.txt` esta vació porque los mensajes de error de `gcc` van dirigidos al descriptor de errores(2) y no al descriptor de salida(1). El segundo ejemplo logra su objetivo.
 
 ### comando &lt;&amp;n
 
-<p>Toma la entrada para comando desde el descriptor de archivo n.</p>
-<p>Ej.</p>
+Toma la entrada para comando desde el descriptor de archivo n.
+Ej.
 
 <pre lang="bash" theme="slate">
 $ echo "(3 * 4)/2" > entrada.txt
@@ -219,24 +219,24 @@ $ bc &lt;&5
 
 ### comando &amp;&gt; archivo
 
-<p>Envía la salida estándar y errores a archivo.</p>
+Envía la salida estándar y errores a archivo.
 
 ### comando &gt; salida.txt 2&gt; errores.txt
 
-<p>Envía la salida a `salida.txt` y los errores a `errores.txt`.</p>
+Envía la salida a `salida.txt` y los errores a `errores.txt`.
 
 ### comando | tee salida.txt
 
-<p>Envía la salida de <em>comando</em> a `tee` para que lo muestre en pantalla y a la ves lo almacene en el archivo `salida.txt`.</p>
+Envía la salida de *comando* a `tee` para que lo muestre en pantalla y a la ves lo almacene en el archivo `salida.txt`.
 
-<p>Tenga cuidado con los espacios, no todas las redirecciones permiten espacios antes o después de `&lt;` y `&gt;`.</p>
+Tenga cuidado con los espacios, no todas las redirecciones permiten espacios antes o después de `&lt;` y `&gt;`.
 
 ## Tuberías y substitución de procesos
 
 ### comando1 | comando2
 
-<p>_comando2_ toma como entrada la salida generada por _comando1_.</p>
-<p>Ej.</p>
+_comando2_ toma como entrada la salida generada por _comando1_.
+Ej.
 
 <pre lang="bash" theme="slate">
 $ ls -1 | grep ".*txt"
@@ -245,8 +245,8 @@ $ echo "1 9 7 1 2 9 2 1" | tr ' ' '\n' |  sort -n | uniq
 
 ### comando &lt;(comandos)
 
-<p>_comando_ toma como entrada la salida de _comandos_.</p>
-<p>Ej. </p>
+_comando_ toma como entrada la salida de _comandos_.
+Ej. 
 
 <pre lang="bash" theme="slate">
 $ uniq <(echo "1 9 7 1 2 9 2 1" | tr ' ' '\n' |  sort -n)
@@ -254,11 +254,11 @@ $ uniq <(echo "1 9 7 1 2 9 2 1" | tr ' ' '\n' |  sort -n)
 
 ## Bash como lenguaje de programación
 
-<p>En este apartado vamos a ver algunas de las características de Bash que le permiten funcionar como un lenguaje de programación. Cabe de decir que Bash no es un lenguaje de propósito general sino más bien orientado a la administración de sistemas y automatización de tareas.</p>
+En este apartado vamos a ver algunas de las características de Bash que le permiten funcionar como un lenguaje de programación. Cabe de decir que Bash no es un lenguaje de propósito general sino más bien orientado a la administración de sistemas y automatización de tareas.
 
 ### Variables
 
-<p>Una variable es un identificador que almacena cierto valor, veamos como definir una.</p>
+Una variable es un identificador que almacena cierto valor, veamos como definir una.
 
 <pre lang="bash" theme="slate">
 $ nombre="Rafael"
@@ -266,8 +266,8 @@ $ declare -i edad=20+3 #variables de tipo entero
 $ idiomas=(español ingles latín hebreo chino) 
 </pre>
 
-<p>Las reglas para nombrar variables son las mismas que en la mayoría de los lenguajes: letras, guion bajo, números, el nombre no debe iniciar con número.</p>
-<p>Para recuperar el valor de una variable anteponga un $ al nombre de la variable.</p>
+Las reglas para nombrar variables son las mismas que en la mayoría de los lenguajes: letras, guion bajo, números, el nombre no debe iniciar con número.
+Para recuperar el valor de una variable anteponga un $ al nombre de la variable.
 
 <pre lang="bash" theme="slate">
 $ echo "Mi nombre es $nombre,  tengo $edad años y hablo ${idiomas[@]}."
@@ -276,7 +276,7 @@ Mi nombre es Rafael,  tengo 23 años y hablo español ingles latín hebreo chino
 
 #### Variables predefinidas
 
-<p>Bash define algunas variables por defecto, muy útiles cuando trabajamos con scripts.</p>
+Bash define algunas variables por defecto, muy útiles cuando trabajamos con scripts.
 
 <pre theme="slate">
 $#    Número de argumentos pasados a un comando.
@@ -292,7 +292,7 @@ $n    Valores de los argumentos. $1 es el primer
 
 ### Arreglos
 
-<p>Bash provee dos tipos de arreglos, basados en índices(los índices son números) y asociativos(los índices son cadenas).</p>
+Bash provee dos tipos de arreglos, basados en índices(los índices son números) y asociativos(los índices son cadenas).
 
 <pre lang="bash" theme="slate">
 $ idiomas=(español ingles latín hebreo chino)
@@ -317,7 +317,7 @@ ${#name[@]}   Número de elementos en el   arreglo
 
 ### Expresiones aritméticas
 
-<p>Las operaciones aritméticas se puede realizar con `$((` <em>expresión</em> `))`.</p>
+Las operaciones aritméticas se puede realizar con `$((` *expresión* `))`.
 
 <pre lang="bash" theme="slate">
 $ echo $(( (2**10)/2 ))
@@ -328,11 +328,11 @@ $ echo $a
 13
 </pre>
 
-<p>Los operadores en su mayoría son los mismos que en C/C++, salvo algunas excepciones, la exponenciación(**), por ejemplo.</p>
+Los operadores en su mayoría son los mismos que en C/C++, salvo algunas excepciones, la exponenciación(**), por ejemplo.
 
 ### Estructuras de control
 
-<p>Las estructuras de control permiten guiar el flujo de ejecución de un programa. Bash provee `if`, `if ... else` y `if ... elif ... else`.</p>
+Las estructuras de control permiten guiar el flujo de ejecución de un programa. Bash provee `if`, `if ... else` y `if ... elif ... else`.
 
 #### If
 
@@ -343,7 +343,7 @@ then
 fi
 </pre>
 
-<p>Ej.</p>
+Ej.
 
 <pre lang="bash" theme="slate">
 if [ $edad -lt 18 ]
@@ -363,7 +363,7 @@ else
 fi
 </pre>
 
-<p>Ej. </p>
+Ej. 
 
 <pre lang="bash" theme="slate">
 if [ $edad -ge 18 ]
@@ -385,7 +385,7 @@ elif COMANDOS-DE-PRUEBA
 fi
 </pre>
 
-<p>Ej.</p>
+Ej.
 
 <pre lang="bash" theme="slate">
 if [ $edad -ge 18 ]
@@ -398,18 +398,18 @@ else
 fi
 </pre>
 
-<p>Para las comparaciones he utilizado algunos operadores diferentes a los convencionales, como son</p>
+Para las comparaciones he utilizado algunos operadores diferentes a los convencionales, como son
 
 <pre theme="slate">
 -lt   Menor que.
 -ge   Mayor o igual a.
 </pre>
 
-<p>Véase `man [` para más información sobre los operadores de comparación.</p>
+Véase `man [` para más información sobre los operadores de comparación.
 
 ### Estructuras de repetición
 
-<p>Bash soporta las estructuras while y for para repetición de operaciones. Su sintaxis es la siguiente.</p>
+Bash soporta las estructuras while y for para repetición de operaciones. Su sintaxis es la siguiente.
 
 #### For
 
@@ -420,7 +420,7 @@ do
 done
 </pre>
 
-<p>Ej. </p>
+Ej. 
 
 <pre lang="bash" theme="slate">
 for i in {1..10}
@@ -438,7 +438,7 @@ do
 done
 </pre>
 
-<p>Ej. </p>
+Ej. 
 
 <pre lang="bash" theme="slate">
 while read archivo
@@ -449,7 +449,7 @@ done < <(ls -1)
 
 ## Scripts
 
-<p>Un script no es más que una serie de comandos y operaciones guardados en un archivo, listos para ser ejecutados por Bash. La estructura de un script es la siguiente.</p>
+Un script no es más que una serie de comandos y operaciones guardados en un archivo, listos para ser ejecutados por Bash. La estructura de un script es la siguiente.
 
 <pre theme="slate">
 #!/bin/bash
@@ -463,8 +463,8 @@ CODIGO_PRINCIPAL
 EXIT_CODE
 </pre>
 
-<p>La primer línea especifica con que comando deben ser ejecutados los comandos en el archivo. El contenido de la primera línea es conocido como <em>shebang</em>.</p>
-<p>Para finalizar les dejo un pequeño script donde se emplean algunos elementos ya vistos, es un script muy sencillo que empleo para configurar un directorio con plantillas de código en diferentes lenguajes para usarse durante un concurso de programación.</p>
+La primer línea especifica con que comando deben ser ejecutados los comandos en el archivo. El contenido de la primera línea es conocido como *shebang*.
+Para finalizar les dejo un pequeño script donde se emplean algunos elementos ya vistos, es un script muy sencillo que empleo para configurar un directorio con plantillas de código en diferentes lenguajes para usarse durante un concurso de programación.
 
 <pre lang="bash" theme="slate">
 #!/bin/bash
@@ -519,9 +519,9 @@ fi
 exit 0;
 </pre>
 
-<p><strong>Script 1</strong>: setcontest.sh</p>
+**Script 1**: setcontest.sh
 
-<p>Existen básicamente dos formas de ejecutar un script. Invocar bash pasando como argumento el archivo o dando permisos de ejecución al script y se ejecuta como cualquier otro comando.</p>
+Existen básicamente dos formas de ejecutar un script. Invocar bash pasando como argumento el archivo o dando permisos de ejecución al script y se ejecuta como cualquier otro comando.
 
 <pre theme="slate">
 $ bash mi_script.sh      # primera forma
@@ -532,13 +532,13 @@ $ ./mi_script.sh
 
 ## Conclusión
 
-<p>Bash es una herramienta poderosa y extensa, hablar a profundidad del tema involucraría cientos de páginas y ciertamente el autor de este artículo no cuenta con el conocimiento suficiente. En este documento solo hemos visto algunas de las características básicas pero que considero suficiente para iniciarse. Además recalcar que lo antes visto es unicamente referente a Bash, en futuras publicaciones escribiré sobre ciertos programas que agregan funcionalidad a la linea de comandos.</p>
+Bash es una herramienta poderosa y extensa, hablar a profundidad del tema involucraría cientos de páginas y ciertamente el autor de este artículo no cuenta con el conocimiento suficiente. En este documento solo hemos visto algunas de las características básicas pero que considero suficiente para iniciarse. Además recalcar que lo antes visto es unicamente referente a Bash, en futuras publicaciones escribiré sobre ciertos programas que agregan funcionalidad a la linea de comandos.
 
 ## Referencias
 
 <table>
   <tr><td>[1]</td> <td>Bash Pocket reference, Arnold Robbins, O'Reily.</td></tr>
-  <tr><td>[2]</td> <td><a href="https://wiki.archlinux.org/index.php/Color_Bash_Prompt" target="_blank">Color Bash Prompt</a>, Archilinux.org</td></tr>
-  <tr><td>[3]</td> <td><a href="http://www.catonmat.net/blog/bash-vi-editing-mode-cheat-sheet/" target="_blank">Working Productively in Bash's Vi Command Line Editing Mode</a>, catonmat.net</td></tr>
-  <tr><td>[4]</td> <td><a href="http://www.catonmat.net/blog/bash-emacs-editing-mode-cheat-sheet/" target="_blank">Bash Emacs Editing Mode Cheat Sheet</a>, catonmat.net</td></tr>
+  <tr><td>[2]</td> <td>[Color Bash Prompt](https://wiki.archlinux.org/index.php/Color_Bash_Prompt), Archilinux.org</td></tr>
+  <tr><td>[3]</td> <td>[Working Productively in Bash's Vi Command Line Editing Mode](http://www.catonmat.net/blog/bash-vi-editing-mode-cheat-sheet/), catonmat.net</td></tr>
+  <tr><td>[4]</td> <td>[Bash Emacs Editing Mode Cheat Sheet](http://www.catonmat.net/blog/bash-emacs-editing-mode-cheat-sheet/), catonmat.net</td></tr>
 </table>

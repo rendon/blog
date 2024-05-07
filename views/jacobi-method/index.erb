@@ -6,42 +6,28 @@
     <span class='tags'><span class="fa-solid fa-tag"></span><code>#algorithms</code> <code>#math</code> <code>#post</code></span>
 </p>
 
-<p>
-Systems of linear equations are very important and has many applications in real life, from the most obvious to find the intersection point of many linear equations in the plane, upto the analysis of electronic circuits with Kirchhoff’s laws or traffic flow in streets.
-</p>
-<p>
-I am not an expert in this topics but currently we are studying this topic in my numerical methods course, since the course is about “numerical” methods, we don’t study the Gaussian elimination method because it is more algebraic, instead we study Jacobi method. I am going to explain briefly the idea of the method and I give you a simple implementation in Java.
-</p>
+<p>Systems of linear equations are very important and has many applications in real life, from the most obvious to find the intersection point of many linear equations in the plane, upto the analysis of electronic circuits with Kirchhoff’s laws or traffic flow in streets.</p>
+<p>I am not an expert in this topics but currently we are studying this topic in my numerical methods course, since the course is about “numerical” methods, we don’t study the Gaussian elimination method because it is more algebraic, instead we study Jacobi method. I am going to explain briefly the idea of the method and I give you a simple implementation in Java.</p>
 <h2 id="jacobi-method-1">Jacobi method</h2>
-<p>
-This was the first iterative method to solve systems of linear equations and was devised by <a href="http://en.wikipedia.org/wiki/Carl_Gustav_Jakob_Jacobi" target="_blank">Carl Gustav Jacob Jacobi</a>(1804-1851). Lets define the system of linear equations as:
-</p>
+<p>This was the first iterative method to solve systems of linear equations and was devised by <a href="http://en.wikipedia.org/wiki/Carl_Gustav_Jakob_Jacobi">Carl Gustav Jacob Jacobi</a>(1804-1851). Lets define the system of linear equations as:</p>
 <figure>
 <img src="/jacobi-method/jacobi_1.png" alt="Equation system" />
 <figcaption aria-hidden="true">Equation system</figcaption>
 </figure>
-<p>
-For each row <em>i</em> isolate the <span class="math inline"><em>x</em>_<em>i</em></span> variable.
-</p>
+<p>For each row <em>i</em> isolate the <span class="math inline"><em>x</em>_<em>i</em></span> variable.</p>
 <figure>
 <img src="/jacobi-method/jacobi_2.png" alt="Isolate variables" />
 <figcaption aria-hidden="true">Isolate variables</figcaption>
 </figure>
-<p>
-Make an initial approximation of the solution <span class="math inline">(<em>x</em><sub>1</sub>,<em>x</em><sub>2</sub>,<em>x</em><sub>3</sub>,…,<em>x</em><sub><em>n</em></sub>)</span>, a good choice is to use zero to all variables. Substitute these values in the rewritten equation and update the values of the approximation. Repeat the process until the answer be acceptable.
-</p>
+<p>Make an initial approximation of the solution <span class="math inline">(<em>x</em><sub>1</sub>,<em>x</em><sub>2</sub>,<em>x</em><sub>3</sub>,…,<em>x</em><sub><em>n</em></sub>)</span>, a good choice is to use zero to all variables. Substitute these values in the rewritten equation and update the values of the approximation. Repeat the process until the answer be acceptable.</p>
 <h2 id="stop-condition">Stop condition</h2>
-<p>
-You can stop the iterations when $ |x_{n+1} - x_{n}| $ for all <span class="math inline"><em>x</em>_<em>i</em></span>, <span class="math inline"><em>n</em></span> is the number of iterations.
-</p>
+<p>You can stop the iterations when $ |x_{n+1} - x_{n}| $ for all <span class="math inline"><em>x</em>_<em>i</em></span>, <span class="math inline"><em>n</em></span> is the number of iterations.</p>
 <h2 id="convergence-condition">Convergence condition</h2>
-<p>
-Only if the coefficient matrix is <a href="http://en.wikipedia.org/wiki/Diagonally_dominant_matrix" target="_target">diagonally dominant</a> the method can guarantee a convergence to the solution. Sometimes the convergence can be achieved even if the conditions are not satisfied, but there is no guarantee.
-</p>
+<p>Only if the coefficient matrix is <a href="http://en.wikipedia.org/wiki/Diagonally_dominant_matrix">diagonally dominant</a> the method can guarantee a convergence to the solution. Sometimes the convergence can be achieved even if the conditions are not satisfied, but there is no guarantee.</p>
 <h2 id="implementation-in-java">Implementation in Java</h2>
 <p>Embed: <code>jacobi.java</code></p>
 <h2 id="gauss-seidel-method">Gauss-Seidel Method</h2>
-<p>This is modification of the Jacobi method made by <a href="http://en.wikipedia.org/wiki/Carl_Friedrich_Gauss" target="_blank">Carl Friedrich Gauss</a> and <a href="http://en.wikipedia.org/wiki/Philipp_Ludwig_von_Seidel" target="_blank">Philipp L. Seidel</a> that can converge in less iterations than Jacobi method.</p>
+<p>This is modification of the Jacobi method made by <a href="http://en.wikipedia.org/wiki/Carl_Friedrich_Gauss">Carl Friedrich Gauss</a> and <a href="http://en.wikipedia.org/wiki/Philipp_Ludwig_von_Seidel">Philipp L. Seidel</a> that can converge in less iterations than Jacobi method.</p>
 <p>In the Jacobi method the values of the approximations <span class="math inline"><em>x</em><sub><em>i</em></sub></span> are used up to the next iteration of the method while in the Gauss-Seidel version each approximation <span class="math inline"><em>x</em><sub><em>i</em></sub></span> is used as soon as it’s ready, see the code to a better understanding. Since the two methods are very similar I show only the fragment where the codes differ.</p>
 <p>Embed: <code>gauss-seidel.java</code></p>
 <p>The conditions for stopping and convergence are the same for both methods.</p>
@@ -68,7 +54,7 @@ X_17 = {0.18611987381703465 0.3312302839116719 -0.42271293375394325 }
 1
 </td>
 <td>
-<a href="http://college.cengage.com/mathematics/larson/elementary_linear/5e/students/ch08-10/chap_10_2.pdf" target="_blank">Iterative methods for solving linear systems</a>
+<a href="http://college.cengage.com/mathematics/larson/elementary_linear/5e/students/ch08-10/chap_10_2.pdf">Iterative methods for solving linear systems</a>
 </td>
 </tr>
 <tr>
@@ -76,7 +62,7 @@ X_17 = {0.18611987381703465 0.3312302839116719 -0.42271293375394325 }
 2
 </td>
 <td>
-<a href="http://en.wikipedia.org/wiki/Jacobi_method" target="_blank">Jacobi method, Wikipedia</a>
+<a href="http://en.wikipedia.org/wiki/Jacobi_method">Jacobi method, Wikipedia</a>
 </td>
 </tr>
 </table>

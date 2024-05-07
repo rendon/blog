@@ -3,22 +3,22 @@
 # Tmux
 2016-02-18 2024-05-07 #sysadmin #tools #post
 
-<p><strong>NOTA</strong>: Este artículo fue publicado originalmente en <a href="http://revista.atixlibre.org/?p=259" target="_blank">ATIX</a>, revista de software libre.</p>
+**NOTA**: Este artículo fue publicado originalmente en [ATIX](http://revista.atixlibre.org/?p=259), revista de software libre.
 
 <blockquote>
 Tmux es un multiplexor de terminal: posibilita que una o más de terminales, cada una ejecutando un programa por separado,  puedan crearse, accederse y controlarse desde una sola pantalla.
 </blockquote>
 
-<p>Hace seis años aproximadamente empece a usar el sistema operativo GNU/Linux, casi el mismo tiempo en el que me inicie en la programación, cuando aun cursaba el bachillerato. Hoy soy estudiante de ingeniería, próximo a graduarme, puedo decir que GNU/Linux es el mejor entorno de desarrollo que he conocido.</p>
+Hace seis años aproximadamente empece a usar el sistema operativo GNU/Linux, casi el mismo tiempo en el que me inicie en la programación, cuando aun cursaba el bachillerato. Hoy soy estudiante de ingeniería, próximo a graduarme, puedo decir que GNU/Linux es el mejor entorno de desarrollo que he conocido.
 
-<p>A lo largo de estos años he aprendido a utilizar el SO y algunas herramientas que me han ayudado a realizar mi trabajo de manera más fácil y eficiente, y que considero, debería ser el kit básico de todo desarrollador.</p>
+A lo largo de estos años he aprendido a utilizar el SO y algunas herramientas que me han ayudado a realizar mi trabajo de manera más fácil y eficiente, y que considero, debería ser el kit básico de todo desarrollador.
 
-<p>En este tiempo también he conocido a algunos programadores, la mayoría de ellos usuarios de Windows, dependientes de las GUIs y de los IDEs, demorando demasiado en tareas que bien se podrían automatizar empleando las herramientas adecuadas. En la edición 2012 del CONACUP, un concursante que terminó por sentarse a lado mio, no pudo siquiera intentar resolver los problemas propios del evento debido a que paso la mayor parte del tiempo cambiándose de máquina en máquina porque eclipse se le bloqueaba. Verídico.</p>
+En este tiempo también he conocido a algunos programadores, la mayoría de ellos usuarios de Windows, dependientes de las GUIs y de los IDEs, demorando demasiado en tareas que bien se podrían automatizar empleando las herramientas adecuadas. En la edición 2012 del CONACUP, un concursante que terminó por sentarse a lado mio, no pudo siquiera intentar resolver los problemas propios del evento debido a que paso la mayor parte del tiempo cambiándose de máquina en máquina porque eclipse se le bloqueaba. Verídico.
 
-<p>Tiempo atrás leí una pregunta muy popular en StackOverflow, <em>C++ IDE for Linux?</em>, muchas respuestas y comentarios, de entre ellos destacó uno: <em>UNIX is an IDE. All of it.</em>, lo cual me hizo recordar cual fue el propósito inicial de UNIX, un sistema para programadores.</p>
+Tiempo atrás leí una pregunta muy popular en StackOverflow, *C++ IDE for Linux?*, muchas respuestas y comentarios, de entre ellos destacó uno: *UNIX is an IDE. All of it.*, lo cual me hizo recordar cual fue el propósito inicial de UNIX, un sistema para programadores.
 
 
-<p>Estamos iniciando el año y he decidido comenzar una serie de artículos que titulo <em>"Herramientas de un desarrollador"</em> como son:</p>
+Estamos iniciando el año y he decidido comenzar una serie de artículos que titulo *"Herramientas de un desarrollador"* como son:
 
 <ul>
   <li>Multiplexor de terminal: tmux</li>
@@ -28,13 +28,13 @@ Tmux es un multiplexor de terminal: posibilita que una o más de terminales, cad
   <li>Sistema de control de versiones: git</li>
 </ul>
 
-<p>Lo único que se necesita para seguir estos artículos es un emulador de terminal(xterm, gnome-terminal, konsole, etc.) y ganas de aprender. Puesto que vamos a dedicar mucho tiempo trabajando en línea de comandos es vital una herramienta que nos permita administrar terminales en forma eficiente, esta herramienta se llama tmux y es el tema de esta primer entrega.</p>
+Lo único que se necesita para seguir estos artículos es un emulador de terminal(xterm, gnome-terminal, konsole, etc.) y ganas de aprender. Puesto que vamos a dedicar mucho tiempo trabajando en línea de comandos es vital una herramienta que nos permita administrar terminales en forma eficiente, esta herramienta se llama tmux y es el tema de esta primer entrega.
 
 ## ¿Qué es tmux?
 
-<p>En electrónica un multiplexor es un dispositivo que permite trasmitir varios mensajes o señales de manera simultanea sobre un canal de comunicación. Tmux es un multiplexor de terminal, esto es, posibilita que una o más de terminales(o ventanas), cada una ejecutando un programa por separado, puedan accederse y controlarse desde una sola pantalla. </p>
+En electrónica un multiplexor es un dispositivo que permite trasmitir varios mensajes o señales de manera simultanea sobre un canal de comunicación. Tmux es un multiplexor de terminal, esto es, posibilita que una o más de terminales(o ventanas), cada una ejecutando un programa por separado, puedan accederse y controlarse desde una sola pantalla. 
 
-<p>En mis actividades diarias empleo muy a menudo una o más terminales, cuando programo utilizo como mínimo dos, en una tengo abierto vim y en la otra realizo las pruebas. Antes yo solía tener dos terminales abiertas en dos ventanas, usando Ctrl + Tab para moverme entre ellas, pero con el tiempo esto se volvió tedioso y mi vista se cansaba fácilmente debido a los constantes destellos del cambio de ventanas. Investigando un poco conocí GNU Screen, no me gusto. Descubrí tmux y fue exactamente lo que andaba buscando.</p>
+En mis actividades diarias empleo muy a menudo una o más terminales, cuando programo utilizo como mínimo dos, en una tengo abierto vim y en la otra realizo las pruebas. Antes yo solía tener dos terminales abiertas en dos ventanas, usando Ctrl + Tab para moverme entre ellas, pero con el tiempo esto se volvió tedioso y mi vista se cansaba fácilmente debido a los constantes destellos del cambio de ventanas. Investigando un poco conocí GNU Screen, no me gusto. Descubrí tmux y fue exactamente lo que andaba buscando.
 
 ![Antes](/tmux/hdud1_0.png)
 
@@ -42,7 +42,7 @@ Tmux es un multiplexor de terminal: posibilita que una o más de terminales, cad
 
 ## Instalación
 
-<p>Para los usuarios de distribuciones Debian, Ubuntu, CentOS, Fedora, etc. es muy probable que puedan instalar tmux directamente con el gestor de paquetes o bien pueden compilarlo desde código fuente, nada complicado.</p>
+Para los usuarios de distribuciones Debian, Ubuntu, CentOS, Fedora, etc. es muy probable que puedan instalar tmux directamente con el gestor de paquetes o bien pueden compilarlo desde código fuente, nada complicado.
 
 ### Con el gestor de paquetes
 
@@ -50,17 +50,17 @@ Embed: `install.sh`
 
 ## Desde código fuente
 
-<p>Ve al sitio oficial de tmux(<a href="https://tmux.github.io/" target="_blank">https://tmux.github.io/</a>) y descarga el código fuente, yo estoy empleando la versión 1.6. Por cierto, tmux depende de `libevent` y `ncurses`.</p>
+Ve al sitio oficial de tmux([https://tmux.github.io/](https://tmux.github.io/)) y descarga el código fuente, yo estoy empleando la versión 1.6. Por cierto, tmux depende de `libevent` y `ncurses`.
 
 Embed: `install-from-src.sh`
 
 ## Lo básico
 
-<p>Para empezar a usar tmux abre una terminal y ejecuta tmux, teclea el comando exit para salir. Tmux al igual que vim es modal, el modo por defecto es el que nos permite interactuar con la terminal. Los otros modos son:</p>
+Para empezar a usar tmux abre una terminal y ejecuta tmux, teclea el comando exit para salir. Tmux al igual que vim es modal, el modo por defecto es el que nos permite interactuar con la terminal. Los otros modos son:
 
 <ul>
-<li><strong>output mode</strong>: Entramos a este modo cuando un comando que produce una salida, tal como list-keys, es ejecutado con una combinación de teclas.</li>
-<li><strong>copy mode</strong>: Este modo permite copiar texto de las ventanas, del historial o de la salida producida por otros programas.</li>
+<li>**output mode**: Entramos a este modo cuando un comando que produce una salida, tal como list-keys, es ejecutado con una combinación de teclas.</li>
+<li>**copy mode**: Este modo permite copiar texto de las ventanas, del historial o de la salida producida por otros programas.</li>
 </ul>
 
 ### El prefijo de comandos
@@ -74,7 +74,7 @@ Tmux tiene un comando para cada acción y una serie de keybindings para ejecutar
 
 ### Paneles
 
-<p>Tmux permite dividir el área de trabajo en varias partes, llamadas paneles, estas pueden ser horizontales o verticales.</p>
+Tmux permite dividir el área de trabajo en varias partes, llamadas paneles, estas pueden ser horizontales o verticales.
 
 Embed: `panel-operations.txt`
 
@@ -84,7 +84,7 @@ Embed: `panel-operations.txt`
 
 ![Paneles enumerados](/tmux/hdud1_3.png)
 
-<p>Si necesitas reducir o aumentar el área de un panel lo puedes hacer con las siguientes combinaciones.</p>
+Si necesitas reducir o aumentar el área de un panel lo puedes hacer con las siguientes combinaciones.
 
 ### Aumentar o reducir el panel verticalmente.
 
@@ -98,26 +98,26 @@ Embed: `panel-resize-horizontally.txt`
 
 ### Organizando paneles
 
-<p>Tmux proporciona cinco plantillas que nos permiten organizar nuestros paneles.</p>
+Tmux proporciona cinco plantillas que nos permiten organizar nuestros paneles.
 
 <ul>
-<li><strong>even-horizontal</strong>: Alinea todos los paneles horizontalmente, de izquierda a derecha. </li>
-<li><strong>even-vertical</strong>: Alinea todos los paneles verticalmente, de arriba a abajo. </li>
-<li><strong>main-horizontal</strong>: Crea un panel en la parte superior que ocupa casi todo el espacio de la pantalla y alinea el resto de los paneles en la parte inferior. </li>
-<li><strong>main-vertical</strong>: Crea un panel en el lado izquierdo que ocupa casi todo el espacio de la pantalla y alinea el resto de los paneles a la derecha.</li>
-<li><strong>tiled</strong>: Alinea todos los paneles en la pantalla con igual cantidad de espacio.</li>
+<li>**even-horizontal**: Alinea todos los paneles horizontalmente, de izquierda a derecha. </li>
+<li>**even-vertical**: Alinea todos los paneles verticalmente, de arriba a abajo. </li>
+<li>**main-horizontal**: Crea un panel en la parte superior que ocupa casi todo el espacio de la pantalla y alinea el resto de los paneles en la parte inferior. </li>
+<li>**main-vertical**: Crea un panel en el lado izquierdo que ocupa casi todo el espacio de la pantalla y alinea el resto de los paneles a la derecha.</li>
+<li>**tiled**: Alinea todos los paneles en la pantalla con igual cantidad de espacio.</li>
 </ul>
 
 <p>Presiona <kbd>PREFIX</kbd> + <kbd>Espacio</kbd> para probar cada plantilla.</p>
 
 ### Ventanas
 
-<p>Cuando los paneles no son suficientes o deseamos agrupar las terminales segun su actividad contamos con las ventanas.</p>
+Cuando los paneles no son suficientes o deseamos agrupar las terminales segun su actividad contamos con las ventanas.
 
 <h6>Crear una ventana.</h6>
 Embed: `new-window.txt`
 
-<p>Las ventanas tienen nombre y lo podemos modificar con:</p>
+Las ventanas tienen nombre y lo podemos modificar con:
 
 Embed: `rename-window.txt`
 
@@ -130,24 +130,24 @@ Embed: `move-between-windows.txt`
 
 ### Sesiones
 
-<p>Una sesión es una colección de pseudo terminales(ver man 7 pty) que son administradas por tmux. Cada sesión tiene una o más ventanas asociadas a ella. Las sesiones son persistentes y mantendrán su estado en caso de una desconexión. Aquí va un punto importante, si un programa se esta ejecutando cuando la sesión se interrumpe éste continuara su ejecución cuando la sesión sea reanudada.</p>
+Una sesión es una colección de pseudo terminales(ver man 7 pty) que son administradas por tmux. Cada sesión tiene una o más ventanas asociadas a ella. Las sesiones son persistentes y mantendrán su estado en caso de una desconexión. Aquí va un punto importante, si un programa se esta ejecutando cuando la sesión se interrumpe éste continuara su ejecución cuando la sesión sea reanudada.
 
-<p>En otras palabras las sesiones sirven para crear entornos de trabajo personalizados, por ejemplo, si están trabajando en un proyecto y tienes abiertos varios archivos, un terminal interactivo de Ruby o Python, varias ventanas, etc. Si por alguna razón tienes que interrumpir tus actividades, resultaría un poco molesto tener que cerrar archivos, programas, paneles y ventanas, y una hora más tarde cuando regresas a trabajar, restablecer el entorno. La solución es crear una sesión y le asignamos un nombre acorde, si trabajas en más de un proyecto o tarea simplemente crea otra sesión y mantendrás tus áreas de trabajo organizadas.</p>
+En otras palabras las sesiones sirven para crear entornos de trabajo personalizados, por ejemplo, si están trabajando en un proyecto y tienes abiertos varios archivos, un terminal interactivo de Ruby o Python, varias ventanas, etc. Si por alguna razón tienes que interrumpir tus actividades, resultaría un poco molesto tener que cerrar archivos, programas, paneles y ventanas, y una hora más tarde cuando regresas a trabajar, restablecer el entorno. La solución es crear una sesión y le asignamos un nombre acorde, si trabajas en más de un proyecto o tarea simplemente crea otra sesión y mantendrás tus áreas de trabajo organizadas.
 Aunque no lo indiquemos explícitamente tmux crea una sesión de forma automática cada vez que lo ejecutamos.
 
 Embed: `session-operations.txt`
 
 ## Configuración y personalización
 
-<p>Hasta ahora hemos cubierto lo esencial, usando las configuraciones por defecto, sin embargo éstas no siempre son las más cómodas para todos, es por eso que tmux nos admite ser personalizado usando el archivo `~/.tmux.conf`. A continuación muestro algunas de las opciones disponibles:</p>
+Hasta ahora hemos cubierto lo esencial, usando las configuraciones por defecto, sin embargo éstas no siempre son las más cómodas para todos, es por eso que tmux nos admite ser personalizado usando el archivo `~/.tmux.conf`. A continuación muestro algunas de las opciones disponibles:
 
 Embed: `customization.txt`
 
-<p>Tmux soporta los modos vi y emacs para moverse dentro de la aplicación, por defecto el modo emacs es activado. Activar modo vi y algunos atajos.</p>
+Tmux soporta los modos vi y emacs para moverse dentro de la aplicación, por defecto el modo emacs es activado. Activar modo vi y algunos atajos.
 
 Embed: `copy.txt`
 
-<p>Con estas opciones activadas, haz lo siguiente para copiar contenido dentro de tmux, <strong>1)</strong> entra en modo copy, <strong>2)</strong> presiona la tecla v para iniciar la selección y muevete con las teclas <kbd>hjkl</kbd>, como en vim, <strong>3)</strong> presiona la tecla y para copiar la selección.</p>
+<p>Con estas opciones activadas, haz lo siguiente para copiar contenido dentro de tmux, **1)** entra en modo copy, **2)** presiona la tecla v para iniciar la selección y muevete con las teclas <kbd>hjkl</kbd>, como en vim, **3)** presiona la tecla y para copiar la selección.</p>
 
 ### Moverse entre los paneles de manera similar a vim con los splits.
 
@@ -161,7 +161,7 @@ Embed: `vim-like-resize.txt`
 
 Embed: `bar-customization.txt`
 
-<p>Longitud del historial.</p>
+Longitud del historial.
 
 Embed: `history-limit.txt`
 
@@ -169,47 +169,47 @@ Embed: `history-limit.txt`
 
 Embed: `reload-conf.txt`
 
-<p>Existen muchas más opciones de configuración pero creo que con esto es suficiente para comenzar.</p>
+Existen muchas más opciones de configuración pero creo que con esto es suficiente para comenzar.
 
 ## Algunos hacks
 
 ### Iniciar tmux automáticamente al abrir una terminal
 
-<p>Hemos visto que para utilizar tmux abrimos una terminal y entonces lo ejecutamos, para hacer que tmux se ejecute automáticamente cuando abrimos una terminal agrega las siguientes líneas al archivo `~/.bashrc`.</p>
+Hemos visto que para utilizar tmux abrimos una terminal y entonces lo ejecutamos, para hacer que tmux se ejecute automáticamente cuando abrimos una terminal agrega las siguientes líneas al archivo `~/.bashrc`.
 
 Embed: `auto-start.sh`
 
-<p>Si estamos ejecutando el interprete de comandos en modo interactivo y tenemos soporte para 256 colores entonces ejecutamos tmux.</p>
+Si estamos ejecutando el interprete de comandos en modo interactivo y tenemos soporte para 256 colores entonces ejecutamos tmux.
 
 ### Copiar texto al portapapeles del sistema
 
-<p>Estando en el modo copy es posible copiar texto para ser usado en otros paneles o ventanas dentro de tmux, pero no en otras aplicaciones, es decir, el texto copiado en tmux no se puede pegar en firefox, por citar un ejemplo. La siguiente línea soluciona el problema. Es necesario tener instalado el programa `xclip`.</p>
+Estando en el modo copy es posible copiar texto para ser usado en otros paneles o ventanas dentro de tmux, pero no en otras aplicaciones, es decir, el texto copiado en tmux no se puede pegar en firefox, por citar un ejemplo. La siguiente línea soluciona el problema. Es necesario tener instalado el programa `xclip`.
 
 Embed: `copy-xclip.txt`
 
 <p>Funciona de esta manera, entra en modo copy y copia el texto en cuestión tal como ya se ha visto. Sal del modo copy y presiona <kbd>PREFIX</kbd>, suelta y después <kbd>Ctrl</kbd>+<kbd>c</kbd> para colocar el contenido en el portapapeles del sistema.</p>
 
-<p>Una desventaja que he notado con este truco es que una vez que lo usas vim ya no puede trabajar con el portapapeles del sistema(`"*`), aun no he encontrado una solución.</p>
+Una desventaja que he notado con este truco es que una vez que lo usas vim ya no puede trabajar con el portapapeles del sistema(`"*`), aun no he encontrado una solución.
 
 ### Agregar una tecla control adicional
 
 <p>Cuando reasigne <kbd>PREFIX</kbd> a <kbd>Ctrl</kbd> + <kbd>a</kbd> mencione que ésta combinación era más cómoda, y lo es en comparación a <kbd>Ctrl</kbd> + <kbd>b</kbd>, pero en realidad para mi es más accesible porque he reasignado la tecla de la ventana para que actúe como una tecla control adicional, esta asignación trabaja a nivel de sistema y no tiene relación directa con tmux pero a mi me resulta muy útil, en especial con vim.</p>
 
-<p>Para realizar la re asignación emplea el comando `xmodmap` y agrega lo siguiente en el archivo `~/.Xmodmap`.</p>
+Para realizar la re asignación emplea el comando `xmodmap` y agrega lo siguiente en el archivo `~/.Xmodmap`.
 
 Embed: `extra-ctrl-key.txt`
 
-<p>Algunos entornos de escritorio ejecutan este archivo al iniciar, si no es tu caso, agrega el comando `xmodmap ~/.Xmodmap` al archivo de inicio de tu entorno de escritorio, para openbox el archivo es `~/.config/openbox/autostart.sh`.</p>
+Algunos entornos de escritorio ejecutan este archivo al iniciar, si no es tu caso, agrega el comando `xmodmap ~/.Xmodmap` al archivo de inicio de tu entorno de escritorio, para openbox el archivo es `~/.config/openbox/autostart.sh`.
 
 ## Conclusión
 
-<p>Tmux al igual que las otras herramientas que vamos a tratar no son el tipo de programas que se aprenden a usar en 5 minutos, requieren cierta cantidad de tiempo, yo lo llamo una inversión porque el tiempo que dediquen para aprender a utilizarlas lo verán remunerado en poco tiempo en forma de eficiencia y productividad.</p>
+Tmux al igual que las otras herramientas que vamos a tratar no son el tipo de programas que se aprenden a usar en 5 minutos, requieren cierta cantidad de tiempo, yo lo llamo una inversión porque el tiempo que dediquen para aprender a utilizarlas lo verán remunerado en poco tiempo en forma de eficiencia y productividad.
 
 ## Referencias
 
 <table>
 <tr><td>[1]</td>  <td><a href="https://tmux.github.io/"  target="_blank">https://tmux.github.io</a>                                      </td></tr>
-<tr><td>[2]</td>  <td><a href="http://pragprog.com/book/bhtmux/tmux" target="_blank">tmux Productive Mouse-Free Development, Brian P. Hogan</a>   </td></tr>
-<tr><td>[3]</td>  <td><a href="http://stackoverflow.com/questions/24109/c-ide-for-linux" target="_blank">C IDE for Linux?</a>                     </td></tr>
-<tr><td>[4]</td>  <td><a href="http://unix.stackexchange.com/questions/15715/getting-tmux-to-copy-a-buffer-to-the-clipboard" target="_blank">Getting tmux to copy a buffer to the clipboard</a>  </td></tr>
+<tr><td>[2]</td>  <td>[tmux Productive Mouse-Free Development, Brian P. Hogan](http://pragprog.com/book/bhtmux/tmux)   </td></tr>
+<tr><td>[3]</td>  <td>[C IDE for Linux?](http://stackoverflow.com/questions/24109/c-ide-for-linux)                     </td></tr>
+<tr><td>[4]</td>  <td>[Getting tmux to copy a buffer to the clipboard](http://unix.stackexchange.com/questions/15715/getting-tmux-to-copy-a-buffer-to-the-clipboard)  </td></tr>
 </table>

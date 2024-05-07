@@ -1,19 +1,19 @@
 # Testing a Web service
 2016-02-18 2024-05-07 #dev #post
 
-<p>I've been working with Web services these days for some college projects. Here are some interesting ways to test your web service.</p>
+I've been working with Web services these days for some college projects. Here are some interesting ways to test your web service.
 
-<p>Supponse this is our Web service:</p>
+Supponse this is our Web service:
 
 Embed: `web-service.php`
 
 ![Our web service](/testing-a-web-service/testws_myservice.png)
 
-<p>Now, how to test if our Web service is working as expected? Let' see.</p>
+Now, how to test if our Web service is working as expected? Let' see.
 
 ## SoapUI
 
-<p>This is a greate tool. Given a Web service location, SoapUI generates the needed SOAP messages to send requests to our Web service. Here I show how to test our previous Web service.</p>
+This is a greate tool. Given a Web service location, SoapUI generates the needed SOAP messages to send requests to our Web service. Here I show how to test our previous Web service.
 
 ![SoapUI new project](/testing-a-web-service/testws_soapui_new.png)
 
@@ -22,56 +22,56 @@ Embed: `web-service.php`
 
 ## Command line
 
-<p>Using the command line always let us understand better how the stuffs works :). </p>
+Using the command line always let us understand better how the stuffs works :). 
 
-<p>Put the following request message in a file called <em>request.xml</em>:</p>
+Put the following request message in a file called *request.xml*:
 
 Embed: `request.xml`
 
 ### Using Wget
 
-<p>Issue the following command to test our Web service:</p>
+Issue the following command to test our Web service:
 
 Embed: `wget.sh`
 
-<p>The content the file <em>response.xml</em> should be something like this:</p>
+The content the file *response.xml* should be something like this:
 
 Embed: `wget-output.xml`
 
-<p>This is the same response shown in picture , unindented though.</p>
+This is the same response shown in picture , unindented though.
 
 ### Using cURL
 
-<p>Here is the curl version:</p>
+Here is the curl version:
 
 Embed: `curl.sh`
 
-<p>The content of the <em>out.xml</em> file must be the same as the previous example.</p>
+The content of the *out.xml* file must be the same as the previous example.
 
 ### Using telnet
 
-<p>Here I show you how you can send an HTTP POST request to our WS using telnet:</p>
+Here I show you how you can send an HTTP POST request to our WS using telnet:
 
 Embed: `telnet.sh`
 
-<p>DON'T FORGET to specify the content length!</p>
+DON'T FORGET to specify the content length!
 
 ## Using Java
 
-<p>Well, this is useful too, specially if you are developing a Java application.</p>
+Well, this is useful too, specially if you are developing a Java application.
 
 Embed: `testws.java`
 
 ## Using C++ with Qt
 
-<p>I used this too:</p>
+I used this too:
 
 Embed: `testws-qt.cpp`
 
-<p>The methods <em>testService()</em> and <em>testFinished()</em> are <a href="http://qt-project.org/doc/qt-5.0/qtcore/signalsandslots.html">SLOTS</a>.</p>
+The methods *testService()* and *testFinished()* are [SLOTS](http://qt-project.org/doc/qt-5.0/qtcore/signalsandslots.html).
 
 ## What's next?
 
-<p>So far we have seen only how to test the connection to the Web service, the next step would be to extract the information we need from the response message, is not that hard, search for XML parser for your language, for Qt I've used <a href="http://doc.qt.io/qt-5/qxmlstreamreader.html" target="_blank">QXmlStreamReader</a>.</p>
+So far we have seen only how to test the connection to the Web service, the next step would be to extract the information we need from the response message, is not that hard, search for XML parser for your language, for Qt I've used [QXmlStreamReader](http://doc.qt.io/qt-5/qxmlstreamreader.html).
 
-<p>I hope this be helpful.</p>
+I hope this be helpful.

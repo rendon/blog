@@ -6,20 +6,12 @@
     <span class='tags'><span class="fa-solid fa-tag"></span><code>#algorithms</code> <code>#data-structures</code> <code>#post</code></span>
 </p>
 
-<p>
-I recently found out about <a href="http://adventofcode.com/">Advent of Code</a>, and as part of my preparation for this year’s event I’m solving the puzzles of the previous event (<a href="http://adventofcode.com/2015">adventofcode.com/2015</a>), in this short series I’ll publish my solutions with a brief explanation.
-</p>
-<p>
-A brief explanation about how Advent of Code works, there’s one puzzle every day from December 1st to the 25th, each puzzle has two versions so you can earn upto two stars for every puzzle.
-</p>
+<p>I recently found out about <a href="http://adventofcode.com/">Advent of Code</a>, and as part of my preparation for this year’s event I’m solving the puzzles of the previous event (<a href="http://adventofcode.com/2015">adventofcode.com/2015</a>), in this short series I’ll publish my solutions with a brief explanation.</p>
+<p>A brief explanation about how Advent of Code works, there’s one puzzle every day from December 1st to the 25th, each puzzle has two versions so you can earn upto two stars for every puzzle.</p>
 <h2 id="day-1-not-quite-lisp">Day 1: Not Quite Lisp</h2>
-<p>
-Problem description: <a href="http://adventofcode.com/2015/day/1">day/1</a>.
-</p>
+<p>Problem description: <a href="http://adventofcode.com/2015/day/1">day/1</a>.</p>
 <h3 id="solution">Solution</h3>
-<p>
-For v1: Just use a variable for the current floor, increase by one when we find a <code>(</code>, descrease by 1 when we find a <code>)</code>.
-</p>
+<p>For v1: Just use a variable for the current floor, increase by one when we find a <code>(</code>, descrease by 1 when we find a <code>)</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">#!/usr/bin/env ruby</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>input <span class="kw">=</span> <span class="dt">File</span><span class="at">.read</span>(<span class="vs">&#39;input.txt&#39;</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>sequence <span class="kw">=</span> input<span class="at">.split</span>(<span class="ss">//</span>)</span>
@@ -32,9 +24,7 @@ For v1: Just use a variable for the current floor, increase by one when we find 
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">end</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">puts</span> floor</span></code></pre></div>
-<p>
-For v2: Similar to v1, we just need to keep track of the positions.
-</p>
+<p>For v2: Similar to v1, we just need to keep track of the positions.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">#!/usr/bin/env ruby</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>input <span class="kw">=</span> <span class="dt">File</span><span class="at">.read</span>(<span class="vs">&#39;input.txt&#39;</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>sequence <span class="kw">=</span> input<span class="at">.split</span>(<span class="ss">//</span>)</span>
@@ -51,13 +41,9 @@ For v2: Similar to v1, we just need to keep track of the positions.
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">end</span></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
 <h2 id="day-2-i-was-told-there-would-be-no-math">Day 2: I Was Told There Would Be No Math</h2>
-<p>
-Problem description: <a href="http://adventofcode.com/2015/day/2">day/2</a>.
-</p>
+<p>Problem description: <a href="http://adventofcode.com/2015/day/2">day/2</a>.</p>
 <h3 id="solution-1">Solution</h3>
-<p>
-For v1: Read all lines, parse the three integers and just apply the fomula from the problem description.
-</p>
+<p>For v1: Read all lines, parse the three integers and just apply the fomula from the problem description.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>paper <span class="kw">=</span> <span class="dv">0</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="dt">File</span><span class="at">.readlines</span>(<span class="vs">&#39;input.txt&#39;</span>)<span class="at">.each</span> <span class="cf">do</span> <span class="kw">|</span>line<span class="kw">|</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">next</span> <span class="cf">if</span> line<span class="at">.length</span> <span class="kw">==</span> <span class="vs">&#39;&#39;</span></span>
@@ -66,9 +52,7 @@ For v1: Read all lines, parse the three integers and just apply the fomula from 
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  paper <span class="kw">+=</span> (<span class="dv">2</span> <span class="kw">*</span> l <span class="kw">*</span> w) <span class="kw">+</span> (<span class="dv">2</span> <span class="kw">*</span> l <span class="kw">*</span> h) <span class="kw">+</span> (<span class="dv">2</span> <span class="kw">*</span> w <span class="kw">*</span> h) <span class="kw">+</span> (l <span class="kw">*</span> w)</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">puts</span> paper</span></code></pre></div>
-<p>
-For v2: Take the lowest 2 values (out of 3) and compute the perimeter, plus the product of all of them.
-</p>
+<p>For v2: Take the lowest 2 values (out of 3) and compute the perimeter, plus the product of all of them.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ribbon <span class="kw">=</span> <span class="dv">0</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dt">File</span><span class="at">.readlines</span>(<span class="vs">&#39;input.txt&#39;</span>)<span class="at">.each</span> <span class="cf">do</span> <span class="kw">|</span>line<span class="kw">|</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  dimensions <span class="kw">=</span> line<span class="at">.split</span>(<span class="ch">&#39;x&#39;</span>)<span class="at">.map</span>(<span class="kw">&amp;</span><span class="wa">:to_i</span>)<span class="at">.sort</span></span>
@@ -77,13 +61,9 @@ For v2: Take the lowest 2 values (out of 3) and compute the perimeter, plus the 
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">puts</span> ribbon</span></code></pre></div>
 <h2 id="day-3-perfectly-spherical-houses-in-a-vacuum">Day 3: Perfectly Spherical Houses in a Vacuum</h2>
-<p>
-Problem description: <a href="http://adventofcode.com/2015/day/3">day/3</a>.
-</p>
+<p>Problem description: <a href="http://adventofcode.com/2015/day/3">day/3</a>.</p>
 <h3 id="solution-2">Solution</h3>
-<p>
-For v1: A simulation problem, update your position in a 2-dimensional grid with every command, use a table to keep track of the unique positions you’ve been in.
-</p>
+<p>For v1: A simulation problem, update your position in a 2-dimensional grid with every command, use a table to keep track of the unique positions you’ve been in.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>grid <span class="kw">=</span> <span class="kw">{[</span><span class="dv">0</span>, <span class="dv">0</span><span class="kw">]</span> <span class="kw">=&gt;</span> <span class="dv">true</span><span class="kw">}</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>r <span class="kw">=</span> <span class="dv">0</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>c <span class="kw">=</span> <span class="dv">0</span></span>
@@ -122,9 +102,7 @@ For v1: A simulation problem, update your position in a 2-dimensional grid with 
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="fu">puts</span> grid<span class="at">.length</span></span></code></pre></div>
 <h2 id="day-4-the-ideal-stocking-stuffer">Day 4: The Ideal Stocking Stuffer</h2>
-<p>
-Problem description: <a href="http://adventofcode.com/2015/day/4">day/4</a>.
-</p>
+<p>Problem description: <a href="http://adventofcode.com/2015/day/4">day/4</a>.</p>
 <h3 id="solution-3">Solution</h3>
 <p>
 <p>For v1: Well, I just brute-forced this one, used Ruby’s <code>Digest::MD5</code> to compute the checksum.</p>
@@ -159,9 +137,7 @@ Problem description: <a href="http://adventofcode.com/2015/day/4">day/4</a>.
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  key <span class="kw">+=</span> <span class="dv">1</span></span>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
 <h2 id="day-5-doesnt-he-have-intern-elves-for-this">Day 5: Doesn’t He Have Intern-Elves For This?</h2>
-<p>
-Problem description: <a href="http://adventofcode.com/2015/day/5">day/5</a>.
-</p>
+<p>Problem description: <a href="http://adventofcode.com/2015/day/5">day/5</a>.</p>
 <h3 id="solution-4">Solution</h3>
 <p>
 <p>For v1: Just follow the instructions <strong>carefully</strong> and you should be able to solve this problem.</p>

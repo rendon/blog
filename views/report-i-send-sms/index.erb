@@ -7,28 +7,20 @@
     <span class='tags'><span class="fa-solid fa-tag"></span><code>#dev</code> <code>#android</code> <code>#post</code></span>
 </p>
 
-<p>
-Con éste documento doy inicio a una serie de reportes correspondientes al desarrollo de los proyectos de la asignatura <strong>Desarrollo de Aplicaciones para Tecnologías Móviles</strong>.
-</p>
+<p>Con éste documento doy inicio a una serie de reportes correspondientes al desarrollo de los proyectos de la asignatura <strong>Desarrollo de Aplicaciones para Tecnologías Móviles</strong>.</p>
 <h2 id="definición-del-problema">Definición del problema</h2>
-<p>
-En esta ocasión toca el turno al primer proyecto, que podríamos denominar “Envío de mensajes SMS desde la PC”. A continuación una breve descripción.
-</p>
+<p>En esta ocasión toca el turno al primer proyecto, que podríamos denominar “Envío de mensajes SMS desde la PC”. A continuación una breve descripción.</p>
 <blockquote>
 Desarrollar una aplicación de escritorio que permita a sus usuarios enviar y recibir mensajes de texto (SMS) desde la PC, usando un dispositivo celular o smartphone que funja como emisor y receptor.
 </blockquote>
 <h2 id="propuesta-de-solución">Propuesta de solución</h2>
-<p>
-La solución que vamos a tratar en este reporte consiste en lo siguiente. No vamos a crear 1 programa sino 2, un servidor en el dispositivo móvil y un cliente en la PC. El siguiente diagrama puede ayudar a entender mejor la solución.
-</p>
+<p>La solución que vamos a tratar en este reporte consiste en lo siguiente. No vamos a crear 1 programa sino 2, un servidor en el dispositivo móvil y un cliente en la PC. El siguiente diagrama puede ayudar a entender mejor la solución.</p>
 <figure>
 <img src="/report-i-send-sms/sms_01.png" alt="Diagrama de la solución" />
 <figcaption aria-hidden="true">Diagrama de la solución</figcaption>
 </figure>
 <h3 id="servidor">Servidor</h3>
-<p>
-Se encargará de las siguientes actividades:
-</p>
+<p>Se encargará de las siguientes actividades:</p>
 <ul>
 <li>
 Enviar los mensajes que el cliente le solicite y almacenarlos en una base de datos.
@@ -53,9 +45,7 @@ Servir el último mensaje recibido.
 </li>
 </li>
 <h3 id="cliente">Cliente</h3>
-<p>
-Éste se comunicará con el servidor y proporcionará una interfaz gráfica al usuario con los siguientes servicios.
-</p>
+<p>Éste se comunicará con el servidor y proporcionará una interfaz gráfica al usuario con los siguientes servicios.</p>
 <ul>
 <li>
 Enviar mensaje SMS.
@@ -74,9 +64,7 @@ Visualizar los mensajes enviados.
 </li>
 </ul>
 <h2 id="requisitos">Requisitos</h2>
-<p>
-Para poder seguir este tutorial necesitas contar con los siguientes requisitos:
-</p>
+<p>Para poder seguir este tutorial necesitas contar con los siguientes requisitos:</p>
 <ul>
 <li>
 Un dispositivo móvil con sistema operativo Android 2.3 (probablemente funcione con versiones posteriores)
@@ -107,32 +95,18 @@ Acostumbro codificar en Ingles puesto que considero es más homogéneo, permite 
 </li>
 </ul>
 <h2 id="el-servidor">El servidor</h2>
-<p>
-El servidor es una aplicación para Android. Es un servidor HTTP que recibe peticiones mediante el método GET, quizás no lo más adecuado pero si lo más sencillo. Para no empezar desde cero vamos a hacer uso de NanoHTTPD (<em>http://nanohttpd.com/</em>), que como su nombre lo indica es un servidor HTTP muy pequeño, ideal para un sistema embebido.
-</p>
-<p>
-Con el fin de aprender a utilizar el SDK de Android he optado por no utilizar un IDE para esta parte, únicamente las herramientas que incluye el SDK y la línea de comandos, nada de que preocuparse.
-</p>
+<p>El servidor es una aplicación para Android. Es un servidor HTTP que recibe peticiones mediante el método GET, quizás no lo más adecuado pero si lo más sencillo. Para no empezar desde cero vamos a hacer uso de NanoHTTPD (<em>http://nanohttpd.com/</em>), que como su nombre lo indica es un servidor HTTP muy pequeño, ideal para un sistema embebido.</p>
+<p>Con el fin de aprender a utilizar el SDK de Android he optado por no utilizar un IDE para esta parte, únicamente las herramientas que incluye el SDK y la línea de comandos, nada de que preocuparse.</p>
 <h3 id="crear-el-proyecto">Crear el proyecto</h3>
-<p>
-En la línea de comandos teclee los siguiente:
-</p>
+<p>En la línea de comandos teclee los siguiente:</p>
 <p>Embed: <code>create-project.sh</code></p>
-<p>
-Así debe lucir la estructura del proyecto:
-</p>
+<p>Así debe lucir la estructura del proyecto:</p>
 <p>Embed: <code>project-structure.txt</code></p>
-<p>
-Por el momento en el archivo <em>SMSServer.java</em> hay solo un método, <em>onCreate()</em>, que lo único que hace es imprimir un mensaje en de bienvenida. Primero veamos cómo implementar el servidor, dentro del archivo <em>SMSServer.java</em> creamos una clase privada <em>HelloServer</em> que herede de <em>NanoHTTPD</em>, un constructor y el método <em>serve()</em>, es éste último es donde se concentra la mayor parte de la acción. El código es bastante simple por lo que no creo que halla necesidad de entrar mucho detalle.
-</p>
+<p>Por el momento en el archivo <em>SMSServer.java</em> hay solo un método, <em>onCreate()</em>, que lo único que hace es imprimir un mensaje en de bienvenida. Primero veamos cómo implementar el servidor, dentro del archivo <em>SMSServer.java</em> creamos una clase privada <em>HelloServer</em> que herede de <em>NanoHTTPD</em>, un constructor y el método <em>serve()</em>, es éste último es donde se concentra la mayor parte de la acción. El código es bastante simple por lo que no creo que halla necesidad de entrar mucho detalle.</p>
 <p>Embed: <code>hello-server.java</code></p>
-<p>
-La forma de enviar datos con el método GET tiene el siguiente formato:
-</p>
+<p>La forma de enviar datos con el método GET tiene el siguiente formato:</p>
 <p>Embed: <code>get-format.txt</code></p>
-<p>
-Un signo de interrogación seguido por una lista de parámetros con formato clave=valor, separados por ampersands (&amp;). NanoHTTPD se encarga de extraer dichos parámetros y se los pasa al método <em>serve()</em> en la variable <em>parameters</em>, el cliente siempre enviará como primer parámetro la cadena “command” y su valor va a determinar la acción que el cliente esta solicitando. Los posibles comandos son:
-</p>
+<p>Un signo de interrogación seguido por una lista de parámetros con formato clave=valor, separados por ampersands (&amp;). NanoHTTPD se encarga de extraer dichos parámetros y se los pasa al método <em>serve()</em> en la variable <em>parameters</em>, el cliente siempre enviará como primer parámetro la cadena “command” y su valor va a determinar la acción que el cliente esta solicitando. Los posibles comandos son:</p>
 <ul>
 <li>
 <strong>COMMAND_GET_CONTACTS</strong> para solicitar la lista de contactos.
@@ -153,137 +127,87 @@ Un signo de interrogación seguido por una lista de parámetros con formato clav
 <strong>COMMAND_GET_LAST_MESSAGE</strong> para recuperar el nuevo nuevo mensaje en caso de haberlo.
 </li>
 </ul>
-<p>
-Todas éstas constantes se definen tanto en el cliente como en el servidor.
-</p>
+<p>Todas éstas constantes se definen tanto en el cliente como en el servidor.</p>
 <h3 id="agregando-acción-al-método-oncreate">Agregando acción al método onCreate()</h3>
-<p>
-Éste método es el primero que se ejecuta al iniciar la aplicación y en el vamos a incluir algunas acciones, como son, iniciar el servidor, recuperar la lista de contactos del dispositivo y cargar la base de datos. En caso de que la base de datos no exista ésta deberá ser creada, las bases de datos SQLite se almacenan en archivos.
-</p>
+<p>Éste método es el primero que se ejecuta al iniciar la aplicación y en el vamos a incluir algunas acciones, como son, iniciar el servidor, recuperar la lista de contactos del dispositivo y cargar la base de datos. En caso de que la base de datos no exista ésta deberá ser creada, las bases de datos SQLite se almacenan en archivos.</p>
 <p>Embed: <code>on-create.java</code></p>
 <h3 id="servir-la-lista-de-contactos">Servir la lista de contactos</h3>
-<p>
-En el método <em>onCreate()</em> cargamos la libreta de contactos en <em>contactList</em>, ésta lista es la que le enviaremos al cliente cuando la solicite.
-</p>
+<p>En el método <em>onCreate()</em> cargamos la libreta de contactos en <em>contactList</em>, ésta lista es la que le enviaremos al cliente cuando la solicite.</p>
 <p>Embed: <code>get-contacts.java</code></p>
 <h3 id="servir-la-lista-de-mensajes-enviados">Servir la lista de mensajes enviados</h3>
 <p>Embed: <code>get-received-messages.java</code></p>
 <h3 id="enviar-sms">Enviar SMS</h3>
-<p>
-El método <em>sendSMS()</em> es el que se encarga de enviar los mensajes SMS:
-</p>
+<p>El método <em>sendSMS()</em> es el que se encarga de enviar los mensajes SMS:</p>
 <p>Embed: <code>send-sms.java</code></p>
 <h3 id="detectar-los-mensajes-entrantes">Detectar los mensajes entrantes</h3>
-<p>
-Esta es una de las partes más interesantes. Cada vez que sucede un evento el sistema hace notificaciones todas la aplicaciones que así lo requieran, para ser notificados es necesario heredar la clase <em>BroadcastReceiver</em>.
-</p>
+<p>Esta es una de las partes más interesantes. Cada vez que sucede un evento el sistema hace notificaciones todas la aplicaciones que así lo requieran, para ser notificados es necesario heredar la clase <em>BroadcastReceiver</em>.</p>
 <p>Embed: <code>sms-receiver.java</code></p>
-<p>
-Y en el método <em>onResume()</em> de la clase SMSServer:
-</p>
+<p>Y en el método <em>onResume()</em> de la clase SMSServer:</p>
 <p>Embed: <code>on-resume.java</code></p>
 <h3 id="la-base-de-datos">La base de datos</h3>
-<p>
-Para que el registro de mensajes enviados y recibidos persista incluso después de reiniciar el servidor es necesario almacenar dichos mensajes en algún lugar, en este caso, una base de datos, Android provee soporte nativo para SQLite. La clase _DBManager se encarga de todas las operaciones de la base de datos.
-</p>
+<p>Para que el registro de mensajes enviados y recibidos persista incluso después de reiniciar el servidor es necesario almacenar dichos mensajes en algún lugar, en este caso, una base de datos, Android provee soporte nativo para SQLite. La clase _DBManager se encarga de todas las operaciones de la base de datos.</p>
 <p>Embed: <code>db-manager.java</code></p>
 <h3 id="concesión-de-permisos">Concesión de permisos</h3>
-<p>
-En Android las aplicaciones por defecto cuentan con privilegios muy limitados, por lo cual es necesario conceder permisos para poder acceder al Internet, a los mensajes, a los contactos, etc. Estos permisos se especifican en el archivo <em>AndroidManifest.xml</em> que se encuentra en folder raíz del proyecto.
-</p>
+<p>En Android las aplicaciones por defecto cuentan con privilegios muy limitados, por lo cual es necesario conceder permisos para poder acceder al Internet, a los mensajes, a los contactos, etc. Estos permisos se especifican en el archivo <em>AndroidManifest.xml</em> que se encuentra en folder raíz del proyecto.</p>
 <p>Embed: <code>permissions.xml</code></p>
-<p>
-Hasta aquí la descripción del programa, veamos ahora la compilación e instalación.
-</p>
-<p>
-Nos posicionamos en el folder de nuestro proyecto y tecleamos lo siguiente, la primera línea es para compilar y la segunda para instalar la aplicación en el dispositivo o en el emulador, lo que encuentre primero.
-</p>
+<p>Hasta aquí la descripción del programa, veamos ahora la compilación e instalación.</p>
+<p>Nos posicionamos en el folder de nuestro proyecto y tecleamos lo siguiente, la primera línea es para compilar y la segunda para instalar la aplicación en el dispositivo o en el emulador, lo que encuentre primero.</p>
 <p>Embed: <code>compile-and-install.sh</code></p>
-<p>
-La dirección del servidor es la dirección IP que tienen el dispositivo móvil, en el puerto 8080, por ejemplo, <em>http://192.168.1.242:8080</em>. Esta dirección la tienen que conocer el cliente para poder conectarse.
-</p>
+<p>La dirección del servidor es la dirección IP que tienen el dispositivo móvil, en el puerto 8080, por ejemplo, <em>http://192.168.1.242:8080</em>. Esta dirección la tienen que conocer el cliente para poder conectarse.</p>
 <figure>
 <img src="/report-i-send-sms/sms_02.png" alt="Interfaz del servidor de SMS" />
 <figcaption aria-hidden="true">Interfaz del servidor de SMS</figcaption>
 </figure>
 <h2 id="el-cliente">El cliente</h2>
-<p>
-El cliente es una programa en Java, con una interfaz sencilla, una venta principal con tres pestañas, la primera para enviar mensajes, la segunda para visualizar los mensajes recibidos y la última para visualizar los mensajes enviados. Para esta parte utilice el IDE IntelliJ IDEA.
-</p>
-<p>
-Además de la interfaz gráfica se ha desarrollado una clase <em>SmsClient</em> que se encargará de obtener los recursos del servidor. A continuación se describen los métodos.
-</p>
+<p>El cliente es una programa en Java, con una interfaz sencilla, una venta principal con tres pestañas, la primera para enviar mensajes, la segunda para visualizar los mensajes recibidos y la última para visualizar los mensajes enviados. Para esta parte utilice el IDE IntelliJ IDEA.</p>
+<p>Además de la interfaz gráfica se ha desarrollado una clase <em>SmsClient</em> que se encargará de obtener los recursos del servidor. A continuación se describen los métodos.</p>
 <h3 id="testconnection">testConnection()</h3>
-<p>
-Intenta conectar al servidor y retorna verdadero en caso de éxito.
-</p>
+<p>Intenta conectar al servidor y retorna verdadero en caso de éxito.</p>
 <p>Embed: <code>test-connection.java</code></p>
 <h3 id="getsentmessages">getSentMessages()</h3>
-<p>
-Obtiene del servidor la lista de mensajes enviados.
-</p>
+<p>Obtiene del servidor la lista de mensajes enviados.</p>
 <p>Embed: <code>get-sent-messages.java</code></p>
 <h3 id="getreceivedmessages">getReceivedMessages()</h3>
-<p>
-Recupera del servidor la lista de mensajes enviados.
-</p>
+<p>Recupera del servidor la lista de mensajes enviados.</p>
 <p>Embed: <code>client-get-received-messages.java</code></p>
 <h3 id="getcontactlist">getContactList()</h3>
-<p>
-Obtiene del servidor la lista de contactos en el dispositivo.
-</p>
+<p>Obtiene del servidor la lista de contactos en el dispositivo.</p>
 <p>Embed: <code>get-contact-list.java</code></p>
 <h3 id="sendsms">sendSMS()</h3>
-<p>
-Solicita al servidor enviar un mensaje, enviándole como parámetros el número y el mensaje.
-</p>
+<p>Solicita al servidor enviar un mensaje, enviándole como parámetros el número y el mensaje.</p>
 <p>Embed: <code>client-send-sms.java</code></p>
 <h3 id="newmessagepanel">NewMessagePanel</h3>
-<p>
-Hacemos unas cuantas validaciones y en caso satisfactorio procedemos a enviar el mensaje.
-</p>
+<p>Hacemos unas cuantas validaciones y en caso satisfactorio procedemos a enviar el mensaje.</p>
 <p>Embed: <code>action-performed.java</code></p>
 <figure>
 <img src="/report-i-send-sms/sms_03.png" alt="Envío de mensajes" />
 <figcaption aria-hidden="true">Envío de mensajes</figcaption>
 </figure>
 <h3 id="inboxpanel">InboxPanel</h3>
-<p>
-Esta parte si es un poco interesante, cómo saber si ha llegado un nuevo mensaje y en su caso obtenerlo y actualizar el contenido de la bandeja de entrada. Para eso creamos una clase que se ejecuta en un hilo independiente y continuamente pregunta al servidor si hay mensajes nuevos.
-</p>
+<p>Esta parte si es un poco interesante, cómo saber si ha llegado un nuevo mensaje y en su caso obtenerlo y actualizar el contenido de la bandeja de entrada. Para eso creamos una clase que se ejecuta en un hilo independiente y continuamente pregunta al servidor si hay mensajes nuevos.</p>
 <p>Embed: <code>sms-monitor.java</code></p>
 <figure>
 <img src="/report-i-send-sms/sms_04.png" alt="Bandeja de entrada" />
 <figcaption aria-hidden="true">Bandeja de entrada</figcaption>
 </figure>
 <h3 id="sentmessagepanel">SentMessagePanel</h3>
-<p>
-Esta parte es más simple, únicamente muestra la lista de mensajes enviados. En caso de no poder contactar al servidor al momento de iniciar la aplicación, ésta se mantiene continuamente reintentado, lo mismo pasa con las otras partes de la aplicación.
-</p>
+<p>Esta parte es más simple, únicamente muestra la lista de mensajes enviados. En caso de no poder contactar al servidor al momento de iniciar la aplicación, ésta se mantiene continuamente reintentado, lo mismo pasa con las otras partes de la aplicación.</p>
 <p>Embed: <code>run.java</code></p>
 <figure>
 <img src="/report-i-send-sms/sms_05.png" alt="Mensajes enviados" />
 <figcaption aria-hidden="true">Mensajes enviados</figcaption>
 </figure>
 <h3 id="bono">Bono</h3>
-<p>
-Al enviar un mensaje el usuario puede introducir el número directamente o presionar el botón con etiqueta “…” para acceder a la lista de contactos del dispositivo. Por cuestiones de seguridad he alterado la imagen puesto que es mi lista de contactos.
-</p>
+<p>Al enviar un mensaje el usuario puede introducir el número directamente o presionar el botón con etiqueta “…” para acceder a la lista de contactos del dispositivo. Por cuestiones de seguridad he alterado la imagen puesto que es mi lista de contactos.</p>
 <figure>
 <img src="/report-i-send-sms/sms_06.png" alt="Lista de contactos" />
 <figcaption aria-hidden="true">Lista de contactos</figcaption>
 </figure>
-<p>
-El código es sencillo:
-</p>
+<p>El código es sencillo:</p>
 <p>Embed: <code>contact-chooser.java</code></p>
-<p>
-Hasta aquí las explicaciones, espero les sea de utilidad.
-</p>
+<p>Hasta aquí las explicaciones, espero les sea de utilidad.</p>
 <h2 id="código-fuente">Código fuente</h2>
-<p>
-Tanto el servidor como el cliente se encuentran hospedados en Bitbucket, bajo la licencia GPLv3, con excepcón de NanoHTTPD, el cual tienen su propia licencia. Para obtenerlo puedes ir directamente a los siguientes sitios y descargar un archivo ZIP.
-</p>
+<p>Tanto el servidor como el cliente se encuentran hospedados en Bitbucket, bajo la licencia GPLv3, con excepcón de NanoHTTPD, el cual tienen su propia licencia. Para obtenerlo puedes ir directamente a los siguientes sitios y descargar un archivo ZIP.</p>
 <ul>
 <li>
 <strong>SMSServer:</strong> <a href="https://bitbucket.org/rendon/smsserver">https://bitbucket.org/rendon/smsserver</a>
@@ -292,21 +216,13 @@ Tanto el servidor como el cliente se encuentran hospedados en Bitbucket, bajo la
 <strong>SMSClient:</strong> <a href="https://bitbucket.org/rendon/smsclient">https://bitbucket.org/rendon/smsclient</a>
 </li>
 </ul>
-<p>
-O bien puedes clonar el proyecto usando el Sistema de Control de Versiones <strong>git</strong>.
-</p>
+<p>O bien puedes clonar el proyecto usando el Sistema de Control de Versiones <strong>git</strong>.</p>
 <p>Embed: <code>clone-projects.sh</code></p>
 <h2 id="conclusión">Conclusión</h2>
-<p>
-Este primer proyecto fue interesante puesto que me permitió recordar algunas cosas y aprender muchas más, por ejemplo, cómo crear aplicaciones en Android, entiendo mejor la forma en que trabajan los servidores, entre otras cosas.
-</p>
-<p>
-Los programas en realidad no son tan complicados, con un poco de investigación y análisis estoy seguro de que lograrán entenderlos.
-</p>
+<p>Este primer proyecto fue interesante puesto que me permitió recordar algunas cosas y aprender muchas más, por ejemplo, cómo crear aplicaciones en Android, entiendo mejor la forma en que trabajan los servidores, entre otras cosas.</p>
+<p>Los programas en realidad no son tan complicados, con un poco de investigación y análisis estoy seguro de que lograrán entenderlos.</p>
 <h2 id="por-hacer">Por hacer</h2>
-<p>
-En esta sección vamos a listar algunas características que en nuestra aplicación no se implementaron pero que la harían mejor.
-</p>
+<p>En esta sección vamos a listar algunas características que en nuestra aplicación no se implementaron pero que la harían mejor.</p>
 <ul>
 <li>
 Cambiar el método de comunicación con el servidor de <strong>GET</strong> a <strong>POST</strong>, éste último es más seguro.

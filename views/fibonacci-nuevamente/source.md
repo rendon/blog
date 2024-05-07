@@ -3,45 +3,45 @@
 # Fibonacci nuevamente
 2016-02-18 2024-05-07 #algorithms #post
 
-<p>La sucesión de fibonacci se define de la siguiente manera:</p>
+La sucesión de fibonacci se define de la siguiente manera:
 
 $f(n) = \begin{cases} 0 & \text{si n = 0} \\\\ 1 & \text{si n = 1} \\\\ f(n - 1) + f(n - 2) & \text{si n > 1} \end{cases} $
 
-<p>Empezando con el uno los primeros 10 términos de esta sucesión son: </p>
+Empezando con el uno los primeros 10 términos de esta sucesión son: 
   
 $ F\_{1} = 1,\;\; F\_{2} = 1,\;\; F\_{3} = 2,\;\; F\_{4} = 3,\;\; F\_{5} = 5,\;\; F\_{6} = 8,\;\; F\_{7} = 13,\;\; F\_{8} = 21,\;\; F\_{9} = 34,\;\; F\_{10} = 55$
 	
 	
-<p>Quizás están pensando que este post trata simplemente en implementar la función en algun lenguaje de programación y entonces probablemente su primera reacción será "ya me lo se...". ¿Pues que creen? lo que aquí les mostrare es una alternativa al calculo de los términos de fibonacci. Me refiero al <em>número aureo</em> o <em>golden ratio</em>.</p>
+Quizás están pensando que este post trata simplemente en implementar la función en algun lenguaje de programación y entonces probablemente su primera reacción será "ya me lo se...". ¿Pues que creen? lo que aquí les mostrare es una alternativa al calculo de los términos de fibonacci. Me refiero al *número aureo* o *golden ratio*.
 	
 	
 $F\_{n} = \left[\frac{\varphi^{n}}{\sqrt{5}}\right]$
 	
 	
-<p>Donde los corchetes indican que el <em>n-esimo</em> término corresponde al <strong>entero más cercano</strong>. Y por supuesto, <strong><em>n</em></strong> es el término que deseamos conocer...Hey! Alto! Alto! Y ese "phi" de donde salio?, veamos, la constante $\varphi$ es un numero irracional con valor aproximado de 1.618033988749894848204586834365638117720309179805762862135448622705260 el cual se obtiene de la siguiente fórmula:</p>
+Donde los corchetes indican que el *n-esimo* término corresponde al **entero más cercano**. Y por supuesto, ***n*** es el término que deseamos conocer...Hey! Alto! Alto! Y ese "phi" de donde salio?, veamos, la constante $\varphi$ es un numero irracional con valor aproximado de 1.618033988749894848204586834365638117720309179805762862135448622705260 el cual se obtiene de la siguiente fórmula:
 	
 
 $\varphi = \frac{1 + \sqrt{5}}{2}$
 
 	
-<p>Es probable que halla muchas dudas al respecto de $\varphi$, yo las tengo. Desafortunadamente yo no puedo explicarles eso así que checar <a href="http://es.wikipedia.org/wiki/N%C3%BAmero_%C3%A1ureo">aquí para mas información</a>.</p>
+Es probable que halla muchas dudas al respecto de $\varphi$, yo las tengo. Desafortunadamente yo no puedo explicarles eso así que checar [aquí para mas información](http://es.wikipedia.org/wiki/N%C3%BAmero_%C3%A1ureo).
 	
 	
-<p>Veamos un ejemplo. Sabemos que $F\_{10} = 55$, y según la fórmula:</p>
+Veamos un ejemplo. Sabemos que $F\_{10} = 55$, y según la fórmula:
 	
 $F\_{10} = \left[\frac{\varphi^{10}}{\sqrt{5}}\right] \approx 55.0036361232 \rightarrow 55$
 	
-<p>Encontré esta razón en los foros de <a href="http://projecteuler.net" target="_blank">projecteuler.net</a> después de resolver el problema 25 por fuerza bruta y me llamo mucho la atención la solución tan elegante con esta propiedad. Acá les dejo el problema para que practiquen.</p>
+Encontré esta razón en los foros de [projecteuler.net](http://projecteuler.net) después de resolver el problema 25 por fuerza bruta y me llamo mucho la atención la solución tan elegante con esta propiedad. Acá les dejo el problema para que practiquen.
 	
 <blockquote>
-  <p>La sucesión de Fibonacci se define por la siguiente relación recurrente.</p>
+  La sucesión de Fibonacci se define por la siguiente relación recurrente.
   <br>
   <br>
 
   <p>F<sub>n</sub> = F<sub>n-1</sub> + F<sub>n-2</sub>, donde F<sub>1</sub> = 1 y F<sub>2</sub> = 1.</p>
   <br>
   <br>
-  <p>Por ende los primeros 12 términos son:</p>
+  Por ende los primeros 12 términos son:
   <br>
   <br>
   F(1) = 1<br>
@@ -57,15 +57,15 @@ $F\_{10} = \left[\frac{\varphi^{10}}{\sqrt{5}}\right] \approx 55.0036361232 \rig
   F(11) = 89<br>
   F(12) = 144<br>
   <br>
-  <p>El 12th término, F(12), es el primer término que contiene 3 dígitos.</p>
+  El 12th término, F(12), es el primer término que contiene 3 dígitos.
   <br>
   <br>
-  <p>¿Cual es el primer término el la sucesión de fibonacci que contiene 1000 dígitos?</p>
+  ¿Cual es el primer término el la sucesión de fibonacci que contiene 1000 dígitos?
 </blockquote>
-<strong><em><a href="http://www.projecteuler.net">www.projecteuler.net</a> </em></strong> <em>Problem 25</em>.
+***[www.projecteuler.net](http://www.projecteuler.net) *** *Problem 25*.
 	
 
 #Referencias
-[1] <a href="http://projecteuler.net" target="_blank">ProjectEuler.net</a>, foro del problema 25.
-[2] <a href="http://es.wikipedia.org/wiki/N%C3%BAmero_%C3%A1ureo" target="_blank">Número aureo</a>, Wikipedia.
+[1] [ProjectEuler.net](http://projecteuler.net), foro del problema 25.
+[2] [Número aureo](http://es.wikipedia.org/wiki/N%C3%BAmero_%C3%A1ureo), Wikipedia.
 

@@ -7,35 +7,23 @@
     <span class='tags'><span class="fa-solid fa-tag"></span><code>#dev</code> <code>#post</code></span>
 </p>
 
-<p>
-Este es el reporte correspondiente al proyecto número 2 de la materia Desarrollo de Aplicaciones para Tecnologías Móviles.
-</p>
+<p>Este es el reporte correspondiente al proyecto número 2 de la materia Desarrollo de Aplicaciones para Tecnologías Móviles.</p>
 <h2 id="definición-del-problema">Definición del Problema</h2>
-<p>
-Este proyecto consiste en desarrollar un Web Service que manipule una base de datos a petición de los clientes.
-</p>
+<p>Este proyecto consiste en desarrollar un Web Service que manipule una base de datos a petición de los clientes.</p>
 <blockquote>
 Desarrolle un Web Service con los servicios necesarios para manipular una base de datos (backend) y además una aplicación cliente para que los usuarios puedan acceder a las servicios (frontend).
 </blockquote>
 <h2 id="definiciones">Definiciones</h2>
-<p>
-Antes de continuar es necesario conocer algunas definiciones para comprender mejor el trabajo que vamos a realizar.
-</p>
+<p>Antes de continuar es necesario conocer algunas definiciones para comprender mejor el trabajo que vamos a realizar.</p>
 <h3 id="web-service">Web Service</h3>
 <blockquote>
 Un Web service es un sistema de software diseñado para soportar interacción máquina-a-máquina de manera interoperable a través de una red. Éste sistema tiene una interfaz descrita en un formato que puede ser procesado por la máquina (específicamente WSDL). Otros sistemas interactúan con el Web service en una manera prescrita por su definición usando mensajes SOAP, comúnmente transmitidos usando HTTP con una serialización XML en conjunto con otros estándares Web. &lt;%= cite(‘w3c_ws’); %&gt;
 </blockquote>
 <h2 id="propuesta-de-solución">Propuesta de solución</h2>
-<p>
-El problema nos solicita dos cosas, proveer servicios y manipular una base de datos. En vista que el problema no especifica que servicios ni que datos manipular, tenemos la libertad de enfocar el proyecto a la problemática que más nos agrade.
-</p>
-<p>
-Vamos a desarrollar un mina sistema de juez en línea como <a href="http://uva.onlinejudge.org/" target="__blank">UVa</a>, <a href="http://lightoj.com/" target="__blank">LightOJ</a> u <a href="http://omegaup.com/" target="__blank">OmegaUp</a>, el cual consiste en dos partes, un servidor (el juez) y uno o más clientes (los solucionadores de problemas).
-</p>
+<p>El problema nos solicita dos cosas, proveer servicios y manipular una base de datos. En vista que el problema no especifica que servicios ni que datos manipular, tenemos la libertad de enfocar el proyecto a la problemática que más nos agrade.</p>
+<p>Vamos a desarrollar un mina sistema de juez en línea como <a href="http://uva.onlinejudge.org/">UVa</a>, <a href="http://lightoj.com/">LightOJ</a> u <a href="http://omegaup.com/">OmegaUp</a>, el cual consiste en dos partes, un servidor (el juez) y uno o más clientes (los solucionadores de problemas).</p>
 <h3 id="el-servidor">El servidor</h3>
-<p>
-Es aquí donde vamos a implementar el web service para que proporcione los siguientes servicios:
-</p>
+<p>Es aquí donde vamos a implementar el web service para que proporcione los siguientes servicios:</p>
 <ul>
 <li>
 Crear un problema con sus casos de prueba y almacenarlos en una base de datos.
@@ -47,13 +35,9 @@ Aceptar soluciones de parte de los usuarios y almacenarlas en la base de datos.
 Compilar y ejecutar la solución y reportar los resultados.
 </li>
 </ul>
-<p>
-Esta parte la vamos a realizar en PHP.
-</p>
+<p>Esta parte la vamos a realizar en PHP.</p>
 <h3 id="el-cliente">El cliente</h3>
-<p>
-Una pequeña aplicación Web en Ruby on Rails que permita a los usuarios realizar los siguientes operaciones.
-</p>
+<p>Una pequeña aplicación Web en Ruby on Rails que permita a los usuarios realizar los siguientes operaciones.</p>
 <ul>
 <li>
 Crear problemas.
@@ -65,9 +49,7 @@ Enviar soluciones (código fuente).
 Visualizar los resultados de la solución enviada.
 </li>
 </ul>
-<p>
-El nombre de mi juez en línea sera <strong>Micro OJ</strong>, por razones obvias.
-</p>
+<p>El nombre de mi juez en línea sera <strong>Micro OJ</strong>, por razones obvias.</p>
 <h2 id="requisitos">Requisitos</h2>
 <ul>
 <li>
@@ -81,19 +63,13 @@ El servidor debe tener instalados los compiladores para C, C++ y Python.
 </li>
 </ul>
 <h2 id="el-servidor-1">El servidor</h2>
-<p>
-En esta parte vamos a implementar el Web Service. Antes que nada veamos nuestro modelo de base de datos.
-</p>
+<p>En esta parte vamos a implementar el Web Service. Antes que nada veamos nuestro modelo de base de datos.</p>
 <figure>
 <img src="/report-ii-microoj-web-services/ws_01.png" alt="Modelo de la base de datos" />
 <figcaption aria-hidden="true">Modelo de la base de datos</figcaption>
 </figure>
-<p>
-<strong>NOTA:</strong> Vamos a hacer una mezcla rara de ingles y español porque sino el profesor no va creer que el trabajo es nuestro.
-</p>
-<p>
-El Web Service va a consistir de los siguientes servicios.
-</p>
+<p><strong>NOTA:</strong> Vamos a hacer una mezcla rara de ingles y español porque sino el profesor no va creer que el trabajo es nuestro.</p>
+<p>El Web Service va a consistir de los siguientes servicios.</p>
 <h3 id="servicios">Servicios</h3>
 <table>
 </td>
@@ -223,61 +199,31 @@ Retorna la lista de todos los usuario (únicamente el ID y el nombre).
 </tr>
 <p>PHP cuenta con soporte nativo para SOAP, pero nosotros vamos a emplear NuSOAP porque nos permite generar el archivo WSDL. El código que implementa el Web Service consta de aproximadamente de 800 líneas y por lo tanto no vamos a entrar en detalles de la implementación, sin embargo, el código no es complejo, con un conocimiento básico de PHP podrán entenderlo.</p>
 <h3 id="definición-de-un-servicio">Definición de un servicio</h3>
-<p>
-Los servicios son funciones normales en PHP, la diferencia es que tenemos que registarlas, por ejemplo, veamos como crear el servicio <strong>create_problem</strong>.
-</p>
-<p>
-Función:
-</p>
+<p>Los servicios son funciones normales en PHP, la diferencia es que tenemos que registarlas, por ejemplo, veamos como crear el servicio <strong>create_problem</strong>.</p>
+<p>Función:</p>
 <p>Embed: <code>create-problem.php</code></p>
-<p>
-Registro del servicio:
-</p>
+<p>Registro del servicio:</p>
 <p>Embed: <code>register.php</code></p>
-<p>
-El nombre del servicio comienza con <em>Judge.</em> porque la función es parte de la clase <em>Judge</em>. El primer argumento es el nombre del servicio, el segundo argumento es un arreglo especificando los datos que require el servicio, el tercer array es para especificar los datos que retorna el servicio, el último argumento es simplemente para documentación.
-</p>
+<p>El nombre del servicio comienza con <em>Judge.</em> porque la función es parte de la clase <em>Judge</em>. El primer argumento es el nombre del servicio, el segundo argumento es un arreglo especificando los datos que require el servicio, el tercer array es para especificar los datos que retorna el servicio, el último argumento es simplemente para documentación.</p>
 <h3 id="crear-un-tipo-de-dato-complejo">Crear un tipo de dato complejo</h3>
-<p>
-Para algunos de los servicios retornamos más de un dato, por ejemplo, <em>get_problem</em> y <em>get_user_data</em> que retornan una estructura con los datos del problema y del usuario respectivamente, o <em>get_all_problems</em> que retorna una lista de problemas. Veamos como crear un tipo de dato complejo y después un arreglo de objetos complejos.
-</p>
+<p>Para algunos de los servicios retornamos más de un dato, por ejemplo, <em>get_problem</em> y <em>get_user_data</em> que retornan una estructura con los datos del problema y del usuario respectivamente, o <em>get_all_problems</em> que retorna una lista de problemas. Veamos como crear un tipo de dato complejo y después un arreglo de objetos complejos.</p>
 <p>Embed: <code>add-complex-type.php</code></p>
-<p>
-En este código especificamos el nombre del tipo de dato, los campos que contiene, los tipos de datos de cada campo, etc. Ahora un arreglo de objetos tipo <strong>Problem</strong>.
-</p>
+<p>En este código especificamos el nombre del tipo de dato, los campos que contiene, los tipos de datos de cada campo, etc. Ahora un arreglo de objetos tipo <strong>Problem</strong>.</p>
 <p>Embed: <code>add-complex-type-2.php</code></p>
-<p>
-Y es así como se procede con el resto de los servicios.
-</p>
+<p>Y es así como se procede con el resto de los servicios.</p>
 <h2 id="el-cliente-1">El cliente</h2>
-<p>
-Esta la parte más extensa y que necesitará de mucha paciencia, hacer una descripción sería abrumador y aburrido, por lo que únicamente vamos a ver las partes más importantes.
-</p>
-<p>
-Esta parte consume mucho tiempo principalmente porque hay que aprender el lenguaje Ruby y ademas como utilizar el framework Ruby on Rails, pero si ya conocen bien éstas dos herramientas supongo terminarán mucho más rápido. Mi recomendación para Ruby on Rails es <a href="http://ruby.railstutorial.org">Ruby on Rails Tutorial</a> por Michael Hartl, el cual seguí para realizar el cliente.
-</p>
+<p>Esta la parte más extensa y que necesitará de mucha paciencia, hacer una descripción sería abrumador y aburrido, por lo que únicamente vamos a ver las partes más importantes.</p>
+<p>Esta parte consume mucho tiempo principalmente porque hay que aprender el lenguaje Ruby y ademas como utilizar el framework Ruby on Rails, pero si ya conocen bien éstas dos herramientas supongo terminarán mucho más rápido. Mi recomendación para Ruby on Rails es <a href="http://ruby.railstutorial.org">Ruby on Rails Tutorial</a> por Michael Hartl, el cual seguí para realizar el cliente.</p>
 <h3 id="cliente-soap">Cliente SOAP</h3>
-<p>
-Para poder utilizar los servicios del Web Service será necesaria una herramienta que sea capaz de comunicarse con el servidor utilizando el protocolo SOAP, y esa herramienta se llama <a href="http://savonrb.com/" target="_blank">Savon</a>, un cliente SOAP para el lenguaje Ruby.
-</p>
-<p>
-Veamos como establecer comunicación con el servidor para crear un usuario.
-</p>
+<p>Para poder utilizar los servicios del Web Service será necesaria una herramienta que sea capaz de comunicarse con el servidor utilizando el protocolo SOAP, y esa herramienta se llama <a href="http://savonrb.com/">Savon</a>, un cliente SOAP para el lenguaje Ruby.</p>
+<p>Veamos como establecer comunicación con el servidor para crear un usuario.</p>
 <p>Embed: <code>client-conn.rb</code></p>
-<p>
-Al ejecutarlo debe arrojar algo similar a esto:
-</p>
+<p>Al ejecutarlo debe arrojar algo similar a esto:</p>
 <p>Embed: <code>client-conn-output.txt</code></p>
-<p>
-El ejemplo anterior da por hecho que los servidores Apache y MySQL están encendidos y que la base de datos ya esta instalada.
-</p>
-<p>
-<strong>NOTA:</strong> Con el código fuente incluyo el modelo de la base de datos, fue diseñado utilizando Workbench y por lo tanto podrán exportar la base de datos desde ahí.
-</p>
+<p>El ejemplo anterior da por hecho que los servidores Apache y MySQL están encendidos y que la base de datos ya esta instalada.</p>
+<p><strong>NOTA:</strong> Con el código fuente incluyo el modelo de la base de datos, fue diseñado utilizando Workbench y por lo tanto podrán exportar la base de datos desde ahí.</p>
 <h3 id="la-interfaz">La interfaz</h3>
-<p>
-Una imagen dice más que mil palabras, como todos sabemos, así que allá vamos.
-</p>
+<p>Una imagen dice más que mil palabras, como todos sabemos, así que allá vamos.</p>
 <figure>
 <img src="/report-ii-microoj-web-services/ws_02.png" alt="Página principal de MicroOJ" />
 <figcaption aria-hidden="true">Página principal de MicroOJ</figcaption>
@@ -294,16 +240,12 @@ Una imagen dice más que mil palabras, como todos sabemos, así que allá vamos.
 <img src="/report-ii-microoj-web-services/ws_05.png" alt="Lista de problemas" />
 <figcaption aria-hidden="true">Lista de problemas</figcaption>
 </figure>
-<p>
-Cada problema debe mostrar la opción de enviar una solución, sin embargo, nótese que en la imagen esta opción no figura, esto es porque el usuario no ha iniciado sesión y únicamente los usuarios registrados pueden enviar soluciones.
-</p>
+<p>Cada problema debe mostrar la opción de enviar una solución, sin embargo, nótese que en la imagen esta opción no figura, esto es porque el usuario no ha iniciado sesión y únicamente los usuarios registrados pueden enviar soluciones.</p>
 <figure>
 <img src="/report-ii-microoj-web-services/ws_06.png" alt="Usuario que ha iniciado sesión" />
 <figcaption aria-hidden="true">Usuario que ha iniciado sesión</figcaption>
 </figure>
-<p>
-En esta imagen observe que en la barra izquierda ha aparecido una nueva operación, “Crear problemas”, esta operación esta disponible únicamente para el usuario administrador.
-</p>
+<p>En esta imagen observe que en la barra izquierda ha aparecido una nueva operación, “Crear problemas”, esta operación esta disponible únicamente para el usuario administrador.</p>
 <figure>
 <img src="/report-ii-microoj-web-services/ws_07.png" alt="Formulario para registrar un problema" />
 <figcaption aria-hidden="true">Formulario para registrar un problema</figcaption>
@@ -316,39 +258,25 @@ En esta imagen observe que en la barra izquierda ha aparecido una nueva operaci�
 <img src="/report-ii-microoj-web-services/ws_09.png" alt="Formulario para enviar soluciones" />
 <figcaption aria-hidden="true">Formulario para enviar soluciones</figcaption>
 </figure>
-<p>
-El editor de código es Ace (<a href="http://ace.c9.io/">http://ace.c9.io/</a>).
-</p>
+<p>El editor de código es Ace (<a href="http://ace.c9.io/">http://ace.c9.io/</a>).</p>
 <figure>
 <img src="/report-ii-microoj-web-services/ws_10.png" alt="Resultados de la solución" />
 <figcaption aria-hidden="true">Resultados de la solución</figcaption>
 </figure>
-<p>
-El diseño de la interfaz fue hecho utilizando Bootstrap (<a href="http://getbootstrap.com/2.3.2/index.html">http://getbootstrap.com/2.3.2/index.html</a>).
-</p>
+<p>El diseño de la interfaz fue hecho utilizando Bootstrap (<a href="http://getbootstrap.com/2.3.2/index.html">http://getbootstrap.com/2.3.2/index.html</a>).</p>
 <h2 id="desarrollo-del-cliente">Desarrollo del cliente</h2>
-<p>
-Ahora que ya vimos como trabaja el cliente, es momento de explicar a grandes rasgos como se desarrollo.
-</p>
+<p>Ahora que ya vimos como trabaja el cliente, es momento de explicar a grandes rasgos como se desarrollo.</p>
 <h3 id="creación-del-proyecto">Creación del proyecto</h3>
-<p>
-En este punto vamos a asumir que ROR ya esta instalado y configurado. Ejecuta los siguientes comandos para crear el proyecto.
-</p>
+<p>En este punto vamos a asumir que ROR ya esta instalado y configurado. Ejecuta los siguientes comandos para crear el proyecto.</p>
 <p>Embed: <code>create-project.sh</code></p>
-<p>
-El tercer comando genera el esquelo de nuestra aplicación.
-</p>
+<p>El tercer comando genera el esquelo de nuestra aplicación.</p>
 <figure>
 <img src="/report-ii-microoj-web-services/ws_11.png" alt="Esqueleto de una aplicación ROR" />
 <figcaption aria-hidden="true">Esqueleto de una aplicación ROR</figcaption>
 </figure>
-<p>
-La mayor parte de la acción ocurre en el subdirectorio <em>app</em>, especificamente en los subdirectorios <em>app/views</em>, <em>app/controllers</em> y <em>app/models</em>, esta estructura corresponde al patron de diseño <a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller" target="_blank">Model View Controller</a>.
-</p>
+<p>La mayor parte de la acción ocurre en el subdirectorio <em>app</em>, especificamente en los subdirectorios <em>app/views</em>, <em>app/controllers</em> y <em>app/models</em>, esta estructura corresponde al patron de diseño <a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">Model View Controller</a>.</p>
 <h3 id="contenido-de-nuestro-proyecto">Contenido de nuestro proyecto</h3>
-<p>
-Nuestra aplicación consiste de 5 vistas:
-</p>
+<p>Nuestra aplicación consiste de 5 vistas:</p>
 <ul>
 <li>
 <strong>problems</strong> Para crear y visualizar problemas.
@@ -366,9 +294,7 @@ Nuestra aplicación consiste de 5 vistas:
 <strong>static_pages</strong> Estructura y diseño del sitio, contenido estático.
 </li>
 </ul>
-<p>
-Cada vista tiene su respectivo controlador en la carpeta <em>app/controllers</em>:
-</p>
+<p>Cada vista tiene su respectivo controlador en la carpeta <em>app/controllers</em>:</p>
 <ul>
 <li>
 <strong>problems_controller.rb</strong>
@@ -386,9 +312,7 @@ Cada vista tiene su respectivo controlador en la carpeta <em>app/controllers</em
 <strong>users_controller.rb</strong>
 </li>
 </ul>
-<p>
-Utilizamos también tres modelos para almacenar y manipular nuestros datos, estos archivos se ubican en la carpeta <em>app/models</em>:
-</p>
+<p>Utilizamos también tres modelos para almacenar y manipular nuestros datos, estos archivos se ubican en la carpeta <em>app/models</em>:</p>
 <ul>
 <li>
 <strong>problem.rb</strong>
@@ -401,71 +325,37 @@ Utilizamos también tres modelos para almacenar y manipular nuestros datos, esto
 </li>
 </ul>
 <h3 id="creación-de-un-usuario">Creación de un usuario</h3>
-<p>
-La alta de usuarios ocurre de la siguiente manera. El archivo <em>app/views/users/new.html.erb</em> contiene el diseño del formulario.
-</p>
-<p>
-El código que se encarga de crear al nuevo usuario se encuentra en el archivo <em>app/controllers/users_controller.rb</em>. El método <em>new</em> se ejecuta cuando el usuario accede al formulario de registro, lo que hace es crear un objeto de tipo <strong>User</strong>, cuyos datos miembro estan enlazados a los campos del formulario.
-</p>
+<p>La alta de usuarios ocurre de la siguiente manera. El archivo <em>app/views/users/new.html.erb</em> contiene el diseño del formulario.</p>
+<p>El código que se encarga de crear al nuevo usuario se encuentra en el archivo <em>app/controllers/users_controller.rb</em>. El método <em>new</em> se ejecuta cuando el usuario accede al formulario de registro, lo que hace es crear un objeto de tipo <strong>User</strong>, cuyos datos miembro estan enlazados a los campos del formulario.</p>
 <p>Embed: <code>new-action.rb</code></p>
-<p>
-El método <em>create</em> se ejecuta en cuanto el usuario envía los datos de registro. Aquí se realiza la validación, y en caso de que la validación sea satisfactoria se procede a enviar los datos al servidor. En caso contrario se redirecciona nuevamente al formulario con el mensaje de error correspondiente.
-</p>
+<p>El método <em>create</em> se ejecuta en cuanto el usuario envía los datos de registro. Aquí se realiza la validación, y en caso de que la validación sea satisfactoria se procede a enviar los datos al servidor. En caso contrario se redirecciona nuevamente al formulario con el mensaje de error correspondiente.</p>
 <p>Embed: <code>create-action.rb</code></p>
 <h3 id="inicio-de-sesión">Inicio de sesión</h3>
-<p>
-El diseño del formulario se encuentra en el archivo <em>app/views/sessions/new.html.erb</em>.
-</p>
-<p>
-La código que se encarga de crear la sesión se encuentra en el archivo <em>app/controllers/sessions_controller.rb</em>, en el método <em>create</em>:
-</p>
+<p>El diseño del formulario se encuentra en el archivo <em>app/views/sessions/new.html.erb</em>.</p>
+<p>La código que se encarga de crear la sesión se encuentra en el archivo <em>app/controllers/sessions_controller.rb</em>, en el método <em>create</em>:</p>
 <p>Embed: <code>sessions-create-action.rb</code></p>
 <h3 id="cierre-de-sesión">Cierre de sesión</h3>
-<p>
-Cerrar sesión básicamente equivale a destruir los datos del usuario actual para que ya no se pueda comunicar con el servidor como usuario registrado, esta acción se encuentra en el método <em>destroy</em>, en el mismo archivo del paso anterior.
-</p>
+<p>Cerrar sesión básicamente equivale a destruir los datos del usuario actual para que ya no se pueda comunicar con el servidor como usuario registrado, esta acción se encuentra en el método <em>destroy</em>, en el mismo archivo del paso anterior.</p>
 <p>Embed: <code>sessions-destroy-action.rb</code></p>
-<p>
-El método destroy llama a otro método, <em>sign_out</em>, el cual se encuentra en el archivo <em>app/helpers/sessions_helper.rb</em>, junto con otros métodos auxiliares para el manejo de sesiones.
-</p>
+<p>El método destroy llama a otro método, <em>sign_out</em>, el cual se encuentra en el archivo <em>app/helpers/sessions_helper.rb</em>, junto con otros métodos auxiliares para el manejo de sesiones.</p>
 <p>Embed: <code>sessions-sign-out.rb</code></p>
 <h3 id="creación-de-un-problema">Creación de un problema</h3>
-<p>
-La lógica para crear un problema y enviarlo al servidor es la siguiente.
-</p>
-<p>
-El archivo <em>app/views/problems/new.html.erb</em> contiene el diseño del formulario que se muestra en la figura .
-</p>
-<p>
-El archivo <em>app/controllers/problems_controller.rb</em> contiene la lógica de la creación. El método <em>new</em> crea un objeto de tipo <strong>Problem</strong>, cuyos datos miembro estan enlazados a los campos del formulario.
-</p>
+<p>La lógica para crear un problema y enviarlo al servidor es la siguiente.</p>
+<p>El archivo <em>app/views/problems/new.html.erb</em> contiene el diseño del formulario que se muestra en la figura .</p>
+<p>El archivo <em>app/controllers/problems_controller.rb</em> contiene la lógica de la creación. El método <em>new</em> crea un objeto de tipo <strong>Problem</strong>, cuyos datos miembro estan enlazados a los campos del formulario.</p>
 <p>Embed: <code>problems-new-action.rb</code></p>
-<p>
-Cuando el usuario envía el problema, el método <em>create</em> se encarga de realizar la conexión al servidor, enviar los datos y proveer una respuesta al usuario.
-</p>
+<p>Cuando el usuario envía el problema, el método <em>create</em> se encarga de realizar la conexión al servidor, enviar los datos y proveer una respuesta al usuario.</p>
 <p>Embed: <code>problems-create-action.rb</code></p>
 <h3 id="envio-de-una-solución">Envio de una solución</h3>
-<p>
-El formulario para el envio de soluciones se localiza en el archivo <em>app/views/solutions/new.html.erb</em>. El controlador <strong>Solutions</strong> es el que se encarga de la lógica de esta operación:
-</p>
+<p>El formulario para el envio de soluciones se localiza en el archivo <em>app/views/solutions/new.html.erb</em>. El controlador <strong>Solutions</strong> es el que se encarga de la lógica de esta operación:</p>
 <p>Embed: <code>solutions-create-action.rb</code></p>
-<p>
-Estas son las partes más importantes, creo que con esto podrán entender el resto de las operaciones.
-</p>
+<p>Estas son las partes más importantes, creo que con esto podrán entender el resto de las operaciones.</p>
 <h3 id="notas-sobre-el-uso-de-la-base-de-datos-en-ror">Notas sobre el uso de la base de datos en ROR</h3>
-<p>
-Como habrán observado, empleamos tres tablas para almacenar nuestros datos, sin embargo, los datos nunca son almacenados en estas tablas ya que todo se envía al servidor remoto, esta es una alteración que he tenido que realizar para aprovechar las facilidades de Ruby on Rails pero a la vez cumplir con el requisito de emplear un Web service.
-</p>
-<p>
-Al utilizar los modelos que proporciona Rails se nos facilita mucho la creación de formularios y la validación de los datos.
-</p>
-<p>
-Si prescindiéramos del Web service y empleáramos las bases de datos nativas de Rails, la complejidad del cliente sería mucho menor.
-</p>
+<p>Como habrán observado, empleamos tres tablas para almacenar nuestros datos, sin embargo, los datos nunca son almacenados en estas tablas ya que todo se envía al servidor remoto, esta es una alteración que he tenido que realizar para aprovechar las facilidades de Ruby on Rails pero a la vez cumplir con el requisito de emplear un Web service.</p>
+<p>Al utilizar los modelos que proporciona Rails se nos facilita mucho la creación de formularios y la validación de los datos.</p>
+<p>Si prescindiéramos del Web service y empleáramos las bases de datos nativas de Rails, la complejidad del cliente sería mucho menor.</p>
 <h2 id="código-fuente">Código fuente</h2>
-<p>
-El código tanto del cliente como del servidor están disponibles en Bitbucket en las siguientes direcciones:
-</p>
+<p>El código tanto del cliente como del servidor están disponibles en Bitbucket en las siguientes direcciones:</p>
 <ul>
 <li>
 <a href="https://bitbucket.org/rendon/microoj/admin">https://bitbucket.org/rendon/microoj</a>
@@ -474,17 +364,11 @@ El código tanto del cliente como del servidor están disponibles en Bitbucket e
 <a href="https://bitbucket.org/rendon/microoj_ws">https://bitbucket.org/rendon/microoj_ws</a>
 </li>
 </ul>
-<p>
-O bien pueden clonar los repositorios desde la consola:
-</p>
+<p>O bien pueden clonar los repositorios desde la consola:</p>
 <p>Embed: <code>clone-projects.sh</code></p>
-<p>
-La licencia de ambos proyectos es GPLv3, con excepción de los componentes empleados, los cuales tienen sus propias licencias.
-</p>
+<p>La licencia de ambos proyectos es GPLv3, con excepción de los componentes empleados, los cuales tienen sus propias licencias.</p>
 <h2 id="por-hacer">Por hacer</h2>
-<p>
-Un sistema de juez en línea es más complejo de lo que se muestra en esta práctica, a continuación se listan algunas características deseables:
-</p>
+<p>Un sistema de juez en línea es más complejo de lo que se muestra en esta práctica, a continuación se listan algunas características deseables:</p>
 <ul>
 <li>
 Mejorar el manejo de usuarios. Que los usuarios puedan ver el perfil de los demás participantes y ver su progreso.

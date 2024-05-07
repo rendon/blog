@@ -1,11 +1,11 @@
 # Recipe 003: Breadth-First Search (BFS)
 2016-03-05 2024-05-06 #algorithms #data-structures #post
 
-<a href="http://en.wikipedia.org/wiki/Breadth-first_search">Breadth-First Search</a> is another fundamental algorithm in <a href="http://en.wikipedia.org/wiki/Graph_theory" target="_blank">graph theory</a>, it's a must-know algorithm!
+[Breadth-First Search](http://en.wikipedia.org/wiki/Breadth-first_search) is another fundamental algorithm in [graph theory](http://en.wikipedia.org/wiki/Graph_theory), it's a must-know algorithm!
 
 ![A graph](/recipe-003-bfs/graph.svg)
 
-<p>For this algorithm we need a <a href="http://en.wikipedia.org/wiki/Queue_%28abstract_data_type%29" target="_blank">queue</a>.</p>
+For this algorithm we need a [queue](http://en.wikipedia.org/wiki/Queue_%28abstract_data_type%29).
 
 ```cpp
 #include <iostream>

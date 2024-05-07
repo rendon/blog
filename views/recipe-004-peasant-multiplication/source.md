@@ -1,7 +1,7 @@
 # Russian peasant multiplication
 2016-05-02 2024-05-06 #algorithms #post
 
-I learned this one from <a href="https://classroom.udacity.com/courses/cs215" target="_blank">Intro to Algorithms</a>.
+I learned this one from [Intro to Algorithms](https://classroom.udacity.com/courses/cs215).
 
 - Q: How would you multiply two numbers without using the `*` operator?
 - A: Using the Russian peasant multiplication algorithm and bitshift operators.

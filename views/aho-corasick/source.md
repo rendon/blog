@@ -2,17 +2,17 @@
 2016-02-18 2024-05-07 #algorithms #data-structures #post
 
 ## Introduction
-<p>The best way to explain this topic is with a problem:</p>
+The best way to explain this topic is with a problem:
 
 <blockquote>You are given a text T (1 <= |T| <= 1,000,000) and n (1 <= n <= 1000) patterns, each pattern P<sub>i</sub> has at least 1 and at most 500 characters. Find how many times each pattern occurs in T.</blockquote>
 
-<p>Although we can find the number of occurrences of a pattern in linear time (for example, using the <a href="/z-algorithm" target="_blank">Z Algorithm</a>) , there are many patterns and so this approach will not be fast enough to finish in a reasonably amount of time.</p>
+Although we can find the number of occurrences of a pattern in linear time (for example, using the [Z Algorithm](/z-algorithm)) , there are many patterns and so this approach will not be fast enough to finish in a reasonably amount of time.
 
-<p>In short and as you probably have already guessed, there exist a more efficient solution to this problem than our first attempt, the string matching algorithm invented by Alfred V. Aho and Margaret J. Corasick. I will not try to explain the algorithm because the authors explain it very well in their paper, I'm only going to provide you with an implementation and some practice problems.</p>
+In short and as you probably have already guessed, there exist a more efficient solution to this problem than our first attempt, the string matching algorithm invented by Alfred V. Aho and Margaret J. Corasick. I will not try to explain the algorithm because the authors explain it very well in their paper, I'm only going to provide you with an implementation and some practice problems.
 
-<p>This is the paper [Efficient String Matching: An Aid to Bibliographic Search](/aho-corasick/AhoCorasick.pdf)</p>
+This is the paper [Efficient String Matching: An Aid to Bibliographic Search](/aho-corasick/AhoCorasick.pdf)
 
-<p>Usually these papers are very complex and hard to understand without enough background, but to my surprise, this one is well explained and easy to understand.</p>
+Usually these papers are very complex and hard to understand without enough background, but to my surprise, this one is well explained and easy to understand.
 
 ## Aho-Corasick implementation in C++
 
@@ -141,8 +141,8 @@ int main(int argc, char *argv[])
 ## Practice problems
 
 <ul>
-  <li><a href="http://lightoj.com/volume_showproblem.php?problem=1427" target="_blank">Light OJ 1427 - Substring Frequency (II)</a> | <a href="https://gist.github.com/rendon/042fab740fcb859ca34b" target="_blank">My solution</a></li>
-  <li><a href="http://codeforces.com/contest/433/problem/E" target="_blank">Codeforces #248 Div 2 E. Tachibana Kanade's Tofu</a> | <a href="https://gist.github.com/rendon/b12375831e143732cb63" target="_blank">My solution</a></li>
+  <li>[Light OJ 1427 - Substring Frequency (II)](http://lightoj.com/volume_showproblem.php?problem=1427) | [My solution](https://gist.github.com/rendon/042fab740fcb859ca34b)</li>
+  <li>[Codeforces #248 Div 2 E. Tachibana Kanade's Tofu](http://codeforces.com/contest/433/problem/E) | [My solution](https://gist.github.com/rendon/b12375831e143732cb63)</li>
 </ul>
 
 ## References

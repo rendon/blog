@@ -6,29 +6,19 @@
     <span class='tags'><span class="fa-solid fa-tag"></span><code>#algorithms</code> <code>#data-structures</code> <code>#post</code></span>
 </p>
 
-<p>
-Convex hull is a classical problem in computational geometry and often used in programming contests. Today I present to you the Andrew’s algorithm to compute the convex hull from a set of 2D points.
-</p>
+<p>Convex hull is a classical problem in computational geometry and often used in programming contests. Today I present to you the Andrew’s algorithm to compute the convex hull from a set of 2D points.</p>
 <figure>
 <img src="/andrews-convex-hull-algorithm/convex_hull_0.svg" alt="Convex Hull" />
 <figcaption aria-hidden="true">Convex Hull</figcaption>
 </figure>
 <h2 id="convex-hull">Convex Hull</h2>
-<p>
-Here a definition from Robert Sedgewick lecture notes.
-</p>
+<p>Here a definition from Robert Sedgewick lecture notes.</p>
 <div class="box">
-<p>
-A set of point is <strong>convex</strong> if for any two points <em>p</em> and <em>q</em> is the set, the line segment <em>pq</em> is completely in the set.
-</p>
-<p>
-<strong>Convex hull</strong>. Smallest convex set containing all the points.
-</p>
+<p>A set of point is <strong>convex</strong> if for any two points <em>p</em> and <em>q</em> is the set, the line segment <em>pq</em> is completely in the set.</p>
+<p><strong>Convex hull</strong>. Smallest convex set containing all the points.</p>
 </div>
 <h2 id="andrews-algorithm">Andrew’s algorithm</h2>
-<p>
-The Andrews’s Algorithm splits the convex hull in two parts parts, upper hull and lower hull, here the algorithm.
-</p>
+<p>The Andrews’s Algorithm splits the convex hull in two parts parts, upper hull and lower hull, here the algorithm.</p>
 <ol>
 <li>
 L and U are lists of points.
@@ -107,12 +97,8 @@ Join the upper and the lower convex hull.
 </tr>
 </table>
 <h2 id="sample-problem">Sample problem</h2>
-<p>
-A easy problem where you can put in practice this topic is with <a href="http://lightoj.com/volume_showproblem.php?problem=1203" target="_blank">1203 - Guarding Bananas</a> from <a href="http://lightoj.com/" target="_blank">lightoj.com</a>.
-</p>
-<p>
-To check if three point are convex you can use a vector cross product.
-</p>
+<p>A easy problem where you can put in practice this topic is with <a href="http://lightoj.com/volume_showproblem.php?problem=1203">1203 - Guarding Bananas</a> from <a href="http://lightoj.com/">lightoj.com</a>.</p>
+<p>To check if three point are convex you can use a vector cross product.</p>
 <table>
 <tr>
 <td>
@@ -127,13 +113,9 @@ To check if three point are convex you can use a vector cross product.
 </figure>
 </tr>
 </table>
-<p>
-If points A, O and B are in clockwise orientation then $ v u$ will be greater than zero, otherwise the result will be less than zero.
-</p>
+<p>If points A, O and B are in clockwise orientation then $ v u$ will be greater than zero, otherwise the result will be less than zero.</p>
 <h2 id="solution-to-sample-problem">Solution to sample problem</h2>
-<p>
-Apply the algorithm to find the convex hull and then, for each point that form the convex hull, compute the angle between it and its left and right points, take the minimum.
-</p>
+<p>Apply the algorithm to find the convex hull and then, for each point that form the convex hull, compute the angle between it and its left and right points, take the minimum.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cmath&gt;</span></span>
@@ -253,7 +235,7 @@ Apply the algorithm to find the convex hull and then, for each point that form t
 <span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h2 id="references">References</h2>
 <ol type="1">
-<li><a href="http://community.topcoder.com/tc?module=Static&d1=tutorials&d2=lineSweep" target="_blank">Line Sweep Algorithms, bmerry</a></li>
-<li><a href="http://www.cs.princeton.edu/courses/archive/fall05/cos226/lectures/geometry.pdf" target="_blank">Geometry Lecture, Robert Sedgewick</a></li>
+<li><a href="http://community.topcoder.com/tc?module=Static&amp;d1=tutorials&amp;d2=lineSweep">Line Sweep Algorithms, bmerry</a></li>
+<li><a href="http://www.cs.princeton.edu/courses/archive/fall05/cos226/lectures/geometry.pdf">Geometry Lecture, Robert Sedgewick</a></li>
 </ol>
 

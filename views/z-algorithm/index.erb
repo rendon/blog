@@ -6,12 +6,8 @@
     <span class='tags'><span class="fa-solid fa-tag"></span><code>#algorithms</code> <code>#post</code></span>
 </p>
 
-<p>
-String matching is a very common problem, given a text <span class="math inline"><em>T</em></span> and a pattern <span class="math inline"><em>P</em></span> find the occurrences of <span class="math inline"><em>P</em></span> in <span class="math inline"><em>T</em></span>. This problem doesn’t need too much introduction.
-</p>
-<p>
-The most easy (and naive) algorithm to solve this problem is to slide off <span class="math inline"><em>P</em></span> through <span class="math inline"><em>T</em></span> and see if there is a match. Something like this:
-</p>
+<p>String matching is a very common problem, given a text <span class="math inline"><em>T</em></span> and a pattern <span class="math inline"><em>P</em></span> find the occurrences of <span class="math inline"><em>P</em></span> in <span class="math inline"><em>T</em></span>. This problem doesn’t need too much introduction.</p>
+<p>The most easy (and naive) algorithm to solve this problem is to slide off <span class="math inline"><em>P</em></span> through <span class="math inline"><em>T</em></span> and see if there is a match. Something like this:</p>
 <p>Embed: <code>naive-search.cpp</code></p>
 <p>However, much more efficient solutions exists to this problem, the Z algorithm is one of them.</p>
 <h2>
@@ -20,9 +16,7 @@ The <span class="math inline"><em>Z</em><sub><em>i</em></sub>(<em>T</em>)</span>
 <div class="box">
 <p>The <span class="math inline"><em>Z</em><sub><em>i</em></sub>(<em>T</em>)</span> is equal to the length of the longest substring starting at position <span class="math inline"><em>i</em> &gt; 0</span> that matches a prefix of <span class="math inline"><em>T</em></span>.</p>
 </div>
-<p>
-For example, let be T = “cabacadcab”, <span class="math inline"><em>Z</em><sub>3</sub> = 0</span>, <span class="math inline"><em>Z</em><sub>4</sub> = 2</span> and <span class="math inline"><em>Z</em><sub>7</sub> = 3</span>. Obviously <span class="math inline"><em>Z</em><sub>0</sub></span> is always equal to the length of the string. See figure .
-</p>
+<p>For example, let be T = “cabacadcab”, <span class="math inline"><em>Z</em><sub>3</sub> = 0</span>, <span class="math inline"><em>Z</em><sub>4</sub> = 2</span> and <span class="math inline"><em>Z</em><sub>7</sub> = 3</span>. Obviously <span class="math inline"><em>Z</em><sub>0</sub></span> is always equal to the length of the string. See figure .</p>
 <figure>
 <img src="/z-algorithm/z_alg_example.png" alt="Z Algorithm example" />
 <figcaption aria-hidden="true">Z Algorithm example</figcaption>
@@ -35,13 +29,9 @@ For example, let be T = “cabacadcab”, <span class="math inline"><em>Z</em><s
 <img src="/z-algorithm/z_boxes.svg" alt="Z-Boxes" />
 <figcaption aria-hidden="true">Z-Boxes</figcaption>
 </figure>
-<p>
-Assume that we have already computed the values of <span class="math inline"><em>Z</em></span> upto some <span class="math inline"><em>k</em> − 1</span> and now we need to compute <span class="math inline"><em>Z</em><sub><em>k</em></sub></span>. There are four possible cases. In the following pictures <span class="math inline"><em>l</em></span> and <span class="math inline"><em>r</em></span> denote de start and the end of the last Z-box.
-</p>
+<p>Assume that we have already computed the values of <span class="math inline"><em>Z</em></span> upto some <span class="math inline"><em>k</em> − 1</span> and now we need to compute <span class="math inline"><em>Z</em><sub><em>k</em></sub></span>. There are four possible cases. In the following pictures <span class="math inline"><em>l</em></span> and <span class="math inline"><em>r</em></span> denote de start and the end of the last Z-box.</p>
 <h3 id="case-1-k-is-out-of-the-last-z-box">Case 1: $ k $ is out of the last Z-box</h3>
-<p>
-Position <span class="math inline"><em>k</em></span> is not contained in the last Z-box. We need to compare character by character to find <span class="math inline"><em>Z</em><sub><em>k</em></sub></span>.
-</p>
+<p>Position <span class="math inline"><em>k</em></span> is not contained in the last Z-box. We need to compare character by character to find <span class="math inline"><em>Z</em><sub><em>k</em></sub></span>.</p>
 <figure>
 <img src="/z-algorithm/z_alg_cases_1.svg" alt="Case 1" />
 <figcaption aria-hidden="true">Case 1</figcaption>
@@ -54,21 +44,15 @@ We’ll denote this last Z-box as <span class="math inline"><em>α</em></span> a
 <img src="/z-algorithm/z_alg_cases_2.svg" alt="Case 2" />
 <figcaption aria-hidden="true">Case 2</figcaption>
 </figure>
-<p>
-As you can see, <span class="math inline"><em>k</em>′</span> corresponds to position <span class="math inline"><em>k</em></span> in the prefix and we already computed <span class="math inline"><em>Z</em><sub><em>k</em>′</sub></span> and so we can leverage this fact. There are three more cases.
-</p>
+<p>As you can see, <span class="math inline"><em>k</em>′</span> corresponds to position <span class="math inline"><em>k</em></span> in the prefix and we already computed <span class="math inline"><em>Z</em><sub><em>k</em>′</sub></span> and so we can leverage this fact. There are three more cases.</p>
 <h4 id="case-2a-z_k-beta">Case 2a: $ Z_{k’} &lt; |\beta| $</h4>
-<p>
-In this case <span class="math inline"><em>Z</em><sub><em>k</em></sub> = <em>Z</em><sub><em>k</em>′</sub></span>.
-</p>
+<p>In this case <span class="math inline"><em>Z</em><sub><em>k</em></sub> = <em>Z</em><sub><em>k</em>′</sub></span>.</p>
 <figure>
 <img src="/z-algorithm/z_alg_cases_2a.svg" alt="Case 2a" />
 <figcaption aria-hidden="true">Case 2a</figcaption>
 </figure>
 <h4 id="case-2b-z_k-beta">Case 2b: $ Z_{k’} &gt; |\beta| $</h4>
-<p>
-Let be <span class="math inline"><em>x</em></span> the first character that is not contained in the last Z-box and <span class="math inline"><em>y</em></span> the first character that is not contained in the prefix, we know one thing, <span class="math inline"><em>x</em> ≠ <em>y</em></span> and therefore <span class="math inline"><em>Z</em><sub><em>k</em></sub></span> cannot be greater than <span class="math inline"><em>Z</em><sub><em>k</em>′</sub></span>. Result <span class="math inline"><em>Z</em><sub><em>k</em></sub> = |<em>β</em>|</span>.
-</p>
+<p>Let be <span class="math inline"><em>x</em></span> the first character that is not contained in the last Z-box and <span class="math inline"><em>y</em></span> the first character that is not contained in the prefix, we know one thing, <span class="math inline"><em>x</em> ≠ <em>y</em></span> and therefore <span class="math inline"><em>Z</em><sub><em>k</em></sub></span> cannot be greater than <span class="math inline"><em>Z</em><sub><em>k</em>′</sub></span>. Result <span class="math inline"><em>Z</em><sub><em>k</em></sub> = |<em>β</em>|</span>.</p>
 <figure>
 <img src="/z-algorithm/z_alg_cases_2b.svg" alt="Case 2b" />
 <figcaption aria-hidden="true">Case 2b</figcaption>
@@ -78,20 +62,12 @@ Let be <span class="math inline"><em>x</em></span> the first character that is n
 <img src="/z-algorithm/z_alg_cases_2c.svg" alt="Case 2c" />
 <figcaption aria-hidden="true">Case 2c</figcaption>
 </figure>
-<p>
-Here we know two things, <span class="math inline"><em>x</em> ≠ <em>y</em></span> and <span class="math inline"><em>y</em> ≠ <em>w</em></span>. How about <span class="math inline"><em>x</em></span> and <span class="math inline"><em>w</em></span>? We don’t know, they may be equal or not. In this case it’s necessary to verify.
-</p>
-<p>
-Okay, here is an implementation to complement the explanation:
-</p>
+<p>Here we know two things, <span class="math inline"><em>x</em> ≠ <em>y</em></span> and <span class="math inline"><em>y</em> ≠ <em>w</em></span>. How about <span class="math inline"><em>x</em></span> and <span class="math inline"><em>w</em></span>? We don’t know, they may be equal or not. In this case it’s necessary to verify.</p>
+<p>Okay, here is an implementation to complement the explanation:</p>
 <p>Embed: <code>implementation.cpp</code></p>
-<p>
-Since <span class="math inline"><em>l</em></span> and <span class="math inline"><em>r</em></span> never decrease the complexity of this algorithm is <span class="math inline"><em>O</em>(<em>n</em>)</span>.
-</p>
+<p>Since <span class="math inline"><em>l</em></span> and <span class="math inline"><em>r</em></span> never decrease the complexity of this algorithm is <span class="math inline"><em>O</em>(<em>n</em>)</span>.</p>
 <h2 id="string-matching-using-the-z-function">String matching using the Z function</h2>
-<p>
-Now that we know how to compute the Z function let’s see how to use it to find the occurrences of a pattern <span class="math inline"><em>P</em></span> in a text <span class="math inline"><em>T</em></span>. The idea is easy:
-</p>
+<p>Now that we know how to compute the Z function let’s see how to use it to find the occurrences of a pattern <span class="math inline"><em>P</em></span> in a text <span class="math inline"><em>T</em></span>. The idea is easy:</p>
 <ol>
 <li>
 Concatenate <span class="math inline"><em>P</em></span> with <span class="math inline"><em>T</em></span> and compute the Z function in the resulting string (<span class="math inline"><em>S</em></span> = <span class="math inline"><em>P</em></span> + <span class="math inline"><em>T</em></span> )
@@ -103,15 +79,13 @@ There is an occurrence of <span class="math inline"><em>P</em></span> that start
 <h2>
 Practice problems
 </h2>
-<p>
-Here are some problems to put into practice this algorithm:
-</p>
+<p>Here are some problems to put into practice this algorithm:</p>
 <ul>
 <li>
-<a href="http://codeforces.com/contest/432/problem/D" target="_blank">Codeforces Round #246 Div 2 Problem D: Prefixes and Suffixes</a> | <a href="https://gist.github.com/rendon/0cd66d5891b5758cd382" target="_blank">My solution</a>
+<a href="http://codeforces.com/contest/432/problem/D">Codeforces Round #246 Div 2 Problem D: Prefixes and Suffixes</a> | <a href="https://gist.github.com/rendon/0cd66d5891b5758cd382">My solution</a>
 </li>
 <li>
-<a href="http://lightoj.com/volume_showproblem.php?problem=1255" target="_blank">Light OJ: 1255 - Substring Frequency</a> | <a href="https://gist.github.com/rendon/43bbc8f3fbcb8d231c99" target="_blank">My solution</a>
+<a href="http://lightoj.com/volume_showproblem.php?problem=1255">Light OJ: 1255 - Substring Frequency</a> | <a href="https://gist.github.com/rendon/43bbc8f3fbcb8d231c99">My solution</a>
 </li>
 </ul>
 <h2 id="references">References</h2>

@@ -1,15 +1,15 @@
 # Set up DHCP server
 2016-02-18 2024-05-07 #sysadmin #linux #post
 
-<p>DHCP stands for Dynamic Host Configuration Protocol, a network protocol used to automatically configure hosts in a network. There are some concepts you need to know to understand what is a DHCP server.</p>
+DHCP stands for Dynamic Host Configuration Protocol, a network protocol used to automatically configure hosts in a network. There are some concepts you need to know to understand what is a DHCP server.
 
-<p>A subnetwork has some settings that indentify their hosts and itself from other subnetworks, settings such as <a href="http://en.wikipedia.org/wiki/Subnetwork#Network_addressing_and_routing" target="_blank">network address</a>, <a href="http://en.wikipedia.org/wiki/Subnet_mask" target="_blank">subnet mask</a>, <a href="http://en.wikipedia.org/wiki/Default_gateway" target="_blank">gateway</a>, <a href="http://en.wikipedia.org/wiki/IP_address" target="_blank">IP</a>, etc. Each host connected to a subnetwork must have at least an IP and subnet mask address, a gateway address to comunicate out with other subnetworks, and possibly one or more DNS server addresses to go out to the Internet. In a small network is not a problem setting up each PC manually, but if the network has one or two hundred PCs or the users don't know anything about networks and only wish to connect to the internet things get complicated.</p>
+A subnetwork has some settings that indentify their hosts and itself from other subnetworks, settings such as [network address](http://en.wikipedia.org/wiki/Subnetwork#Network_addressing_and_routing), [subnet mask](http://en.wikipedia.org/wiki/Subnet_mask), [gateway](http://en.wikipedia.org/wiki/Default_gateway), [IP](http://en.wikipedia.org/wiki/IP_address), etc. Each host connected to a subnetwork must have at least an IP and subnet mask address, a gateway address to comunicate out with other subnetworks, and possibly one or more DNS server addresses to go out to the Internet. In a small network is not a problem setting up each PC manually, but if the network has one or two hundred PCs or the users don't know anything about networks and only wish to connect to the internet things get complicated.
 
-<p>That said, a DHCP server serves all settings the that clients(PCs) needs to configure their connection. In this post I show you how to setup a DHCP server using Debian GNU/Linux, here is the schema.</p>
+That said, a DHCP server serves all settings the that clients(PCs) needs to configure their connection. In this post I show you how to setup a DHCP server using Debian GNU/Linux, here is the schema.
 
 ![Network diagram](/setup-dhcp-server/dhcp_lan_0.svg)
 
-<p>My ISP is Telmex and its router comes with the DHCP option so I had to rearrange the network this way. Since the server provides two services it has two NICs too. Let's go!.</p>
+My ISP is Telmex and its router comes with the DHCP option so I had to rearrange the network this way. Since the server provides two services it has two NICs too. Let's go!.
 
 ## Instalation
 
@@ -19,7 +19,7 @@ $ sudo apt-get install dhcp3-server
 
 ## Configuration
 
-<p>First configure your NICs.</p>
+First configure your NICs.
 
 <pre lang="bash" theme="slate">
 $ sudo dhclient eth0 -v
@@ -39,7 +39,7 @@ bound to 192.168.1.64 -- renewal in 36506 seconds.
 $ sudo ifconfig eth1 128.64.32.1 netmask 255.255.255.0
 </pre>
 
-<p>Now, go to `/etc/dhcp/` and open the `dhcpd.conf` file, add these lines.</p>
+Now, go to `/etc/dhcp/` and open the `dhcpd.conf` file, add these lines.
 
 <pre lang="bash" theme="slate">
 subnet 128.64.32.0 netmask 255.255.255.0 {
@@ -52,18 +52,18 @@ subnet 128.64.32.0 netmask 255.255.255.0 {
 }
 </pre>
 
-<p>Here is the meaning of the options:</p>
+Here is the meaning of the options:
 
 <ul>
-<li><strong><em>range:</em></strong> Range of valid IPs the server can assign to clients.</li>
-<li><strong><em>subnet-mask:</em></strong> Subnetwork Mask address.</li>
-<li><strong><em>broadcast-address:</em></strong> Broadcast address. </li>
-<li><strong><em>routers:</em></strong> Gateway, to go out of the subnetwork.</li>
-<li><strong><em>default-lease-time n:</em></strong> Number of seconds the connection is leased by default. After n seconds the connection ends and the client needs to renew the connection.</li>
-<li><strong><em>max-lease-time n:</em></strong> Maximun number of seconds the connections is leased.</li>
+<li>***range:*** Range of valid IPs the server can assign to clients.</li>
+<li>***subnet-mask:*** Subnetwork Mask address.</li>
+<li>***broadcast-address:*** Broadcast address. </li>
+<li>***routers:*** Gateway, to go out of the subnetwork.</li>
+<li>***default-lease-time n:*** Number of seconds the connection is leased by default. After n seconds the connection ends and the client needs to renew the connection.</li>
+<li>***max-lease-time n:*** Maximun number of seconds the connections is leased.</li>
 </ul>
 
-<p>Save the file and restart the service.</p>
+Save the file and restart the service.
 
 <pre lang="bash" theme="slate">
 $ sudo service isc-dhcp-server restart
@@ -71,7 +71,7 @@ $ sudo service isc-dhcp-server restart
 
 ## Testing
 
-<p>Most operating systems comes with a network manager that detect and try to connect automatically to a network when detected, if not, execute the following command, change `eth0` with your NIC.</p>
+Most operating systems comes with a network manager that detect and try to connect automatically to a network when detected, if not, execute the following command, change `eth0` with your NIC.
 
 <pre lang="bash" theme="slate">
 $ sudo dhclient eth0 -v
@@ -90,20 +90,20 @@ DHCPACK from 128.64.32.1
 bound to 128.64.32.3 -- renewal in 273 seconds.
 </pre>
 
-<p>Follow this <a href="http://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol#Technical_details" target="_blank">link</a> to know what every message(DHCPDISCOVER, DHCPREQUEST, DHCPOFFER, etc.) means, recommended.</p>
+Follow this [link](http://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol#Technical_details) to know what every message(DHCPDISCOVER, DHCPREQUEST, DHCPOFFER, etc.) means, recommended.
 
-<p>At this point your DHCP server is working, you should be able to comunicate with other hosts in the network, however, you can't go out to the internet yet, we need to configure our server to act as an Internet router too.</p>
+At this point your DHCP server is working, you should be able to comunicate with other hosts in the network, however, you can't go out to the internet yet, we need to configure our server to act as an Internet router too.
 
 ## Configure Internet Router
 
-<p>In the server execute the next lines to redirect the traffic on `eth1` to `eth0`.</p>
+In the server execute the next lines to redirect the traffic on `eth1` to `eth0`.
 
 <pre lang="bash" theme="slate">
 $ sudo iptables --table nat --append POSTROUTING --out-interface eth0 -j MASQUERADE
 $ sudo iptables --append FORWARD --in-interface eth1 -j ACCEPT
 </pre>
 
-<p>If there were no problems now you can go out to the internet too.</p>
+If there were no problems now you can go out to the internet too.
 
-<p>There are more options to customize the DHCP server, DNS server addresses, for example, the configuration that we just created is one of the most basic, but I think it's good to start.</p>
-<p>That is all for this post, I hope it be useful for you. Comments or corrections are welcome.</p>
+There are more options to customize the DHCP server, DNS server addresses, for example, the configuration that we just created is one of the most basic, but I think it's good to start.
+That is all for this post, I hope it be useful for you. Comments or corrections are welcome.

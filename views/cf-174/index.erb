@@ -8,20 +8,14 @@
 
 <p>I took part in Codeforces 174 Division II and here are my solutions for some of the problems.</p>
 <h2 id="a.-cows-and-primitive-roots">A. Cows and primitive roots</h2>
-<p><a href="http://www.codeforces.com/contest/284/problem/A" title="Cows and primitive roots">Problem description</a>.</p>
+<p><a href="http://www.codeforces.com/contest/284/problem/A">Cows and primitive roots</a>.</p>
 <h3 id="solution">Solution:</h3>
 <h4 id="complicated-version">Complicated version:</h4>
-<p>
-Stick to the problem definition and make the tests, we need a modpow function. Complexity: <span class="math inline"><em>O</em>(<em>n</em><sup>2</sup>)</span>.
-</p>
+<p>Stick to the problem definition and make the tests, we need a modpow function. Complexity: <span class="math inline"><em>O</em>(<em>n</em><sup>2</sup>)</span>.</p>
 <p>Embed: <code>a.cpp</code></p>
-<p>
-This problem took me about an hour, I am out of practice, I didn’t remember well how to implement the modpow function and I wanted to do it by myself.
-</p>
+<p>This problem took me about an hour, I am out of practice, I didn’t remember well how to implement the modpow function and I wanted to do it by myself.</p>
 <h4 id="simplified-version">Simplified version:</h4>
-<p>
-I found this formula in <a href="http://en.wikipedia.org/wiki/Primitive_root_modulo_n#Finding_primitive_roots" title="Primitive roots">wikipedia</a>:
-</p>
+<p>I found this formula in <a href="http://en.wikipedia.org/wiki/Primitive_root_modulo_n#Finding_primitive_roots">Primitive roots</a>:</p>
 <blockquote>
 The number of primitive roots modulo n, if there are any, is equal to $ ((n)) $
 </blockquote>
@@ -30,38 +24,21 @@ Where $(n) $ is defined as: How many numbers <span class="math inline"><em>m</em
 </p>
 <p>Embed: <code>a-simple.cpp</code></p>
 <h2 id="b.-cows-and-poker-game">B. Cows and Poker Game</h2>
-<p><a href="http://www.codeforces.com/contest/284/problem/B" title="Cows and Poker Game">Problem description</a>.</p>
+<p><a href="http://www.codeforces.com/contest/284/problem/B">Cows and Poker Game</a>.</p>
 <h3 id="solution-1">Solution:</h3>
-<p>
-Count the occurrences of ‘F’s and ’A’s. If the occurrences of ’I’ is 0 the answer is the number of occurences of ‘A’s, if the occurrences of ’I’ is exactly 1 the answer is 1, in other case the answer is 0. This is the solution that I sent during the contest. Complexity: <span class="math inline"><em>O</em>(<em>n</em>)</span>.
-</p>
+<p>Count the occurrences of ‘F’s and ’A’s. If the occurrences of ’I’ is 0 the answer is the number of occurences of ‘A’s, if the occurrences of ’I’ is exactly 1 the answer is 1, in other case the answer is 0. This is the solution that I sent during the contest. Complexity: <span class="math inline"><em>O</em>(<em>n</em>)</span>.</p>
 <p>Embed: <code>b.cpp</code></p>
 <h2 id="c.-cows-and-sequence">C. Cows and Sequence</h2>
-<p><a href="http://www.codeforces.com/contest/284/problem/C" title="Cows and Sequence">Problem description</a>.</p>
+<p><a href="http://www.codeforces.com/contest/284/problem/C">Cows and Sequence</a>.</p>
 <h3 id="solution-2">Solution:</h3>
-<p>
-I wasn’t able to solve this problem during the contest, the idea described here is from the editorial and my implementation is based on <a href="http://www.codeforces.com/profile/Efremov_licesos" target="_blank">Efremov_licesos</a>’s solution.
-</p>
-<p>
-<strong>Q</strong>: If the solution is described in the editorial Why to write about it again?
-</p>
-<p>
-<strong>A</strong>: Because sometimes the solutions described in the editorials are very abstract and it’s almost always hard to understand other contestants’ solutions(many contestants are very intelligent but their code is cryptic and ugly …no offense).
-</p>
-<p>
-If the operations were only 1 and 2 you can solve the problem keeping the sum of the additions to existing elements or new elements. The hard part is operation 3, How to know what is the value of the last element after some aditions? The idea is to use two arrays, an array B to store the new values(<span class="math inline"><em>k</em><sub><em>i</em></sub></span>), and an array A to store the additions(operation 1). A picture is worth a thousand words.
-</p>
+<p>I wasn’t able to solve this problem during the contest, the idea described here is from the editorial and my implementation is based on <a href="http://www.codeforces.com/profile/Efremov_licesos">Efremov_licesos</a>’s solution.</p>
+<p><strong>Q</strong>: If the solution is described in the editorial Why to write about it again?</p>
+<p><strong>A</strong>: Because sometimes the solutions described in the editorials are very abstract and it’s almost always hard to understand other contestants’ solutions(many contestants are very intelligent but their code is cryptic and ugly …no offense).</p>
+<p>If the operations were only 1 and 2 you can solve the problem keeping the sum of the additions to existing elements or new elements. The hard part is operation 3, How to know what is the value of the last element after some aditions? The idea is to use two arrays, an array B to store the new values(<span class="math inline"><em>k</em><sub><em>i</em></sub></span>), and an array A to store the additions(operation 1). A picture is worth a thousand words.</p>
 <p><img src="/cf-174/cf174d2_c_0.png" /></p>
-<p>
-The value of the last element is <code>(A[n] * n) - (A[n] * (n-1)) + B[n]</code>, or graphically.
-</p>
+<p>The value of the last element is <code>(A[n] * n) - (A[n] * (n-1)) + B[n]</code>, or graphically.</p>
 <p><img src="/cf-174/cf174d2_c_1.png" /></p>
-<p>
-I hope with this the code be more understandable.
-</p>
-<p>
-Complexity: <span class="math inline"><em>O</em>(<em>n</em>)</span>.
-</p>
+<p>I hope with this the code be more understandable. Complexity: <span class="math inline"><em>O</em>(<em>n</em>)</span>.</p>
 <p>Embed: <code>c.cpp</code></p>
 <h3 id="d.-not-solved-yet.">D. Not solved yet.</h3>
 <h3 id="e.-not-solved-yet.">E. Not solved yet.</h3>
