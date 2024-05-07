@@ -12,9 +12,9 @@ However, much more efficient solutions exists to this problem, the Z algorithm i
   The $Z_{i}(T)$ is equal to the length of the longest substring starting at position $i > 0$ that matches a prefix of $T$.
 </div> 
 
-<p>For example, let be T = "cabacadcab", $Z_{3} = 0$, $Z_{4} = 2$ and $Z_{7} = 3$. Obviously $Z_{0}$ is always equal to the length of the string. See figure <%= ref('fig_z_alg_example') %>.</p>
+<p>For example, let be T = "cabacadcab", $Z_{3} = 0$, $Z_{4} = 2$ and $Z_{7} = 3$. Obviously $Z_{0}$ is always equal to the length of the string. See figure .</p>
 
-![Z Algorithm example](z_alg_example.png)
+![Z Algorithm example](/z-algorithm/z_alg_example.png)
 
 ## Z Boxes
 
@@ -22,7 +22,7 @@ However, much more efficient solutions exists to this problem, the Z algorithm i
     If $Z_{i} > 0$ a Z-box is a substring that starts at position $i$ and ends at position $i + Z_{i} - 1$, i.e. the substring that matches the prefix of $T$.
 </div>
 
-![Z-Boxes](z_boxes.svg)
+![Z-Boxes](/z-algorithm/z_boxes.svg)
 
 
 <p>Assume that we have already computed the values of $Z$ upto some $k-1$ and now we need to compute $Z_{k}$. There are four possible cases. In the following pictures $l$ and $r$ denote de start and the end of the last Z-box.</p>
@@ -31,14 +31,14 @@ However, much more efficient solutions exists to this problem, the Z algorithm i
 
 <p>Position $k$ is not contained in the last Z-box. We need to compare character by character to find $Z_{k}$.</p>
 
-![Case 1](z_alg_cases_1.svg)
+![Case 1](/z-algorithm/z_alg_cases_1.svg)
 
 
 ### Case 2: $ k $ is within the last Z-box
 
 <p>We'll denote this last Z-box as $\alpha$ and as $\beta$ the box starting at position $k$ and ending at $r$. Since every Z-box matches a prefix, the figure <%=ref('fig_z_alg_case_2');%> depicts our situation.</p>
 
-![Case 2](z_alg_cases_2.svg)
+![Case 2](/z-algorithm/z_alg_cases_2.svg)
 
 <p>As you can see, $k'$ corresponds to position $k$ in the prefix and we already computed $Z_{k'}$ and so we can leverage this fact. There are three more cases.</p>
 
@@ -47,18 +47,18 @@ However, much more efficient solutions exists to this problem, the Z algorithm i
 
 <p>In this case $Z_{k} = Z_{k'}$.</p>
 
-![Case 2a](z_alg_cases_2a.svg)
+![Case 2a](/z-algorithm/z_alg_cases_2a.svg)
 
 
 #### Case 2b: $ Z_{k'} > |\\beta| $
 
 <p>Let be $x$ the first character that is not contained in the last Z-box and $y$ the first character that is not contained in the prefix, we know one thing, $x \neq y$ and therefore $Z_{k}$ cannot be greater than $Z_{k'}$. Result $Z_{k} = |\beta|$.</p>
 
-![Case 2b](z_alg_cases_2b.svg)
+![Case 2b](/z-algorithm/z_alg_cases_2b.svg)
 
 #### Case 2c: $ Z_{k'} = |\beta| $
 
-![Case 2c](z_alg_cases_2c.svg)
+![Case 2c](/z-algorithm/z_alg_cases_2c.svg)
 
 <p>Here we know two things, $x \neq y$  and $y \neq w$. How about $x$ and $w$? We don't know, they may be equal or not. In this case it's necessary to verify.</p>
 

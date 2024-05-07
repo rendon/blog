@@ -14,14 +14,14 @@
 
 <p>Compute the distance between the two men as they move and take the minimum distance.</p>
 
-![Termnary search example](ternary_search_1.png)
+![Termnary search example](/ternary-search/ternary_search_1.png)
 
 <p>Obviously, we can only take discrete points, and, since the problem ask for an answer with an error less than 1e-6, a brute force approach would take much time, very much. So the strategy is to use ternary search:</p>
 
-![Step 1](ternary_search_2.png)
-![Step 2](ternary_search_3.png)
-![Step 3](ternary_search_4.png)
-![Step 4](ternary_search_5.png)
+![Step 1](/ternary-search/ternary_search_2.png)
+![Step 2](/ternary-search/ternary_search_3.png)
+![Step 3](/ternary-search/ternary_search_4.png)
+![Step 4](/ternary-search/ternary_search_5.png)
 
 <p>And so on. Here is my solution:</p>
 

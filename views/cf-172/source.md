@@ -1,7 +1,5 @@
-<%=  tex_set("show_numbers_in_sections", false);  %>
-<%=  tex_set("show_numbers_in_subsections", false);  %>
 
-![](codeforces_logo.png)
+![](/cf-172/codeforces_logo.png)
 
 <p>I took part in Codeforces 172 Division II and here are my solutions for some of the problems.</p>
 

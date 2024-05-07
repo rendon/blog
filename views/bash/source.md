@@ -1,12 +1,10 @@
-<%
-tex_set("show_numbers_in_sections", false)
-tex_set("show_numbers_in_subsections", false)
-tex_set("show_numbers_in_subsubsections", false)
-%>
+<!-- vim: set spelllang=es_mx: -->
+
+# Bash
 
 <p><strong>NOTA</strong>: Este artículo fue publicado originalmente en <a href="http://revista.atixlibre.org/?p=271" target="_blank">ATIX</a>, revista de software libre.</p>
 
-![](hdud2_0.png)
+![](/bash/hdud2_0.png)
 
 <blockquote>
 El Bourne Again Shell es el poderoso interprete de comandos por defecto en la mayoría de los sistemas UNIX y una herramienta indispensable de todo desarrollador.
@@ -68,7 +66,7 @@ usuario@host:directorio_actual$   #resultado
 PS1='[\e[0;32m][\t][\e[1;34m]\u[\e[0;37m][\e[1;37m]@\h~$ [\e[1;37m]'
 </pre>
 
-![Prompt con colores](hdud2_1.png)
+![Prompt con colores](/bash/hdud2_1.png)
 
 <p>En la definición del prompt se han utilizados algunos valores especiales para obtener información del sistema, tales como la hora, nombre de usuario,  host, directorio actual,  entre otras.</p>
 

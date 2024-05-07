@@ -1,4 +1,9 @@
-<p>¡Hola! Con éste documento doy inicio a una serie de reportes correspondientes al desarrollo de los proyectos de la asignatura <strong>Desarrollo de Aplicaciones para Tecnologías Móviles</strong>.</p>
+<!-- vim: set spelllang=es_mx: -->
+
+# Reporte I: Enviar mensajes SMS
+2016-03-05 2024-05-06 #dev #android #post
+
+<p>Con éste documento doy inicio a una serie de reportes correspondientes al desarrollo de los proyectos de la asignatura <strong>Desarrollo de Aplicaciones para Tecnologías Móviles</strong>.</p>
 
 ## Definición del problema
 
@@ -10,7 +15,7 @@
 
 <p>La solución que vamos a tratar en este reporte consiste en lo siguiente. No vamos a crear 1 programa sino 2, un servidor en el dispositivo móvil y un cliente en la PC. El siguiente diagrama puede ayudar a entender mejor la solución.</p>
 
-![Diagrama de la solución](sms_01.png)
+![Diagrama de la solución](/report-i-send-sms/sms_01.png)
 
 
 ### Servidor
@@ -161,7 +166,7 @@ Embed: `compile-and-install.sh`
 
 <p>La dirección del servidor es la dirección IP que tienen el dispositivo móvil, en el puerto 8080, por ejemplo, _http://192.168.1.242:8080_. Esta dirección la tienen que conocer el cliente para poder conectarse.</p>
 
-![Interfaz del servidor de SMS](sms_02.png)
+![Interfaz del servidor de SMS](/report-i-send-sms/sms_02.png)
 
 ## El cliente
 
@@ -207,7 +212,7 @@ Embed: `client-send-sms.java`
 
 Embed: `action-performed.java`
 
-![Envío de mensajes](sms_03.png)
+![Envío de mensajes](/report-i-send-sms/sms_03.png)
 
 ### InboxPanel
 
@@ -215,7 +220,7 @@ Embed: `action-performed.java`
 
 Embed: `sms-monitor.java`
 
-![Bandeja de entrada](sms_04.png)
+![Bandeja de entrada](/report-i-send-sms/sms_04.png)
 
 
 ### SentMessagePanel
@@ -224,13 +229,13 @@ Embed: `sms-monitor.java`
 
 Embed: `run.java`
 
-![Mensajes enviados](sms_05.png)
+![Mensajes enviados](/report-i-send-sms/sms_05.png)
 
 ### Bono
 
 <p>Al enviar un mensaje el usuario puede introducir el número directamente o presionar el botón con etiqueta "..." para acceder a la lista de contactos del dispositivo. Por cuestiones de seguridad he alterado la imagen puesto que es mi lista de contactos.</p>
 
-![Lista de contactos](sms_06.png)
+![Lista de contactos](/report-i-send-sms/sms_06.png)
 
 <p>El código es sencillo:</p>
 
@@ -270,8 +275,6 @@ Embed: `clone-projects.sh`
 
 ## Referencias
 
-<% 
 - [Documentación de Android](https://developer.android.com/index.html)
 - [Begining Android Application Development](http://www.wrox.com/WileyCDA/WroxTitle/Beginning-Android-Application-Development.productCd-1118087291.html)
 - [Documentación de NanoHTTPD](http://nanohttpd.org/)
-%>

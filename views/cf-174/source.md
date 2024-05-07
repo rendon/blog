@@ -1,10 +1,7 @@
-<% 
-  tex_set("show_numbers_in_sections", false);
-  tex_set("show_numbers_in_subsections", false);
-  tex_set("show_numbers_in_subsubsections", false);
-%>
+#  CF-174
+2016-03-04 2024-05-06 #algorithms #data-structures #post
 
-<p>I took part in Codeforces 174 Division II and here are my solutions for some of the problems.</p>
+I took part in Codeforces 174 Division II and here are my solutions for some of the problems.
 
 ## A. Cows and primitive roots
 
@@ -57,11 +54,11 @@ Embed: `b.cpp`
 
 <p>If the operations were only 1 and 2 you can solve the problem keeping the sum of the additions to existing elements or new elements. The hard part is operation 3, How to know what is the value of the last element after some aditions? The idea is to use two arrays, an array B to store the new values($k_i$), and an array A to store the additions(operation 1). A picture is worth a thousand words.</p>
 
-![](cf174d2_c_0.png)
+![](/cf-174/cf174d2_c_0.png)
 
 <p>The value of the last element is `(A[n] * n) - (A[n] * (n-1)) + B[n]`, or graphically.</p>
 
-![](cf174d2_c_1.png)
+![](/cf-174/cf174d2_c_1.png)
 
 <p>I hope with this the code be more understandable.</p>
 <p>Complexity: $O(n)$.</p>
@@ -72,4 +69,4 @@ Embed: `c.cpp`
 
 ### E. Not solved yet.
 
-<p>Comments of corrections are welcome. Bye!</p>
+Comments of corrections are welcome.

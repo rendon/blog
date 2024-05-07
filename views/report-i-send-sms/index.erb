@@ -13,7 +13,7 @@ Desarrollar una aplicación de escritorio que permita a sus usuarios enviar y re
 La solución que vamos a tratar en este reporte consiste en lo siguiente. No vamos a crear 1 programa sino 2, un servidor en el dispositivo móvil y un cliente en la PC. El siguiente diagrama puede ayudar a entender mejor la solución.
 </p>
 <figure>
-<img src="sms_01.png" alt="Diagrama de la solución" />
+<img src="/report-i-send-sms/sms_01.png" alt="Diagrama de la solución" />
 <figcaption aria-hidden="true">Diagrama de la solución</figcaption>
 </figure>
 <h3 id="servidor">Servidor</h3>
@@ -194,7 +194,7 @@ Nos posicionamos en el folder de nuestro proyecto y tecleamos lo siguiente, la p
 La dirección del servidor es la dirección IP que tienen el dispositivo móvil, en el puerto 8080, por ejemplo, <em>http://192.168.1.242:8080</em>. Esta dirección la tienen que conocer el cliente para poder conectarse.
 </p>
 <figure>
-<img src="sms_02.png" alt="Interfaz del servidor de SMS" />
+<img src="/report-i-send-sms/sms_02.png" alt="Interfaz del servidor de SMS" />
 <figcaption aria-hidden="true">Interfaz del servidor de SMS</figcaption>
 </figure>
 <h2 id="el-cliente">El cliente</h2>
@@ -235,7 +235,7 @@ Hacemos unas cuantas validaciones y en caso satisfactorio procedemos a enviar el
 </p>
 <p>Embed: <code>action-performed.java</code></p>
 <figure>
-<img src="sms_03.png" alt="Envío de mensajes" />
+<img src="/report-i-send-sms/sms_03.png" alt="Envío de mensajes" />
 <figcaption aria-hidden="true">Envío de mensajes</figcaption>
 </figure>
 <h3 id="inboxpanel">InboxPanel</h3>
@@ -244,7 +244,7 @@ Esta parte si es un poco interesante, cómo saber si ha llegado un nuevo mensaje
 </p>
 <p>Embed: <code>sms-monitor.java</code></p>
 <figure>
-<img src="sms_04.png" alt="Bandeja de entrada" />
+<img src="/report-i-send-sms/sms_04.png" alt="Bandeja de entrada" />
 <figcaption aria-hidden="true">Bandeja de entrada</figcaption>
 </figure>
 <h3 id="sentmessagepanel">SentMessagePanel</h3>
@@ -253,7 +253,7 @@ Esta parte es más simple, únicamente muestra la lista de mensajes enviados. En
 </p>
 <p>Embed: <code>run.java</code></p>
 <figure>
-<img src="sms_05.png" alt="Mensajes enviados" />
+<img src="/report-i-send-sms/sms_05.png" alt="Mensajes enviados" />
 <figcaption aria-hidden="true">Mensajes enviados</figcaption>
 </figure>
 <h3 id="bono">Bono</h3>
@@ -261,7 +261,7 @@ Esta parte es más simple, únicamente muestra la lista de mensajes enviados. En
 Al enviar un mensaje el usuario puede introducir el número directamente o presionar el botón con etiqueta “…” para acceder a la lista de contactos del dispositivo. Por cuestiones de seguridad he alterado la imagen puesto que es mi lista de contactos.
 </p>
 <figure>
-<img src="sms_06.png" alt="Lista de contactos" />
+<img src="/report-i-send-sms/sms_06.png" alt="Lista de contactos" />
 <figcaption aria-hidden="true">Lista de contactos</figcaption>
 </figure>
 <p>

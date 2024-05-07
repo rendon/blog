@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 function convert() {
-    sed -i "s/<%= file(post, '\([^']*\)', '\([^']*\)') %>/[\2](\1)/g" source.md
-    sed -i "s/<%= src_file(post, '\([^']*\)') %>/[\1](\1)/g" source.md
+    # sed -i "s/<%= file(post, '\([^']*\)', '\([^']*\)') %>/[\2](\1)/g" source.md
+    # sed -i "s/<%= src_file(post, '\([^']*\)') %>/[\1](\1)/g" source.md
 
     # # <%= link_to('http://adventofcode.com/', 'Advent of Code', target: :blank) %>
     # sed -i "s/<%= link_to('\([^']*\)', '\([^']*\)',[^)]*) %>/[\2](\1)/g" source.md
@@ -12,14 +12,14 @@ function convert() {
     # sed -i '/<%= finalize(); %>/d' source.md
 
     # # Sections
-    # sed -i 's/<%= section(["]\([^"]*\)["]);\? %>/## \1/g' source.md
-    # sed -i "s/<%= section([']\([^']*\)[']);\? %>/## \1/g" source.md
+    # sed -i "s/<%= section('\(.*\)');  %>/## \1/g" source.md
+    # sed -i 's/<%= section("\(.*\)");  %>/## \1/g' source.md
 
-    # sed -i 's/<%= subsection(["]\([^"]*\)["]);\? %>/### \1/g' source.md
-    # sed -i "s/<%= subsection([']\([^']*\)[']);\? %>/### \1/g" source.md
+    # sed -i "s/<%= subsection('\(.*\)');  %>/### \1/g" source.md
+    # sed -i 's/<%= subsection("\(.*\)");  %>/### \1/g' source.md
 
-    # sed -i 's/<%= subsubsection(["]\([^"]*\)["]);\? %>/#### \1/g' source.md
-    # sed -i "s/<%= subsubsection([']\([^']*\)[']);\? %>/#### \1/g" source.md
+    # sed -i 's/<%= subsubsection("\([^"]*\)");\? %>/#### \1/g' source.md
+    # sed -i "s/<%= subsubsection('\([^']*\)');\? %>/#### \1/g" source.md
 
 
     # # # code blocks
@@ -52,7 +52,18 @@ function convert() {
     # sed -i "s/<% add_bib('\([^']*\)', *'\([^']*\)', *'\([^']*\)', *'\([^']*\)');\? %>/- [\3](\4)/g" source.md
     # sed -i 's/<% add_bib("\([^"]*\)", *"\([^"]*\)", *"\([^"]*\)", *"\([^"]*\)");\? %>/- [\3](\4)/g' source.md
 
-    sed -i "s/add_bib('\([^']*\)', *'\([^']*\)', *'\([^']*\)', *'\([^']*\)');\?/- [\3](\4)/g" source.md
+    # sed -i "s/add_bib('\([^']*\)', *'\([^']*\)', *'\([^']*\)', *'\([^']*\)');\?/- [\3](\4)/g" source.md
+
+    # sed -i "s/!\[\(.*\)\](\(.*\))/![\1](\/$1\/\2)/g" source.md
+    # sed -i "/tex_set/d" source.md
+    
+    # <%= ref('dns_wicd_conf'); %>
+    sed -i "s/<%= ref('.*') %>//g" source.md
+    sed -i "s/<%= ref('.*'); %>//g" source.md
+
+
+    sed -i 's/<%= ref(".*") %>//g' source.md
+    sed -i 's/<%= ref(".*"); %>//g' source.md
 }
 
 
@@ -65,7 +76,7 @@ do
         cd "$dir"
         if [[ -f source.md ]]
         then
-            convert
+            convert $dir
         fi
         cd -
     fi

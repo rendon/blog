@@ -4,7 +4,7 @@
 
 Embed: `web-service.php`
 
-![Our web service](testws_myservice.png)
+![Our web service](/testing-a-web-service/testws_myservice.png)
 
 <p>Now, How to test if our Web service is working as expected? Let' see.</p>
 
@@ -12,10 +12,10 @@ Embed: `web-service.php`
 
 <p>This is a greate tool. Given a Web service location, SoapUI generates the needed SOAP messages to send requests to our Web service. Here I show how to test our previous Web service.</p>
 
-![SoapUI new project](testws_soapui_new.png)
+![SoapUI new project](/testing-a-web-service/testws_soapui_new.png)
 
 
-![Calling our Web service using SoapUI](testws_soapui_request.png)
+![Calling our Web service using SoapUI](/testing-a-web-service/testws_soapui_request.png)
 
 ## Command line
 
@@ -35,7 +35,7 @@ Embed: `wget.sh`
 
 Embed: `wget-output.xml`
 
-<p>This is the same response shown in picture <%= ref('testws_soapui_request'); %>, unindented though.</p>
+<p>This is the same response shown in picture , unindented though.</p>
 
 ### Using cURL
 

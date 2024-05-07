@@ -46,11 +46,11 @@ I wasn’t able to solve this problem during the contest, the idea described her
 <p>
 If the operations were only 1 and 2 you can solve the problem keeping the sum of the additions to existing elements or new elements. The hard part is operation 3, How to know what is the value of the last element after some aditions? The idea is to use two arrays, an array B to store the new values(<span class="math inline"><em>k</em><sub><em>i</em></sub></span>), and an array A to store the additions(operation 1). A picture is worth a thousand words.
 </p>
-<p><img src="cf174d2_c_0.png" /></p>
+<p><img src="/cf-174/cf174d2_c_0.png" /></p>
 <p>
 The value of the last element is <code>(A[n] * n) - (A[n] * (n-1)) + B[n]</code>, or graphically.
 </p>
-<p><img src="cf174d2_c_1.png" /></p>
+<p><img src="/cf-174/cf174d2_c_1.png" /></p>
 <p>
 I hope with this the code be more understandable.
 </p>

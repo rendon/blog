@@ -7,13 +7,13 @@
 
 En matemáticas $\pi$ es una constante cuyo valor es la razón entre el perímetro de un círculo con respecto a su diámetro, es decir, cuantas veces cabe el diámetro en el perímetro del círculo.
 
-![Razón entre el el perímetro y el diámetro de un círculo](pi_unrolled.gif)
+![Razón entre el el perímetro y el diámetro de un círculo](/arquimedes-pi/pi_unrolled.gif)
 
 Arquímides de Siracusa(c. 287 a. C. ? c. 212 a. C.) fue un matemático griego, físico, ingeniero, inventor y astrónomo. Él fue probablemente el primero en encontrar un método para aproximar el valor de $\pi$ de manera iterativa.
 
 Dada una circunferencia, el método de Arquímedes consiste en dibujar un polígono inscrito y otro circunscrito y calculaba el perímetro de ambos polígonos, siendo estos perímetros el límite superior(polígono circunscrito) y límite inferior(polígono inscrito).
 
-![Método de Arquímedes para obtener PI](arquimedes_pi.png)
+![Método de Arquímedes para obtener PI](/arquimedes-pi/arquimedes_pi.png)
 
 Con base en lo anterior Arquímedes pudo determinar el intervalo numérico en el que se encuentra el valor exacto de $\pi$.
 
@@ -39,7 +39,7 @@ En la ecuación se remarca que en esta fórmula debe emplearse el valor de $\pi$
 
 Por cierto, si se preguntan de donde resultan las formulas una imagen puede ayudar:
 
-![Derivación de formulas](perimetro_pi_formulas.png)
+![Derivación de formulas](/arquimedes-pi/perimetro_pi_formulas.png)
 
 Cuanto mayor sea el número de lados del polígono mayor sera la precisión del valor de $$\pi$$. Así, por ejemplo, para n = 3, n = 8 y n = 17280 usando un polígono inscrito tenemos que el valor aproximado de $$\pi$$ es 2.598076211353316, 3.0614674589207183 y 3.1415926362832276 respectivamente.
 

@@ -1,8 +1,7 @@
-<%= tex_set("show_numbers_in_sections", false); %>
 
 <p>Convex hull is a classical problem in computational geometry and often used in programming contests. Today I present to you  the Andrew's algorithm to compute the convex hull from a set of 2D points. </p>
 
-![Convex Hull](convex_hull_0.svg)
+![Convex Hull](/andrews-convex-hull-algorithm/convex_hull_0.svg)
 
 ## Convex Hull
 <p>Here a definition from Robert Sedgewick lecture notes.</p>
@@ -36,16 +35,16 @@
 
 <table>
 <tr>
-<td>![Step 1](convex_hull_1.png)
-<td>![Step 2](convex_hull_2.png)
+<td>![Step 1](/andrews-convex-hull-algorithm/convex_hull_1.png)
+<td>![Step 2](/andrews-convex-hull-algorithm/convex_hull_2.png)
 </tr>
 <tr>
-<td>![Step 3](convex_hull_3.png)
-<td>![Step 4](convex_hull_4.png)
+<td>![Step 3](/andrews-convex-hull-algorithm/convex_hull_3.png)
+<td>![Step 4](/andrews-convex-hull-algorithm/convex_hull_4.png)
 </tr>
 <tr>
-<td>![Step 5](convex_hull_5.png)
-<td>![Step 6](convex_hull_6.png)
+<td>![Step 5](/andrews-convex-hull-algorithm/convex_hull_5.png)
+<td>![Step 6](/andrews-convex-hull-algorithm/convex_hull_6.png)
 </tr>
 </table>
 
@@ -57,8 +56,8 @@
 
 <table>
 <tr>
-<td>![Clockwise](convex_hull_7.png)
-<td>![Anticlockwise](convex_hull_8.png)
+<td>![Clockwise](/andrews-convex-hull-algorithm/convex_hull_7.png)
+<td>![Anticlockwise](/andrews-convex-hull-algorithm/convex_hull_8.png)
 </tr>
 </table>
 

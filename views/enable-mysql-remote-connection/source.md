@@ -1,8 +1,6 @@
-<%
-tex_set("show_numbers_in_sections", false)
-tex_set("show_numbers_in_subsections", false)
-tex_set("show_numbers_in_subsubsections", false)
-%>
+# Enable MySQL remote connection
+2016-02-04 2024-05-06 #sysadmin #post
+
 <p>In this post I'll show you how to allow remote connections to MySQL server, just in case, my distro is Debian GNU/Linux. I am assuming that MySQL server and MySQL client are already installed in the server and client side respectively.</p>
 
 <p>Enabling remote connections has several security issues and you should think about it before you proceed. </p>

@@ -1,20 +1,24 @@
+<!-- vim: set spelllang=es_mx: -->
+# Reporte V: Android web service
+2016-02-23 2024-05-06 #dev #school #post
+
 <p>Este reporte corresponde al proyecto número 5 de la asignatura Desarrollo de Aplicaciones para Tecnologías Móviles.</p>
 
-<%= section('Definición del problema');  %>
+## Definición del problema
 
 <blockquote>Desarrollar un Web service (en el lenguaje que más les agrade) capaz de manipular una base de datos a petición del cliente, en este caso, el cliente será una aplicación móvil para la plataforma Android.</blockquote>
 
-<%= section('Definiciones');  %>
+## Definiciones
 
 <p>Como este reporte forma parte de una serie de reportes, vamos a omitir la teoría sobre Web services puesto que ya se abordo en el reporte número <a href="/?p=865">II</a>.</p>
 
-<%= section('Propuesta de solución');  %>
+## Propuesta de solución
 
 <p>Nuevamente, el problema nos da la flexibilidad de elegir que problema modelar, la propuesta es la siguiente:</p>
 
 <blockquote>Desarrollar una aplicación móvil para el control requisiciones, similar a los dispositivos que utilizan los agentes de venta cuando salen a levantar pedidos.</blockquote>
 
-<%= subsection('El cliente');  %>
+### El cliente
 
 <p>La aplicación móvil deberá cumplir con los siguientes requisitos:</p>
 
@@ -28,7 +32,7 @@
   <li>La aplicación permitirá contactar al servidor para actualizar catálogos.</li>
 </ul>
 
-<%= subsection('El servidor');  %>
+### El servidor
 
 <p>Un Web service desarrollado en PHP que manipula una base de datos MySQL. A continuación la lista de servicios que vamos desarrollar:</p>
 
@@ -38,7 +42,7 @@
   <li>**GetAllProducts()** Retorna al cliente la lista de productos. Este servicio forma parte de la actualización de catálogos.</li>
 </ul>
 
-<%= subsection('Requisitos');  %>
+### Requisitos
 
 <p>Para poder realizar esta práctica se necesita lo siguiente:</p>
 
@@ -54,11 +58,11 @@
 
 <p>El Web service para esta aplicación es exactamente el mismo que se empleamos en el proyecto anterior (cliente Blackberry). A continuación se muestra el modelo de la base de datos para refrescar la memoria.</p>
 
-![Modelo de datos](bbws_data_model.png)
+![Modelo de datos](/report-v-android-web-service/bbws_data_model.png)
 
 <p>Lo relevante de la implementación del Web service lo pueden encontrar en los reportes [III](/report-iii-wp8-web-services/) y [IV](/report-iv-bb10-web-service/), colocar nuevamente el código aquí sería redundante y ocuparía mucho espacio.</p>
 
-<%= section('La base de datos local');  %>
+## La base de datos local
 
 <p>Uno de los requisitos de nuestra aplicación es que debe de funcionar de forma desconectada, por ende, es necesario crear una replica del modelo de datos en nuestra aplicación móvil. A continuación se muestra como se manipulan los datos en de formal local, el SGBD es SQLite.</p>
 
@@ -744,20 +748,20 @@ public class WebService {
 
 <p>En esta ocasión he optado por utilizar el diseñador de interfaces que viene con IntelliJ IDEA, sin embargo, al final el resultado es el mismo, código XML.</p>
 
-<%= subsection('Creación del proyecto');  %>
+### Creación del proyecto
 
 <p>Para evitar ambigüedades vamos a ilustrar paso a paso cómo crear el proyecto en IntelliJ IDEA.</p>
 
-![Página de inicio de IntelliJ IDEA](androidws_cp_1.png)
-![Nombre del proyecto](androidws_cp_2.png)
-![Nombre del paquete y configuración de dispositivo](androidws_cp_3.png)
-![Estamos listos para empezar](androidws_cp_4.png)
+![Página de inicio de IntelliJ IDEA](/report-v-android-web-service/androidws_cp_1.png)
+![Nombre del proyecto](/report-v-android-web-service/androidws_cp_2.png)
+![Nombre del paquete y configuración de dispositivo](/report-v-android-web-service/androidws_cp_3.png)
+![Estamos listos para empezar](/report-v-android-web-service/androidws_cp_4.png)
 
-<%= subsection('La página principal');  %>
+### La página principal
 
 <p>La siguiente figura muestra como lucirá la página principal de nuestra aplicación:</p>
 
-![Página principal](androidws_home.png)
+![Página principal](/report-v-android-web-service/androidws_home.png)
 
 <p>El diseño correspondiente en XML es el siguiente:</p>
 
@@ -895,11 +899,11 @@ public void onCreate(Bundle savedInstanceState)
 </pre>
 
 
-<%= subsection('Registro de pedidos');  %>
+### Registro de pedidos
 
 <p>A continuación se ilustra la interfaz para registrar pedidos.</p>
 
-![Registro de pedidos](androidws_shop.png)
+![Registro de pedidos](/report-v-android-web-service/androidws_shop.png)
 
 <p>La interfaz esta descrita de la siguiente manera:</p>
 
@@ -1061,11 +1065,11 @@ saveRequestButton.setOnClickListener(new View.OnClickListener() {
 </pre>
 
 
-<%= subsection('Consulta de pedidos');  %>
+### Consulta de pedidos
 
 <p>Nuestra aplicación también permite visualizar la lista de pedidos que tenemos en nuestra base de datos local.</p>
 
-![Consulta de pedidos](androidws_query.png)
+![Consulta de pedidos](/report-v-android-web-service/androidws_query.png)
 
 <p>El código XML que describe a esta interfaz es el siguiente:</p>
 
@@ -1135,7 +1139,7 @@ public void onCreate(Bundle savedInstanceBundle)
 <p>Hasta aquí las explicaciones, al final se proporciona el código completo de la aplicación.</p>
 
 
-<%= section('Código fuente');  %>
+## Código fuente
 
 <p>El código del servidor y del cliente están disponibles en Bitbucket en las siguientes direcciones:</p>
 
@@ -1151,12 +1155,10 @@ $ git clone https://rendon@bitbucket.org/rendon/requisitionandroid.git
 
 <p>La licencia del Web service y de la aplicación cliente es GPLv3.</p>
 
-<%= section('Por hacer');  %>
+## Por hacer
 
 <p>Mejorar la interfaz gráfica. La personalización de los elementos gráficos es un poco tediosa, al menos en la version 2.3, espero que esto halla mejorado en las versiones más recientes.</p>
 
 
-<% 
-section('Referencias');
+## Referencias
 - [Documentación de Android](https://developer.android.com/index.html)
-%>

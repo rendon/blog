@@ -8,13 +8,13 @@
 
 <p>Cuando nos conectamos a la Internet es indispensable que nuestro sistema conozca la dirección o direcciones de los servidores DNS para solicitar la traducción de nombres a IPs. En general, existen dos formas de establecer estas configuraciones, con la ayuda de una aplicación gráfica, o desde la línea de comandos. Veamos las dos formas.</p>
 
-<p>En la figura <%= ref('dns_wicd_conf'); %> se muestra la forma de configurar una computadora para que utilice un servidor DNS en específico, en el ejemplo se utiliza una IP estática ya que de esta manera tenemos control total sobre las configuraciones, cuando utilizamos un cliente DHCP generalmente tambien se configura el servidor DNS automáticamente .</p>
+<p>En la figura  se muestra la forma de configurar una computadora para que utilice un servidor DNS en específico, en el ejemplo se utiliza una IP estática ya que de esta manera tenemos control total sobre las configuraciones, cuando utilizamos un cliente DHCP generalmente tambien se configura el servidor DNS automáticamente .</p>
 
-![Configuración de IP estática y servidor DNS con wicd](dns_wicd_conf.png)
+![Configuración de IP estática y servidor DNS con wicd](/dns-server-gnu-linux/dns_wicd_conf.png)
 
-<p>La figura <%= ref('dns_network_manager_conf'); %> muestra como realizar la misma conexión utilizando el programa Network Manager, el asistente que podemos encontrar en sistemas con entorno de escritorio GNOME.</p>
+<p>La figura  muestra como realizar la misma conexión utilizando el programa Network Manager, el asistente que podemos encontrar en sistemas con entorno de escritorio GNOME.</p>
 
-![Configuración de IP estática y servidor DNS con Network Manager](dns_network_manager_conf.png)
+![Configuración de IP estática y servidor DNS con Network Manager](/dns-server-gnu-linux/dns_network_manager_conf.png)
 
 <p>El método para especificar el servidor(es) DNS desde la lína de comandos, es utilizando el archivo _/etc/resolv.conf_ para especificar a donde se deben solicitar los nombres. A continuación un ejemplo de como podría lucir este archivo.</p>
 
@@ -56,7 +56,7 @@ Embed: `add-facebook-address.conf`
 
 <p>Cada vez que alguien intente conectarse a facebook, en servidor de DNS le regresará al cliente la dirección del servidor DNS, en el cual tenemos también ejecutándose un servidor Web, el cual mostrará al cliente una nota informativa del porque se le ha denegado el servicio.</p>
 
-![Denegación de acceso a facebook usando DNS](dns_deny_facebook.png)
+![Denegación de acceso a facebook usando DNS](/dns-server-gnu-linux/dns_deny_facebook.png)
 
 <p>Esto es todo por esta práctica. DNS es un tema extenso y complejo, en esta práctica solo hemos visto unos ejemplos sencillos, aunque creo que es un buen punto de partida para aprender sobre este tema.</p>
 

@@ -4,7 +4,7 @@
 
 <p>That said, a DHCP server serves all settings the that clients(PCs) needs to configure their connection. In this post I show you how to setup a DHCP server using Debian GNU/Linux, here is the schema.</p>
 
-![Network diagram](dhcp_lan_0.svg)
+![Network diagram](/setup-dhcp-server/dhcp_lan_0.svg)
 
 <p>My ISP is Telmex and its router comes with the DHCP option so I had to rearrange the network this way. Since the server provides two services it has two NICs too. Let's go!.</p>
 

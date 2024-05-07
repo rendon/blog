@@ -58,7 +58,7 @@
 
 <p>En esta parte vamos a implementar el Web Service. Antes que nada veamos nuestro modelo de base de datos.</p>
 
-![Modelo de la base de datos](ws_01.png)
+![Modelo de la base de datos](/report-ii-microoj-web-services/ws_01.png)
 
 <p><strong>NOTA:</strong> Vamos a hacer una mezcla rara de ingles y español porque sino el profesor no va creer que el trabajo es nuestro. </p>
 
@@ -138,32 +138,32 @@ Embed: `client-conn-output.txt`
 
 <p>Una imagen dice más que mil palabras, como todos sabemos, así que allá vamos.</p>
 
-![Página principal de MicroOJ](ws_02.png)
+![Página principal de MicroOJ](/report-ii-microoj-web-services/ws_02.png)
 
-![Formulario de registro de usuarios](ws_03.png)
+![Formulario de registro de usuarios](/report-ii-microoj-web-services/ws_03.png)
 
-![Formulario de inicio de sesión](ws_04.png)
+![Formulario de inicio de sesión](/report-ii-microoj-web-services/ws_04.png)
 
-![Lista de problemas](ws_05.png)
+![Lista de problemas](/report-ii-microoj-web-services/ws_05.png)
 
 <p>Cada problema debe mostrar la opción de enviar una solución, sin embargo, nótese que en la imagen esta opción no figura, esto es porque el usuario no ha iniciado sesión y únicamente los usuarios registrados pueden enviar soluciones.</p>
 
 
-![Usuario que ha iniciado sesión](ws_06.png)
+![Usuario que ha iniciado sesión](/report-ii-microoj-web-services/ws_06.png)
 
 <p>En esta imagen observe que en la barra izquierda ha aparecido una nueva operación, "Crear problemas", esta operación esta disponible únicamente para el usuario administrador.</p>
 
-![Formulario para registrar un problema](ws_07.png)
+![Formulario para registrar un problema](/report-ii-microoj-web-services/ws_07.png)
 
 
-![Los usuarios pueden enviar soluciones](ws_08.png)
+![Los usuarios pueden enviar soluciones](/report-ii-microoj-web-services/ws_08.png)
 
 
-![Formulario para enviar soluciones](ws_09.png)
+![Formulario para enviar soluciones](/report-ii-microoj-web-services/ws_09.png)
 
 <p>El editor de código es Ace (<a href="http://ace.c9.io/">http://ace.c9.io/</a>).</p>
 
-![Resultados de la solución](ws_10.png)
+![Resultados de la solución](/report-ii-microoj-web-services/ws_10.png)
 
 <p>El diseño de la interfaz fue hecho utilizando Bootstrap (<a href="http://getbootstrap.com/2.3.2/index.html">http://getbootstrap.com/2.3.2/index.html</a>).</p>
 
@@ -179,7 +179,7 @@ Embed: `create-project.sh`
 
 <p>El tercer comando genera el esquelo de nuestra aplicación.</p>
 
-![Esqueleto de una aplicación ROR](ws_11.png)
+![Esqueleto de una aplicación ROR](/report-ii-microoj-web-services/ws_11.png)
 
 <p>La mayor parte de la acción ocurre en el subdirectorio _app_, especificamente en los subdirectorios _app/views_, _app/controllers_ y _app/models_, esta estructura corresponde al patron de diseño <a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller" target="_blank">Model View Controller</a>. </p>
 
@@ -247,7 +247,7 @@ Embed: `sessions-sign-out.rb`
 
 <p>La lógica para crear un problema y enviarlo al servidor es la siguiente.</p>
 
-<p>El archivo _app/views/problems/new.html.erb_ contiene el diseño del formulario que se muestra en la figura <%= ref('ws_07'); %>.</p>
+<p>El archivo _app/views/problems/new.html.erb_ contiene el diseño del formulario que se muestra en la figura .</p>
  
 <p>El archivo _app/controllers/problems_controller.rb_ contiene la lógica de la creación. El método _new_ crea un objeto de tipo <strong>Problem</strong>, cuyos datos miembro estan enlazados a los campos del formulario.</p>
 

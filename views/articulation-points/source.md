@@ -1,4 +1,3 @@
-<%= tex_set("show_numbers_in_sections", false); %>
 
 ## Welcome
 
@@ -14,7 +13,7 @@
   <p><strong>Articulation Point( or Cut Vertex):</strong> Is any vertex whose removal(together with the removal of any incident edges) results in a disconnected graph.</p>
 </div>
 
-![Articulation points example](artpoints.svg)
+![Articulation points example](/articulation-points/artpoints.svg)
 
 ## Sample problem
 

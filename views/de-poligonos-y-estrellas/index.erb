@@ -6,14 +6,14 @@ Hace algun tiempo tuve la necesidad de desarrollar una aplicación en Java que d
 Es común que la mayoría de nosotros estemos familiarizados con el sistema de coordenadas rectangulares donde cada punto en el espacio se representa por dos valores de la forma <span class="math inline">(<em>x</em>,<em>y</em>)</span> donde <span class="math inline"><em>x</em>, <em>y</em> ∈ ℝ</span>, <span class="math inline"><em>x</em></span> corresponde al desplazamiento sobre la recta horizontal y <span class="math inline"><em>y</em></span> corresponde al desplazamiento vertical. Véase figura &lt;%= ref(“plano_cartesiano”); %&gt;.
 </p>
 <figure>
-<img src="plano_cartesiano.png" alt="Plano cartesiano y coordenadas rectangulares" />
+<img src="/de-poligonos-y-estrellas/plano_cartesiano.png" alt="Plano cartesiano y coordenadas rectangulares" />
 <figcaption aria-hidden="true">Plano cartesiano y coordenadas rectangulares</figcaption>
 </figure>
 <p>
 Con este sistema de coordenadas es posible representar cualquier objeto geométrico, incluyendo nuestros polígonos, sin embargo existen otros sistemas de coordenadas que nos facilitan las cosas para esta tarea en especial, me refiero a las <a href="http://es.wikipedia.org/wiki/Coordenadas_polares" target="_blank">coordenadas polares.</a>:
 </p>
 <figure>
-<img src="coordenadas_polares.png" alt="Coordenadas polares" />
+<img src="/de-poligonos-y-estrellas/coordenadas_polares.png" alt="Coordenadas polares" />
 <figcaption aria-hidden="true">Coordenadas polares</figcaption>
 </figure>
 <p>
@@ -26,7 +26,7 @@ Una vez asimilados estos conceptos podemos formular la solución. Para un políg
 Hablemos un poco a cerca de la implementación. El lenguaje que empleo aquí es Java pero esto puede fácilmente ser portado a cualquier otro lenguaje ya que la teoría es la misma. Veamos pues como esta conformada el área de dibujo en Java:
 </p>
 <figure>
-<img src="coordenadas_java.png" alt="Sistema de coordenadas en Java" />
+<img src="/de-poligonos-y-estrellas/coordenadas_java.png" alt="Sistema de coordenadas en Java" />
 <figcaption aria-hidden="true">Sistema de coordenadas en Java</figcaption>
 </figure>
 <p>
@@ -41,7 +41,7 @@ Donde <span class="math inline"><em>m</em><em>a</em><em>x</em><em>Y</em></span> 
 Ya casi tenemos todo listo para empezar a codificar, solo falta ver como convertir las coordenadas polares a rectangulares, pequeño detalle. De la siguiente ilustración se puede observar que tenemos los datos necesarios para obtener las componentes rectangulares de un punto.
 </p>
 <figure>
-<img src="polar_a_rectangular.png" alt="Componentes de un punto" />
+<img src="/de-poligonos-y-estrellas/polar_a_rectangular.png" alt="Componentes de un punto" />
 <figcaption aria-hidden="true">Componentes de un punto</figcaption>
 </figure>
 <p>
@@ -61,7 +61,7 @@ Como pueden observer los métodos son idénticos, sin embargo el objetivo es dis
 Ahora solo resta construir una interfaz para la aplicación, sin embargo eso esta fuera del alcance de este post así que no entraremos en detalles. Al final les dejo el código completo de la aplicación por si acaso. He aquí el resultado:
 </p>
 <figure>
-<img src="polygon_test.png" alt="El resultado" />
+<img src="/de-poligonos-y-estrellas/polygon_test.png" alt="El resultado" />
 <figcaption aria-hidden="true">El resultado</figcaption>
 </figure>
 <p>

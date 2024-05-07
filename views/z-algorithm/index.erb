@@ -16,7 +16,7 @@ The <span class="math inline"><em>Z</em><sub><em>i</em></sub>(<em>T</em>)</span>
 For example, let be T = “cabacadcab”, <span class="math inline"><em>Z</em><sub>3</sub> = 0</span>, <span class="math inline"><em>Z</em><sub>4</sub> = 2</span> and <span class="math inline"><em>Z</em><sub>7</sub> = 3</span>. Obviously <span class="math inline"><em>Z</em><sub>0</sub></span> is always equal to the length of the string. See figure &lt;%= ref(‘fig_z_alg_example’) %&gt;.
 </p>
 <figure>
-<img src="z_alg_example.png" alt="Z Algorithm example" />
+<img src="/z-algorithm/z_alg_example.png" alt="Z Algorithm example" />
 <figcaption aria-hidden="true">Z Algorithm example</figcaption>
 </figure>
 <h2 id="z-boxes">Z Boxes</h2>
@@ -24,7 +24,7 @@ For example, let be T = “cabacadcab”, <span class="math inline"><em>Z</em><s
 <pre><code>If $Z_{i} &gt; 0$ a Z-box is a substring that starts at position $i$ and ends at position $i + Z_{i} - 1$, i.e. the substring that matches the prefix of $T$.</code></pre>
 </div>
 <figure>
-<img src="z_boxes.svg" alt="Z-Boxes" />
+<img src="/z-algorithm/z_boxes.svg" alt="Z-Boxes" />
 <figcaption aria-hidden="true">Z-Boxes</figcaption>
 </figure>
 <p>
@@ -35,7 +35,7 @@ Assume that we have already computed the values of <span class="math inline"><em
 Position <span class="math inline"><em>k</em></span> is not contained in the last Z-box. We need to compare character by character to find <span class="math inline"><em>Z</em><sub><em>k</em></sub></span>.
 </p>
 <figure>
-<img src="z_alg_cases_1.svg" alt="Case 1" />
+<img src="/z-algorithm/z_alg_cases_1.svg" alt="Case 1" />
 <figcaption aria-hidden="true">Case 1</figcaption>
 </figure>
 <h3 id="case-2-k-is-within-the-last-z-box">Case 2: $ k $ is within the last Z-box</h3>
@@ -43,7 +43,7 @@ Position <span class="math inline"><em>k</em></span> is not contained in the las
 We’ll denote this last Z-box as <span class="math inline"><em>α</em></span> and as <span class="math inline"><em>β</em></span> the box starting at position <span class="math inline"><em>k</em></span> and ending at <span class="math inline"><em>r</em></span>. Since every Z-box matches a prefix, the figure &lt;%=ref(‘fig_z_alg_case_2’);%&gt; depicts our situation.
 </p>
 <figure>
-<img src="z_alg_cases_2.svg" alt="Case 2" />
+<img src="/z-algorithm/z_alg_cases_2.svg" alt="Case 2" />
 <figcaption aria-hidden="true">Case 2</figcaption>
 </figure>
 <p>
@@ -54,7 +54,7 @@ As you can see, <span class="math inline"><em>k</em>′</span> corresponds to po
 In this case <span class="math inline"><em>Z</em><sub><em>k</em></sub> = <em>Z</em><sub><em>k</em>′</sub></span>.
 </p>
 <figure>
-<img src="z_alg_cases_2a.svg" alt="Case 2a" />
+<img src="/z-algorithm/z_alg_cases_2a.svg" alt="Case 2a" />
 <figcaption aria-hidden="true">Case 2a</figcaption>
 </figure>
 <h4 id="case-2b-z_k-beta">Case 2b: $ Z_{k’} &gt; |\beta| $</h4>
@@ -62,12 +62,12 @@ In this case <span class="math inline"><em>Z</em><sub><em>k</em></sub> = <em
 Let be <span class="math inline"><em>x</em></span> the first character that is not contained in the last Z-box and <span class="math inline"><em>y</em></span> the first character that is not contained in the prefix, we know one thing, <span class="math inline"><em>x</em> ≠ <em>y</em></span> and therefore <span class="math inline"><em>Z</em><sub><em>k</em></sub></span> cannot be greater than <span class="math inline"><em>Z</em><sub><em>k</em>′</sub></span>. Result <span class="math inline"><em>Z</em><sub><em>k</em></sub> = |<em>β</em>|</span>.
 </p>
 <figure>
-<img src="z_alg_cases_2b.svg" alt="Case 2b" />
+<img src="/z-algorithm/z_alg_cases_2b.svg" alt="Case 2b" />
 <figcaption aria-hidden="true">Case 2b</figcaption>
 </figure>
 <h4 id="case-2c-z_k">Case 2c: $ Z_{k’} = || $</h4>
 <figure>
-<img src="z_alg_cases_2c.svg" alt="Case 2c" />
+<img src="/z-algorithm/z_alg_cases_2c.svg" alt="Case 2c" />
 <figcaption aria-hidden="true">Case 2c</figcaption>
 </figure>
 <p>

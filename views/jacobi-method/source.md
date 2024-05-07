@@ -1,4 +1,3 @@
-<% tex_set("show_numbers_in_sections", false); %>
 
 <p>Systems of linear equations are very important and has many applications in real life, from the most obvious to find the intersection point of many linear equations in the plane, upto the analysis of electronic circuits with Kirchhoff's laws or traffic flow in streets. </p>
 
@@ -8,11 +7,11 @@
 
 <p>This was the first iterative method to solve systems of linear equations and was devised by <a href="http://en.wikipedia.org/wiki/Carl_Gustav_Jakob_Jacobi" target="_blank">Carl Gustav Jacob Jacobi</a>(1804-1851). Lets define the system of linear equations as:</p>
 
-![Equation system](jacobi_1.png)
+![Equation system](/jacobi-method/jacobi_1.png)
 
 <p>For each row <em>i</em> isolate the $x\_{i}$ variable.</p>
 
-![Isolate variables](jacobi_2.png)
+![Isolate variables](/jacobi-method/jacobi_2.png)
 
 <p>Make an initial approximation of the solution $(x_{1}, x_{2}, x_{3},\ldots,x_{n})$, a good choice is to use zero to all variables. Substitute these values in the rewritten equation and update the values of the approximation. Repeat the process until the answer be acceptable.</p>
 
@@ -42,7 +41,7 @@ The conditions for stopping and convergence are the same for both methods.
 
 If we solve the following system of linear equations we get to the answer at different rates.
 
-![Example](jacobi_3.png)
+![Example](/jacobi-method/jacobi_3.png)
 
 Jacobi's method needs 28 iterations:
 

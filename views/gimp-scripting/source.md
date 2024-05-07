@@ -14,7 +14,7 @@ Embed: `script.py`
 
 <p>La documentación de las funciones que empleo en el script y muchas más la proporciona el mismo gimp y podemos acceder a ella con el botón `Browse...`. Hasta aquí con este post, espero que esta información les sea tan útil como a mi o más.</p>
 
-![Documentación de GIMP](gimp-documentation.png)
+![Documentación de GIMP](/gimp-scripting/gimp-documentation.png)
 
 ## Referencias
 

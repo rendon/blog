@@ -31,7 +31,7 @@ export PATH="${PATH}:/opt/android-sdk-linux/tools:/opt/android-sdk-linux/platfor
 
 <p>Una API es una interfaz que proporciona facilidades a los desarrolladores para que puedan crear aplicaciones sin tanto problema puesto que abstrae la complejidad y el desarrollador se concentra más en el <em>qué</em> y no en el <em>cómo</em>. La API de Android es una colección de classes en Java que por defecto no se incluyen el archivo que descargamos y será necesario descargarlas de internet. En la línea de comandos ejecuta el comando `android`, les aparecerá la siguiente ventana.</p>
 
-![Administrador del Android SDK](android_sdk_01.png)
+![Administrador del Android SDK](/setup-android-sdk/android_sdk_01.png)
 
 <p>Nosotros vamos a desarrollar una aplicación para la versión 2.3 de Android (Versión 10 de la API) por lo que selecionaremos esa opción y procederemos a descargar.</p>
 
@@ -47,11 +47,11 @@ apt-get install ant
 
 <p>El SDK de android incluye un emulador quen nos permite desarrollar aplicaciones incluso si no tenemos un dispositivo con sistema operativo Android, o simplemente para no hacer trabajar mucho a tu smartphone. Para utilizar el emulador primero debenos crear un dispositivo virtual. En la línea de comandos ejecuta el comando `android avd` y nos aparecerá la siguiente ventana.</p>
 
-![Creación de un dispositivo virtual](android_sdk_02.png)
+![Creación de un dispositivo virtual](/setup-android-sdk/android_sdk_02.png)
 
 <p>Elegimos la opción "New" para crear un dispositivo virtual, en esa ventana proporcionamos el nombre para el dispositivo y utilizamos los valores que se muestran en la imagen.</p>
 
-![Creación de un dispositivo virtual](android_sdk_03.png)
+![Creación de un dispositivo virtual](/setup-android-sdk/android_sdk_03.png)
 
 <p>Para ejecutar el emulador con la imagen recien creada utiliza el siguiente comando en una terminal.</p>
 
@@ -99,6 +99,6 @@ ant debug install
 
 <p>El último comando buscará algún dispositivo Android conectado al sistema o una máquina virtual activa e instalará el programa ahí.</p>
 
-![Aplicación HolaMundo corriendo en el emulador Android](android_sdk_04.png)
+![Aplicación HolaMundo corriendo en el emulador Android](/setup-android-sdk/android_sdk_04.png)
 
 <p>Ahora estamos listos para empezar a desarrollar para Android. ¡Suerte!</p>

@@ -55,7 +55,7 @@ $1539 - 513 + 171 - 57 + 19 - 7 = 1152$
 $513 - 171 + 57 - 19 + 7 = 387$
 
 <p>Con un poco de observación llegamos a que el resultado final de  una vaca $i$ es igual a:</p>
-![Formula para obtener el resultado final](sumsums_formulas.png)
+![Formula para obtener el resultado final](/omi-tg-sumando-sumas/sumsums_formulas.png)
 
 <p>Donde $k = n - 1$, $s1$ es la suma de la primera fila y $C_{i}$ es el valor inicial de la vaca $i$.</p>
 
@@ -63,7 +63,7 @@ $513 - 171 + 57 - 19 + 7 = 387$
 
 <p>Después de investigar llegue a que necesitamos utilizar la siguiente matriz:</p>
 
-![Matriz base](sumsums_matrix.png)
+![Matriz base](/omi-tg-sumando-sumas/sumsums_matrix.png)
 
 <p>Elevamos esta matriz a la potencia $t$ y podremos encontrar el valor que buscamos en $M_{0,1}$. Para que la exponenciación funcione en tiempo debemos utilizar el método de <a href="https://es.wikipedia.org/wiki/Exponenciaci%C3%B3n_binaria" target="_blank">exponenciación binaria</a> que tiene una complejidad $O(log_{2} n)$, siendo $n$ el valor del exponente.</p>
 

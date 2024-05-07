@@ -1,4 +1,3 @@
-<% tex_set("show_numbers_in_sections", false); %>
 
 <p>Hi guys!, In my [previous post](/arduino-control-speakers) I described how to build a volume controller with Arduino, using the <strong>termios</strong> API for serial communication in GNU/Linux, well, in this post I use the same concepts to build a simple game controller for the classical game Snake.</p>
 
@@ -6,9 +5,9 @@
 
 <p>We need to build the following circuit:</p>
 
-![Schematic](game1.jpg)
+![Schematic](/arduino-game-controller/game1.jpg)
 
-![Electronic diagram](game2.jpg)
+![Electronic diagram](/arduino-game-controller/game2.jpg)
 
 <p>We need the following code in <em>wiring</em> to receive instructions from the board.  </p>
 
@@ -20,7 +19,7 @@ Embed: `snake.cpp`
 
 <p>Connect the Arduino to the PC and execute the previous program. Here is a screenshot of the game in action.</p>
 
-![Game in action](game3.jpg)
+![Game in action](/arduino-game-controller/game3.jpg)
 
 <p>Game Over! See you in the next post.</p>
 

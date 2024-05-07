@@ -1,5 +1,3 @@
-<% tex_set("show_numbers_in_sections", false); %>
-<% tex_set("show_numbers_in_subsections", false); %>
 
 <p><strong>NOTA</strong>: Este artículo fue publicado originalmente en <a href="http://revista.atixlibre.org/?p=259" target="_blank">ATIX</a>, revista de software libre.</p>
 
@@ -34,9 +32,9 @@ Tmux es un multiplexor de terminal: posibilita que una o más de terminales, cad
 
 <p>En mis actividades diarias empleo muy a menudo una o más terminales, cuando programo utilizo como mínimo dos, en una tengo abierto vim y en la otra realizo las pruebas. Antes yo solía tener dos terminales abiertas en dos ventanas, usando Ctrl + Tab para moverme entre ellas, pero con el tiempo esto se volvió tedioso y mi vista se cansaba fácilmente debido a los constantes destellos del cambio de ventanas. Investigando un poco conocí GNU Screen, no me gusto. Descubrí tmux y fue exactamente lo que andaba buscando.</p>
 
-![Antes](hdud1_0.png)
+![Antes](/tmux/hdud1_0.png)
 
-![Después](hdud1_1.png)
+![Después](/tmux/hdud1_1.png)
 
 ## Instalación
 
@@ -76,11 +74,11 @@ Tmux tiene un comando para cada acción y una serie de keybindings para ejecutar
 
 Embed: `panel-operations.txt`
 
-![Splits](hdud1_2.png)
+![Splits](/tmux/hdud1_2.png)
 
 <p>Una combinación muy util para moverse entre paneles es <kbd>PREFIX</kbd> + <kbd>q</kbd>, que enumera cada uno de los paneles por un momento, presiona el numero del panel al cual te quieres trasladar y listo.</p>
 
-![Paneles enumerados](hdud1_3.png)
+![Paneles enumerados](/tmux/hdud1_3.png)
 
 <p>Si necesitas reducir o aumentar el área de un panel lo puedes hacer con las siguientes combinaciones.</p>
 
@@ -122,7 +120,7 @@ Embed: `rename-window.txt`
 <h6>Moverse entre ventanas.</h6>
 Embed: `move-between-windows.txt`
 
-![Ventanas](hdud1_4.png)
+![Ventanas](/tmux/hdud1_4.png)
 
 <p>El listado de ventanas activas se muestra en la parte inferior de la pantalla, cada ventana tiene un número que la identifica. Una forma fácil de cambiar de ventana es presionando <kbd>PREFIX</kbd> + numero_de_ventana. Si tienes demasiadas ventanas también es posible buscarlas por su nombre con <kbd>PREFIX</kbd> + <kbd>f</kbd> o bien presionar <kbd>PREFIX</kbd> + <kbd>w</kbd> para mostrar el listado de ventanas.</p>
 

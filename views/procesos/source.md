@@ -14,7 +14,7 @@ Embed: `task-struct.c`
 
 <p>Como podrán apreciar en la última línea, un proceso también mantiene una lista de sus procesos hermanos, aquellos que comparten el mismo padre.</p>
 
-<p>El kernel mantiene la lista de procesos en una lista doublemente enlazada donde cada elemento contiene una estructura `task_struct`. La figura <%= ref('doubly_linked_list'); %> muestra como luce dicha lista.</p>
+<p>El kernel mantiene la lista de procesos en una lista doublemente enlazada donde cada elemento contiene una estructura `task_struct`. La figura  muestra como luce dicha lista.</p>
 
 <%= 
 figure(post, 'doubly_linked_list.png', caption: 'Lista doblemente enlazada de procesos', label: 'doubly_linked_list', lang: :es);
@@ -30,7 +30,7 @@ figure(post, 'doubly_linked_list.png', caption: 'Lista doblemente enlazada de pr
 	<li>__TASK_STOPPED: El proceso a termina su ejecución</li>
 </ul>
 
-La figura <%= ref('process_states'); %> ilustra las relaciones entre los distintos estados.
+La figura  ilustra las relaciones entre los distintos estados.
 
 <%= 
 figure(post, 'process_states.svg', caption: 'Diagrama de flujo de los estados de un proceso', label: 'process_states', lang: :es);
@@ -138,9 +138,9 @@ Embed: `process-tree-gi.c`
 
 <p>Manualmente hay que editar un poco la salida para que que sirva como entrada para el visualizador. He aquí el archivo resultante: <%= file(post, 'pstree.gi') %>.</p>
 
-<p>La figura <%= ref("pstree"); %> muestra el resultado.</p>
+<p>La figura  muestra el resultado.</p>
 
-![Árbol de procesos](pstree.svg)
+![Árbol de procesos](/procesos/pstree.svg)
 
 ## Creación de procesos
 

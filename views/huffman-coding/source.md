@@ -23,7 +23,7 @@
   <li>Using the new codes just make the translation for each character in the text.</li>
 </ol>
 
-![Huffman Tree for the string "this is an example of a huffman tree" --Wikipedia](huffman_tree.svg)
+![Huffman Tree for the string "this is an example of a huffman tree" --Wikipedia](/huffman-coding/huffman_tree.svg)
 
 <p>For more detailed information see the References section.</p>
 

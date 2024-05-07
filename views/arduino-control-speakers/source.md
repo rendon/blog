@@ -1,4 +1,3 @@
-<%= tex_set("show_numbers_in_sections", false); %>
 
 <p>Today I will show you how to build a simple volume controller using arduino and serial communication in GNU/Linux, specifically Debian Squeeze.</p>
 
@@ -17,7 +16,7 @@
 
 <p>As first step, build the following circuit: </p>
 
-![Circuit](controller0.png)
+![Circuit](/arduino-control-speakers/controller0.png)
 
 <p>Use the following code for arduino to read the input from the potentiometer.</p>
 

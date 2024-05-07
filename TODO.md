@@ -1,4 +1,7 @@
 # Review and fix
+
+## Fix links to images and files.
+
 - andrews-convex-hull-algorithm
 - arduino-control-speakers
 - arduino-game-controller

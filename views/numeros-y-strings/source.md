@@ -13,7 +13,7 @@
 
 <p>El algoritmo para este problema es muy sencillo y se basa en divisiones y residuos(véase [Big Mod](/big-mod) para más información. Veamos un ejemplo.</p>
 
-![Descomposición de un número en dígitos](descomposicion_digitos.png)
+![Descomposición de un número en dígitos](/numeros-y-strings/descomposicion_digitos.png)
 
 
 <p>Se observa que si bien obtenemos los dígitos estos se encuentran en orden inverso, por ello invertimos el orden de los dígitos al final del ciclo en el siguiente código:</p>

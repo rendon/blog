@@ -2,7 +2,7 @@
 
 <p>Nowadays it's a piece of cake, but I did struggle a bit to get my head around this and other graph theory algorithms.</p>
 
-![A graph.](graph.svg)
+![A graph.](/recipe-002-dfs/graph.svg)
 
 ## Common ways to represent graphs in a computer 
 

@@ -124,7 +124,7 @@ Embed: `pascal.c`
 
 <p>Quizás una imagen ayuda un poco a entender este procedimiento.</p>
 
-![Búsqueda Binaria](binary_search.png)
+![Búsqueda Binaria](/recursion/binary_search.png)
 
 <p>Una posible implementación de este algoritmo de forma recursiva es la siguiente.</p>
 

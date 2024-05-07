@@ -1,3 +1,8 @@
+<!-- vim: set spelllang=es_mx: -->
+
+# Reporte III: Windows Phone 8 & Web services
+2016-02-24 2024-05-06 #dev #post
+
 <p>Tengo que decir que no soy un usuario Windows, pero en esta situación no tuve elección.</p>
 
 <p>Este reporte corresponde al proyecto número 3 de la asignatura Desarrollo de Aplicaciones para Tecnologías Móviles.</p>
@@ -64,7 +69,7 @@
 
 <p>Nuestra base de datos consiste de 3 tablas, Cliente, Pedido y Detalle.</p>
 
-![El modelo de datos](ws_wp8_01.png)
+![El modelo de datos](/report-iii-wp8-web-services/ws_wp8_01.png)
 
 <p>**NOTA:** Con el código fuente incluyo el modelo de la base de datos, fue diseñado utilizando MySQL Workbench y por lo tanto podrán exportar la base de datos desde ahí.</p>
 
@@ -389,7 +394,7 @@ using(RequisitionDataContext db = new RequisitionDataContext(cs))
 
 <p>A continuación se muestra como debe lucir la estructura del proyecto (en la imagen se muestra la estructura final):</p>
 
-![Nuestro proyecto en el Explorador de soluciones](ws_wp8_02.png)
+![Nuestro proyecto en el Explorador de soluciones](/report-iii-wp8-web-services/ws_wp8_02.png)
 
 <p>Mi intención era emplear el patrón de diseño MVVM pero al parecer termine implementando la lógica en la parte del View. Será para la próxima.</p>
 
@@ -397,14 +402,14 @@ using(RequisitionDataContext db = new RequisitionDataContext(cs))
 
 <p>Visual Studio tiene la opción de generar el código fuente necesario para comunicarnos con un Web service, vamos al explorador de soluciones, click derecho sobre nuestro proyecto, elegimos la opción "Add service reference", nos aparecerá la siguiente ventana:</p>
 
-![Conexión al Web service](ws_wp8_03.png)
+![Conexión al Web service](/report-iii-wp8-web-services/ws_wp8_03.png)
 
 
 ### La pagina principal
 
 <p>La siguiente imagen muestra la pagina principal de la aplicación:</p>
 
-![Pagina principal](ws_wp8_04.png)
+![Pagina principal](/report-iii-wp8-web-services/ws_wp8_04.png)
 
 <p>El diseño correspondiente en XAML (archivo _MainPage.xaml_):</p>
 
@@ -489,7 +494,7 @@ using(RequisitionDataContext db = new RequisitionDataContext(cs))
 
 <p>La siguiente imagen muestra la interfaz para dar de alta a los clientes.</p>
 
-![Alta de clientes](ws_wp8_05.png)
+![Alta de clientes](/report-iii-wp8-web-services/ws_wp8_05.png)
 
 <p>El diseño correspondiente en XAML (archivo _View/AddClientView.xaml_):</p>
 
@@ -633,7 +638,7 @@ private void Button_Click_1(object sender, RoutedEventArgs e)
 
 <p>La siguiente imagen muestra la interfaz para la consulta de clientes.</p>
 
-![Consulta de clientes](ws_wp8_06.png)
+![Consulta de clientes](/report-iii-wp8-web-services/ws_wp8_06.png)
 
 <p>El diseño correspondiente en XAML (archivo _View/QueryClientView.xaml_):</p>
 
@@ -754,7 +759,7 @@ protected override void OnNavigatedTo(NavigationEventArgs e)
 
 <p>La siguiente imagen muestra la interfaz para el registro de pedidos:</p>
 
-![Consulta de clientes](ws_wp8_07.png)
+![Consulta de clientes](/report-iii-wp8-web-services/ws_wp8_07.png)
 
 <p>El diseño correspondiente en XAML (archivo _View/ShopView.xaml_):</p>
 
@@ -942,7 +947,7 @@ private void saveRequisitionButton_Click_1(object sender, RoutedEventArgs e)
 
 <p>La siguiente imagen muestra la interfaz para la consulta de pedidos:</p>
 
-![Consulta de pedidos](ws_wp8_08.png)
+![Consulta de pedidos](/report-iii-wp8-web-services/ws_wp8_08.png)
 
 <p>El diseño correspondiente en XAML (archivo _View/QueryShopView.xaml_):</p>
 
@@ -1398,8 +1403,6 @@ $ git clone https://rendon@bitbucket.org/rendon/requisition_wp8.git
 
 ## Referencias
 
-<%
 - [Creating Web Services with PHP and SOAP](http://www.sitepoint.com/web-services-with-php-and-soap-1/)
 - [Documentaciónde NuSOAP](http://nusoap.sourceforge.net/)
 - [Microsoft Developer Network](http://msdn.microsoft.com/en-US/)
-%>
