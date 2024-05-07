@@ -1,3 +1,7 @@
+<!-- vim: set spelllang=es_mx: -->
+
+# Reporte IV BlackBerry 10 Web service
+
 <p>Este reporte corresponde al proyecto número 4 de la asignatura Desarrollo de Aplicaciones para Tecnologías Móviles.</p>
 
 <div style="padding: 10px; border: 1px solid red;">
@@ -1103,17 +1107,11 @@ $ git clone https://rendon@bitbucket.org/rendon/requisition_bb10.git
 
 <p>La licencia del Web service y del la aplicación cliente es GPLv3.</p>
 
-<%= section('Por hacer');  %>
+## Por hacer
 
 <p>Esta es la primara vez que utilizo Qt para algo más que un simple "Hola, mundo!", y la primera vez que utilizo QML, seguramente existe una mejor manera de realizar las cosas, Qt emplea el patrón de diseño <a href="http://qt-project.org/doc/qt-4.8/modelview.html" target="_blank">Model View</a>, sin embargo, al ser la primera vez, me enfoque más en que las cosas funcionaran. Lo cierto es que apegarse a un patrón de diseño ayuda a dar mantenimiento a nuestro software de forma más fácil.</p>
 
-<%= section('Referencias');  %>
+## Referencias
 
-<% 
-add_bib('bb_doc', 'BlackBerry', 'Documentación de Cascades', 'http://developer.blackberry.com/native/documentation/cascades/');
-add_bib('qt_project', 'Qt Project', 'Documentación de Qt', 'https://www.qt.io/developers/');
-%>
-<%= generate_bib_table();
- %>
-
-
+- [Documentación de Cascades](http://developer.blackberry.com/native/documentation/cascades/)
+- [Documentación de Qt](https://www.qt.io/developers/)

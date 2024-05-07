@@ -105,9 +105,6 @@ diff iliad.mb.txt original.iliad.mb.txt
 <p>The last command should output NOTHING, otherwise something went wrong.</p>
 
 ## References
-<% 
-add_bib('hc_yb', 'Barry Brown', 'Text Compression with Huffman Coding ', 'https://www.youtube.com/watch?v=ZdooBTdW5bM');
-add_bib('heca', 'Alex Allain', 'Huffman Encoding Compression Algorithm', 'http://www.cprogramming.com/tutorial/computersciencetheory/huffman.html');
-add_bib('hc_wp', 'Wikipedia', 'Huffman coding', 'http://en.wikipedia.org/w/index.php?title=Huffman_coding');
-%>
-<%= generate_bib_table(:en) %>
+- [Text Compression with Huffman Coding ](https://www.youtube.com/watch?v=ZdooBTdW5bM)
+- [Huffman Encoding Compression Algorithm](http://www.cprogramming.com/tutorial/computersciencetheory/huffman.html)
+- [Huffman coding](http://en.wikipedia.org/w/index.php?title=Huffman_coding)

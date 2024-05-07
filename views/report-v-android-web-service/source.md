@@ -1158,5 +1158,5 @@ $ git clone https://rendon@bitbucket.org/rendon/requisitionandroid.git
 
 <% 
 section('Referencias');
-add_bib('android_doc', 'Android', 'Documentación de Android', 'https://developer.android.com/index.html');
+- [Documentación de Android](https://developer.android.com/index.html)
 %>

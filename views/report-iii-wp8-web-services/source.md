@@ -1399,7 +1399,7 @@ $ git clone https://rendon@bitbucket.org/rendon/requisition_wp8.git
 ## Referencias
 
 <%
-add_bib('cws_st', 'Stephen Thorpe', 'Creating Web Services with PHP and SOAP', 'http://www.sitepoint.com/web-services-with-php-and-soap-1/');
-add_bib('nusoap_site', 'NuSOAP', 'Documentaciónde NuSOAP', 'http://nusoap.sourceforge.net/');
-add_bib('msdn', 'Microsoft', 'Microsoft Developer Network', 'http://msdn.microsoft.com/en-US/');
+- [Creating Web Services with PHP and SOAP](http://www.sitepoint.com/web-services-with-php-and-soap-1/)
+- [Documentaciónde NuSOAP](http://nusoap.sourceforge.net/)
+- [Microsoft Developer Network](http://msdn.microsoft.com/en-US/)
 %>

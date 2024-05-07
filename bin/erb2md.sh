@@ -44,13 +44,15 @@ function convert() {
     # # # bib table
     # sed -i '/<%= generate_bib_table();\? %>/d' source.md
 
-    # # # add_bib
-    # # # <%= add_bib('edxai', 'Dan Klein and Pieter Abbeel', 'CS188.1x Artificial Intelligence', 'https://courses.edx.org/courses/BerkeleyX/CS188.1x/2013_Spring/info'); %>
+    # # add_bib
+    # # <%= add_bib('edxai', 'Dan Klein and Pieter Abbeel', 'CS188.1x Artificial Intelligence', 'https://courses.edx.org/courses/BerkeleyX/CS188.1x/2013_Spring/info'); %>
     # sed -i "s/<%= add_bib('\([^']*\)', *'\([^']*\)', *'\([^']*\)', *'\([^']*\)');\? %>/- [\3](\4)/g" source.md
     # sed -i 's/<%= add_bib("\([^"]*\)", *"\([^"]*\)", *"\([^"]*\)", *"\([^"]*\)");\? %>/- [\3](\4)/g' source.md
 
     # sed -i "s/<% add_bib('\([^']*\)', *'\([^']*\)', *'\([^']*\)', *'\([^']*\)');\? %>/- [\3](\4)/g" source.md
     # sed -i 's/<% add_bib("\([^"]*\)", *"\([^"]*\)", *"\([^"]*\)", *"\([^"]*\)");\? %>/- [\3](\4)/g' source.md
+
+    sed -i "s/add_bib('\([^']*\)', *'\([^']*\)', *'\([^']*\)', *'\([^']*\)');\?/- [\3](\4)/g" source.md
 }
 
 

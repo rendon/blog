@@ -301,13 +301,10 @@ Embed: `clone-projects.sh`
 
 ## Referencias
 
-<% 
-add_bib('w3c_ws', 'W3C', 'Web Services Architecture', 'http://www.w3.org/TR/ws-arch/');
-add_bib('cws_st', 'Stephen Thorpe', 'Creating Web Services with PHP and SOAP', 'http://www.sitepoint.com/web-services-with-php-and-soap-1/'); 
-add_bib('nusoap_site', 'NuSOAP', 'Documentación de NuSOAP', 'http://nusoap.sourceforge.net/');
-add_bib('ryanbigg_site','Ryan Bigg', 'Ubuntu, Ruby, RVM, Rails, and You', 'http://ryanbigg.com/2010/12/ubuntu-ruby-rvm-rails-and-you/');
-add_bib('rails_tutorial', 'Michael Hartl', 'Ruby on Rails Tutorial', 'http://ruby.railstutorial.org/');
-add_bib('savon_site', 'Savon', 'Documentación de Savon', 'http://savonrb.com/');
-%>
-<%= generate_bib_table(:es); %>
+- [Web Services Architecture](http://www.w3.org/TR/ws-arch/)
+- [Creating Web Services with PHP and SOAP](http://www.sitepoint.com/web-services-with-php-and-soap-1/) 
+- [Documentación de NuSOAP](http://nusoap.sourceforge.net/)
+- [Ubuntu, Ruby, RVM, Rails, and You](http://ryanbigg.com/2010/12/ubuntu-ruby-rvm-rails-and-you/)
+- [Ruby on Rails Tutorial](http://ruby.railstutorial.org/)
+- [Documentación de Savon](http://savonrb.com/)
 

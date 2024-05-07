@@ -22,4 +22,3 @@ Embed: `src.cpp`
 ## References
 
 - [Algorithms, 4th Edition](http://algs4.cs.princeton.edu/home/)
-<%= generate_bib_table(:en); %>

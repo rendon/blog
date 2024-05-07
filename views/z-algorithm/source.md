@@ -88,5 +88,3 @@ Embed: `implementation.cpp`
 ## References
 
 - [Linear-time pattern matching. Z-values and Z-algorithm](http://www.cs.ucdavis.edu/~gusfield/cs122f10/videolist.html)
-<%= generate_bib_table(:en) %>
-

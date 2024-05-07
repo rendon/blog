@@ -16,5 +16,3 @@ I hope it helps, in the references you can find more detailed explanations of th
 ## References
 - [Bridges in a graph](http://www.geeksforgeeks.org/bridge-in-a-graph/)
 - [Bridge (graph theory)](https://en.wikipedia.org/wiki/Bridge_(graph_theory))
-
-<%= generate_bib_table(:en) %>

@@ -271,7 +271,7 @@ Embed: `clone-projects.sh`
 ## Referencias
 
 <% 
-add_bib('android_doc', 'Android', 'Documentación de Android', 'https://developer.android.com/index.html');
-add_bib('beg_and_app_dev', 'Wei-Meng Lee', 'Begining Android Application Development', 'http://www.wrox.com/WileyCDA/WroxTitle/Beginning-Android-Application-Development.productCd-1118087291.html');
-add_bib('nanohttpd_site', 'NanoHTTPD', 'Documentación de NanoHTTPD', 'http://nanohttpd.org/');
+- [Documentación de Android](https://developer.android.com/index.html)
+- [Begining Android Application Development](http://www.wrox.com/WileyCDA/WroxTitle/Beginning-Android-Application-Development.productCd-1118087291.html)
+- [Documentación de NanoHTTPD](http://nanohttpd.org/)
 %>

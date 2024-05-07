@@ -63,7 +63,7 @@ Embed: `add-facebook-address.conf`
 ## Referencias
 
 <%
-add_bib('wp_dns', 'Wikipedia', 'Domain Name System', 'https://en.wikipedia.org/wiki/Domain_Name_System');
-add_bib('ms_dns', 'Microsoft', 'Domain Name System', 'http://technet.microsoft.com/en-US/network/bb629410.aspx');
-add_bib('archlinux_dnsmasq', 'Archlinux', 'Dnsmasq', 'https://wiki.archlinux.org/index.php/Dnsmasq');
+- [Domain Name System](https://en.wikipedia.org/wiki/Domain_Name_System)
+- [Domain Name System](http://technet.microsoft.com/en-US/network/bb629410.aspx)
+- [Dnsmasq](https://wiki.archlinux.org/index.php/Dnsmasq)
 %>

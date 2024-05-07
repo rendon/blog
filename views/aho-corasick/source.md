@@ -144,8 +144,5 @@ int main(int argc, char *argv[])
 
 ## References
 
-<%
-add_bib('ac', 'Alfred V. Aho and Margaret J. Corasick', 'Efficient String Matching: An Aid to Bibliographic Search', 'http://dl.acm.org/citation.cfm?id=360855');
-add_bib('pk', 'Pekka Kilpel ainen', 'Lecture 4: Set Matching and. Aho-Corasick Algorithm', '//www.cs.uku.fi/~kilpelai/BSA05/lectures/slides04.pdf');
-%>
-<%= generate_bib_table(:en); %>
+- [Efficient String Matching: An Aid to Bibliographic Search](http://dl.acm.org/citation.cfm?id=360855)
+- [Lecture 4: Set Matching and. Aho-Corasick Algorithm](/aho-corasick/slides04.pdf)
