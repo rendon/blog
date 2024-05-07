@@ -15,7 +15,33 @@
 <p>
 En Linux (el kernel) toda la información relacionada a un proceso se almacena en la estructura <code>task_struct</code> la cual esta definida en el encabezado <code>&lt;linux/sched.h&gt;</code> y dentro de sus campos podemos encontrar los siguientes:
 </p>
-<p>Embed: <code>task-struct.c</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> task_struct <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">volatile</span> <span class="dt">long</span> state<span class="op">;</span>    <span class="co">/* -1 unrunnable, 0 runnable, &gt;0 stopped */</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> <span class="op">*</span>stack<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    atomic_t usage<span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">unsigned</span> <span class="dt">int</span> flags<span class="op">;</span> <span class="co">/* per process flags, defined below */</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">unsigned</span> <span class="dt">int</span> ptrace<span class="op">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    pid_t pid<span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    pid_t tgid<span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> comm<span class="op">[</span>TASK_COMM_LEN<span class="op">];</span> <span class="co">/* executable name excluding path</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">                     - access with [gs]et_task_comm (which lock</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">                       it with task_lock())</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">                     - initialized normally by setup_new_exec */</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">/*</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">     * children/sibling forms the list of my natural children</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">     */</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> list_head children<span class="op">;</span>  <span class="co">/* list of my children */</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> list_head sibling<span class="op">;</span>   <span class="co">/* linkage in my parent&#39;s children list */</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>Como podrán apreciar en la última línea, un proceso también mantiene una lista de sus procesos hermanos, aquellos que comparten el mismo padre.</p>
 <p>El kernel mantiene la lista de procesos en una lista doublemente enlazada donde cada elemento contiene una estructura <code>task_struct</code>. La figura muestra como luce dicha lista.</p>
 <p>&lt;%= figure(post, ‘doubly_linked_list.png’, caption: ‘Lista doblemente enlazada de procesos’, label: ‘doubly_linked_list’, lang: :es); %&gt;</p>
@@ -45,12 +71,110 @@ __TASK_STOPPED: El proceso a termina su ejecución
 <h3 id="utilizando-el-comando-ps">Utilizando el comando ps</h3>
 <p>El comando <code>ps</code> obtiene y reporta información de los procesos en el sistema en un determinado instante (snapshot). <code>ps</code> soporta varias opciones que nos permiten filtrar justo la información que necesitamos, veamos algunos ejemplos.</p>
 <p>Listar todos los procesos en el sistema: <code>ps -e</code></p>
-<p>Embed: <code>ps-e.txt</code></p>
-<p>Mostrar los procesos en forma de arbol: <code>ps -ejH</code> Embed: <code>ps-ejh.txt</code></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  PID TTY          TIME CMD</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    1 ?        00:00:01 init</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    2 ?        00:00:00 kthreadd</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    3 ?        00:00:02 ksoftirqd/0</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    6 ?        00:00:00 migration/0</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    7 ?        00:00:00 watchdog/0</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    8 ?        00:00:00 migration/1</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>   10 ?        00:00:02 ksoftirqd/1</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>   12 ?        00:00:00 watchdog/1</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    .</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    .</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    .</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>28260 ?        00:00:00 apache2</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>28383 ?        00:00:00 gvfsd-metadata</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>28414 ?        00:02:31 inkscape</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>29918 pts/3    00:00:00 bash</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>30032 ?        00:00:00 kworker/0:1</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>30759 ?        00:00:00 kworker/1:2</span></code></pre></div>
+<p>Mostrar los procesos en forma de arbol: <code>ps -ejH</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  PID  PGID   SID TTY          TIME CMD</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    2     0     0 ?        00:00:00 kthreadd</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    3     0     0 ?        00:00:02   ksoftirqd/0</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    6     0     0 ?        00:00:00   migration/0</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    7     0     0 ?        00:00:00   watchdog/0</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    8     0     0 ?        00:00:00   migration/1</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    .</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    .</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    .</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    1     1     1 ?        00:00:01 init</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  329   329   329 ?        00:00:00   udevd</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  439   329   329 ?        00:00:00     udevd</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a> 2507   329   329 ?        00:00:00     udevd</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a> 1822  1822  1822 ?        00:00:00   rpcbind</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a> 2144  2081  2070 ?        00:00:00   rsyslogd</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a> 2173  2173  2173 ?        00:00:00   vmware-usbarbit</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a> 2202  2202  2202 ?        00:00:00   acpid</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a> 2232  2232  2232 ?        00:00:00   dbus-daemon</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a> 2310  2310  2310 ?        00:00:00   atd</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a> 2335  2334  2334 ?        00:00:00   gdm3</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a> 2470  2334  2334 ?        00:00:00     gdm-simple-slav</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a> 2509  2509  2509 tty7     00:35:46       Xorg</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a> 3180  2334  2334 ?        00:00:00       gdm-session-wor</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a> 3464  3464  3464 ?        00:00:09         openbox</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a> 3517  3517  3517 ?        00:00:00           ssh-agent</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a> 2391  2390  2390 ?        00:00:00   avahi-daemon</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a> 2392  2390  2390 ?        00:00:00     avahi-daemon</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    .</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    .</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    .</span></code></pre></div>
 <p>Mostrar los procesos creados por el usuario <em>root</em>:</p>
-<p>Embed: <code>root-processes.txt</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>root         1  0.0  0.0   2280   732 ?        Ss   08:43   0:01 init [2]  </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>root         2  0.0  0.0      0     0 ?        S    08:43   0:00 [kthreadd]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>root         3  0.0  0.0      0     0 ?        S    08:43   0:02 [ksoftirqd/0]</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>root         6  0.0  0.0      0     0 ?        S    08:43   0:00 [migration/0]</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>root         7  0.0  0.0      0     0 ?        S    08:43   0:00 [watchdog/0]</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>root         8  0.0  0.0      0     0 ?        S    08:43   0:00 [migration/1]</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>root        10  0.0  0.0      0     0 ?        S    08:43   0:02 [ksoftirqd/1]</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>root        12  0.0  0.0      0     0 ?        S    08:43   0:00 [watchdog/1]</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  .</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  .</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  .</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>root      3230  0.0  0.0   3780   864 tty4     Ss+  08:44   0:00 /sbin/getty 38400 tty4</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>root      3231  0.0  0.0   3780   856 tty5     Ss+  08:44   0:00 /sbin/getty 38400 tty5</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>root      3232  0.0  0.0   3780   856 tty6     Ss+  08:44   0:00 /sbin/getty 38400 tty6</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>root      3448  0.0  0.0      0     0 ?        S    08:51   0:00 [kauditd]</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>root      3611  0.0  0.0  24052  3584 ?        Sl   08:52   0:01 /usr/lib/udisks/udisks-daemon</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>root      3614  0.0  0.0   6352   728 ?        S    08:52   0:00 udisks-daemon: not polling any devices</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>root     23607  0.0  0.0      0     0 ?        S    13:54   0:06 [kworker/1:1]</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>root     24530  0.0  0.0      0     0 ?        S    14:08   0:04 [kworker/0:0]</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>root     27516  0.0  0.0   4664  1628 ?        S    14:52   0:00 /bin/sh /usr/bin/mysqld_safe</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>root     27845  0.0  0.0   3352   620 ?        S    14:52   0:00 logger -t mysqld -p daemon.error</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>root     28055  0.0  0.1  36792  7596 ?        Ss   14:52   0:00 /usr/sbin/apache2 -k start</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>root     30032  0.0  0.0      0     0 ?        S    15:19   0:00 [kworker/0:1]</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>root     30759  0.0  0.0      0     0 ?        S    15:30   0:00 [kworker/1:2]</span></code></pre></div>
 <p>Es posible especificar que campos debe contener el reporte, por ejemplo: <code>ps -eo pid,class,rtprio,pri,psr,pcpu,stat,comm</code></p>
-<p>Embed: <code>ps-eo.txt</code></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  PID CLS RTPRIO PRI PSR %CPU STAT COMMAND</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    1 TS       -  19   1  0.0 Ss   init</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    2 TS       -  19   0  0.0 S    kthreadd</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    3 TS       -  19   0  0.0 S    ksoftirqd/0</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    6 FF      99 139   0  0.0 S    migration/0</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    7 FF      99 139   0  0.0 S    watchdog/0</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    8 FF      99 139   1  0.0 S    migration/1</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>   10 TS       -  19   1  0.0 S    ksoftirqd/1</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>   12 FF      99 139   1  0.0 S    watchdog/1</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>   13 TS       -  39   0  0.0 S&lt;   cpuset</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>   14 TS       -  39   1  0.0 S&lt;   khelper</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>   15 TS       -  19   1  0.0 S    kdevtmpfs</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>   16 TS       -  39   1  0.0 S&lt;   netns</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>   17 TS       -  19   0  0.0 S    sync_supers</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    .</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    .</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    .</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>28064 TS       -  19   1  0.0 S    apache2</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>28121 TS       -  19   0  0.0 Ss   bash</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>28197 TS       -  19   1  0.1 Sl+  vi</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>28207 TS       -  19   0  0.0 S    apache2</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>28210 TS       -  19   1  0.0 S    apache2</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>28257 TS       -  19   1  0.0 S    apache2</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>28259 TS       -  19   0  0.0 S    apache2</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>28260 TS       -  19   0  0.0 S    apache2</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>28383 TS       -  19   0  0.0 S    gvfsd-metadata</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>28414 TS       -  19   1  1.4 S    inkscape</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>29918 TS       -  19   1  0.0 Ss   bash</span></code></pre></div>
 <p>El significado de las opciones es el siguiente:</p>
 <ul>
 <li>
@@ -113,26 +237,240 @@ __TASK_STOPPED: El proceso a termina su ejecución
 <p>Para más información véase la documentación (<code>man ps</code>). Otro comando que puede ser útil es <code>top</code>, cuya funcionalidad es similar a <code>ps</code> en cuanto a la información que despliega, la diferencia es que <code>top</code> se mantiene actualizando la información constantemente.</p>
 <h3 id="desde-c">Desde C</h3>
 <p>Para obtener información sobre el proceso actual utilizaremos la macro <code>current</code>, cuya implementación varia entre plataformas. El siguiente listado muestra como moverse desde el proceso actual hasta la raíz:</p>
-<p>Embed: <code>current-macro.c</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> task_struct <span class="op">*</span>parent <span class="op">=</span> current<span class="op">;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="op">(</span>parent<span class="op">-&gt;</span>pid <span class="op">!=</span> <span class="dv">1</span><span class="op">)</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    parent <span class="op">=</span> parent<span class="op">-&gt;</span>parent<span class="op">;</span></span></code></pre></div>
 <p>Para un determinado proceso podemos obtener la lista de sus procesos hijo de la siguiente manera:</p>
-<p>Embed: <code>get-child-list.c</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> list_head <span class="op">*</span>list<span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> task_struct <span class="op">*</span>task<span class="op">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>list_for_each<span class="op">(</span>list<span class="op">,</span> <span class="op">&amp;</span>s<span class="op">-&gt;</span>children<span class="op">)</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    task <span class="op">=</span> list_entry<span class="op">(</span>list<span class="op">,</span> <span class="kw">struct</span> task_struct<span class="op">,</span> sibling<span class="op">);</span></span></code></pre></div>
 <h4 id="visualizar-el-árbol-de-procesos">Visualizar el árbol de procesos</h4>
 <p>Con las premisas que hemos visto podemos extraer algo de información significativa de nuestro sistema operativo, lo primero que se me ocurrió es simular lo que hace el comando <code>pstree</code>. El siguiente código realiza un recorrido primero en profundidad (<a href="https://en.wikipedia.org/wiki/Depth-first_search">DFS</a>) para obtener el árbol de procesos de nuestro sistema:</p>
-<p>Embed: <code>process-tree.c</code></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;linux/init.h&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;linux/kernel.h&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;linux/module.h&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;linux/list.h&gt;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;linux/types.h&gt;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;linux/slab.h&gt;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;linux/sched.h&gt;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;linux/string.h&gt;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> pstree<span class="op">(</span><span class="kw">struct</span> task_struct <span class="op">*</span>s<span class="op">,</span> <span class="dt">int</span> sum<span class="op">)</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> list_head <span class="op">*</span>list<span class="op">;</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> task_struct <span class="op">*</span>task<span class="op">;</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> i<span class="op">;</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> sum<span class="op">;</span> i<span class="op">++)</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        printk<span class="op">(</span><span class="st">&quot; &quot;</span><span class="op">);</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    printk<span class="op">(</span><span class="st">&quot;|--&gt;</span><span class="sc">%s\n</span><span class="st">&quot;</span><span class="op">,</span> s<span class="op">-&gt;</span>comm<span class="op">);</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    sum <span class="op">=</span> sum <span class="op">+</span> strlen<span class="op">(</span>s<span class="op">-&gt;</span>comm<span class="op">);</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    list_for_each<span class="op">(</span>list<span class="op">,</span> <span class="op">&amp;</span>s<span class="op">-&gt;</span>children<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>        task <span class="op">=</span> list_entry<span class="op">(</span>list<span class="op">,</span> <span class="kw">struct</span> task_struct<span class="op">,</span> sibling<span class="op">);</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>        pstree<span class="op">(</span>task<span class="op">,</span> sum<span class="op">);</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> simple_init<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> task_struct <span class="op">*</span>parent <span class="op">=</span> current<span class="op">;</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span>parent<span class="op">-&gt;</span>pid <span class="op">!=</span> <span class="dv">1</span><span class="op">)</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>        parent <span class="op">=</span> parent<span class="op">-&gt;</span>parent<span class="op">;</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    pstree<span class="op">(</span>parent<span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> simple_exit<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>    printk<span class="op">(</span><span class="st">&quot;Bye!</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>module_init<span class="op">(</span>simple_init<span class="op">);</span></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>module_exit<span class="op">(</span>simple_exit<span class="op">);</span></span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>MODULE_LICENSE<span class="op">(</span><span class="st">&quot;GPLv3&quot;</span><span class="op">);</span></span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>MODULE_DESCRIPTION<span class="op">(</span><span class="st">&quot;Playing with processes.&quot;</span><span class="op">);</span></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>MODULE_AUTHOR<span class="op">(</span><span class="st">&quot;Rafael Rendón Pablo&quot;</span><span class="op">);</span></span></code></pre></div>
 <p>Este código corresponde a un módulo cargable del nucleo (<a href="http://en.wikipedia.org/wiki/Loadable_kernel_module">LKM</a>) y se compila con el siguiente archivo Makefile:</p>
-<p>Embed: <code>makefile</code></p>
+<pre><code>obj-m += pstree.o
+all:
+    make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+clean:
+    make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
+</code></pre>
 <p>No se si esta sea la mejor manera de experimentar con el kernel pero funciona, y por ahora eso es más importante. Veamos como funciona.</p>
 <p>Insertar el módulo:</p>
-<p>Embed: <code>insert-mod.sh</code></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> insmod pstree.ko</span></code></pre></div>
 <p>Visualizar los resultados:</p>
-<p>Embed: <code>dmesg.sh</code></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dmesg</span></code></pre></div>
 <p>Aquí el resultado en mi máquina:</p>
-<p>Embed: <code>process-tree-output.txt</code></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>[10134.361134] |--&gt;init</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>[10134.361138]     |--&gt;udevd</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>[10134.361142]          |--&gt;udevd</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>[10134.361150]          |--&gt;udevd</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>[10134.361157]     |--&gt;rpcbind</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>[10134.361162]     |--&gt;rsyslogd</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>[10134.361167]     |--&gt;acpid</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>[10134.361172]     |--&gt;vmware-usbarbit</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>[10134.361177]     |--&gt;dbus-daemon</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>[10134.361182]     |--&gt;atd</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>[10134.361187]     |--&gt;gdm3</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>[10134.361192]         |--&gt;gdm-simple-slav</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>[10134.361199]                        |--&gt;Xorg</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>[10134.361214]                        |--&gt;gdm-session-wor</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>[10134.361229]                                       |--&gt;openbox</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>[10134.361252]                                              |--&gt;ssh-agent</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>[10134.361278]                                              |--&gt;firefox</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>[10134.361308]     |--&gt;avahi-daemon</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>[10134.361313]                 |--&gt;avahi-daemon</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>[10134.361325]     |--&gt;cron</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>[10134.361329]     |--&gt;ntpd</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>[10134.361334]     |--&gt;colord</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>[10134.361339]     |--&gt;exim4</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>[10134.361344]     |--&gt;colord-sane</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>[10134.361349]     |--&gt;cupsd</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>[10134.361353]     |--&gt;sshd</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>[10134.361358]     |--&gt;minissdpd</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>[10134.361363]     |--&gt;getty</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>[10134.361367]     |--&gt;getty</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>[10134.361372]     |--&gt;getty</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>[10134.361377]     |--&gt;getty</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>[10134.361381]     |--&gt;getty</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>[10134.361386]     |--&gt;getty</span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>[10134.361391]     |--&gt;polkitd</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>[10134.361395]     |--&gt;accounts-daemon</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>[10134.361400]     |--&gt;console-kit-dae</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>[10134.361405]     |--&gt;upowerd</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>[10134.361410]     |--&gt;rtkit-daemon</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>[10134.361415]     |--&gt;dbus-daemon</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>[10134.361420]     |--&gt;dbus-launch</span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>[10134.361425]     |--&gt;fbpanel</span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>[10134.361430]     |--&gt;sh</span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>[10134.361434]       |--&gt;conky</span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>[10134.361440]     |--&gt;compton</span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>[10134.361445]     |--&gt;nm-applet</span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>[10134.361450]     |--&gt;hp-systray</span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>[10134.361454]               |--&gt;hp-systray</span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>[10134.361465]                         |--&gt;hp-systray</span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>[10134.361480]     |--&gt;notification-da</span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>[10134.361485]     |--&gt;gvfsd</span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>[10134.361490]     |--&gt;pulseaudio</span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>[10134.361495]     |--&gt;gconfd-2</span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>[10134.361500]     |--&gt;kded4</span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>[10134.361504]     |--&gt;kdeinit4</span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>[10134.361509]             |--&gt;klauncher</span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>[10134.361518]             |--&gt;okular</span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>[10134.361527]             |--&gt;okular</span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>[10134.361536]     |--&gt;kglobalaccel</span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>[10134.361541]     |--&gt;yakuake</span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>[10134.361546]            |--&gt;tmux</span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>[10134.361555]     |--&gt;tmux</span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>[10134.361559]         |--&gt;bash</span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>[10134.361566]             |--&gt;vim</span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>[10134.361575]         |--&gt;bash</span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>[10134.361582]             |--&gt;sudo</span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a>[10134.361591]                 |--&gt;su</span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>[10134.361601]                   |--&gt;bash</span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>[10134.361613]                       |--&gt;insmod</span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a>[10134.361628]         |--&gt;bash</span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a>[10134.361635]             |--&gt;vi</span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a>[10134.361644]     |--&gt;udisks-daemon</span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>[10134.361649]                  |--&gt;udisks-daemon</span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>[10134.361661]     |--&gt;knotify4</span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>[10134.361666]     |--&gt;mpd</span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a>[10134.361670]     |--&gt;dolphin</span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a>[10134.361675]     |--&gt;at-spi-bus-laun</span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a>[10134.361680]     |--&gt;apache2</span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a>[10134.361685]            |--&gt;apache2</span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a>[10134.361693]            |--&gt;apache2</span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a>[10134.361702]            |--&gt;apache2</span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a>[10134.361710]            |--&gt;apache2</span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a>[10134.361718]            |--&gt;apache2</span>
+<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a>[10134.361727]            |--&gt;apache2</span>
+<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a>[10134.361735]            |--&gt;apache2</span>
+<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a>[10134.361744]            |--&gt;apache2</span>
+<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a>[10134.361752]            |--&gt;apache2</span>
+<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a>[10134.361761]            |--&gt;apache2</span>
+<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a>[10134.361769]     |--&gt;mysqld_safe</span>
+<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a>[10134.361774]                |--&gt;mysqld</span>
+<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a>[10134.361785]                |--&gt;logger</span>
+<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a>[10134.361795]     |--&gt;kuiserver</span>
+<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a>[10134.361800]     |--&gt;xclip</span></code></pre></div>
 <p>Para descargar el módulo del kernel ejecuta el siguiente comando:</p>
-<p>Embed: <code>rmmod.sh</code></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> rmmod pstree</span></code></pre></div>
 <h4 id="visualizar-el-árbol-de-procesos-de-forma-gráfica">Visualizar el árbol de procesos de forma gráfica</h4>
 <p>Una vez que logre extraer el árbol se me ocurrió generarlo en un formato adecuado para que pudiese visualizarlo de forma gráfica apoyándome de una herramienta que desarrolle para visualizar grafos (<a href="https://github.com/rendon/graph_illustrator/">Graph Illustrator</a>). He aquí la nueva versión:</p>
-<p>Embed: <code>process-tree-gi.c</code></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;linux/init.h&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;linux/kernel.h&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;linux/module.h&gt;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;linux/list.h&gt;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;linux/types.h&gt;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;linux/slab.h&gt;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;linux/sched.h&gt;</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;linux/string.h&gt;</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> pstree_coord<span class="op">(</span><span class="kw">struct</span> task_struct <span class="op">*</span>s<span class="op">,</span> <span class="dt">int</span> x<span class="op">,</span> <span class="dt">int</span> y<span class="op">)</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> list_head <span class="op">*</span>list<span class="op">;</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> task_struct <span class="op">*</span>task<span class="op">;</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> size <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> offset <span class="op">=</span> <span class="dv">15</span><span class="op">;</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    printk<span class="op">(</span><span class="st">&quot;</span><span class="sc">%s\\</span><span class="st">n[</span><span class="sc">%d</span><span class="st">]:</span><span class="sc">%d</span><span class="st">,</span><span class="sc">%d</span><span class="st">,C</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> s<span class="op">-&gt;</span>comm<span class="op">,</span> s<span class="op">-&gt;</span>pid<span class="op">,</span> x<span class="op">,</span> y<span class="op">);</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    list_for_each<span class="op">(</span>list<span class="op">,</span> <span class="op">&amp;</span>s<span class="op">-&gt;</span>children<span class="op">)</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>        size <span class="op">+=</span> offset<span class="op">;</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> <span class="op">-</span>size <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    list_for_each<span class="op">(</span>list<span class="op">,</span> <span class="op">&amp;</span>s<span class="op">-&gt;</span>children<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>        task <span class="op">=</span> list_entry<span class="op">(</span>list<span class="op">,</span> <span class="kw">struct</span> task_struct<span class="op">,</span> sibling<span class="op">);</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>        pstree_coord<span class="op">(</span>task<span class="op">,</span> x <span class="op">+</span> i<span class="op">,</span> y <span class="op">-</span> <span class="dv">15</span><span class="op">);</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>        i <span class="op">+=</span> offset<span class="op">;</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> pstree<span class="op">(</span><span class="kw">struct</span> task_struct <span class="op">*</span>s<span class="op">)</span></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> list_head <span class="op">*</span>list<span class="op">;</span></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> task_struct <span class="op">*</span>task<span class="op">;</span></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>    printk<span class="op">(</span><span class="st">&quot;</span><span class="sc">%s\\</span><span class="st">n[</span><span class="sc">%d</span><span class="st">],</span><span class="sc">%s\\</span><span class="st">n[</span><span class="sc">%d</span><span class="st">]</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>           s<span class="op">-&gt;</span>parent<span class="op">-&gt;</span>comm<span class="op">,</span> s<span class="op">-&gt;</span>parent<span class="op">-&gt;</span>pid<span class="op">,</span> s<span class="op">-&gt;</span>comm<span class="op">,</span> s<span class="op">-&gt;</span>pid<span class="op">);</span></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>    list_for_each<span class="op">(</span>list<span class="op">,</span> <span class="op">&amp;</span>s<span class="op">-&gt;</span>children<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>        task <span class="op">=</span> list_entry<span class="op">(</span>list<span class="op">,</span> <span class="kw">struct</span> task_struct<span class="op">,</span> sibling<span class="op">);</span></span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>        pstree<span class="op">(</span>task<span class="op">);</span></span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> simple_init<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> task_struct <span class="op">*</span>parent <span class="op">=</span> current<span class="op">;</span></span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span>parent<span class="op">-&gt;</span>pid <span class="op">!=</span> <span class="dv">1</span><span class="op">)</span></span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>        parent <span class="op">=</span> parent<span class="op">-&gt;</span>parent<span class="op">;</span></span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>    printk<span class="op">(</span><span class="st">&quot;[EDGES]</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>    pstree<span class="op">(</span>parent<span class="op">);</span></span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a>    printk<span class="op">(</span><span class="st">&quot;[VERTICES]</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a>    pstree_coord<span class="op">(</span>parent<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> simple_exit<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a>    printk<span class="op">(</span><span class="st">&quot;======================= END =========================</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a>module_init<span class="op">(</span>simple_init<span class="op">);</span></span>
+<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a>module_exit<span class="op">(</span>simple_exit<span class="op">);</span></span>
+<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a>MODULE_LICENSE<span class="op">(</span><span class="st">&quot;GPLv3&quot;</span><span class="op">);</span></span>
+<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a>MODULE_DESCRIPTION<span class="op">(</span><span class="st">&quot;Playing with processes.&quot;</span><span class="op">);</span></span>
+<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a>MODULE_AUTHOR<span class="op">(</span><span class="st">&quot;Rafael Rendón Pablo&quot;</span><span class="op">);</span></span>
+<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
 <p>
 Manualmente hay que editar un poco la salida para que que sirva como entrada para el visualizador. He aquí el archivo resultante: &lt;%= file(post, ‘pstree.gi’) %&gt;.
 </p>
@@ -143,7 +481,26 @@ Manualmente hay que editar un poco la salida para que que sirva como entrada par
 </figure>
 <h2 id="creación-de-procesos">Creación de procesos</h2>
 <p>En sistemas UNIX la creación de nuevos procesos se realiza en dos pasos. Primero se bifurca el proceso actual utilizando la función <code>fork()</code>, la cual crea una copia del proceso actual, la única diferencia entre estos dos procesos es el PID, el cual es único. El segundo paso consiste en reemplazar el espacio de memoria del nuevo proceso con el código ejecutable del programa que se quiere ejecutar e inmediatamente iniciar la ejecución, esto se logra con la función <code>exec()</code>.</p>
-<p>Embed: <code>fork-example.c</code></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/types.h&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    pid_t pid <span class="op">=</span> fork<span class="op">();</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>pid <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>        fprintf<span class="op">(</span>stderr<span class="op">,</span> <span class="st">&quot;La bifurcación fallo :(&quot;</span><span class="op">);</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>pid <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>        execlp<span class="op">(</span><span class="st">&quot;/bin/ls&quot;</span><span class="op">,</span> <span class="st">&quot;ls&quot;</span><span class="op">,</span> NULL<span class="op">);</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>        wait<span class="op">(</span>NULL<span class="op">);</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">&quot;El proceso hijo ya termino.&quot;</span><span class="op">);</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>Notarán que he utilizado <code>execlp()</code> en vez de <code>exec()</code>, esto es porque en realidad <code>exec()</code> es un familia de funciones, la cuales son <em>front ends</em> para la función <code>execve()</code>.</p>
 <p>El código funciona de la siguiente manera:</p>
 <ul>
@@ -161,7 +518,65 @@ El proceso padre puede continuar con su ejecución o bien esperar que que el hij
 </li>
 </ul>
 <p>Por último veamos un ejemplo un poco más elaborado, un mini emulador de terminal:</p>
-<p>Embed: <code>cli-example.c</code></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/types.h&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> line<span class="op">[</span><span class="dv">100</span><span class="op">];</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> command<span class="op">[</span><span class="dv">20</span><span class="op">];</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> args<span class="op">[</span><span class="dv">60</span><span class="op">];</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> exit <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> ch<span class="op">,</span> cmd_len<span class="op">,</span> args_len<span class="op">,</span> bg<span class="op">,</span> i<span class="op">,</span> len<span class="op">;</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    pid_t pid<span class="op">;</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">&quot;osh&gt; &quot;</span><span class="op">);</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>        len <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="op">((</span>ch <span class="op">=</span> getchar<span class="op">())</span> <span class="op">!=</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">)</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>            line<span class="op">[</span>len<span class="op">++]</span> <span class="op">=</span> ch<span class="op">;</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>        line<span class="op">[</span>len<span class="op">]</span> <span class="op">=</span> <span class="ch">&#39;</span><span class="sc">\0</span><span class="ch">&#39;</span><span class="op">;</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>        cmd_len <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>        i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="op">(</span>i <span class="op">&lt;</span> len <span class="op">&amp;&amp;</span> line<span class="op">[</span>i<span class="op">]</span> <span class="op">!=</span> <span class="ch">&#39; &#39;</span><span class="op">)</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>            command<span class="op">[</span>cmd_len<span class="op">++]</span> <span class="op">=</span> line<span class="op">[</span>i<span class="op">++];</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>        command<span class="op">[</span>cmd_len<span class="op">]</span> <span class="op">=</span> <span class="ch">&#39;</span><span class="sc">\0</span><span class="ch">&#39;</span><span class="op">;</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>        args_len <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="op">(</span>i <span class="op">&lt;</span> len <span class="op">&amp;&amp;</span> line<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> <span class="ch">&#39; &#39;</span><span class="op">)</span> i<span class="op">++;</span></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="op">(</span>i <span class="op">&lt;</span> len<span class="op">)</span></span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>            args<span class="op">[</span>args_len<span class="op">++]</span> <span class="op">=</span> line<span class="op">[</span>i<span class="op">++];</span></span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>        args<span class="op">[</span>args_len<span class="op">]</span> <span class="op">=</span> <span class="ch">&#39;</span><span class="sc">\0</span><span class="ch">&#39;</span><span class="op">;</span></span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>strcmp<span class="op">(</span>command<span class="op">,</span> <span class="st">&quot;exit&quot;</span><span class="op">)</span> <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>cmd_len <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>            bg <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> args_len <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&gt;=</span> <span class="dv">0</span><span class="op">;</span> i<span class="op">--)</span> <span class="op">{</span></span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="op">(</span>args<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> <span class="ch">&#39;&amp;&#39;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>                    bg <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>                    args<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="ch">&#39; &#39;</span><span class="op">;</span></span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span></span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>            pid <span class="op">=</span> fork<span class="op">();</span></span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>pid <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="op">(</span>args_len <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span> </span>
+<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>                    execlp<span class="op">(</span>command<span class="op">,</span> command<span class="op">,</span> args<span class="op">,</span> NULL<span class="op">);</span></span>
+<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span></span>
+<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a>                    execlp<span class="op">(</span>command<span class="op">,</span> command<span class="op">,</span> NULL<span class="op">);</span></span>
+<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="op">(</span>bg <span class="op">==</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a>                    wait<span class="op">(</span>NULL<span class="op">);</span></span>
+<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>En este ejemplo básicamente leemos la línea de texto que el usuario introduce y se paramos el nombre del comando de los parámetros y además verificamos si el comando debe ejecutarse en <em>background</em> (el comando finaliza con un ampersand), después de esto creamos un nuevo proceso y utilizamos la función <code>execlp()</code> para ejecutar al comando en cuestión, el cual debe existir en el sistema.</p>
 <p>Este programa esta bien limitado y tiene varías fallas, el único propósito es dar una mejor idea de como se crean procesos y no de crear una copia de Bash :).</p>
 <p>&lt;% add_bib(“lkd_rl”, “Robert Love”, “Linux Kernel Development, 3rd Ed.”); add_bib(“osc_9th”, “Silberschatz et al.”, “Operating System Concepts, 9th Ed.”); %&gt;</p>

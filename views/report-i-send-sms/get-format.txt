@@ -1,1 +1,0 @@
-http://servidor[:puerto]/?parametro1=valor1&parametro2=valor2&parametroN=valorN

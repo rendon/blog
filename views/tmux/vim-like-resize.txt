@@ -1,6 +1,0 @@
-# Presiona Ctrl + a + [jkhl]
-# para redimensionar panel
-bind-key C-a-j resize-pane -D 2
-bind-key C-a-k resize-pane -U 2
-bind-key C-a-h resize-pane -L 4
-bind-key C-a-l resize-pane -R 4

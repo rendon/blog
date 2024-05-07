@@ -41,7 +41,36 @@ La precedencia de una operación indica el orden que que debe realizarse, las op
 
 Antes de proceder con la evaluación de expresiones es necesario tener en cuenta que para que el algoritmo funcione correctamente la expresión debe tener una sintaxis correcta, por ejemplo, una distribución de paréntesis adecuada, también es indispensable que la expresión emplee únicamente elementos válidos, es decir, no emplear caracteres que no sean operadores ni operandos como pueden ser `"$?\_%#`. Es difícil crear una aplicación que tome en cuenta todos los posibles casos de error que pudieran surgir, sin embargo podemos abordar los más comunes, verificar el uso de elementos validos es muy fácil y se consigue con solo iterar por toda la cadena y comprobar que los caracteres sean operadores(+-\*/^) o dígitos(0-9). La siguiente función comprueba el balanceo de paréntesis.
 
-Embed: `check.c`
+
+```c
+bool check(string expression)
+{
+    int i;
+    int top = 0;
+    char stack[LIMIT];
+    for (i = 0; i < expression.length(); i++) {
+        if (expression[i] == '(') {
+            stack[top++] = '(';
+        } else if (expression[i] == ')') {
+            cout << "top = " << top << endl;
+            cout << stack[top - 1] << endl << endl;
+
+            if (top == 0) {
+                return false;
+            }
+
+            if (stack[top - 1] != '(') {
+                return false;
+            }
+
+            top--; //pop()
+        }
+    }
+
+    return top == 0;
+}
+
+```
 
 El algoritmo que aquí se emplea utiliza una *pila*, que es una estructura de datos lineal donde únicamente podemos insertar(push) o eliminar(pop) elementos por uno de sus extremos con la siguiente regla: Último en entrar, primero en salir(LIFO).
 
@@ -49,13 +78,92 @@ La idea es muy simple y consiste en recorrer la cadena de caracteres y cada vez 
 
 La función que se muestra a continuación toma una expresión aritmética que previamente ha sido analizada para comprobar el balance de paréntesis y la convierte a notación posfija.
 
-Embed: `to-postfix.c`
+
+```c
+string to_postfix(string expression)
+{
+    int i, j, top = 0;
+    char stack[LIMIT];
+    char token;
+    string output;
+    for (i = 0; i < expression.length(); i++) {
+        token = expression[i];
+        if (isdigit(token)) {
+            output += token;
+        } else if (token == '(') {
+            stack[top++] = '(';
+        } else if (token == ')') {
+            while (stack[top - 1] != '(') {
+                output += stack[--top];
+            }
+
+            top--;
+        } else if (strchr("+-*/^", token) != NULL) {
+            while (precedence(token) <= precedence(stack[top - 1])) {
+                output += stack[--top];
+            }
+
+            stack[top++] = token;
+        }
+    }
+
+    while (top > 0) {
+        output += stack[--top];
+    }
+
+    return output;
+}
+
+```
 
 El algoritmo que se emplea en la función anterior lo pueden encontrar en casi cualquier libro de estructuras de datos, generalmente cuando se abordan los temas de recursión o pilas. De todas formas aquí les dejo [este link](http://montcs.bloomu.edu/~bobmon/Information/RPN/infix2rpn.shtml) donde pueden encontrar los detalles.
 
 Teniendo la expresión en notación posfija solo nos resta la función que realiza la evaluación.
 
-Embed: `eval.c`
+
+```c
+double eval(string expression)
+{
+    int i, j, top = 0;
+    double a, b, c;
+    double stack[LIMIT];
+
+    for (i = 0; i < expression.length(); i++) {
+        if (isdigit(expression[i])) {
+            stack[top++] = (double)(expression[i] - '0');
+        } else { // Operator
+            b = stack[--top];
+            a = stack[--top];
+
+            switch (expression[i]) {
+            case '+':
+                c = a + b;
+                break;
+            case '-':
+                c = a - b;
+                break;
+            case '*':
+                c = a * b;
+                break;
+            case '/':
+                c = a / b;
+                break;
+            case '%':
+                c = (int)a % (int)b;
+                break;
+            case '^':
+                c = pow(a, b);
+                break;
+            }
+
+            stack[top++] = c;
+        }
+    }
+
+    return stack[top - 1];
+}
+
+```
 
 El algoritmo que empleamos para evaluar la expresión posfija consiste en avanzar por la expresión y si el elemento es un operando(dígito) lo ponemos en la pila, pero si es un operador(+-\*/%^) entonces retiramos los dos(las operaciones son binarias) elementos de lo más alto de la pila en orden inverso, es decir, primero el segundo operando y después el primer operando(el ultimo es el primero ;)), realizamos la operación correspondiente y colocamos el resultado en la pila y continuamos analizando la expresión. Siguiendo estos pasos al final quedara la pila con un solo elemento, el resultado.
 

@@ -8,7 +8,68 @@ Topological sorting works on [DAGs](http://en.wikipedia.org/wiki/Directed_acycli
 ## Example problem
 Here you have a problem where you have to literally find an ordering for tasks: [10305 - Ordering Tasks](http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1246). Here is a working implementation of Topological sorting.
 
-Embed: `src.cpp`
+
+```cpp
+#include <iostream>
+#include <cstdio>
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+class Graph {
+private:
+    vector<vector<int> > G;
+public:
+    Graph() {}
+    Graph(int nodes) {
+        G.resize(nodes);
+    }
+
+    void addEdge(int u, int v) {
+        G[u].push_back(v);
+    }
+
+    void dfs(int u, vector<bool> &visited) {
+        visited[u] = true;
+        for (int v : G[u]) {
+            if (!visited[v]) {
+                dfs(v, visited);
+            }
+        }
+
+        printf("%d ", u + 1);
+    }
+
+    void sort() {
+        vector<bool> visited(G.size(), false);
+        for (int u = 0; u < int(G.size()); u++) {
+            if (!visited[u]) {
+                dfs(u, visited);
+            }
+        }
+    }
+};
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+    while (n != 0 || m != 0) {
+        Graph graph(n);
+        for (int i = 0; i < m; i++) {
+            int u, v;
+            scanf("%d %d", &u, &v);
+            graph.addEdge(v - 1, u - 1);
+
+        }
+        graph.sort();
+        scanf("%d %d", &n, &m);
+    }
+
+    return 0;
+}
+
+
+```
 
 The solutions works as follows:
 

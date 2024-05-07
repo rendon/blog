@@ -8,7 +8,36 @@
 
 <p>I’ve been working with Web services these days for some college projects. Here are some interesting ways to test your web service.</p>
 <p>Supponse this is our Web service:</p>
-<p>Embed: <code>web-service.php</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">require_once</span> <span class="st">&#39;lib/nusoap.php&#39;</span><span class="ot">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="cn">H</span>ello(<span class="va">$name</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">&quot;Hello &quot;</span> <span class="op">.</span> <span class="va">$name</span> <span class="op">.</span> <span class="st">&quot;!&quot;</span><span class="ot">;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="va">$server</span> <span class="op">=</span> <span class="kw">new</span> soap_server()<span class="ot">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="va">$server</span>-&gt;configureWSDL(<span class="st">&quot;MyService&quot;</span><span class="ot">,</span> <span class="st">&quot;urn:MyService&quot;</span>)<span class="ot">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="va">$server</span>-&gt;soap_defencoding <span class="op">=</span> <span class="st">&#39;utf-8&#39;</span><span class="ot">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="va">$server</span>-&gt;register(<span class="st">&#39;Hello&#39;</span><span class="ot">,</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">array</span>(<span class="st">&#39;name&#39;</span> =&gt; <span class="st">&#39;xsd:string&#39;</span>)<span class="ot">,</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">array</span>(<span class="st">&#39;response&#39;</span> =&gt; <span class="st">&#39;xsd:string&#39;</span>)<span class="ot">,</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;MyService&#39;</span><span class="ot">,</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">false</span><span class="ot">,</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;rpc&#39;</span><span class="ot">,</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;literal&#39;</span><span class="ot">,</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;Test method.&#39;</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>)<span class="ot">;</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="kw">isset</span>(<span class="va">$HTTP_RAW_POST_DATA</span>)) {</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="va">$server</span>-&gt;service(<span class="va">$HTTP_RAW_POST_DATA</span>)<span class="ot">;</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="va">$server</span>-&gt;service(<span class="st">&quot;php://input&quot;</span>)<span class="ot">;</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="kw">?&gt;</span></span></code></pre></div>
 <figure>
 <img src="/testing-a-web-service/testws_myservice.png" alt="Our web service" />
 <figcaption aria-hidden="true">Our web service</figcaption>
@@ -27,27 +56,133 @@
 <h2 id="command-line">Command line</h2>
 <p>Using the command line always let us understand better how the stuffs works :).</p>
 <p>Put the following request message in a file called <em>request.xml</em>:</p>
-<p>Embed: <code>request.xml</code></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">soapenv:Envelope</span><span class="ot"> xmlns:soapenv=</span><span class="st">&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;</span><span class="ot"> xmlns:mys=</span><span class="st">&quot;MyService&quot;</span>&gt;</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>   &lt;<span class="kw">soapenv:Header</span>/&gt;</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>   &lt;<span class="kw">soapenv:Body</span>&gt;</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">mys:Hello</span>&gt;</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>         &lt;<span class="kw">name</span>&gt;Rafael&lt;/<span class="kw">name</span>&gt;</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">mys:Hello</span>&gt;</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>   &lt;/<span class="kw">soapenv:Body</span>&gt;</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">soapenv:Envelope</span>&gt;</span></code></pre></div>
 <h3 id="using-wget">Using Wget</h3>
 <p>Issue the following command to test our Web service:</p>
-<p>Embed: <code>wget.sh</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="at">--post-file</span><span class="op">=</span>request.xml <span class="at">--header</span><span class="op">=</span><span class="st">&quot;Content-Type: text/xml&quot;</span> <span class="at">--header</span><span class="op">=</span><span class="st">&quot;SOAPAction: &#39;Hello&#39;&quot;</span> http://localhost/ws/index.php<span class="pp">?</span>wsdl <span class="at">-O</span> response.xml</span></code></pre></div>
 <p>The content the file <em>response.xml</em> should be something like this:</p>
-<p>Embed: <code>wget-output.xml</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">&lt;?xml</span><span class="ot"> version=</span><span class="st">&quot;1.0&quot;</span><span class="ot"> encoding=</span><span class="st">&quot;utf-8&quot;</span><span class="fu">?&gt;</span>&lt;<span class="kw">SOAP-ENV:Envelope</span><span class="ot"> xmlns:SOAP-ENV=</span><span class="st">&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;</span><span class="ot"> xmlns:xsd=</span><span class="st">&quot;http://www.w3.org/2001/XMLSchema&quot;</span><span class="ot"> xmlns:xsi=</span><span class="st">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><span class="ot"> xmlns:SOAP-ENC=</span><span class="st">&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;</span>&gt;&lt;<span class="kw">SOAP-ENV:Body</span>&gt;&lt;<span class="kw">ns1:HelloResponse</span><span class="ot"> xmlns:ns1=</span><span class="st">&quot;MyService&quot;</span>&gt;&lt;<span class="kw">response</span>&gt;Hello Rafael!&lt;/<span class="kw">response</span>&gt;&lt;/<span class="kw">ns1:HelloResponse</span>&gt;&lt;/<span class="kw">SOAP-ENV:Body</span>&gt;&lt;/<span class="kw">SOAP-ENV:Envelope</span>&gt;</span></code></pre></div>
 <p>This is the same response shown in picture , unindented though.</p>
 <h3 id="using-curl">Using cURL</h3>
 <p>Here is the curl version:</p>
-<p>Embed: <code>curl.sh</code></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--header</span> <span class="st">&quot;Content-Type: text/xml; charset=utf-8&quot;</span> <span class="at">--data</span> @request.xml http://localhost/ws/index.php <span class="op">&gt;</span> out.xml</span></code></pre></div>
 <p>The content of the <em>out.xml</em> file must be the same as the previous example.</p>
 <h3 id="using-telnet">Using telnet</h3>
 <p>Here I show you how you can send an HTTP POST request to our WS using telnet:</p>
-<p>Embed: <code>telnet.sh</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[10:29:57]ddc@intel~$</span> telnet localhost 80</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Trying</span> ::1...</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Connected</span> to localhost.</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Escape</span> character is <span class="st">&#39;^]&#39;</span>.</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">POST</span> /ws/index.php HTTP/1.0</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Content-Type:</span> text/xml<span class="kw">;</span> <span class="va">charset</span><span class="op">=</span>utf-8</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Content-Length:</span> 212</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>soapenv:Envelope <span class="ex">xmlns:soapenv=</span><span class="st">&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;</span> xmlns:mys=<span class="st">&quot;MyService&quot;</span><span class="op">&gt;</span> <span class="op">&lt;</span>soapenv:Header/<span class="op">&gt;</span> <span class="op">&lt;</span>soapenv:Body<span class="op">&gt;</span> <span class="op">&lt;</span>mys:Hello<span class="op">&gt;</span> <span class="op">&lt;</span>name<span class="op">&gt;</span>Rafael<span class="op">&lt;</span>/name<span class="op">&gt;</span> <span class="op">&lt;</span>/mys:Hello<span class="op">&gt;</span> <span class="op">&lt;</span>/soapenv:Body<span class="op">&gt;</span> <span class="op">&lt;</span>/soapenv:Envelope<span class="op">&gt;</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="ex">HTTP/1.1</span> 200 OK</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="ex">Date:</span> Wed, 20 Nov 2013 16:29:59 GMT</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="ex">Server:</span> Apache/2.2.22 <span class="er">(</span><span class="ex">Debian</span><span class="kw">)</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="ex">X-Powered-By:</span> PHP/5.4.4-14+deb7u4</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="ex">X-SOAP-Server:</span> NuSOAP/0.9.5 <span class="er">(</span><span class="ex">1.123</span><span class="kw">)</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="ex">Content-Length:</span> 420</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="ex">Vary:</span> Accept-Encoding</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="ex">Connection:</span> close</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="ex">Content-Type:</span> text/xml<span class="kw">;</span> <span class="va">charset</span><span class="op">=</span>utf-8</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="ex">?xml</span> version=<span class="st">&quot;1.0&quot;</span> encoding=<span class="st">&quot;utf-8&quot;</span><span class="pp">?</span><span class="op">&gt;&lt;</span>SOAP-ENV:Envelope xmlns:SOAP-ENV=<span class="st">&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;</span> xmlns:xsd=<span class="st">&quot;http://www.w3.org/2001/XMLSchema&quot;</span> xmlns:xsi=<span class="st">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> xmlns:SOAP-ENC=<span class="st">&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;</span><span class="op">&gt;&lt;</span>SOAP-ENV:Body<span class="op">&gt;&lt;</span>ns1:HelloResponse xmlns:ns1=<span class="st">&quot;MyService&quot;</span><span class="op">&gt;&lt;</span>response<span class="op">&gt;</span>Hello Rafael!<span class="op">&lt;</span>/response<span class="op">&gt;&lt;</span>/ns1:HelloResponse<span class="op">&gt;&lt;</span>/SOAP-ENV:Body<span class="op">&gt;&lt;</span>/SOAP-ENV:Envelope<span class="op">&gt;</span>Connection closed by foreign host.</span></code></pre></div>
 <p>DON’T FORGET to specify the content length!</p>
 <h2 id="using-java">Using Java</h2>
 <p>Well, this is useful too, specially if you are developing a Java application.</p>
-<p>Embed: <code>testws.java</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">java</span><span class="op">.</span><span class="im">io</span><span class="op">.</span><span class="im">BufferedReader</span><span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">java</span><span class="op">.</span><span class="im">io</span><span class="op">.</span><span class="im">DataOutputStream</span><span class="op">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">java</span><span class="op">.</span><span class="im">io</span><span class="op">.</span><span class="im">InputStreamReader</span><span class="op">;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">java</span><span class="op">.</span><span class="im">net</span><span class="op">.</span><span class="im">HttpURLConnection</span><span class="op">;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">java</span><span class="op">.</span><span class="im">net</span><span class="op">.</span><span class="im">URL</span><span class="op">;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="im">java</span><span class="op">.</span><span class="im">net</span><span class="op">.</span><span class="im">HttpURLConnection</span><span class="op">;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> TestWS <span class="op">{</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span><span class="op">(</span><span class="bu">String</span><span class="op">[]</span> args<span class="op">)</span> <span class="kw">throws</span> <span class="bu">Exception</span> <span class="op">{</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        TestWS test <span class="op">=</span> <span class="kw">new</span> <span class="fu">TestWS</span><span class="op">();</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        test<span class="op">.</span><span class="fu">test</span><span class="op">();</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">void</span> <span class="fu">test</span><span class="op">()</span> <span class="kw">throws</span> <span class="bu">Exception</span> <span class="op">{</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        <span class="bu">String</span> ws <span class="op">=</span> <span class="st">&quot;http://localhost/ws/index.php&quot;</span><span class="op">;</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        <span class="bu">URL</span> url <span class="op">=</span> <span class="kw">new</span> <span class="bu">URL</span><span class="op">(</span>ws<span class="op">);</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">HttpURLConnection</span> conn <span class="op">=</span> <span class="op">(</span><span class="bu">HttpURLConnection</span><span class="op">)</span> url<span class="op">.</span><span class="fu">openConnection</span><span class="op">();</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>        conn<span class="op">.</span><span class="fu">setRequestMethod</span><span class="op">(</span><span class="st">&quot;POST&quot;</span><span class="op">);</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        conn<span class="op">.</span><span class="fu">setRequestProperty</span><span class="op">(</span><span class="st">&quot;Content-Type:&quot;</span><span class="op">,</span> <span class="st">&quot;text/xml&quot;</span><span class="op">);</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>        <span class="co">//conn.setRequestProperty(&quot;Header&quot;, &quot;SOAPAction: &#39;Hello&#39;&quot;);</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>        <span class="bu">String</span> message <span class="op">=</span> <span class="st">&quot;&lt;soapenv:Envelope xmlns:soapenv=&#39;http://schemas.xmlsoap.org/soap/envelope/&#39; xmlns:mys=&#39;MyService&#39;&gt; &lt;soapenv:Header/&gt; &lt;soapenv:Body&gt; &lt;mys:Hello&gt; &lt;name&gt;Rafael&lt;/name&gt; &lt;/mys:Hello&gt; &lt;/soapenv:Body&gt; &lt;/soapenv:Envelope&gt;&quot;</span><span class="op">;</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>        conn<span class="op">.</span><span class="fu">setDoOutput</span><span class="op">(</span><span class="kw">true</span><span class="op">);</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>        <span class="bu">DataOutputStream</span> out <span class="op">=</span> <span class="kw">new</span> <span class="bu">DataOutputStream</span><span class="op">(</span>conn<span class="op">.</span><span class="fu">getOutputStream</span><span class="op">());</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>        out<span class="op">.</span><span class="fu">writeBytes</span><span class="op">(</span>message<span class="op">);</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>        out<span class="op">.</span><span class="fu">flush</span><span class="op">();</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>        out<span class="op">.</span><span class="fu">close</span><span class="op">();</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>        <span class="bu">BufferedReader</span> in <span class="op">=</span> <span class="kw">new</span> <span class="bu">BufferedReader</span><span class="op">(</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>                    <span class="kw">new</span> <span class="bu">InputStreamReader</span><span class="op">(</span>conn<span class="op">.</span><span class="fu">getInputStream</span><span class="op">())</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>                <span class="op">);</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>        <span class="bu">String</span> line<span class="op">,</span> response <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="op">;</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="op">((</span>line <span class="op">=</span> in<span class="op">.</span><span class="fu">readLine</span><span class="op">())</span> <span class="op">!=</span> <span class="kw">null</span><span class="op">)</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>            response <span class="op">+=</span> line<span class="op">;</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>        in<span class="op">.</span><span class="fu">close</span><span class="op">();</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>        <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span>response<span class="op">);</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h2 id="using-c-with-qt">Using C++ with Qt</h2>
 <p>I used this too:</p>
-<p>Embed: <code>testws-qt.cpp</code></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>MainWindow<span class="op">::</span>MainWindow<span class="op">(</span><span class="ex">QWidget</span> <span class="op">*</span>parent<span class="op">)</span> <span class="op">:</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QMainWindow</span><span class="op">(</span>parent<span class="op">),</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    ui<span class="op">(</span><span class="kw">new</span> Ui<span class="op">::</span>MainWindow<span class="op">)</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    ui<span class="op">-&gt;</span>setupUi<span class="op">(</span><span class="kw">this</span><span class="op">);</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QVBoxLayout</span> <span class="op">*</span>layout <span class="op">=</span> <span class="kw">new</span> <span class="ex">QVBoxLayout</span><span class="op">();</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QPushButton</span> <span class="op">*</span>testButton <span class="op">=</span> <span class="kw">new</span> <span class="ex">QPushButton</span><span class="op">(</span><span class="st">&quot;Test service&quot;</span><span class="op">);</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">connect</span><span class="op">(</span>testButton<span class="op">,</span> <span class="ex">SIGNAL</span><span class="op">(</span>clicked<span class="op">()),</span> <span class="kw">this</span><span class="op">,</span> <span class="ex">SLOT</span><span class="op">(</span>testService<span class="op">()));</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    layout<span class="op">-&gt;</span>addWidget<span class="op">(</span>testButton<span class="op">);</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QWidget</span> <span class="op">*</span>widget <span class="op">=</span> <span class="kw">new</span> <span class="ex">QWidget</span><span class="op">(</span><span class="kw">this</span><span class="op">);</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    widget<span class="op">-&gt;</span>setLayout<span class="op">(</span>layout<span class="op">);</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    setCentralWidget<span class="op">(</span>widget<span class="op">);</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>MainWindow<span class="op">::~</span>MainWindow<span class="op">()</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">delete</span> ui<span class="op">;</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> MainWindow<span class="op">::</span>testService<span class="op">()</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> message<span class="op">(</span><span class="st">&quot;&lt;soapenv:Envelope xmlns:soapenv=&#39;http://schemas.xmlsoap.org/soap/envelope/&#39; xmlns:mys=&#39;MyService&#39;&gt; &lt;soapenv:Header/&gt; &lt;soapenv:Body&gt; &lt;mys:Hello&gt; &lt;name&gt;Rafael&lt;/name&gt; &lt;/mys:Hello&gt; &lt;/soapenv:Body&gt; &lt;/soapenv:Envelope&gt;&quot;</span><span class="op">);</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QUrl</span> url<span class="op">(</span><span class="st">&quot;http://localhost/ws/index.php&quot;</span><span class="op">);</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QNetworkRequest</span> request<span class="op">(</span>url<span class="op">);</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    request<span class="op">.</span>setHeader<span class="op">(</span><span class="ex">QNetworkRequest::ContentTypeHeader</span><span class="op">,</span> <span class="st">&quot;text/xml&quot;</span><span class="op">);</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QNetworkAccessManager</span> <span class="op">*</span>nm <span class="op">=</span> <span class="kw">new</span> <span class="ex">QNetworkAccessManager</span><span class="op">(</span><span class="kw">this</span><span class="op">);</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QObject::connect</span><span class="op">(</span>nm<span class="op">,</span> <span class="ex">SIGNAL</span><span class="op">(</span>finished<span class="op">(</span><span class="ex">QNetworkReply</span> <span class="op">*)),</span> <span class="kw">this</span><span class="op">,</span> <span class="ex">SLOT</span><span class="op">(</span>testFinished<span class="op">(</span><span class="ex">QNetworkReply</span><span class="op">*)));</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    nm<span class="op">-&gt;</span>post<span class="op">(</span>request<span class="op">,</span> message<span class="op">.</span>toAscii<span class="op">());</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> MainWindow<span class="op">::</span>testFinished<span class="op">(</span><span class="ex">QNetworkReply</span> <span class="op">*</span>reply<span class="op">)</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QByteArray</span> ans <span class="op">=</span> reply<span class="op">-&gt;</span>readAll<span class="op">();</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> response<span class="op">(</span>ans<span class="op">.</span>data<span class="op">());</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Process your response message</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">qDebug</span><span class="op">()</span> <span class="op">&lt;&lt;</span> response <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>The methods <em>testService()</em> and <em>testFinished()</em> are <a href="http://qt-project.org/doc/qt-5.0/qtcore/signalsandslots.html">SLOTS</a>.</p>
 <h2 id="whats-next">What’s next?</h2>
 <p>So far we have seen only how to test the connection to the Web service, the next step would be to extract the information we need from the response message, is not that hard, search for XML parser for your language, for Qt I’ve used <a href="http://doc.qt.io/qt-5/qxmlstreamreader.html">QXmlStreamReader</a>.</p>

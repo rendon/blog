@@ -1,4 +1,3 @@
-
 - [a-star](/a-star)
 - [adventofcode2015-part1](/adventofcode2015-part1)
 - [aho-corasick](/aho-corasick)

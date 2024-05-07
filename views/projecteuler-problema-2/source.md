@@ -31,7 +31,30 @@ Generar términos de la sucesión de Fibonacci no representa ninguna complicaci�
 
 A pesar de que la sucesión de Fibonacci es recursiva por naturaleza es bien sabido que la implementación iterativa es por mucho más eficiente que su correspondiente recursiva. A continuación mi implementación.
 
-Embed: `sol.c`
+
+```c
+#include <stdio.h>
+
+int main()
+{
+    int a = 1, b = 2, c = 3;
+    int sum = 2;	// second term
+
+    while (c < 4000000) {
+        a = b;
+        b = c;
+        c = a + b;
+
+        if (c % 2 == 0) { // even ?
+            sum += c;
+        }
+    }
+
+    printf("sum = %d\n", sum);
+    return 0;
+}
+
+```
 
 
 ## Conclusión
@@ -47,4 +70,3 @@ Hay mucho de que hablar de la sucesión de Fibonacci, mucho se ha escrito sobre 
         <td>[2]</td><td>[http://projecteuler.net](http://projecteuler.net)</td>
     </tr>
 </table>
-

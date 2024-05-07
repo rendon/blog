@@ -25,24 +25,31 @@ Las siglas DNS son la iniciales de <em>Domain Name System</em>, Sistema de Nombr
 <figcaption aria-hidden="true">Configuración de IP estática y servidor DNS con Network Manager</figcaption>
 </figure>
 <p>El método para especificar el servidor(es) DNS desde la lína de comandos, es utilizando el archivo <em>/etc/resolv.conf</em> para especificar a donde se deben solicitar los nombres. A continuación un ejemplo de como podría lucir este archivo.</p>
-<p>Embed: <code>resolv.conf</code></p>
+<pre class="conf"><code># /etc/resolv.conf
+search 192.168.1.65
+nameserver 192.168.1.65
+</code></pre>
 <p>En este caso el servidor DNS se encuentra en la máquina con IP 192.168.1.65. Establecer la IP de nuestro equipo es el siguiente paso:</p>
-<p>Embed: <code>setup-network.sh</code></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ifconfig eth0 192.168.1.100 netmask 255.255.255.0</span></span></code></pre></div>
 <p>Y por último establecer la dirección IP del <em>Gateway</em>.</p>
-<p>Embed: <code>setup-routes.sh</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># route add default gw 192.168.1.254</span></span></code></pre></div>
 <h2 id="instalación-y-configuración-del-servidor-dns">Instalación y configuración del servidor DNS</h2>
 <p>Ahora vamos a configurar nuestro sistema para que actue como servidor de DNS, ya no como cliente. El programa que vamos a utilizar para ello es Dnsmasq. El primer paso es instalarlo.</p>
-<p>Embed: <code>install-dnsmasq.sh</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># apt-get install dnsmasq</span></span></code></pre></div>
 <p>La forma de configurar a Dnsmasq es utilizando el archivo <em>/etc/dnsmasq.conf</em>, la configuración más sencilla sería indicar las direcciones de los servidores de DNS externos, es decir, a los que hará la petición de nombres de dominio en caso que de Dnsmasq no tenga un nombre en su base de datos.</p>
-<p>Embed: <code>dnsmasq.conf</code></p>
+<pre class="conf"><code>server=8.8.8.8
+server=8.8.4.4
+</code></pre>
 <p>El archivo <em>/etc/resolv.conf</em> debe contener la siguiente información:</p>
-<p>Embed: <code>update-resolv.conf</code></p>
+<pre class="conf"><code>nameserver 127.0.0.1
+</code></pre>
 <p>Es decir, las peticiones de traducción de nombres se harán a si mismo, donde esta corriendo Dnsmasq.</p>
 <h2 id="caso-práctico-restringir-sitios-vía-dns">Caso práctico: Restringir sitios vía DNS</h2>
 <p>Existen varias formas de restringir el acceso a ciertos sitios o a cierto tipo de contenido en la Internet, entre las más comunes están el uso de <em>firewalls</em>, servidores <em>proxy</em>, y por supuesto, usando un servidor de DNS. En el caso de los firewalls y servidores proxy, una de las técnicas utilizadas consiste en analizar la información que pasa a través de ellos, a nivel de paquetes y, en base a ello determinan que contenido es admitido y cual es rechazado. Sin embargo, hay casos donde ésta técnica no funciona, por ejemplo, con los sitios que manejan contenido encriptado, como <code>https://facebook.com</code>, <code>https://youtube.com</code>, <code>https://twitter.com</code>, etc.</p>
 <p>Como se han mencionado, con un servidor de DNS también podemos limitar el acceso a ciertos sitios, el método es sencillo, para cada sitio que deseemos bloquear agregamos una entrada en la base de nombres del servidor DNS y hacemos que apunten a otra dirección IP, por ejemplo, a una página Web local que les notifique porque se les ha restringido el acceso.</p>
 <p>Para cada sitio que deseemos bloquear agregar una línea como la siguiente al final del archivo <em>/etc/dnsmasq.conf</em>:</p>
-<p>Embed: <code>add-facebook-address.conf</code></p>
+<pre class="conf"><code>address=/www.facebook.com/192.168.1.65
+</code></pre>
 <p>Cada vez que alguien intente conectarse a facebook, en servidor de DNS le regresará al cliente la dirección del servidor DNS, en el cual tenemos también ejecutándose un servidor Web, el cual mostrará al cliente una nota informativa del porque se le ha denegado el servicio.</p>
 <figure>
 <img src="/dns-server-gnu-linux/dns_deny_facebook.png" alt="Denegación de acceso a facebook usando DNS" />

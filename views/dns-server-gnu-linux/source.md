@@ -22,29 +22,56 @@ La figura  muestra como realizar la misma conexión utilizando el programa Netwo
 
 El método para especificar el servidor(es) DNS desde la lína de comandos, es utilizando el archivo _/etc/resolv.conf_ para especificar a donde se deben solicitar los nombres. A continuación un ejemplo de como podría lucir este archivo.
 
-Embed: `resolv.conf`
+
+```conf
+# /etc/resolv.conf
+search 192.168.1.65
+nameserver 192.168.1.65
+
+```
 
 En este caso el servidor DNS se encuentra en la máquina con IP 192.168.1.65. Establecer la IP de nuestro equipo es el siguiente paso:
 
-Embed: `setup-network.sh`
+
+```sh
+# ifconfig eth0 192.168.1.100 netmask 255.255.255.0
+
+```
 
 Y por último establecer la dirección IP del _Gateway_.
 
-Embed: `setup-routes.sh`
+
+```sh
+# route add default gw 192.168.1.254
+
+```
 
 ## Instalación y configuración del servidor DNS
 
 Ahora vamos a configurar nuestro sistema para que actue como servidor de DNS, ya no como cliente. El programa que vamos a utilizar para ello es Dnsmasq. El primer paso es instalarlo.
 
-Embed: `install-dnsmasq.sh`
+
+```sh
+# apt-get install dnsmasq
+
+```
 
 La forma de configurar a Dnsmasq es utilizando el archivo _/etc/dnsmasq.conf_, la configuración más sencilla sería indicar las direcciones de los servidores de DNS externos, es decir, a los que hará la petición de nombres de dominio en caso que de Dnsmasq no tenga un nombre en su base de datos. 
 
-Embed: `dnsmasq.conf`
+
+```conf
+server=8.8.8.8
+server=8.8.4.4
+
+```
 
 El archivo _/etc/resolv.conf_ debe contener la siguiente información:
 
-Embed: `update-resolv.conf`
+
+```conf
+nameserver 127.0.0.1
+
+```
 
 Es decir, las peticiones de traducción de nombres se harán a si mismo, donde esta corriendo Dnsmasq.
 
@@ -56,7 +83,11 @@ Como se han mencionado, con un servidor de DNS también podemos limitar el acces
 
 Para cada sitio que deseemos bloquear agregar una línea como la siguiente al final del archivo _/etc/dnsmasq.conf_:
 
-Embed: `add-facebook-address.conf`
+
+```conf
+address=/www.facebook.com/192.168.1.65
+
+```
 
 Cada vez que alguien intente conectarse a facebook, en servidor de DNS le regresará al cliente la dirección del servidor DNS, en el cual tenemos también ejecutándose un servidor Web, el cual mostrará al cliente una nota informativa del porque se le ha denegado el servicio.
 

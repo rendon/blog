@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 function convert() {
+    ~/projects/blog/bin/embed < source.md > out.md
+    mv out.md source.md
     # sed -i "s/<%= file(post, '\([^']*\)', '\([^']*\)') %>/[\2](\1)/g" source.md
     # sed -i "s/<%= src_file(post, '\([^']*\)') %>/[\1](\1)/g" source.md
 
@@ -65,11 +67,11 @@ function convert() {
     # sed -i 's/<%= ref(".*") %>//g' source.md
     # sed -i 's/<%= ref(".*"); %>//g' source.md
     
-    sed -i "s/<em>\([^<]*\)<\/em>/*\1*/g" source.md
-    sed -i "s/<strong>\([^<]*\)<\/strong>/**\1**/g" source.md
-    sed -i 's/<a href="\([^"]*\)"\( target="[^"]*"\)\?>\([^<]*\)<\/a>/[\3](\1)/g' source.md
-    sed -i 's/<a href="\([^"]*\)"\( title="\([^"]*\)"\)\?\( target="[^"]*"\)\?>\([^<]*\)<\/a>/[\3](\1)/g' source.md
-    sed -i "s/<p>\([^<]*\)<\/p>/\1/g" source.md
+    # sed -i "s/<em>\([^<]*\)<\/em>/*\1*/g" source.md
+    # sed -i "s/<strong>\([^<]*\)<\/strong>/**\1**/g" source.md
+    # sed -i 's/<a href="\([^"]*\)"\( target="[^"]*"\)\?>\([^<]*\)<\/a>/[\3](\1)/g' source.md
+    # sed -i 's/<a href="\([^"]*\)"\( title="\([^"]*\)"\)\?\( target="[^"]*"\)\?>\([^<]*\)<\/a>/[\3](\1)/g' source.md
+    # sed -i "s/<p>\([^<]*\)<\/p>/\1/g" source.md
 }
 
 

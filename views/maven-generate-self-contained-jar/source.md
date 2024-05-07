@@ -50,4 +50,3 @@ If your application is meant to run out of the box, it's convenient for the user
 ```
 
 Then build your package as usual (`mvn clean package`). The self-contained jar should be in the `target/` directory with a name like `myapp-1.0-SNAPSHOT-shaded.jar`.
-

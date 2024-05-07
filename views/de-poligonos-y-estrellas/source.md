@@ -36,7 +36,45 @@ Ya casi tenemos todo listo para empezar a codificar, solo falta ver como convert
 
 La componente horizontal es el cateto adyacente y por tanto $x = r\cos(\theta)$, el cateto opuesto es la componente vertical y de ahí que $y = r\sin(\theta)$. Ahora sí, al código. Veamos como quedaría el método para calcular las coordenadas de un polígono:
 
-Embed: `compute-polygon.java`
+
+```java
+/**
+ * Compute the coordinates of a polygon.
+ *
+ * @param n number of sides
+ * @param center center of the polygon
+ * @param point point of the first corner
+ */
+void computePolygon(int n, Point center, Point point)
+{
+    double r = center.distance(point),
+           cx = center.getX(),
+           cy = ly((int)center.getY()),
+           px = point.getX(),
+           py = ly((int)point.getY()),
+           theta = 2 * Math.PI / n,
+           beta = Math.atan2(py - cy, px - cx),
+           x, y, xPrime, yPrime;
+
+    polygon.clear();
+
+    for (int i = 0; i < n; i++) {
+        x = r * Math.cos(i * theta);
+        y = r * Math.sin(i * theta);
+
+        // Rotate the polygon such that the mouse click matches the  polygon corner
+        xPrime = x * Math.cos(beta) - y * Math.sin(beta);
+        yPrime = x * Math.sin(beta) + y * Math.cos(beta);
+
+        // Translate the polygon to it's original position
+        xPrime += cx;
+        yPrime += cy;
+
+        polygon.add(new Point((int)Math.round(xPrime), (int)Math.round(yPrime)));
+    }
+}
+
+```
 
 En las líneas 25 a 27 se hace una rotación a la figura con el fin de que el primer vértice del polígono coincida con el punto donde se encuentra el apuntador del ratón. Esta transformación en realidad no forma parte del algoritmo sino más bien por estética. Los métodos `int ly(int y)` y `int oy(int y)` se encargan de obtener $y'$ y $y$ respectivamente.
 
@@ -47,7 +85,55 @@ private int oy(int y) { return maxY - y; }
 
 Como pueden observer los métodos son idénticos, sin embargo el objetivo es distinto. Por claridad los emplearemos para sus respectivas funciones. El código para las estrellas es el siguiente:
 
-Embed: `compute-star.java`
+
+```java
+/**
+ * Compute the coordinates of a n-pointed star.
+ *
+ * @param n number of points
+ * @param center star center
+ * @param point first point of the star
+ */
+
+void computeStar(int n, Point center, Point point)
+{
+    double r = center.distance(point),
+           theta = 2 * Math.PI / n,
+           cx = center.getX(),
+           cy = ly((int)center.getY()),
+           px = point.getX(),
+           py = ly((int)point.getY()),
+           beta = Math.atan2(py - cy, px - cx),
+           x, y, xPrime, yPrime;
+
+    star.clear();
+
+    for (int i = 0; i < n; i++) {
+        x = r * Math.cos(i * theta);
+        y = r * Math.sin(i * theta);
+
+        // Rotate the polygon such that the mouse click matches the  star point
+        xPrime = x * Math.cos(beta) - y * Math.sin(beta);
+        yPrime = x * Math.sin(beta) + y * Math.cos(beta);
+
+        // Translate to it's original position
+        xPrime += cx;
+        yPrime += cy;
+        star.add(new Point((int)Math.round(xPrime), (int)Math.round(yPrime)));
+
+        x = 0.5 * r * Math.cos(i * theta + 0.5 * theta);
+        y = 0.5 * r * Math.sin(i * theta + 0.5 * theta);
+
+        xPrime = x * Math.cos(beta) - y * Math.sin(beta);
+        yPrime = x * Math.sin(beta) + y * Math.cos(beta);
+
+        xPrime += cx;
+        yPrime += cy;
+        star.add(new Point((int)Math.round(xPrime), (int)Math.round(yPrime)));
+    }
+}
+
+```
 
 Ahora solo resta construir una interfaz para la aplicación, sin embargo eso esta fuera del alcance de este post así que no entraremos en detalles. Al final les dejo el código completo de la aplicación por si acaso. He aquí el resultado:
 
@@ -62,4 +148,3 @@ Hasta aquí con este post, espero les sea de utilidad. He de comentarles que est
   <li>[Coordenadas polares](http://es.wikipedia.org/wiki/Coordenadas_polares), *Wikipedia*</li>
   <li>[Coordenadas cartesianas](http://es.wikipedia.org/wiki/Coordenadas_cartesianas), *Wikipedia*</li>
 </ol>
-

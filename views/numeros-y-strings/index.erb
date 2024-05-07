@@ -19,7 +19,18 @@
 <figcaption aria-hidden="true">Descomposición de un número en dígitos</figcaption>
 </figure>
 <p>Se observa que si bien obtenemos los dígitos estos se encuentran en orden inverso, por ello invertimos el orden de los dígitos al final del ciclo en el siguiente código:</p>
-<p>Embed: <code>to-string.cpp</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>string to_string<span class="op">(</span><span class="dt">int</span> n<span class="op">)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    string digits <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span>n <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        digits <span class="op">+=</span> <span class="op">(</span><span class="dt">char</span><span class="op">)(</span>n <span class="op">%</span> <span class="dv">10</span> <span class="op">+</span> <span class="ch">&#39;0&#39;</span><span class="op">);</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        n <span class="op">/=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    reverse<span class="op">(</span>digits<span class="op">.</span>begin<span class="op">(),</span> digits<span class="op">.</span>end<span class="op">());</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> digits<span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>En este código se ha utilizado el número 10 como divisor lo cual es así ya que la base numérica es decimal. Cambien el 10 por un 2 y vean que sucede… ¿A caso son números binarios lo que veo?, ¿que tal con otras bases en vez de 2 ó 10?</p>
 <h3 id="obtener-valor-numérico-a-partir-de-un-string">Obtener valor numérico a partir de un string</h3>
 <p>Ahora vamos con el caso opuesto, tenemos los dígitos en una cadena de caracteres y de ahí obtener el valor correspondiente en entero.</p>
@@ -28,7 +39,14 @@
 <p>Donde <span class="math inline"><em>n</em></span> es la cantidad de dígitos menos 1 ya que los exponentes se empiezan a numerar a partir del 0 (cero) y <span class="math inline"><em>d</em>_<em>i</em></span> es cada uno de los dígitos . Veamos un ejemplo</p>
 <p>$ 354 = 3 * 10^2 + 5 * 10^1 + 4 * 10^0$</p>
 <p>Ahora que tenemos las bases podemos pasar al algoritmo en cuestión.</p>
-<p>Embed: <code>to-int.cpp</code></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> to_int<span class="op">(</span>string number<span class="op">)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> n <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dt">int</span><span class="op">(</span>number<span class="op">.</span>length<span class="op">());</span> i<span class="op">++)</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        n <span class="op">=</span> n <span class="op">*</span> <span class="dv">10</span> <span class="op">+</span> <span class="op">(</span>number<span class="op">[</span>i<span class="op">]</span> <span class="op">-</span> <span class="ch">&#39;0&#39;</span><span class="op">);</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> n<span class="op">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>Como podrán ver son algoritmos muy sencillos y fáciles de entender. Es recomendable aprender muy bien estos algoritmos ya que nunca sabemos cuando los podemos utilizar, además de que siempre es bueno saber el cómo de las cosas :).</p>
 <p>Por último solo les comento que estos algoritmos son útiles en cierto tipo de problemas, especialmente de concursos de programación donde se pone a prueba el dominio de este tipo de algoritmos elementales, generalmente problemas clasificados como <em>fácil</em>, <em>Level 1</em> o <em>Appetizer</em>. Aquí les dejo unos dos ejemplos.</p>
 <blockquote>

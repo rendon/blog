@@ -38,4 +38,3 @@ $ sudo iptables -D INPUT -s 10.0.0.0/24 -p tcp -m tcp --dport 22 -m conntrack --
 ## References
 - [Iptables Essentials: Common Firewall Rules and Commands](https://www.digitalocean.com/community/tutorials/iptables-essentials-common-firewall-rules-and-commands)
 - [How To List and Delete Iptables Firewall Rules](https://www.digitalocean.com/community/tutorials/how-to-list-and-delete-iptables-firewall-rules)
-

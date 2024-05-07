@@ -21,7 +21,22 @@ El algoritmo para este problema es muy sencillo y se basa en divisiones y residu
 
 Se observa que si bien obtenemos los dígitos estos se encuentran en orden inverso, por ello invertimos el orden de los dígitos al final del ciclo en el siguiente código:
 
-Embed: `to-string.cpp`
+
+```cpp
+string to_string(int n)
+{
+    string digits = "";
+
+    while (n > 0) {
+        digits += (char)(n % 10 + '0');
+        n /= 10;
+    }
+
+    reverse(digits.begin(), digits.end());
+    return digits;
+}
+
+```
 
 En este código se ha utilizado el número 10 como divisor lo cual es así ya que la base numérica es decimal. Cambien el 10 por un 2 y vean que sucede... ¿A caso son números binarios lo que veo?, ¿que tal con otras bases en vez de 2 ó 10?
 
@@ -42,7 +57,18 @@ $ \large 354 = 3 * 10^2 + 5 * 10^1 + 4 * 10^0$
 
 Ahora que tenemos las bases podemos pasar al algoritmo en cuestión.
 
-Embed: `to-int.cpp`
+
+```cpp
+int to_int(string number)
+{
+    int n = 0;
+    for (int i = 0; i < int(number.length()); i++)
+        n = n * 10 + (number[i] - '0');
+
+    return n;
+}
+
+```
 
 Como podrán ver son algoritmos muy sencillos y fáciles de entender. Es recomendable aprender muy bien estos algoritmos ya que nunca sabemos cuando los podemos utilizar, además de que siempre es bueno saber el cómo de las cosas :).
 
@@ -73,4 +99,3 @@ Encuentre la suma de todos los número, menores que un millón, que son palíndr
     <li> [Sistema de numeración](http://es.wikipedia.org/wiki/Sistema_de_numeraci%C3%B3n)</li>
     <li> [Horner scheme](http://en.wikipedia.org/wiki/Horner_scheme)</li>
 </ul>
-

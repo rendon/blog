@@ -46,13 +46,33 @@ Para los usuarios de distribuciones Debian, Ubuntu, CentOS, Fedora, etc. es muy 
 
 ### Con el gestor de paquetes
 
-Embed: `install.sh`
+
+```sh
+# Debian y Ubuntu
+$ sudo apt-get install tmux
+
+```
 
 ## Desde código fuente
 
 Ve al sitio oficial de tmux([https://tmux.github.io/](https://tmux.github.io/)) y descarga el código fuente, yo estoy empleando la versión 1.6. Por cierto, tmux depende de `libevent` y `ncurses`.
 
-Embed: `install-from-src.sh`
+
+```sh
+$ # Instalar dependencias
+$ sudo apt-get install libevent-dev libncurses5-dev
+$
+$ cd ~/Downloads/
+$ tar xvf tmux-1.6.tar.gz
+$ cd tmux-1.6/
+$ ./configure
+$ make
+$ sudo make install
+$
+$ # Prueba la instalacion
+$ tmux -V
+
+```
 
 ## Lo básico
 
@@ -76,7 +96,26 @@ Tmux tiene un comando para cada acción y una serie de keybindings para ejecutar
 
 Tmux permite dividir el área de trabajo en varias partes, llamadas paneles, estas pueden ser horizontales o verticales.
 
-Embed: `panel-operations.txt`
+
+```txt
+# Creación de panel horizontal
+# Combinación     Comando
+PREFIX + "      (split-window)
+
+# Creación de panel vertical
+PREFIX + %      (split-window -h)
+
+# Moverse al siguiente panel
+PREFIX + o      (select-pane -t :.+)
+
+#Moverse al al panel superior, inferior, izquierdo y derecho
+
+PREFIX + UP     (select-pane -U)
+PREFIX + DOWN   (select-pane -D)
+PREFIX + LEFT   (select-pane -L)
+PREFIX + RIGHT  (select-pane -R)
+
+```
 
 ![Splits](/tmux/hdud1_2.png)
 
@@ -88,11 +127,21 @@ Si necesitas reducir o aumentar el área de un panel lo puedes hacer con las sig
 
 ### Aumentar o reducir el panel verticalmente.
 
-Embed: `panel-resize-vertically.txt`
+
+```txt
+PREFIX + C-UP     (resize-pane -U)
+PREFIX + C-DOWN   (resize-pane -D)
+
+```
 
 ### Aumentar o reducir el panel horizontalmente.
 
-Embed: `panel-resize-horizontally.txt`
+
+```txt
+PREFIX + C-LEFT   (resize-pane -L)
+PREFIX + C-RIGHT  (resize-pane -R)
+
+```
 
 <p>Para cerrar un panel tenemos dos opciones, terminar la sesión en la terminal con el comando exit o presionando <kbd>PREFIX</kbd> + <kbd>x</kbd>, que cierra el panel con previa confirmación.</p>
 
@@ -115,14 +164,27 @@ Tmux proporciona cinco plantillas que nos permiten organizar nuestros paneles.
 Cuando los paneles no son suficientes o deseamos agrupar las terminales segun su actividad contamos con las ventanas.
 
 <h6>Crear una ventana.</h6>
-Embed: `new-window.txt`
+
+```txt
+PREFIX + c
+
+```
 
 Las ventanas tienen nombre y lo podemos modificar con:
 
-Embed: `rename-window.txt`
+
+```txt
+PREFIX + ,
+
+```
 
 <h6>Moverse entre ventanas.</h6>
-Embed: `move-between-windows.txt`
+
+```txt
+PREFIX + n # Siguiente
+PREFIX + p # Anterior
+
+```
 
 ![Ventanas](/tmux/hdud1_4.png)
 
@@ -135,39 +197,133 @@ Una sesión es una colección de pseudo terminales(ver man 7 pty) que son admini
 En otras palabras las sesiones sirven para crear entornos de trabajo personalizados, por ejemplo, si están trabajando en un proyecto y tienes abiertos varios archivos, un terminal interactivo de Ruby o Python, varias ventanas, etc. Si por alguna razón tienes que interrumpir tus actividades, resultaría un poco molesto tener que cerrar archivos, programas, paneles y ventanas, y una hora más tarde cuando regresas a trabajar, restablecer el entorno. La solución es crear una sesión y le asignamos un nombre acorde, si trabajas en más de un proyecto o tarea simplemente crea otra sesión y mantendrás tus áreas de trabajo organizadas.
 Aunque no lo indiquemos explícitamente tmux crea una sesión de forma automática cada vez que lo ejecutamos.
 
-Embed: `session-operations.txt`
+
+```txt
+#Crear una sesión:
+$ tmux new -s nombre_de_sesion
+
+#Cerrar sesión:
+PREFIX + d
+
+#o bién:
+$ tmux kill-session -t nombre_de_sesion
+
+#Listar sesiones existentes:
+$ tmux list-sessions
+
+#Abrir sesión cuando solo existe una:
+$ tmux attach
+
+#Abrir una sesión en especifico:
+$ tmux attach -t nombre_de_sesion
+
+```
 
 ## Configuración y personalización
 
 Hasta ahora hemos cubierto lo esencial, usando las configuraciones por defecto, sin embargo éstas no siempre son las más cómodas para todos, es por eso que tmux nos admite ser personalizado usando el archivo `~/.tmux.conf`. A continuación muestro algunas de las opciones disponibles:
 
-Embed: `customization.txt`
+
+```txt
+# Soporte para 256 colores.
+set -g default-terminal "screen-256color"
+
+# Cambiar PREFIX a Ctrl + a, más cómodo.
+set-option -g prefix C-a
+unbind-key C-b
+bind-key C-a send-prefix
+
+#Como dividir la pantalla de forma más intuitiva
+# | en vez de %
+bind | split-window -h
+# - en vez de "
+bind - split-window -v
+
+#Cambiando el el atajo para entrar al modo copy.
+bind-key e copy-mode
+
+```
 
 Tmux soporta los modos vi y emacs para moverse dentro de la aplicación, por defecto el modo emacs es activado. Activar modo vi y algunos atajos.
 
-Embed: `copy.txt`
+
+```txt
+setw -g mode-keys vi
+bind-key -t vi-copy 'v' begin-selection
+bind-key -t vi-copy 'y' copy-selection
+
+```
 
 <p>Con estas opciones activadas, haz lo siguiente para copiar contenido dentro de tmux, **1)** entra en modo copy, **2)** presiona la tecla v para iniciar la selección y muevete con las teclas <kbd>hjkl</kbd>, como en vim, **3)** presiona la tecla y para copiar la selección.</p>
 
 ### Moverse entre los paneles de manera similar a vim con los splits.
 
-Embed: `vim-like-movements.txt`
+
+```txt
+# Presiona PREFIX + [jkhl]
+# para cambiar de panel
+unbind-key j
+bind-key j select-pane -D
+unbind-key k
+bind-key k select-pane -U
+unbind-key h
+bind-key h select-pane -L
+unbind-key l
+bind-key l select-pane -R
+
+```
 
 ### Cambia el modo de redimencionar paneles.
 
-Embed: `vim-like-resize.txt`
+
+```txt
+# Presiona Ctrl + a + [jkhl]
+# para redimensionar panel
+bind-key C-a-j resize-pane -D 2
+bind-key C-a-k resize-pane -U 2
+bind-key C-a-h resize-pane -L 4
+bind-key C-a-l resize-pane -R 4
+
+```
 
 ### Configurar la barra de estado.
 
-Embed: `bar-customization.txt`
+
+```txt
+# Color de fondo y de letra
+set -g status-bg black
+set -g status-fg white
+
+# Leyendas que se deben mostrar
+# A la izquierda el nombre del host
+# y a la derecha la fecha
+set -g status-left '#[fg=green]#H'
+set -g status-right '#[fg=yellow]#(date)'
+
+# Color de la ventana activa
+set-window-option -g window-status-current-bg blue
+
+# Color del panel activo
+set-option -g pane-active-border-fg colour027
+
+```
 
 Longitud del historial.
 
-Embed: `history-limit.txt`
+
+```txt
+set -g history-limit 10000
+
+```
 
 <p>Recargar configuración con <kbd>PREFIX</kbd> + <kbd>r</kbd>.</p>
 
-Embed: `reload-conf.txt`
+
+```txt
+unbind r
+bind r source-file ~/.tmux.conf
+
+```
 
 Existen muchas más opciones de configuración pero creo que con esto es suficiente para comenzar.
 
@@ -177,7 +333,12 @@ Existen muchas más opciones de configuración pero creo que con esto es suficie
 
 Hemos visto que para utilizar tmux abrimos una terminal y entonces lo ejecutamos, para hacer que tmux se ejecute automáticamente cuando abrimos una terminal agrega las siguientes líneas al archivo `~/.bashrc`.
 
-Embed: `auto-start.sh`
+
+```sh
+[[ $- != *i* ]] && return
+[[ $TERM != screen* ]] && exec tmux -2
+
+```
 
 Si estamos ejecutando el interprete de comandos en modo interactivo y tenemos soporte para 256 colores entonces ejecutamos tmux.
 
@@ -185,7 +346,11 @@ Si estamos ejecutando el interprete de comandos en modo interactivo y tenemos so
 
 Estando en el modo copy es posible copiar texto para ser usado en otros paneles o ventanas dentro de tmux, pero no en otras aplicaciones, es decir, el texto copiado en tmux no se puede pegar en firefox, por citar un ejemplo. La siguiente línea soluciona el problema. Es necesario tener instalado el programa `xclip`.
 
-Embed: `copy-xclip.txt`
+
+```txt
+bind C-c run "tmux save-buffer - | xclip -i -selection clipboard"
+
+```
 
 <p>Funciona de esta manera, entra en modo copy y copia el texto en cuestión tal como ya se ha visto. Sal del modo copy y presiona <kbd>PREFIX</kbd>, suelta y después <kbd>Ctrl</kbd>+<kbd>c</kbd> para colocar el contenido en el portapapeles del sistema.</p>
 
@@ -197,7 +362,13 @@ Una desventaja que he notado con este truco es que una vez que lo usas vim ya no
 
 Para realizar la re asignación emplea el comando `xmodmap` y agrega lo siguiente en el archivo `~/.Xmodmap`.
 
-Embed: `extra-ctrl-key.txt`
+
+```txt
+remove Control = Control_L Control_R
+remove mod4 = Super_L Super_R
+add Control = Control_L Super_L
+
+```
 
 Algunos entornos de escritorio ejecutan este archivo al iniciar, si no es tu caso, agrega el comando `xmodmap ~/.Xmodmap` al archivo de inicio de tu entorno de escritorio, para openbox el archivo es `~/.config/openbox/autostart.sh`.
 

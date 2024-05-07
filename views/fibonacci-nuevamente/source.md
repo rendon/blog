@@ -68,4 +68,3 @@ Encontré esta razón en los foros de [projecteuler.net](http://projecteuler.net
 #Referencias
 [1] [ProjectEuler.net](http://projecteuler.net), foro del problema 25.
 [2] [Número aureo](http://es.wikipedia.org/wiki/N%C3%BAmero_%C3%A1ureo), Wikipedia.
-

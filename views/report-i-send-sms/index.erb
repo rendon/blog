@@ -99,13 +99,131 @@ Acostumbro codificar en Ingles puesto que considero es más homogéneo, permite 
 <p>Con el fin de aprender a utilizar el SDK de Android he optado por no utilizar un IDE para esta parte, únicamente las herramientas que incluye el SDK y la línea de comandos, nada de que preocuparse.</p>
 <h3 id="crear-el-proyecto">Crear el proyecto</h3>
 <p>En la línea de comandos teclee los siguiente:</p>
-<p>Embed: <code>create-project.sh</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> SMSServer</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">android</span> create project <span class="at">--target</span> android-10 <span class="at">-n</span> SMSServer <span class="at">-k</span> com.inforscience.server <span class="at">-a</span> SMSServer <span class="at">-p</span> ./SMSServer</span></code></pre></div>
 <p>Así debe lucir la estructura del proyecto:</p>
-<p>Embed: <code>project-structure.txt</code></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>SMSServer/</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>├── AndroidManifest.xml</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>├── ant.properties</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>├── bin</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>├── build.xml</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>├── libs</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>├── local.properties</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>├── proguard-project.txt</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>├── project.properties</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>├── res</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>│   ├── layout</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>│   │   └── main.xml</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>│   └── values</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>│       └── strings.xml</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>└── src</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    └── com</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        └── inforscience</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>            └── server</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                └── SMSServer.java</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>9 directories, 9 files</span></code></pre></div>
 <p>Por el momento en el archivo <em>SMSServer.java</em> hay solo un método, <em>onCreate()</em>, que lo único que hace es imprimir un mensaje en de bienvenida. Primero veamos cómo implementar el servidor, dentro del archivo <em>SMSServer.java</em> creamos una clase privada <em>HelloServer</em> que herede de <em>NanoHTTPD</em>, un constructor y el método <em>serve()</em>, es éste último es donde se concentra la mayor parte de la acción. El código es bastante simple por lo que no creo que halla necesidad de entrar mucho detalle.</p>
-<p>Embed: <code>hello-server.java</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="kw">class</span> HelloServer <span class="kw">extends</span> NanoHTTPD <span class="op">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="fu">HelloServer</span><span class="op">()</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">super</span><span class="op">(</span><span class="dv">8080</span><span class="op">);</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">@Override</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="bu">Response</span> <span class="fu">serve</span><span class="op">(</span><span class="bu">String</span> uri<span class="op">,</span> <span class="bu">Method</span> method<span class="op">,</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                          <span class="bu">Map</span><span class="op">&lt;</span><span class="bu">String</span><span class="op">,</span> <span class="bu">String</span><span class="op">&gt;</span> header<span class="op">,</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                          <span class="bu">Map</span><span class="op">&lt;</span><span class="bu">String</span><span class="op">,</span> <span class="bu">String</span><span class="op">&gt;</span> parameters<span class="op">,</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                          <span class="bu">Map</span><span class="op">&lt;</span><span class="bu">String</span><span class="op">,</span> <span class="bu">String</span><span class="op">&gt;</span> files<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="dt">boolean</span> checkForNewMsg <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">String</span> answer <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="op">;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">String</span> command <span class="op">=</span> parameters<span class="op">.</span><span class="fu">get</span><span class="op">(</span><span class="st">&quot;command&quot;</span><span class="op">);</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>command <span class="op">!=</span> <span class="kw">null</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>command<span class="op">.</span><span class="fu">equals</span><span class="op">(</span>COMMAND_GET_CONTACTS<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>                <span class="fu">log</span><span class="op">(</span><span class="st">&quot;GET: Lista de contactos...&quot;</span><span class="op">);</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>                answer <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="op">;</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> contactList<span class="op">.</span><span class="fu">size</span><span class="op">();</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">String</span> name <span class="op">=</span> contactList<span class="op">.</span><span class="fu">get</span><span class="op">(</span>i<span class="op">).</span><span class="fu">getName</span><span class="op">();</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">String</span> number <span class="op">=</span> contactList<span class="op">.</span><span class="fu">get</span><span class="op">(</span>i<span class="op">).</span><span class="fu">getNumber</span><span class="op">();</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                    answer <span class="op">+=</span> name <span class="op">+</span> FIELD_SEPARATOR <span class="op">+</span> number<span class="op">;</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>                    answer <span class="op">+=</span> RECORD_SEPARATOR<span class="op">;</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>                <span class="fu">logln</span><span class="op">(</span>LOG_SERVED<span class="op">);</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>command<span class="op">.</span><span class="fu">equals</span><span class="op">(</span>COMMAND_SEND_MESSAGE<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>                <span class="bu">String</span> number <span class="op">=</span> parameters<span class="op">.</span><span class="fu">get</span><span class="op">(</span><span class="st">&quot;number&quot;</span><span class="op">);</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>                <span class="bu">String</span> text <span class="op">=</span> parameters<span class="op">.</span><span class="fu">get</span><span class="op">(</span><span class="st">&quot;text&quot;</span><span class="op">);</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>                <span class="fu">logln</span><span class="op">(</span><span class="st">&quot;GET: Enviar mensaje:&quot;</span><span class="op">);</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                <span class="fu">logln</span><span class="op">(</span><span class="st">&quot;Para: &quot;</span> <span class="op">+</span> number<span class="op">);</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>                <span class="fu">logln</span><span class="op">(</span><span class="st">&quot;Mensaje: </span><span class="sc">\&quot;</span><span class="st">&quot;</span> <span class="op">+</span> text <span class="op">+</span> <span class="st">&quot;</span><span class="sc">\&quot;</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="op">(</span>number<span class="op">.</span><span class="fu">matches</span><span class="op">(</span><span class="st">&quot;[+]?</span><span class="sc">\\</span><span class="st">d{10,}&quot;</span><span class="op">))</span> <span class="op">{</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">sendSMS</span><span class="op">(</span>number<span class="op">,</span> text<span class="op">);</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">logln</span><span class="op">(</span>LOG_SERVED<span class="op">);</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">long</span> id <span class="op">=</span> SmsDB<span class="op">.</span><span class="fu">insertSentMessage</span><span class="op">(</span>number<span class="op">,</span> text<span class="op">);</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>                    <span class="co">// Test</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>                    <span class="co">//logln(&quot;Guardado con id &quot; + id);</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>                    answer <span class="op">=</span> STATUS_OK<span class="op">;</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">logln</span><span class="op">(</span>LOG_FAIL <span class="op">+</span> <span class="st">&quot; (Verifique el número)&quot;</span><span class="op">);</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>                    answer <span class="op">=</span> STATUS_FAIL<span class="op">;</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>command<span class="op">.</span><span class="fu">equals</span><span class="op">(</span>COMMAND_GET_SENT_MESSAGES<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>                <span class="fu">log</span><span class="op">(</span><span class="st">&quot;GET: Mensajes enviados...&quot;</span><span class="op">);</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>                <span class="bu">Cursor</span> c <span class="op">=</span> SmsDB<span class="op">.</span><span class="fu">getAllSentMessages</span><span class="op">();</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="op">(</span>c<span class="op">.</span><span class="fu">moveToFirst</span><span class="op">())</span> <span class="op">{</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">do</span> <span class="op">{</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>                        <span class="co">//answer += c.getString(0) + FIELD_SEPARATOR;</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>                        answer <span class="op">+=</span> c<span class="op">.</span><span class="fu">getString</span><span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">+</span> FIELD_SEPARATOR<span class="op">;</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>                        answer <span class="op">+=</span> c<span class="op">.</span><span class="fu">getString</span><span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>                        answer <span class="op">+=</span> RECORD_SEPARATOR<span class="op">;</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>                    <span class="op">}</span> <span class="cf">while</span> <span class="op">(</span>c<span class="op">.</span><span class="fu">moveToNext</span><span class="op">());</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>                <span class="fu">logln</span><span class="op">(</span>LOG_SERVED<span class="op">);</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>command<span class="op">.</span><span class="fu">equals</span><span class="op">(</span>COMMAND_GET_RECEIVED_MESSAGES<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>                <span class="fu">log</span><span class="op">(</span><span class="st">&quot;GET: Mensajes recibidos...&quot;</span><span class="op">);</span></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>                <span class="bu">Cursor</span> c <span class="op">=</span> SmsDB<span class="op">.</span><span class="fu">getAllReceivedMessages</span><span class="op">();</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="op">(</span>c<span class="op">.</span><span class="fu">moveToFirst</span><span class="op">())</span> <span class="op">{</span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">do</span> <span class="op">{</span></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>                        <span class="co">//answer += c.getString(0) + FIELD_SEPARATOR;</span></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>                        answer <span class="op">+=</span> c<span class="op">.</span><span class="fu">getString</span><span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">+</span> FIELD_SEPARATOR<span class="op">;</span></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>                        answer <span class="op">+=</span> c<span class="op">.</span><span class="fu">getString</span><span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>                        answer <span class="op">+=</span> RECORD_SEPARATOR<span class="op">;</span></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>                    <span class="op">}</span> <span class="cf">while</span> <span class="op">(</span>c<span class="op">.</span><span class="fu">moveToNext</span><span class="op">());</span></span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span></span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>                <span class="fu">logln</span><span class="op">(</span>LOG_SERVED<span class="op">);</span></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>command<span class="op">.</span><span class="fu">equals</span><span class="op">(</span>COMMAND_CHECK_FOR_NEW_MESSAGE<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="op">(</span>newMessage<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>                    newMessage <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>                    answer <span class="op">=</span> CODE_TRUE<span class="op">;</span></span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>                    answer <span class="op">=</span> CODE_FALSE<span class="op">;</span></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>                checkForNewMsg <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>command<span class="op">.</span><span class="fu">equals</span><span class="op">(</span>COMMAND_GET_LAST_MESSAGE<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>                answer <span class="op">=</span> lastMessageNumber <span class="op">+</span></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>                         FIELD_SEPARATOR <span class="op">+</span></span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>                         lastMessageText<span class="op">;</span></span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(!</span>checkForNewMsg<span class="op">)</span></span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>            <span class="fu">logln</span><span class="op">(</span>LOG_WAITING<span class="op">);</span></span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">new</span> NanoHTTPD<span class="op">.</span><span class="fu">Response</span><span class="op">(</span>answer<span class="op">);</span></span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>La forma de enviar datos con el método GET tiene el siguiente formato:</p>
-<p>Embed: <code>get-format.txt</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>http://servidor[:puerto]/?parametro1=valor1&amp;parametro2=valor2&amp;parametroN=valorN</span></code></pre></div>
 <p>Un signo de interrogación seguido por una lista de parámetros con formato clave=valor, separados por ampersands (&amp;). NanoHTTPD se encarga de extraer dichos parámetros y se los pasa al método <em>serve()</em> en la variable <em>parameters</em>, el cliente siempre enviará como primer parámetro la cadena “command” y su valor va a determinar la acción que el cliente esta solicitando. Los posibles comandos son:</p>
 <ul>
 <li>
@@ -130,29 +248,229 @@ Acostumbro codificar en Ingles puesto que considero es más homogéneo, permite 
 <p>Todas éstas constantes se definen tanto en el cliente como en el servidor.</p>
 <h3 id="agregando-acción-al-método-oncreate">Agregando acción al método onCreate()</h3>
 <p>Éste método es el primero que se ejecuta al iniciar la aplicación y en el vamos a incluir algunas acciones, como son, iniciar el servidor, recuperar la lista de contactos del dispositivo y cargar la base de datos. En caso de que la base de datos no exista ésta deberá ser creada, las bases de datos SQLite se almacenan en archivos.</p>
-<p>Embed: <code>on-create.java</code></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="at">@Override</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">onCreate</span><span class="op">(</span>Bundle savedInstanceState<span class="op">)</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">super</span><span class="op">.</span><span class="fu">onCreate</span><span class="op">(</span>savedInstanceState<span class="op">);</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">setContentView</span><span class="op">(</span>R<span class="op">.</span><span class="fu">layout</span><span class="op">.</span><span class="fu">main</span><span class="op">);</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    logScrollView <span class="op">=</span> <span class="op">(</span>ScrollView<span class="op">)</span> <span class="fu">findViewById</span><span class="op">(</span>R<span class="op">.</span><span class="fu">id</span><span class="op">.</span><span class="fu">logScrollView</span><span class="op">);</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    logTextView <span class="op">=</span> <span class="op">(</span>TextView<span class="op">)</span> <span class="fu">findViewById</span><span class="op">(</span>R<span class="op">.</span><span class="fu">id</span><span class="op">.</span><span class="fu">logTextView</span><span class="op">);</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    logTextView<span class="op">.</span><span class="fu">setMovementMethod</span><span class="op">(</span><span class="kw">new</span> <span class="fu">ScrollingMovementMethod</span><span class="op">());</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">log</span><span class="op">(</span><span class="st">&quot;Iniciando el servidor...&quot;</span><span class="op">);</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    smsServer <span class="op">=</span> <span class="kw">new</span> <span class="fu">HelloServer</span><span class="op">();</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span> <span class="op">{</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        smsServer<span class="op">.</span><span class="fu">start</span><span class="op">();</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        <span class="fu">logln</span><span class="op">(</span>LOG_OK<span class="op">);</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">catch</span> <span class="op">(</span><span class="bu">IOException</span> ioe<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">logln</span><span class="op">(</span>LOG_FAIL<span class="op">);</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">log</span><span class="op">(</span><span class="st">&quot;Cargando lista de contactos...&quot;</span><span class="op">);</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Cursor</span> phones <span class="op">=</span> <span class="fu">getContentResolver</span><span class="op">().</span><span class="fu">query</span><span class="op">(</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>            ContactsContract<span class="op">.</span><span class="fu">CommonDataKinds</span><span class="op">.</span><span class="fu">Phone</span><span class="op">.</span><span class="fu">CONTENT_URI</span><span class="op">,</span> <span class="kw">null</span><span class="op">,</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>            <span class="kw">null</span><span class="op">,</span> <span class="kw">null</span><span class="op">,</span> <span class="kw">null</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="op">);</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="bu">String</span> nc <span class="op">=</span> ContactsContract<span class="op">.</span><span class="fu">CommonDataKinds</span><span class="op">.</span><span class="fu">Phone</span><span class="op">.</span><span class="fu">DISPLAY_NAME</span><span class="op">;</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="bu">String</span> nuc <span class="op">=</span> ContactsContract<span class="op">.</span><span class="fu">CommonDataKinds</span><span class="op">.</span><span class="fu">Phone</span><span class="op">.</span><span class="fu">NUMBER</span><span class="op">;</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="bu">String</span> contacts <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="op">;</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    contactList <span class="op">=</span> <span class="kw">new</span> <span class="bu">Vector</span><span class="op">&lt;</span>Contact<span class="op">&gt;();</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span>phones<span class="op">.</span><span class="fu">moveToNext</span><span class="op">())</span> <span class="op">{</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        <span class="bu">String</span> name <span class="op">=</span> phones<span class="op">.</span><span class="fu">getString</span><span class="op">(</span>phones<span class="op">.</span><span class="fu">getColumnIndex</span><span class="op">(</span>nc<span class="op">));</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>        <span class="bu">String</span> phoneNumber <span class="op">=</span> phones<span class="op">.</span><span class="fu">getString</span><span class="op">(</span>phones<span class="op">.</span><span class="fu">getColumnIndex</span><span class="op">(</span>nuc<span class="op">));</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>        contactList<span class="op">.</span><span class="fu">add</span><span class="op">(</span><span class="kw">new</span> <span class="fu">Contact</span><span class="op">(</span>name<span class="op">,</span> phoneNumber<span class="op">));</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">logln</span><span class="op">(</span>LOG_OK<span class="op">);</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">log</span><span class="op">(</span><span class="st">&quot;Inicializando la base de datos...&quot;</span><span class="op">);</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    database <span class="op">=</span> <span class="fu">openOrCreateDatabase</span><span class="op">(</span>DBManager<span class="op">.</span><span class="fu">DB_NAME</span><span class="op">,</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>                                    <span class="bu">Context</span><span class="op">.</span><span class="fu">MODE_PRIVATE</span><span class="op">,</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>                                    <span class="kw">null</span><span class="op">);</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">logln</span><span class="op">(</span>LOG_OK<span class="op">);</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">logln</span><span class="op">(</span>LOG_WAITING<span class="op">);</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    newMessage <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h3 id="servir-la-lista-de-contactos">Servir la lista de contactos</h3>
 <p>En el método <em>onCreate()</em> cargamos la libreta de contactos en <em>contactList</em>, ésta lista es la que le enviaremos al cliente cuando la solicite.</p>
-<p>Embed: <code>get-contacts.java</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="bu">String</span> <span class="fu">getContacts</span><span class="op">()</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">String</span> ans <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="op">;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> contactList<span class="op">.</span><span class="fu">size</span><span class="op">();</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">String</span> name <span class="op">=</span> contactList<span class="op">.</span><span class="fu">get</span><span class="op">(</span>i<span class="op">).</span><span class="fu">getName</span><span class="op">();</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">String</span> number <span class="op">=</span> contactList<span class="op">.</span><span class="fu">get</span><span class="op">(</span>i<span class="op">).</span><span class="fu">getNumber</span><span class="op">();</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        ans <span class="op">+=</span> name <span class="op">+</span> FIELD_SEPARATOR <span class="op">+</span> number<span class="op">;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        ans <span class="op">+=</span> RECORD_SEPARATOR<span class="op">;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ans<span class="op">;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ans<span class="op">;</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h3 id="servir-la-lista-de-mensajes-enviados">Servir la lista de mensajes enviados</h3>
-<p>Embed: <code>get-received-messages.java</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="bu">String</span> <span class="fu">getReceivedMessages</span><span class="op">()</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">String</span> ans <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="op">;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Cursor</span> c <span class="op">=</span> SmsDB<span class="op">.</span><span class="fu">getAllReceivedMessages</span><span class="op">();</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>c<span class="op">.</span><span class="fu">moveToFirst</span><span class="op">())</span> <span class="op">{</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">do</span> <span class="op">{</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>            ans <span class="op">+=</span> c<span class="op">.</span><span class="fu">getString</span><span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="op">+</span> FIELD_SEPARATOR<span class="op">;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            ans <span class="op">+=</span> c<span class="op">.</span><span class="fu">getString</span><span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>            ans <span class="op">+=</span> RECORD_SEPARATOR<span class="op">;</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span> <span class="cf">while</span> <span class="op">(</span>c<span class="op">.</span><span class="fu">moveToNext</span><span class="op">());</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ans<span class="op">;</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h3 id="enviar-sms">Enviar SMS</h3>
 <p>El método <em>sendSMS()</em> es el que se encarga de enviar los mensajes SMS:</p>
-<p>Embed: <code>send-sms.java</code></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">int</span> <span class="fu">sendSMS</span><span class="op">(</span><span class="dt">final</span> <span class="bu">String</span> number<span class="op">,</span> <span class="dt">final</span> <span class="bu">String</span> text<span class="op">)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">final</span> Activity activity <span class="op">=</span> <span class="kw">this</span><span class="op">;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    activity<span class="op">.</span><span class="fu">runOnUiThread</span><span class="op">(</span><span class="kw">new</span> <span class="bu">Runnable</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span><span class="op">()</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>            SmsManager sms <span class="op">=</span> SmsManager<span class="op">.</span><span class="fu">getDefault</span><span class="op">();</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>            sms<span class="op">.</span><span class="fu">sendTextMessage</span><span class="op">(</span>number<span class="op">,</span> <span class="kw">null</span><span class="op">,</span> text<span class="op">,</span> <span class="kw">null</span><span class="op">,</span> <span class="kw">null</span><span class="op">);</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">});</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span> <span class="co">// Success</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h3 id="detectar-los-mensajes-entrantes">Detectar los mensajes entrantes</h3>
 <p>Esta es una de las partes más interesantes. Cada vez que sucede un evento el sistema hace notificaciones todas la aplicaciones que así lo requieran, para ser notificados es necesario heredar la clase <em>BroadcastReceiver</em>.</p>
-<p>Embed: <code>sms-receiver.java</code></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> SmsReceiver <span class="kw">extends</span> BroadcastReceiver <span class="op">{</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">@Override</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">onReceive</span><span class="op">(</span><span class="bu">Context</span> context<span class="op">,</span> Intent intent<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        Bundle extras <span class="op">=</span> intent<span class="op">.</span><span class="fu">getExtras</span><span class="op">();</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>extras <span class="op">==</span> <span class="kw">null</span><span class="op">)</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">Object</span><span class="op">[]</span> pdus <span class="op">=</span> <span class="op">(</span><span class="bu">Object</span><span class="op">[])</span>extras<span class="op">.</span><span class="fu">get</span><span class="op">(</span><span class="st">&quot;pdus&quot;</span><span class="op">);</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> pdus<span class="op">.</span><span class="fu">length</span><span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>            SmsMessage SMessage <span class="op">=</span> SmsMessage<span class="op">.</span><span class="fu">createFromPdu</span><span class="op">((</span><span class="dt">byte</span><span class="op">[])</span>pdus<span class="op">[</span>i<span class="op">]);</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>            <span class="bu">String</span> sender <span class="op">=</span> SMessage<span class="op">.</span><span class="fu">getOriginatingAddress</span><span class="op">();</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>            <span class="bu">String</span> body <span class="op">=</span> SMessage<span class="op">.</span><span class="fu">getMessageBody</span><span class="op">().</span><span class="fu">toString</span><span class="op">();</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>            Intent in <span class="op">=</span> <span class="kw">new</span> <span class="fu">Intent</span><span class="op">(</span><span class="st">&quot;SmsMessage.intent.MAIN&quot;</span><span class="op">).</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">putExtra</span><span class="op">(</span><span class="st">&quot;get_msg&quot;</span><span class="op">,</span> sender <span class="op">+</span> </span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>                                     SMSServer<span class="op">.</span><span class="fu">FIELD_SEPARATOR</span> <span class="op">+</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>                                     body<span class="op">);</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>            context<span class="op">.</span><span class="fu">sendBroadcast</span><span class="op">(</span>in<span class="op">);</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>Y en el método <em>onResume()</em> de la clase SMSServer:</p>
-<p>Embed: <code>on-resume.java</code></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="at">@Override</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">protected</span> <span class="dt">void</span> <span class="fu">onResume</span><span class="op">()</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">super</span><span class="op">.</span><span class="fu">onResume</span><span class="op">();</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    IntentFilter intentFilter <span class="op">=</span> <span class="kw">new</span> <span class="fu">IntentFilter</span><span class="op">(</span><span class="st">&quot;SmsMessage.intent.MAIN&quot;</span><span class="op">);</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    intentReceiver <span class="op">=</span> <span class="kw">new</span> <span class="fu">BroadcastReceiver</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">@Override</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">public</span> <span class="dt">void</span> <span class="fu">onReceive</span><span class="op">(</span><span class="bu">Context</span> context<span class="op">,</span> Intent intent<span class="op">)</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        <span class="op">{</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>            <span class="bu">String</span> msg <span class="op">=</span> intent<span class="op">.</span><span class="fu">getStringExtra</span><span class="op">(</span><span class="st">&quot;get_msg&quot;</span><span class="op">);</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>            <span class="bu">String</span><span class="op">[]</span> tokens <span class="op">=</span> msg<span class="op">.</span><span class="fu">split</span><span class="op">(</span>FIELD_SEPARATOR<span class="op">);</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>            <span class="bu">String</span> number <span class="op">=</span> tokens<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>            <span class="bu">String</span> text <span class="op">=</span> tokens<span class="op">[</span><span class="dv">1</span><span class="op">];</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>            newMessage <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>            lastMessageNumber <span class="op">=</span> number<span class="op">;</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>            lastMessageText <span class="op">=</span> text<span class="op">;</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>            <span class="fu">logln</span><span class="op">(</span><span class="st">&quot;NOTIFICACIÓN: Nuevo mensaje&quot;</span><span class="op">);</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>            <span class="fu">logln</span><span class="op">(</span><span class="st">&quot;De: &quot;</span> <span class="op">+</span> number<span class="op">);</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>            <span class="fu">logln</span><span class="op">(</span><span class="st">&quot;Mensaje: </span><span class="sc">\&quot;</span><span class="st">&quot;</span> <span class="op">+</span> text <span class="op">+</span> <span class="st">&quot;</span><span class="sc">\&quot;</span><span class="st">&quot;</span><span class="op">);</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>            <span class="dt">long</span> id <span class="op">=</span> SmsDB<span class="op">.</span><span class="fu">insertReceivedMessage</span><span class="op">(</span>number<span class="op">,</span> text<span class="op">);</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    <span class="op">};</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">.</span><span class="fu">registerReceiver</span><span class="op">(</span>intentReceiver<span class="op">,</span> intentFilter<span class="op">);</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> </span></code></pre></div>
 <h3 id="la-base-de-datos">La base de datos</h3>
 <p>Para que el registro de mensajes enviados y recibidos persista incluso después de reiniciar el servidor es necesario almacenar dichos mensajes en algún lugar, en este caso, una base de datos, Android provee soporte nativo para SQLite. La clase _DBManager se encarga de todas las operaciones de la base de datos.</p>
-<p>Embed: <code>db-manager.java</code></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> DBManager <span class="op">{</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span> KEY_RECEIVED_ID      <span class="op">=</span> <span class="st">&quot;id&quot;</span><span class="op">;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span> KEY_RECEIVED_FROM    <span class="op">=</span> <span class="st">&quot;from_number&quot;</span><span class="op">;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span> KEY_RECEIVED_MSG     <span class="op">=</span> <span class="st">&quot;msg&quot;</span><span class="op">;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span> KEY_SENT_ID          <span class="op">=</span> <span class="st">&quot;id&quot;</span><span class="op">;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span> KEY_SENT_TO          <span class="op">=</span> <span class="st">&quot;to_number&quot;</span><span class="op">;</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span> KEY_SENT_MSG         <span class="op">=</span> <span class="st">&quot;msg&quot;</span><span class="op">;</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span> DB_NAME              <span class="op">=</span> <span class="st">&quot;smsdb&quot;</span><span class="op">;</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span> DB_TABLE_RECEIVED    <span class="op">=</span> <span class="st">&quot;received&quot;</span><span class="op">;</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span> DB_TABLE_SENT        <span class="op">=</span> <span class="st">&quot;sent&quot;</span><span class="op">;</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">int</span> DB_VERSION <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span> DB_CREATE_TABLE_RECEIVED <span class="op">=</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;create table received(id integer primary key autoincrement, &quot;</span> <span class="op">+</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>                    KEY_RECEIVED_FROM <span class="op">+</span> <span class="st">&quot; text not null, &quot;</span> <span class="op">+</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>                    KEY_RECEIVED_MSG <span class="op">+</span> <span class="st">&quot; text not null);&quot;</span><span class="op">;</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span> DB_CREATE_TABLE_SENT <span class="op">=</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;create table sent(id integer primary key autoincrement, &quot;</span> <span class="op">+</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>                    KEY_SENT_TO <span class="op">+</span> <span class="st">&quot; text not null, &quot;</span> <span class="op">+</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>                    KEY_SENT_MSG <span class="op">+</span> <span class="st">&quot; text not null);&quot;</span><span class="op">;</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="fu">DBManager</span><span class="op">()</span> <span class="op">{</span> <span class="op">}</span></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">long</span> <span class="fu">insertSentMessage</span><span class="op">(</span><span class="bu">String</span> to<span class="op">,</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>                                         <span class="bu">String</span> msg<span class="op">,</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>                                         SQLiteDatabase db<span class="op">)</span></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>        ContentValues values <span class="op">=</span> <span class="kw">new</span> <span class="fu">ContentValues</span><span class="op">();</span></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>        values<span class="op">.</span><span class="fu">put</span><span class="op">(</span>KEY_SENT_TO<span class="op">,</span> to<span class="op">);</span></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>        values<span class="op">.</span><span class="fu">put</span><span class="op">(</span>KEY_SENT_MSG<span class="op">,</span> msg<span class="op">);</span></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> db<span class="op">.</span><span class="fu">insert</span><span class="op">(</span>DB_TABLE_SENT<span class="op">,</span> <span class="kw">null</span><span class="op">,</span> values<span class="op">);</span></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">long</span> <span class="fu">insertReceivedMessage</span><span class="op">(</span><span class="bu">String</span> from<span class="op">,</span></span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>                                             <span class="bu">String</span> msg<span class="op">,</span></span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>                                             SQLiteDatabase db<span class="op">)</span></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>        ContentValues values <span class="op">=</span> <span class="kw">new</span> <span class="fu">ContentValues</span><span class="op">();</span></span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>        values<span class="op">.</span><span class="fu">put</span><span class="op">(</span>KEY_RECEIVED_FROM<span class="op">,</span> from<span class="op">);</span></span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>        values<span class="op">.</span><span class="fu">put</span><span class="op">(</span>KEY_RECEIVED_MSG<span class="op">,</span> msg<span class="op">);</span></span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> db<span class="op">.</span><span class="fu">insert</span><span class="op">(</span>DB_TABLE_RECEIVED<span class="op">,</span> <span class="kw">null</span><span class="op">,</span> values<span class="op">);</span></span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="bu">Cursor</span> <span class="fu">getAllSentMessages</span><span class="op">(</span>SQLiteDatabase db<span class="op">)</span></span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>        <span class="bu">String</span><span class="op">[]</span> fields <span class="op">=</span> <span class="kw">new</span> <span class="bu">String</span><span class="op">[]</span> <span class="op">{</span>KEY_SENT_ID<span class="op">,</span> KEY_SENT_TO<span class="op">,</span> KEY_SENT_MSG<span class="op">};</span></span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> db<span class="op">.</span><span class="fu">query</span><span class="op">(</span>DB_TABLE_SENT<span class="op">,</span> fields<span class="op">,</span> <span class="kw">null</span><span class="op">,</span> <span class="kw">null</span><span class="op">,</span> <span class="kw">null</span><span class="op">,</span> <span class="kw">null</span><span class="op">,</span> <span class="kw">null</span><span class="op">);</span></span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">static</span> <span class="bu">Cursor</span> <span class="fu">getAllReceivedMessages</span><span class="op">(</span>SQLiteDatabase db<span class="op">)</span></span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>        <span class="bu">String</span><span class="op">[]</span> fields <span class="op">=</span> <span class="kw">new</span> <span class="bu">String</span><span class="op">[]{</span>KEY_RECEIVED_ID<span class="op">,</span></span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>                KEY_RECEIVED_FROM<span class="op">,</span></span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>                KEY_RECEIVED_MSG<span class="op">};</span></span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> db<span class="op">.</span><span class="fu">query</span><span class="op">(</span>DB_TABLE_RECEIVED<span class="op">,</span> fields<span class="op">,</span></span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>                        <span class="kw">null</span><span class="op">,</span> <span class="kw">null</span><span class="op">,</span> <span class="kw">null</span><span class="op">,</span> <span class="kw">null</span><span class="op">,</span> <span class="kw">null</span><span class="op">);</span></span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h3 id="concesión-de-permisos">Concesión de permisos</h3>
 <p>En Android las aplicaciones por defecto cuentan con privilegios muy limitados, por lo cual es necesario conceder permisos para poder acceder al Internet, a los mensajes, a los contactos, etc. Estos permisos se especifican en el archivo <em>AndroidManifest.xml</em> que se encuentra en folder raíz del proyecto.</p>
-<p>Embed: <code>permissions.xml</code></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">uses-permission</span><span class="ot"> android:name=</span><span class="st">&quot;android.permission.INTERNET&quot;</span> /&gt;</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">uses-permission</span><span class="ot"> android:name=</span><span class="st">&quot;android.permission.ACCESS_NETWORK_STATE&quot;</span> /&gt;</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">uses-permission</span><span class="ot"> android:name=</span><span class="st">&quot;android.permission.ACCESS_WIFI_STATE&quot;</span> /&gt;</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">uses-permission</span><span class="ot"> android:name=</span><span class="st">&quot;android.permission.SEND_SMS&quot;</span> /&gt;</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">uses-permission</span><span class="ot"> android:name=</span><span class="st">&quot;android.permission.READ_SMS&quot;</span> /&gt;</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">uses-permission</span><span class="ot"> android:name=</span><span class="st">&quot;android.permission.RECEIVE_SMS&quot;</span> /&gt;</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">uses-permission</span><span class="ot"> android:name=</span><span class="st">&quot;android.permission.HARDWARE_TEST&quot;</span> /&gt;</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">uses-permission</span><span class="ot"> android:name=</span><span class="st">&quot;android.permission.READ_CONTACTS&quot;</span> /&gt;</span></code></pre></div>
 <p>Hasta aquí la descripción del programa, veamos ahora la compilación e instalación.</p>
 <p>Nos posicionamos en el folder de nuestro proyecto y tecleamos lo siguiente, la primera línea es para compilar y la segunda para instalar la aplicación en el dispositivo o en el emulador, lo que encuentre primero.</p>
-<p>Embed: <code>compile-and-install.sh</code></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ant</span> debug</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ant</span> debug install</span></code></pre></div>
 <p>La dirección del servidor es la dirección IP que tienen el dispositivo móvil, en el puerto 8080, por ejemplo, <em>http://192.168.1.242:8080</em>. Esta dirección la tienen que conocer el cliente para poder conectarse.</p>
 <figure>
 <img src="/report-i-send-sms/sms_02.png" alt="Interfaz del servidor de SMS" />
@@ -163,36 +481,269 @@ Acostumbro codificar en Ingles puesto que considero es más homogéneo, permite 
 <p>Además de la interfaz gráfica se ha desarrollado una clase <em>SmsClient</em> que se encargará de obtener los recursos del servidor. A continuación se describen los métodos.</p>
 <h3 id="testconnection">testConnection()</h3>
 <p>Intenta conectar al servidor y retorna verdadero en caso de éxito.</p>
-<p>Embed: <code>test-connection.java</code></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">testConnection</span><span class="op">()</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">String</span> parameters <span class="op">=</span> <span class="st">&quot;command=&quot;</span> <span class="op">+</span> COMMAND_CHECK_FOR_NEW_MESSAGE<span class="op">;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span> <span class="op">{</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">String</span> server <span class="op">=</span> <span class="fu">getProtocol</span><span class="op">()</span> <span class="op">+</span> <span class="st">&quot;://&quot;</span> <span class="op">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">getServerName</span><span class="op">()</span> <span class="op">+</span> <span class="st">&quot;:&quot;</span> <span class="op">+</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">getPort</span><span class="op">();</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">URL</span> url <span class="op">=</span> <span class="kw">new</span> <span class="bu">URL</span><span class="op">(</span>server <span class="op">+</span> <span class="st">&quot;/?&quot;</span> <span class="op">+</span> parameters<span class="op">);</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>        <span class="bu">HttpURLConnection</span> http <span class="op">=</span> <span class="op">(</span><span class="bu">HttpURLConnection</span><span class="op">)</span> url<span class="op">.</span><span class="fu">openConnection</span><span class="op">();</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> http<span class="op">.</span><span class="fu">getResponseCode</span><span class="op">()</span> <span class="op">==</span> HTTP_STATUS_OK<span class="op">;</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">catch</span> <span class="op">(</span><span class="bu">IOException</span> ioe<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span>ioe<span class="op">.</span><span class="fu">toString</span><span class="op">());</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h3 id="getsentmessages">getSentMessages()</h3>
 <p>Obtiene del servidor la lista de mensajes enviados.</p>
-<p>Embed: <code>get-sent-messages.java</code></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="bu">Vector</span><span class="op">&lt;</span>SentMessage<span class="op">&gt;</span> <span class="fu">getSentMessages</span><span class="op">()</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Vector</span><span class="op">&lt;</span>SentMessage<span class="op">&gt;</span> sentMessages <span class="op">=</span> <span class="kw">new</span> <span class="bu">Vector</span><span class="op">&lt;</span>SentMessage<span class="op">&gt;();</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">String</span> parameters <span class="op">=</span> <span class="st">&quot;command=&quot;</span> <span class="op">+</span> COMMAND_GET_SENT_MESSAGES<span class="op">;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span> <span class="op">{</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">String</span> server <span class="op">=</span> <span class="fu">getProtocol</span><span class="op">()</span> <span class="op">+</span> <span class="st">&quot;://&quot;</span> <span class="op">+</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">getServerName</span><span class="op">()</span> <span class="op">+</span> <span class="st">&quot;:&quot;</span> <span class="op">+</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">getPort</span><span class="op">();</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>        <span class="bu">URL</span> url <span class="op">=</span> <span class="kw">new</span> <span class="bu">URL</span><span class="op">(</span>server <span class="op">+</span> <span class="st">&quot;/?&quot;</span> <span class="op">+</span> parameters<span class="op">);</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span>url<span class="op">.</span><span class="fu">toString</span><span class="op">());</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">HttpURLConnection</span> http <span class="op">=</span> <span class="op">(</span><span class="bu">HttpURLConnection</span><span class="op">)</span> url<span class="op">.</span><span class="fu">openConnection</span><span class="op">();</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">InputStreamReader</span> in <span class="op">=</span> <span class="kw">new</span> <span class="bu">InputStreamReader</span><span class="op">(</span>http<span class="op">.</span><span class="fu">getInputStream</span><span class="op">());</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>        <span class="bu">BufferedReader</span> reader <span class="op">=</span> <span class="kw">new</span> <span class="bu">BufferedReader</span><span class="op">(</span>in<span class="op">);</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>        <span class="bu">String</span> line<span class="op">;</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="op">((</span>line <span class="op">=</span> reader<span class="op">.</span><span class="fu">readLine</span><span class="op">())</span> <span class="op">!=</span> <span class="kw">null</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>            <span class="bu">String</span><span class="op">[]</span> rows <span class="op">=</span> line<span class="op">.</span><span class="fu">split</span><span class="op">(</span>RECORD_SEPARATOR<span class="op">);</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> rows<span class="op">.</span><span class="fu">length</span><span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>                <span class="bu">String</span> fields<span class="op">[]</span> <span class="op">=</span> rows<span class="op">[</span>i<span class="op">].</span><span class="fu">split</span><span class="op">(</span>FIELD_SEPARATOR<span class="op">);</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>                SentMessage sm <span class="op">=</span> <span class="kw">new</span> <span class="fu">SentMessage</span><span class="op">(</span>fields<span class="op">[</span><span class="dv">0</span><span class="op">],</span> fields<span class="op">[</span><span class="dv">1</span><span class="op">]);</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>                sentMessages<span class="op">.</span><span class="fu">add</span><span class="op">(</span>sm<span class="op">);</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">catch</span> <span class="op">(</span><span class="bu">IOException</span> ioe<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>        <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span>ioe<span class="op">.</span><span class="fu">toString</span><span class="op">());</span></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sentMessages<span class="op">;</span></span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h3 id="getreceivedmessages">getReceivedMessages()</h3>
 <p>Recupera del servidor la lista de mensajes enviados.</p>
-<p>Embed: <code>client-get-received-messages.java</code></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="bu">Vector</span><span class="op">&lt;</span>ReceivedMessage<span class="op">&gt;</span> <span class="fu">getReceivedMessages</span><span class="op">()</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Vector</span><span class="op">&lt;</span>ReceivedMessage<span class="op">&gt;</span> receivedMessages <span class="op">=</span> <span class="kw">new</span> <span class="bu">Vector</span><span class="op">&lt;</span>ReceivedMessage<span class="op">&gt;();</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">String</span> parameters <span class="op">=</span> <span class="st">&quot;command=&quot;</span> <span class="op">+</span> COMMAND_GET_RECEIVED_MESSAGES<span class="op">;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span> <span class="op">{</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">String</span> server <span class="op">=</span> <span class="fu">getProtocol</span><span class="op">()</span> <span class="op">+</span> <span class="st">&quot;://&quot;</span> <span class="op">+</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">getServerName</span><span class="op">()</span> <span class="op">+</span> <span class="st">&quot;:&quot;</span> <span class="op">+</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">getPort</span><span class="op">();</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>        <span class="bu">URL</span> url <span class="op">=</span> <span class="kw">new</span> <span class="bu">URL</span><span class="op">(</span>server <span class="op">+</span> <span class="st">&quot;/?&quot;</span> <span class="op">+</span> parameters<span class="op">);</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span>url<span class="op">.</span><span class="fu">toString</span><span class="op">());</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">HttpURLConnection</span> http <span class="op">=</span> <span class="op">(</span><span class="bu">HttpURLConnection</span><span class="op">)</span> url<span class="op">.</span><span class="fu">openConnection</span><span class="op">();</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>        <span class="bu">InputStreamReader</span> in <span class="op">=</span> <span class="kw">new</span> <span class="bu">InputStreamReader</span><span class="op">(</span>http<span class="op">.</span><span class="fu">getInputStream</span><span class="op">());</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>        <span class="bu">BufferedReader</span> reader <span class="op">=</span> <span class="kw">new</span> <span class="bu">BufferedReader</span><span class="op">(</span>in<span class="op">);</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>        <span class="bu">String</span> line<span class="op">;</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="op">((</span>line <span class="op">=</span> reader<span class="op">.</span><span class="fu">readLine</span><span class="op">())</span> <span class="op">!=</span> <span class="kw">null</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>            <span class="bu">String</span><span class="op">[]</span> rows <span class="op">=</span> line<span class="op">.</span><span class="fu">split</span><span class="op">(</span>RECORD_SEPARATOR<span class="op">);</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> rows<span class="op">.</span><span class="fu">length</span><span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>                <span class="bu">String</span> fields<span class="op">[]</span> <span class="op">=</span> rows<span class="op">[</span>i<span class="op">].</span><span class="fu">split</span><span class="op">(</span>FIELD_SEPARATOR<span class="op">);</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>                ReceivedMessage rm <span class="op">=</span> <span class="kw">new</span> <span class="fu">ReceivedMessage</span><span class="op">(</span>fields<span class="op">[</span><span class="dv">0</span><span class="op">],</span> fields<span class="op">[</span><span class="dv">1</span><span class="op">]);</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>                receivedMessages<span class="op">.</span><span class="fu">add</span><span class="op">(</span>rm<span class="op">);</span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">catch</span> <span class="op">(</span><span class="bu">IOException</span> ioe<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>        <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span>ioe<span class="op">.</span><span class="fu">toString</span><span class="op">());</span></span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> receivedMessages<span class="op">;</span></span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h3 id="getcontactlist">getContactList()</h3>
 <p>Obtiene del servidor la lista de contactos en el dispositivo.</p>
-<p>Embed: <code>get-contact-list.java</code></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="bu">Vector</span><span class="op">&lt;</span>Contact<span class="op">&gt;</span> <span class="fu">getContactList</span><span class="op">()</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Vector</span><span class="op">&lt;</span>Contact<span class="op">&gt;</span> contacts <span class="op">=</span> <span class="kw">new</span> <span class="bu">Vector</span><span class="op">&lt;</span>Contact<span class="op">&gt;();</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">String</span> command <span class="op">=</span> COMMAND_GET_CONTACTS<span class="op">;</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">String</span> parameters <span class="op">=</span> <span class="st">&quot;command=&quot;</span> <span class="op">+</span> command<span class="op">;</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span> <span class="op">{</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">String</span> server <span class="op">=</span> <span class="fu">getProtocol</span><span class="op">()</span> <span class="op">+</span> <span class="st">&quot;://&quot;</span> <span class="op">+</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">getServerName</span><span class="op">()</span> <span class="op">+</span> <span class="st">&quot;:&quot;</span> <span class="op">+</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">getPort</span><span class="op">();</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">URL</span> url <span class="op">=</span> <span class="kw">new</span> <span class="bu">URL</span><span class="op">(</span>server <span class="op">+</span> <span class="st">&quot;/?&quot;</span> <span class="op">+</span> parameters<span class="op">);</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>        <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span>url<span class="op">.</span><span class="fu">toString</span><span class="op">());</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">HttpURLConnection</span> http <span class="op">=</span> <span class="op">(</span><span class="bu">HttpURLConnection</span><span class="op">)</span> url<span class="op">.</span><span class="fu">openConnection</span><span class="op">();</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>        <span class="bu">InputStreamReader</span> in <span class="op">=</span> <span class="kw">new</span> <span class="bu">InputStreamReader</span><span class="op">(</span>http<span class="op">.</span><span class="fu">getInputStream</span><span class="op">());</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>        <span class="bu">BufferedReader</span> reader <span class="op">=</span> <span class="kw">new</span> <span class="bu">BufferedReader</span><span class="op">(</span>in<span class="op">);</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>        <span class="bu">String</span> line<span class="op">;</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="op">((</span>line <span class="op">=</span> reader<span class="op">.</span><span class="fu">readLine</span><span class="op">())</span> <span class="op">!=</span> <span class="kw">null</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>            <span class="bu">String</span><span class="op">[]</span> rows <span class="op">=</span> line<span class="op">.</span><span class="fu">split</span><span class="op">(</span>RECORD_SEPARATOR<span class="op">);</span></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> rows<span class="op">.</span><span class="fu">length</span><span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>                <span class="bu">String</span> fields<span class="op">[]</span> <span class="op">=</span> rows<span class="op">[</span>i<span class="op">].</span><span class="fu">split</span><span class="op">(</span>FIELD_SEPARATOR<span class="op">);</span></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>                Contact c <span class="op">=</span> <span class="kw">new</span> <span class="fu">Contact</span><span class="op">(</span>fields<span class="op">[</span><span class="dv">0</span><span class="op">],</span> fields<span class="op">[</span><span class="dv">1</span><span class="op">]);</span></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>                contacts<span class="op">.</span><span class="fu">add</span><span class="op">(</span>c<span class="op">);</span></span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">catch</span> <span class="op">(</span><span class="bu">IOException</span> ioe<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>        <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span>ioe<span class="op">.</span><span class="fu">toString</span><span class="op">());</span></span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> contacts<span class="op">;</span></span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h3 id="sendsms">sendSMS()</h3>
 <p>Solicita al servidor enviar un mensaje, enviándole como parámetros el número y el mensaje.</p>
-<p>Embed: <code>client-send-sms.java</code></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">sendSMS</span><span class="op">(</span><span class="bu">String</span> number<span class="op">,</span> <span class="bu">String</span> message<span class="op">)</span> <span class="kw">throws</span> <span class="bu">Exception</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">String</span> command <span class="op">=</span> COMMAND_SEND_MESSAGE<span class="op">;</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    message <span class="op">=</span> <span class="bu">URLEncoder</span><span class="op">.</span><span class="fu">encode</span><span class="op">(</span>message<span class="op">,</span> <span class="st">&quot;UTF8&quot;</span><span class="op">);</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">String</span> parameters <span class="op">=</span> <span class="st">&quot;command=&quot;</span> <span class="op">+</span> command <span class="op">+</span> <span class="st">&quot;&amp;&quot;</span> <span class="op">+</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;number=&quot;</span> <span class="op">+</span> number <span class="op">+</span> <span class="st">&quot;&amp;&quot;</span> <span class="op">+</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;text=&quot;</span> <span class="op">+</span> message<span class="op">;</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span> <span class="op">{</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>        <span class="bu">String</span> server <span class="op">=</span> <span class="fu">getProtocol</span><span class="op">()</span> <span class="op">+</span> <span class="st">&quot;://&quot;</span> <span class="op">+</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">getServerName</span><span class="op">()</span> <span class="op">+</span> <span class="st">&quot;:&quot;</span> <span class="op">+</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">getPort</span><span class="op">();</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">URL</span> url <span class="op">=</span> <span class="kw">new</span> <span class="bu">URL</span><span class="op">(</span>server <span class="op">+</span> <span class="st">&quot;/?&quot;</span> <span class="op">+</span> parameters<span class="op">);</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span>url<span class="op">.</span><span class="fu">toString</span><span class="op">());</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>        <span class="bu">HttpURLConnection</span> http <span class="op">=</span> <span class="op">(</span><span class="bu">HttpURLConnection</span><span class="op">)</span> url<span class="op">.</span><span class="fu">openConnection</span><span class="op">();</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">InputStreamReader</span> in <span class="op">=</span> <span class="kw">new</span> <span class="bu">InputStreamReader</span><span class="op">(</span>http<span class="op">.</span><span class="fu">getInputStream</span><span class="op">());</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>        <span class="bu">BufferedReader</span> reader <span class="op">=</span> <span class="kw">new</span> <span class="bu">BufferedReader</span><span class="op">(</span>in<span class="op">);</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>        <span class="bu">String</span> ans <span class="op">=</span> reader<span class="op">.</span><span class="fu">readLine</span><span class="op">();</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> ans<span class="op">.</span><span class="fu">equals</span><span class="op">(</span>STATUS_OK<span class="op">);</span></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">catch</span> <span class="op">(</span><span class="bu">IOException</span> ioe<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>        <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span>ioe<span class="op">.</span><span class="fu">toString</span><span class="op">());</span></span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span> <span class="co">// Fail</span></span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h3 id="newmessagepanel">NewMessagePanel</h3>
 <p>Hacemos unas cuantas validaciones y en caso satisfactorio procedemos a enviar el mensaje.</p>
-<p>Embed: <code>action-performed.java</code></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="at">@Override</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">actionPerformed</span><span class="op">(</span><span class="bu">ActionEvent</span> event<span class="op">)</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>event<span class="op">.</span><span class="fu">getSource</span><span class="op">()</span> <span class="op">==</span> sendButton<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">String</span> number <span class="op">=</span> numberText<span class="op">.</span><span class="fu">getText</span><span class="op">();</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">String</span> message <span class="op">=</span> messageArea<span class="op">.</span><span class="fu">getText</span><span class="op">();</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span> <span class="op">{</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>smsClient<span class="op">.</span><span class="fu">sendSMS</span><span class="op">(</span>number<span class="op">,</span> message<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>                sentMessagePanel<span class="op">.</span><span class="fu">addMessage</span><span class="op">(</span>number<span class="op">,</span> message<span class="op">);</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>                statusBar<span class="op">.</span><span class="fu">setStatus</span><span class="op">(</span><span class="st">&quot;Enviado&quot;</span><span class="op">,</span> StatusBar<span class="op">.</span><span class="fu">CODE_SUCCESS</span><span class="op">);</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>                messageArea<span class="op">.</span><span class="fu">setText</span><span class="op">(</span><span class="st">&quot;&quot;</span><span class="op">);</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>                numberText<span class="op">.</span><span class="fu">setText</span><span class="op">(</span><span class="st">&quot;&quot;</span><span class="op">);</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>                statusBar<span class="op">.</span><span class="fu">setStatus</span><span class="op">(</span><span class="st">&quot;No se pudo enviar&quot;</span><span class="op">,</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>                                    StatusBar<span class="op">.</span><span class="fu">CODE_FAILURE</span><span class="op">);</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span> <span class="cf">catch</span><span class="op">(</span><span class="bu">Exception</span> e<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>            statusBar<span class="op">.</span><span class="fu">setForeground</span><span class="op">(</span>Client<span class="op">.</span><span class="fu">GUI_ERROR_COLOR</span><span class="op">);</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>            statusBar<span class="op">.</span><span class="fu">setStatus</span><span class="op">(</span><span class="st">&quot;No se pudo enviar&quot;</span><span class="op">,</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>                                StatusBar<span class="op">.</span><span class="fu">CODE_FAILURE</span><span class="op">);</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <figure>
 <img src="/report-i-send-sms/sms_03.png" alt="Envío de mensajes" />
 <figcaption aria-hidden="true">Envío de mensajes</figcaption>
 </figure>
 <h3 id="inboxpanel">InboxPanel</h3>
 <p>Esta parte si es un poco interesante, cómo saber si ha llegado un nuevo mensaje y en su caso obtenerlo y actualizar el contenido de la bandeja de entrada. Para eso creamos una clase que se ejecuta en un hilo independiente y continuamente pregunta al servidor si hay mensajes nuevos.</p>
-<p>Embed: <code>sms-monitor.java</code></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="kw">class</span> SMSMonitor <span class="kw">implements</span> <span class="bu">Runnable</span> <span class="op">{</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">@Override</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span><span class="op">()</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="op">(</span><span class="kw">true</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>            <span class="bu">String</span> command <span class="op">=</span> SmsClient<span class="op">.</span><span class="fu">COMMAND_CHECK_FOR_NEW_MESSAGE</span><span class="op">;</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>            <span class="bu">String</span> parameters <span class="op">=</span> <span class="st">&quot;command=&quot;</span> <span class="op">+</span> command<span class="op">;</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">try</span> <span class="op">{</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>                <span class="bu">String</span> server <span class="op">=</span> smsClient<span class="op">.</span><span class="fu">getProtocol</span><span class="op">()</span> <span class="op">+</span> <span class="st">&quot;://&quot;</span> <span class="op">+</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>                                smsClient<span class="op">.</span><span class="fu">getServerName</span><span class="op">()</span> <span class="op">+</span> <span class="st">&quot;:&quot;</span> <span class="op">+</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>                                smsClient<span class="op">.</span><span class="fu">getPort</span><span class="op">();</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>                <span class="bu">URL</span> url <span class="op">=</span> <span class="kw">new</span> <span class="bu">URL</span><span class="op">(</span>server <span class="op">+</span> <span class="st">&quot;/?&quot;</span> <span class="op">+</span> parameters<span class="op">);</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>                <span class="bu">HttpURLConnection</span> http <span class="op">=</span> <span class="op">(</span><span class="bu">HttpURLConnection</span><span class="op">)</span>url<span class="op">.</span><span class="fu">openConnection</span><span class="op">();</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>                http<span class="op">.</span><span class="fu">getResponseCode</span><span class="op">();</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>                <span class="bu">InputStreamReader</span> in <span class="op">=</span> <span class="kw">new</span> <span class="bu">InputStreamReader</span><span class="op">(</span>http<span class="op">.</span><span class="fu">getInputStream</span><span class="op">());</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>                <span class="bu">BufferedReader</span> reader <span class="op">=</span> <span class="kw">new</span> <span class="bu">BufferedReader</span><span class="op">(</span>in<span class="op">);</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>                <span class="bu">String</span> line <span class="op">=</span> reader<span class="op">.</span><span class="fu">readLine</span><span class="op">();</span></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="op">(</span>line <span class="op">!=</span> <span class="kw">null</span> <span class="op">&amp;&amp;</span> line<span class="op">.</span><span class="fu">equals</span><span class="op">(</span>SmsClient<span class="op">.</span><span class="fu">CODE_TRUE</span><span class="op">))</span> <span class="op">{</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>                    command <span class="op">=</span> SmsClient<span class="op">.</span><span class="fu">COMMAND_GET_LAST_MESSAGE</span><span class="op">;</span></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>                    parameters <span class="op">=</span> <span class="st">&quot;command=&quot;</span> <span class="op">+</span> command<span class="op">;</span></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>                    url <span class="op">=</span> <span class="kw">new</span> <span class="bu">URL</span><span class="op">(</span>server <span class="op">+</span> <span class="st">&quot;/?&quot;</span> <span class="op">+</span> parameters<span class="op">);</span></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>                    http <span class="op">=</span> <span class="op">(</span><span class="bu">HttpURLConnection</span><span class="op">)</span>url<span class="op">.</span><span class="fu">openConnection</span><span class="op">();</span></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>                    http<span class="op">.</span><span class="fu">getResponseCode</span><span class="op">();</span></span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>                    in <span class="op">=</span> <span class="kw">new</span> <span class="bu">InputStreamReader</span><span class="op">(</span>http<span class="op">.</span><span class="fu">getInputStream</span><span class="op">());</span></span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>                    reader <span class="op">=</span> <span class="kw">new</span> <span class="bu">BufferedReader</span><span class="op">(</span>in<span class="op">);</span></span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>                    line <span class="op">=</span> reader<span class="op">.</span><span class="fu">readLine</span><span class="op">();</span></span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">String</span><span class="op">[]</span> tokens <span class="op">=</span> line<span class="op">.</span><span class="fu">split</span><span class="op">(</span>SmsClient<span class="op">.</span><span class="fu">FIELD_SEPARATOR</span><span class="op">);</span></span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">addMessage</span><span class="op">(</span>tokens<span class="op">[</span><span class="dv">0</span><span class="op">],</span> tokens<span class="op">[</span><span class="dv">1</span><span class="op">]);</span></span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>                    statusBar<span class="op">.</span><span class="fu">setStatus</span><span class="op">(</span><span class="st">&quot;Nuevo SMS.&quot;</span><span class="op">,</span> StatusBar<span class="op">.</span><span class="fu">CODE_SUCCESS</span><span class="op">);</span></span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span></span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span> <span class="cf">catch</span> <span class="op">(</span><span class="bu">IOException</span> ioe<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a>                <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span>ioe<span class="op">.</span><span class="fu">toString</span><span class="op">());</span></span>
+<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a>            <span class="fu">sleep</span><span class="op">(</span><span class="dv">500</span><span class="op">);</span></span>
+<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <figure>
 <img src="/report-i-send-sms/sms_04.png" alt="Bandeja de entrada" />
 <figcaption aria-hidden="true">Bandeja de entrada</figcaption>
 </figure>
 <h3 id="sentmessagepanel">SentMessagePanel</h3>
 <p>Esta parte es más simple, únicamente muestra la lista de mensajes enviados. En caso de no poder contactar al servidor al momento de iniciar la aplicación, ésta se mantiene continuamente reintentado, lo mismo pasa con las otras partes de la aplicación.</p>
-<p>Embed: <code>run.java</code></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="at">@Override</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span><span class="op">()</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span><span class="kw">true</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>smsClient<span class="op">.</span><span class="fu">testConnection</span><span class="op">())</span> <span class="op">{</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>            sentMessages <span class="op">=</span> smsClient<span class="op">.</span><span class="fu">getSentMessages</span><span class="op">();</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>sentMessages <span class="op">!=</span> <span class="kw">null</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">loadContacts</span><span class="op">();</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">formatAllMessages</span><span class="op">();</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>                messagePane<span class="op">.</span><span class="fu">updateUI</span><span class="op">();</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>                <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>            messagePane<span class="op">.</span><span class="fu">setText</span><span class="op">(</span><span class="st">&quot;&lt;h1&gt;Intentando contactar &quot;</span> <span class="op">+</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>                                <span class="st">&quot;al servidor...&lt;/h1&gt;&quot;</span><span class="op">);</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sleep</span><span class="op">(</span><span class="dv">2000</span><span class="op">);</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <figure>
 <img src="/report-i-send-sms/sms_05.png" alt="Mensajes enviados" />
 <figcaption aria-hidden="true">Mensajes enviados</figcaption>
@@ -204,7 +755,51 @@ Acostumbro codificar en Ingles puesto que considero es más homogéneo, permite 
 <figcaption aria-hidden="true">Lista de contactos</figcaption>
 </figure>
 <p>El código es sencillo:</p>
-<p>Embed: <code>contact-chooser.java</code></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span> <span class="kw">class</span> ContactChooser <span class="kw">extends</span> <span class="bu">JFrame</span> <span class="op">{</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">private</span> ContactList contactList<span class="op">;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="fu">ContactChooser</span><span class="op">(</span><span class="bu">String</span><span class="op">[]</span> contacts<span class="op">,</span> <span class="bu">String</span><span class="op">[]</span> numbers<span class="op">)</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">setSize</span><span class="op">(</span><span class="dv">300</span><span class="op">,</span> <span class="dv">400</span><span class="op">);</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">setLocationRelativeTo</span><span class="op">(</span><span class="kw">null</span><span class="op">);</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">setDefaultCloseOperation</span><span class="op">(</span><span class="bu">JFrame</span><span class="op">.</span><span class="fu">DISPOSE_ON_CLOSE</span><span class="op">);</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>        contactList <span class="op">=</span> <span class="kw">new</span> <span class="fu">ContactList</span><span class="op">(</span>contacts<span class="op">,</span> numbers<span class="op">);</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>        contactList<span class="op">.</span><span class="fu">setSelectionMode</span><span class="op">(</span><span class="bu">ListSelectionModel</span><span class="op">.</span><span class="fu">SINGLE_SELECTION</span><span class="op">);</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>        <span class="bu">JScrollPane</span> scrollPane <span class="op">=</span> <span class="kw">new</span> <span class="bu">JScrollPane</span><span class="op">(</span>contactList<span class="op">);</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">add</span><span class="op">(</span>scrollPane<span class="op">,</span> <span class="bu">BorderLayout</span><span class="op">.</span><span class="fu">CENTER</span><span class="op">);</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>        contactList<span class="op">.</span><span class="fu">updateUI</span><span class="op">();</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">JPanel</span> southPanel <span class="op">=</span> <span class="kw">new</span> <span class="bu">JPanel</span><span class="op">(</span><span class="kw">new</span> <span class="bu">FlowLayout</span><span class="op">(</span><span class="bu">FlowLayout</span><span class="op">.</span><span class="fu">RIGHT</span><span class="op">));</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>        <span class="bu">JButton</span> cancelButton <span class="op">=</span> <span class="kw">new</span> <span class="bu">JButton</span><span class="op">(</span><span class="st">&quot;Cancelar&quot;</span><span class="op">);</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>        cancelButton<span class="op">.</span><span class="fu">addActionListener</span><span class="op">(</span><span class="kw">new</span> <span class="bu">ActionListener</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">@Override</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>            <span class="kw">public</span> <span class="dt">void</span> <span class="fu">actionPerformed</span><span class="op">(</span><span class="bu">ActionEvent</span> event<span class="op">)</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>            <span class="op">{</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>                contactList<span class="op">.</span><span class="fu">setSelectedIndex</span><span class="op">(-</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>                <span class="fu">dispose</span><span class="op">();</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>        <span class="op">});</span></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>        <span class="bu">JButton</span> acceptButton <span class="op">=</span> <span class="kw">new</span> <span class="bu">JButton</span><span class="op">(</span><span class="st">&quot;Aceptar&quot;</span><span class="op">);</span></span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>        acceptButton<span class="op">.</span><span class="fu">addActionListener</span><span class="op">(</span><span class="kw">new</span> <span class="bu">ActionListener</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>            <span class="at">@Override</span></span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>            <span class="kw">public</span> <span class="dt">void</span> <span class="fu">actionPerformed</span><span class="op">(</span><span class="bu">ActionEvent</span> event<span class="op">)</span></span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>            <span class="op">{</span></span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>                <span class="dt">int</span> index <span class="op">=</span> contactList<span class="op">.</span><span class="fu">getSelectedIndex</span><span class="op">();</span></span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>                <span class="cf">try</span> <span class="op">{</span></span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">String</span> number <span class="op">=</span> contactList<span class="op">.</span><span class="fu">getNumber</span><span class="op">(</span>index<span class="op">);</span></span>
+<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a>                    numberText<span class="op">.</span><span class="fu">setText</span><span class="op">(</span>number<span class="op">);</span></span>
+<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">dispose</span><span class="op">();</span></span>
+<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span> <span class="cf">catch</span><span class="op">(</span><span class="bu">IndexOutOfBoundsException</span> e<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a>                <span class="op">}</span></span>
+<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a>        <span class="op">});</span></span>
+<span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a>        southPanel<span class="op">.</span><span class="fu">add</span><span class="op">(</span>cancelButton<span class="op">);</span></span>
+<span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a>        southPanel<span class="op">.</span><span class="fu">add</span><span class="op">(</span>acceptButton<span class="op">);</span></span>
+<span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a>        <span class="fu">add</span><span class="op">(</span>southPanel<span class="op">,</span> <span class="bu">BorderLayout</span><span class="op">.</span><span class="fu">SOUTH</span><span class="op">);</span></span>
+<span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>Hasta aquí las explicaciones, espero les sea de utilidad.</p>
 <h2 id="código-fuente">Código fuente</h2>
 <p>Tanto el servidor como el cliente se encuentran hospedados en Bitbucket, bajo la licencia GPLv3, con excepcón de NanoHTTPD, el cual tienen su propia licencia. Para obtenerlo puedes ir directamente a los siguientes sitios y descargar un archivo ZIP.</p>
@@ -217,7 +812,8 @@ Acostumbro codificar en Ingles puesto que considero es más homogéneo, permite 
 </li>
 </ul>
 <p>O bien puedes clonar el proyecto usando el Sistema de Control de Versiones <strong>git</strong>.</p>
-<p>Embed: <code>clone-projects.sh</code></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git clone https://rendon@bitbucket.org/rendon/smsserver.git</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git clone https://rendon@bitbucket.org/rendon/smsclient.git</span></code></pre></div>
 <h2 id="conclusión">Conclusión</h2>
 <p>Este primer proyecto fue interesante puesto que me permitió recordar algunas cosas y aprender muchas más, por ejemplo, cómo crear aplicaciones en Android, entiendo mejor la forma en que trabajan los servidores, entre otras cosas.</p>
 <p>Los programas en realidad no son tan complicados, con un poco de investigación y análisis estoy seguro de que lograrán entenderlos.</p>

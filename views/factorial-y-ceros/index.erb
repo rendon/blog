@@ -107,7 +107,18 @@ El numero de ceros al final de un entero <strong>N</strong> en base <em>b</em> e
 <p>Por ejemplo, calculemos la cantidad de ceros al final de 50!.</p>
 <p>Un valor para k que cumpla [latex] 5^{k+1} &gt; n,, [/latex] es 2. Entonces [latex]  +  = 10 + 2 = 12, [/latex].</p>
 <p>Ahora una posible solución.</p>
-<p>Embed: <code>z.cpp</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> z<span class="op">(</span><span class="dt">long</span> <span class="dt">long</span> n<span class="op">)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">long</span> <span class="dt">long</span> zeros <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">long</span> <span class="dt">long</span>  k <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span>k <span class="op">&lt;=</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        zeros <span class="op">+=</span> n <span class="op">/</span> k<span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        k <span class="op">*=</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> zeros<span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>Claro que hay otras formas de solucionar este problema pero creo que esto funciona bien.</p>
 <p>La <a href="http://www.olimpiadadeinformatica.org.mx/">Olimpiada Mexicana de Informática (OMI)</a> cuenta con la <a href="http://www.cmirg.com:8081/traingate/">OMI Training gate</a>, un portal de entrenamiento con juez en línea donde se puede resolver problemas de tipo olimpiada y ser evaluados al instante en el servidor y devolviendo los resultados en el mismo instante. En este portal se presenta un problema llamado <em>K-Ceros</em> el cual puede ser resuelto con lo que hemos visto en este post. Puedes dirigirte a este sitio y con previo registro tener acceso a gran cantidad de problemas de tipo olimpiada de diferentes niveles de complejidad. Se los recomiendo!</p>
 <p><strong>Tip:</strong> Para el problema de K-Ceros utilicen una búsqueda binaria para agilizar la busqueda del resultado.</p>

@@ -10,16 +10,42 @@
 <p>Enabling remote connections has several security issues and you should think about it before you proceed.</p>
 <h2 id="step-1-accept-tcpip-connections-from-any-host">Step 1: Accept TCP/IP connections from any host</h2>
 <p>Open the MySQL configuration file(<code>/etc/mysql/my.cnf</code>) and set the <code>bind-address</code> option to <code>0.0.0.0</code>.</p>
-<p>Embed: <code>my.cnf</code></p>
+<pre class="cnf"><code># Instead of skip-networking the default is now to listen only on
+# localhost which is more compatible and is not less secure.
+#bind-address   = 127.0.0.1
+bind-address    = 0.0.0.0
+</code></pre>
 <p>By default only local connections are allowed. <a href="http://dev.mysql.com/doc/refman/5.1/en/server-options.html#option_mysqld_bind-address">see more…</a>.</p>
 <h2 id="step-2-allow-root-user-to-log-on-from-any-host">Step 2: Allow root user to log on from any host</h2>
 <p>Start a session as root in the server, select the mysql database and see the users who can log on in this server and from which hosts.</p>
-<p>Embed: <code>allow-root.sh</code></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mysql <span class="at">-h</span> localhost <span class="at">-u</span> root <span class="at">-p</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Enter</span> password:</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">.</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">.</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">.</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Type</span> <span class="st">&#39;help;&#39;</span> or <span class="st">&#39;\h&#39;</span> for help. Type <span class="st">&#39;\c&#39;</span> to clear the current input statement.</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span><span class="op">&gt;</span> use mysql<span class="kw">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Reading</span> table information for completion of table and column names</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="ex">You</span> can turn off this feature to get a quicker startup with <span class="at">-A</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="ex">Database</span> changed</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span><span class="op">&gt;</span> select user, host, from user<span class="kw">;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="ex">+------------------+-----------+</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">user</span>             <span class="kw">|</span> <span class="ex">host</span>      <span class="kw">|</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="ex">+------------------+-----------+</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">root</span>             <span class="kw">|</span> <span class="ex">127.0.0.1</span> <span class="kw">|</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">root</span>             <span class="kw">|</span> <span class="ex">::1</span>       <span class="kw">|</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span>                  <span class="kw">|</span> <span class="ex">intel</span>     <span class="kw">|</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">root</span>             <span class="kw">|</span> <span class="ex">intel</span>     <span class="kw">|</span> <span class="op">&lt;</span>--</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span>                  <span class="kw">|</span> <span class="ex">localhost</span> <span class="kw">|</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">debian-sys-maint</span> <span class="kw">|</span> <span class="ex">localhost</span> <span class="kw">|</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">root</span>             <span class="kw">|</span> <span class="ex">localhost</span> <span class="kw">|</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="ex">+------------------+-----------+</span></span></code></pre></div>
 <p>My hostname is intel and default user is root, to allow connections from any host we need to set the hostname to <code>%</code>.</p>
-<p>Embed: <code>allow-root-cmd.sql</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mysql<span class="op">&gt;</span> <span class="kw">UPDATE</span> <span class="fu">user</span> <span class="kw">SET</span> host<span class="op">=</span><span class="st">&#39;%&#39;</span> <span class="kw">WHERE</span> <span class="fu">user</span><span class="op">=</span><span class="st">&#39;root&#39;</span> <span class="kw">AND</span> host<span class="op">=</span><span class="st">&#39;intel&#39;</span>;</span></code></pre></div>
 <p>Restart MySQL server and try a remote connection.</p>
 <h2 id="cant-connect-yet">Can’t connect yet?</h2>
 <p>If remote connection is getting refused, the problem might be your firewall, Debian by default allows all traffic and so I don’t need to add any rule to my firewall, to allow traffic to MySQL execute the following command.</p>
-<p>Embed: <code>allow-traffic.sh</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">iptables</span> <span class="at">-A</span> INPUT <span class="at">-i</span> eth0 <span class="at">-p</span> tcp <span class="at">-m</span> tcp <span class="at">--dport</span> 3306 <span class="at">-j</span> ACCEPT</span></code></pre></div>
 <p>Use your firewall to <a href="http://www.cyberciti.biz/faq/unix-linux-mysqld-server-bind-to-more-than-one-ip-address/">allow remote connection only to specific hosts</a>. That is all, see you in next post.</p>
 

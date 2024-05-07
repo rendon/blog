@@ -10,7 +10,31 @@ Estamos desarrollando un sitio web para un centro comercial y empleamos muchas i
 
 Gimp soporta scripts en [python](http://www.gimp.org/docs/python/index.html) y en [scheme](http://www.gimp.org/tutorials/Basic_Scheme/), de los cuales he optado por python. A continuación el código que emplee para resolver mi problema. 
 
-Embed: `script.py`
+
+```py
+import os, re
+from gimpfu import *
+
+for file in os.listdir(os.getcwd()):
+    if not re.search('jpeg', file):
+        continue
+
+    image = pdb.gimp_file_load(file, '1') # Open file
+    pdb.gimp_image_scale(image, 150, 150) # and scale
+
+    # Apply round corners filter
+    drawable = pdb.gimp_image_active_drawable(image)
+    pdb.script_fu_round_corners(image, drawable, 9, 1, 8, 8, 9, 0, 0)
+    image.merge_visible_layers(0)
+    drawable = pdb.gimp_image_active_drawable(image)
+
+    # Save file with PNG format
+    temp = file.split('.')
+    temp.pop()
+    output_file = temp.pop() + ".png"
+    pdb.gimp_file_save(image, drawable, output_file, 'Saved file')
+
+```
 
 En este ejemplo mis imágenes están en formato JPEG pero ustedes pueden modificarlo para adaptarlo a sus necesidades. En la línea 2 importamos todo el contenido del modulo `gimpfu` el cual contiene todo lo necesario para trabajar con gimp, `os` y `re` son de utilería.
 
@@ -24,4 +48,3 @@ La documentación de las funciones que empleo en el script y muchas más la prop
 
 - [1] [GIMP Python Documentation](http://www.gimp.org/docs/python/index.html)<br/>
 - [2] <a href="http://www.gimp.org/tutorials/Basic_Scheme/" target="_blank">Basic Scheme</a</a>>
-

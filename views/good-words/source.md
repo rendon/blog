@@ -19,4 +19,3 @@ Suppose a word consisting of only 0 and 1 is called good if there is no adjacent
 </table>
 
 The first thing that came to my mind was use dynamic programming but all indicates that in many occasions is very important don't rush out with the first idea since is very likely  isn't the best. Well, this is all for this post, I will see you in next post!The first thing that came to my mind was use dynamic programming but all indicates that in many occasions is very important don't rush out with the first idea since is very likely  isn't the best. Well, this is all for this post, I will see you in next post!
-

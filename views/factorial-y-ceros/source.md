@@ -108,7 +108,22 @@ Un valor para k que cumpla [latex] 5^{k+1} > n,\, [/latex] es 2. Entonces [latex
 
 Ahora una posible solución.
 
-Embed: `z.cpp`
+
+```cpp
+long long z(long long n)
+{
+    long long zeros = 0;
+    long long  k = 5;
+
+    while (k <= n) {
+        zeros += n / k;
+        k *= 5;
+    }
+
+    return zeros;
+}
+
+```
 
 Claro que hay otras formas de solucionar este problema pero creo que esto funciona bien.
 

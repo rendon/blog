@@ -31,7 +31,25 @@ $$(abc) \bmod m = ((a \bmod m)(b \bmod m)(c\bmod m))\bmod m$$
 
 Por ejemplo, sea *n = 105* y *m = 9*, entonces n%m = ((3 % 9) * (5 % 9) * (7 % 9)) % 9 = (3 * 4 * 2) % 9 = 24 % 9 = 6, lo cual es fácil comprobar. Cuando tenemos un número *b* elevado a una potencia *p* sabemos que eso equivale a multiplicar la base *b* un número de veces igual a *p*, por ejemplo, 3^4 = 3 * 3 * 3 * 3. Entonces podemos aplicar **(1)** para el primer problema *(b^p) % m*. Como *p* puede ser muy grande entonces usamos [exponenciación por cuadrados repetidos](/recursion). Una posible implementación en C es la siguiente.
 
-Embed: `modpow.c`
+
+```c
+int modpow(int b, int p, int m)
+{
+    int pow = 1;
+
+    while (p > 0) {
+        if (p % 2 == 1) {
+            pow = (pow * b) % m;
+        }
+
+        b = (b * b) % m;
+        p /= 2;
+    }
+
+    return pow % m;
+}
+
+```
 
 ## Modulo cuando conocemos los dígitos del dividendo
 
@@ -45,7 +63,22 @@ $$(a + b + c) \bmod m = ((a \bmod m) + (b \bmod m) + (c \bmod m)) \bmod m$$
 
 Con toda esta información podemos formular el siguiente algoritmo que resuelve el problema que estamos tratando.
 
-Embed: `mod.c`
+
+```c
+int mod(const char* digits, int m)
+{
+    int i, n = 0;
+    int size = strlen(digits);
+
+    for (i = 0; i < size; i++) {
+        n = n * 10 + digits[i] - '0';
+        n = n % m;
+    }
+
+    return n % m;
+}
+
+```
 
 Si el resultado que devuelve esta función es cero entonces *n* es divisible por *m*.
 
@@ -67,4 +100,3 @@ La teoría de números es muy interesante, es posible dar solución a problemas 
 <tr><td>[1]</td><td>*Art of Programming Contest*, 2ed, Ahmed Shamsul Arefin</td></tr>
 <tr><td>[2]</td><td>*Elementary Number Theory With Applications*, 2ed, Thomas Koshy</td></tr>
 </table>
-

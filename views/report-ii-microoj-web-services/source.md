@@ -97,11 +97,53 @@ Los servicios son funciones normales en PHP, la diferencia es que tenemos que re
 
 Función:
 
-Embed: `create-problem.php`
+
+```php
+function create_problem($user, $password, $title, $description, $author)
+{
+    if ($this->authenticate_user($user, $password) != VALID_USER) {
+        return INVALID_USER;
+    }
+
+    $mysqli = $this->open_db();
+    $query = $this->fips($title,
+                         $description,
+                         $author);
+
+    $mysqli->query("SET NAMES UTF8");
+    $mysqli->query($query);
+    $code = $mysqli->insert_id;
+
+    if ($code == 0) {
+        if ($mysqli->errno == ER_DUP_ENTRY) {
+            return ER_TITLE_ALREADY_TAKEN;
+        } else {
+            return ER_FAILED_TO_INSERT_RECORD;
+        }
+    }
+
+    $mysqli->close();
+    return $code;
+}
+
+```
 
 Registro del servicio:
 
-Embed: `register.php`
+
+```php
+$server->register('Judge.create_problem',
+    array(
+        'user' => 'xsd:string',
+        'password' => 'xsd:string',
+        'title' => 'xsd:string',
+        'description' => 'xsd:string',
+        'author' => 'xsd:integer'),
+    array('return' => 'xsd:integer'),
+    'http://localhost/microoj_ws/judge.php'
+);
+
+```
 
 El nombre del servicio comienza con _Judge._ porque la función es parte de la clase _Judge_. El primer argumento es el nombre del servicio, el segundo argumento es un arreglo especificando los datos que require el servicio, el tercer array es para especificar los datos que retorna el servicio, el último argumento es simplemente para documentación.
 
@@ -109,11 +151,47 @@ El nombre del servicio comienza con _Judge._ porque la función es parte de la c
 
 Para algunos de los servicios retornamos más de un dato, por ejemplo, _get_problem_ y _get_user_data_  que retornan una estructura con los datos del problema y del usuario respectivamente, o _get_all_problems_ que retorna una lista de problemas. Veamos como crear un tipo de dato complejo y después un arreglo de objetos complejos.
 
-Embed: `add-complex-type.php`
+
+```php
+$server->wsdl->addComplexType('Problem', 'complexType', 'struct', 'all', '',
+    array(
+        'id' => array(
+            'type' => 'xsd:string',
+            'minOccurs' => '1',
+            'maxOccurs' => '1'),
+        'title' => array(
+            'type' => 'xsd:string',
+            'minOccurs' => '1',
+            'maxOccurs' => '1'),
+        'description' => array(
+            'type' => 'xsd:string',
+            'minOccurs' => '1',
+            'maxOccurs' => '1')
+        )
+    );
+
+```
 
 En este código especificamos el nombre del tipo de dato, los campos que contiene, los tipos de datos de cada campo, etc. Ahora un arreglo de objetos tipo **Problem**.
 
-Embed: `add-complex-type-2.php`
+
+```php
+$server->wsdl->addComplexType(
+    'ArrayOfProblem',
+    'complexType',
+    'array',
+    'sequence',
+    '',
+    array(
+        'problem' => array(
+            'type'      => 'tns:Problem',
+            'minOccurs' => '0', 
+            'maxOccurs' => 'unbounded'
+        )
+    )
+);
+
+```
 
 Y es así como se procede con el resto de los servicios.
 
@@ -129,11 +207,42 @@ Para poder utilizar los servicios del Web Service será necesaria una herramient
 
 Veamos como establecer comunicación con el servidor para crear un usuario.
 
-Embed: `client-conn.rb`
+
+```rb
+require 'savon'
+
+client = Savon::Client.new do
+    # Dirección de nuestro servicio
+    wsdl.document = "http://localhost/microoj_ws/judge.php?wsdl"
+end
+
+user_name = "usuario"
+password = "1a2b3c"
+request = client.request "Judge.create_user" do
+    soap.body = {
+        :name => user_name,
+        :password => password
+    }
+end
+
+response = request.to_hash[:judge_create_user_response]
+puts response
+insert_id = response[:return].to_i
+puts insert_id
+
+```
 
 Al ejecutarlo debe arrojar algo similar a esto:
 
-Embed: `client-conn-output.txt`
+
+```txt
+. Logs
+.
+.
+{:return=>"4", :"@xmlns:ns1"=>"http://schemas.xmlsoap.org/soap/envelope/"}
+4
+
+```
 
 El ejemplo anterior da por hecho que los servidores Apache y MySQL están encendidos y que la base de datos ya esta instalada. 
 
@@ -180,7 +289,13 @@ Ahora que ya vimos como trabaja el cliente, es momento de explicar a grandes ras
 
 En este punto vamos a asumir que ROR ya esta instalado y configurado. Ejecuta los siguientes comandos para crear el proyecto.
 
-Embed: `create-project.sh`
+
+```sh
+$ mkdir microoj
+$ cd microoj
+$ rails new MicroOJ
+
+```
 
 El tercer comando genera el esquelo de nuestra aplicación.
 
@@ -224,11 +339,71 @@ La alta de usuarios ocurre de la siguiente manera. El archivo _app/views/users/n
 
 El código que se encarga de crear al nuevo usuario se encuentra en el archivo _app/controllers/users_controller.rb_. El método _new_ se ejecuta cuando el usuario accede al formulario de registro, lo que hace es crear un objeto de tipo **User**, cuyos datos miembro estan enlazados a los campos del formulario.
 
-Embed: `new-action.rb`
+
+```rb
+def new
+    @user = User.new
+end
+
+```
 
 El método _create_ se ejecuta en cuanto el usuario envía los datos de registro. Aquí se realiza la validación, y en caso de que la validación sea satisfactoria se procede a enviar los datos al servidor. En caso contrario se redirecciona nuevamente al formulario con el mensaje de error correspondiente.
 
-Embed: `create-action.rb`
+
+```rb
+def create
+    @user = User.new(user_params)
+    if @user.valid?
+        client = Savon::Client.new do
+            wsdl.document = WSDL_LOCATION
+        end
+
+        name = params[:user][:name]
+        password = params[:user][:password]
+
+        url = SecureRandom.urlsafe_base64
+        remember_token = Digest::SHA1.hexdigest(url.to_s)
+        request = client.request "Judge.create_user" do
+            soap.body = {
+                :user => name,
+                :password => password,
+                :remember_token => remember_token
+            }
+        end
+
+        response = request.to_hash[:judge_create_user_response]
+        id = response[:return].to_i
+
+        if id > 0
+            flash[:success] = "Bienvenido a Micro OJ"
+
+            request = client.request "Judge.get_user_data" do
+                soap.body = {
+                    :user => name,
+                    :password => password
+                }
+            end
+
+            response = request.to_hash[:judge_get_user_data_response]
+            user_data = response[:user]
+            user = User.new
+            user.id = user_data[:id]
+            user.name = user_data[:id]
+            user.password = user_data[:password]
+            user.remember_token = user_data[:remember_token]
+
+            sign_in user
+            redirect_to root_path
+        else
+            render 'new'
+        end
+
+    else
+        render 'new' # Pending
+    end
+end
+
+```
 
 ### Inicio de sesión
 
@@ -236,17 +411,70 @@ El diseño del formulario se encuentra en el archivo _app/views/sessions/new.htm
 
 La código que se encarga de crear la sesión se encuentra en el archivo _app/controllers/sessions_controller.rb_, en el método _create_:
 
-Embed: `sessions-create-action.rb`
+
+```rb
+def create
+    client = Savon::Client.new do
+        wsdl.document = WSDL_LOCATION
+    end
+
+    request = client.request "Judge.authenticate_user" do
+        soap.body = {
+            :user => params[:session][:name],
+            :password => params[:session][:password]
+        }
+    end
+
+    answer = request[:judge_authenticate_user_response][:answer].to_i
+    if answer == VALID_USER
+        request = client.request "Judge.get_user_data" do
+            soap.body = {
+                :user => params[:session][:name],
+                :password => params[:session][:password]
+            }
+        end
+
+        response = request.to_hash[:judge_get_user_data_response]
+        user_data = response[:user]
+        user = User.new
+        user.id = user_data[:id]
+        user.name = params[:session][:name]
+        user.password = params[:session][:password]
+        user.remember_token = user_data[:remember_token]
+
+        sign_in user
+        redirect_to root_path
+    else
+        flash.now[:error] = 'Combinación usuario/contraseña invalida'
+        render 'new'
+    end
+end
+
+```
 
 ### Cierre de sesión
 
 Cerrar sesión básicamente equivale a destruir los datos del usuario actual para que ya no se pueda comunicar con el servidor como usuario registrado, esta acción se encuentra en el método _destroy_, en el mismo archivo del paso anterior.
 
-Embed: `sessions-destroy-action.rb`
+
+```rb
+def destroy
+    sign_out
+    redirect_to root_path
+end
+
+```
 
 El método destroy llama a otro método, _sign_out_, el cual se encuentra en el archivo _app/helpers/sessions_helper.rb_, junto con otros métodos auxiliares para el manejo de sesiones.
 
-Embed: `sessions-sign-out.rb`
+
+```rb
+def sign_out
+    self.current_user = nil
+    cookies.delete(:remember_token)
+end
+
+```
 
 ### Creación de un problema
 
@@ -256,17 +484,137 @@ El archivo _app/views/problems/new.html.erb_ contiene el diseño del formulario 
  
 El archivo _app/controllers/problems_controller.rb_ contiene la lógica de la creación. El método _new_ crea un objeto de tipo **Problem**, cuyos datos miembro estan enlazados a los campos del formulario.
 
-Embed: `problems-new-action.rb`
+
+```rb
+def new
+    @problem = Problem.new
+end
+
+```
 
 Cuando el usuario envía el problema, el método _create_ se encarga de realizar la conexión al servidor, enviar los datos y proveer una respuesta al usuario.
 
-Embed: `problems-create-action.rb`
+
+```rb
+def create
+    @problem_saved = false
+    parameters = problem_params
+    @problem = Problem.new(parameters)
+    if not @problem.valid?
+        render 'new'
+    else
+        client = Savon::Client.new do
+            wsdl.document = WSDL_LOCATION
+        end
+
+        title = parameters[:title]
+        description = parameters[:description]
+        author = parameters[:author]
+
+        request = client.request "Judge.create_problem" do
+            soap.body = {
+                :user => current_user.name,
+                :password => current_user.password,
+                :title => title,
+                :description => CGI.escapeHTML(description),
+                :author => author
+            }
+        end
+
+        response = request.to_hash[:judge_create_problem_response]
+        @insert_problem_code = response[:return]
+
+        if @insert_problem_code.to_i > 0
+            @problem_saved = true
+            @problem_saved_id = @insert_problem_code
+            @problem_title = parameters[:title]
+            @problem_statement = parameters[:description]
+            @problem_author = author
+
+            @test_cases = []
+            id = @insert_problem_code.to_i
+            1.upto(TEST_CASES_PER_PROBLEM) do |tc|
+                input_key  = "in_" + tc.to_s
+                output_key = "out_" + tc.to_s
+                request = client.request "Judge.save_test_case" do
+                    soap.body = {
+                        :user => current_user.name,
+                        :password => current_user.password,
+                        :id_problem => id,
+                        :input => CGI.escapeHTML(params[input_key]),
+                        :output => CGI.escapeHTML(params[output_key])
+                    }
+                end
+
+                response = request.to_hash[:judge_save_test_case_response]
+                test_id = response[:return].to_i
+                @test_cases << {"id" => test_id, "in" => params[input_key],
+                                "out" => params[output_key]}
+            end
+
+            render 'saved'
+        else
+            msg = "Ocurrio un error al intentar guardar el problema."
+            @problem.errors.add("Error:", msg)
+            render 'new'
+        end
+
+    end
+end
+
+```
 
 ### Envio de una solución
 
 El formulario para el envio de soluciones se localiza en el archivo _app/views/solutions/new.html.erb_. El controlador **Solutions** es el que se encarga de la lógica de esta operación:
 
-Embed: `solutions-create-action.rb`
+
+```rb
+def create
+  @id_problem = params[:id_problem]
+  @id_user = params[:id_user]
+  @source_code = params[:source_code]
+  @language = params[:language]
+
+  client = Savon::Client.new do
+      wsdl.document = WSDL_LOCATION
+  end
+
+  request = client.request "Judge.save_solution" do
+      soap.body = {
+          :user => current_user.name,
+          :password => current_user.password,
+          :id_problem => params[:id_problem],
+          :source_code => params[:source_code],
+          :language => params[:language]
+      }
+  end
+
+  response = request.to_hash[:judge_save_solution_response]
+  @submission_answer = response[:return]
+
+  if @submission_answer[:error].to_i == SU_COMPILATION
+      id = @submission_answer[:id].to_i
+      request = client.request "Judge.test_solution" do
+          soap.body = { 
+              :user => current_user.name,
+              :password => current_user.password,
+              :id_solution => id,
+          }
+      end
+
+      response = request.to_hash[:judge_test_solution_response]
+      @test_results = response[:return][:item]
+  else
+      request = client.request "Judge.get_last_error"
+      response = request.to_hash[:judge_get_last_error_response]
+      @error_message = response[:message]
+  end
+
+  render 'submission_result'
+end
+
+```
 
 Estas son las partes más importantes, creo que con esto podrán entender el resto de las operaciones.
 
@@ -289,7 +637,12 @@ El código tanto del cliente como del servidor están disponibles en Bitbucket e
 
 O bien pueden clonar los repositorios desde la consola:
 
-Embed: `clone-projects.sh`
+
+```sh
+$ git clone https://rendon@bitbucket.org/rendon/microoj.git
+$ git clone https://rendon@bitbucket.org/rendon/microoj_ws.git
+
+```
 
 La licencia de ambos proyectos es GPLv3, con excepción de los componentes empleados, los cuales tienen sus propias licencias.
 
@@ -312,4 +665,3 @@ Un sistema de juez en línea es más complejo de lo que se muestra en esta prác
 - [Ubuntu, Ruby, RVM, Rails, and You](http://ryanbigg.com/2010/12/ubuntu-ruby-rvm-rails-and-you/)
 - [Ruby on Rails Tutorial](http://ruby.railstutorial.org/)
 - [Documentación de Savon](http://savonrb.com/)
-

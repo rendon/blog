@@ -5,7 +5,17 @@ String matching is a very common problem, given a text $T$ and a pattern $P$ fin
 
 The most easy (and naive) algorithm to solve this problem is to slide off $P$ through $T$ and see if there is a match. Something like this:
 
-Embed: `naive-search.cpp`
+
+```cpp
+for (int i = 0; i + P.length <= T.length; i++) {
+    int j = 0;
+    while (P[j] == T[i+j])
+        j++;
+    if (j == P.length)
+        // We found a match!
+}
+
+```
 
 However, much more efficient solutions exists to this problem, the Z algorithm is one of them.
 
@@ -67,7 +77,34 @@ Here we know two things, $x \neq y$  and $y \neq w$. How about $x$ and $w$? We d
 
 Okay, here is an implementation to complement the explanation:
 
-Embed: `implementation.cpp`
+
+```cpp
+Z[0] = n;
+int l = 0, r = 0;
+for (int k = 1; k < n; k++) {
+    if (r < k) {
+        l = r = k;
+        while (S[r] == S[r-l])
+            r++;
+        Z[k] = r - l;
+    } else {
+        int b = r - k;
+        int j = k - l; // j is k'
+        if (Z[j] < b) {
+            Z[k] = Z[j];
+        } else if (Z[j] > b) {
+            Z[k] = b;
+        } else {
+            l = k;
+            r = k + b;
+            while (S[r] == S[r-l])
+                r++;
+            Z[k] = r - l;
+        }
+    }
+}
+
+```
 
 Since $l$ and $r$ never decrease the complexity of this algorithm is $O(n)$.
 

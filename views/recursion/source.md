@@ -43,7 +43,15 @@ Antes de proceder con la implementación veamos un ejemplo para ver como se comp
 
 Veamos ahora una implementación de esta función en C.
 
-Embed: `factorial.c`
+
+```c
+int factorial(int n)
+{
+    if (n == 0) return 1;
+    else return n * factorial(n - 1);
+}
+
+```
 
 La condición en la línea 2 es nuestro caso base, el problema se puede resolver directamente sin necesidad de continuar con la recursión. Más adelate cuando generemos permutaciones vera la relación que existe entre la función factorial y el número de permutaciones.
 
@@ -65,7 +73,15 @@ Un ejemplo siempre ayuda. Sea $a=489$ y $b = 324$.
 
 En este punto *b* vale cero y por tanto el algoritmo ha terminado, el último residuo diferente de cero es 3 y por ende el MCD(489, 324) = 3. Veamos una implementación recursiva en C.
 
-Embed: `gcd.c`
+
+```c
+int gcd(int a, int b) // a > b
+{
+    if (b == 0) return a;
+    else return gcd(b, a % b);
+}
+
+```
 
 ## Exponenciación rápida
 
@@ -77,7 +93,19 @@ Un algoritmo lineal tiene un buen desempeño sin embargo existen problemas donde
 
 El algoritmo recursivo que aquí se describe se base en la regla de exponenciación que nos dice que $(a^n)^m = a^{nm}$ con la cual podemos reformular $a^n$ como $(a^2)^{n/2} (n \bmod 2)$. Aprovechando esta propiedad se puede diseñar un algoritmo de complejidad $O(\log_{2} n)$.
 
-Embed: `power.c`
+
+```c
+int power(int a, int n)
+{
+    if (n == 0)
+        return 1;
+    if (n%2 == 0)
+        return square(power(a, n / 2)); // square(a) returns a^2
+    else
+        return a * power(a, n - 1);
+}
+
+```
 
 Establecemos el caso base en la línea 3 gracias a que por definición cualquier número elevado a una potencia cero es igual a la unidad.
 
@@ -98,7 +126,15 @@ En términos matemáticos esta sucesión se describe con la siguiente función:
 
 $$f(n) = \begin{cases} 0 & \text{si n = 0} \\\\ 1 & \text{si n = 1} \\\\ f(n - 1) + f(n - 2) & \text{si n > 1} \end{cases}$$
 
-Embed: `fibonacci.c`
+
+```c
+int fibonacci(unsigned int n)
+{
+    if (n == 0 || n == 1) return n;
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+```
 
 Note que el parámetro es de tipo `unsigned int` para asegurar que *n* siempre será mayor o igual a cero(el compilador nos advertirá), según lo especifica la función de fibonacci.
 
@@ -120,7 +156,15 @@ Inicialmente se empieza con un solo elemento, el 1 el punto más alto del trián
 
 La código que se muestra a continuación calcula el valor ubicado en la fila *i*, columna *j*  del triángulo de pascal. Cabe decir que esta versión del algoritmo es muy ineficiente pero se muestra por cuestiones didácticas.
 
-Embed: `pascal.c`
+
+```c
+int pascal(int i, int j)
+{
+    if (i == j || j == 1) return 1;
+    return pascal(i - 1, j - 1 + pascal(i - 1, j);
+}
+
+```
     
 <!--Búsqueda-->
 ## Búsqueda binaria
@@ -135,7 +179,22 @@ Quizás una imagen ayuda un poco a entender este procedimiento.
 
 Una posible implementación de este algoritmo de forma recursiva es la siguiente.
 
-Embed: `binary-search.c`
+
+```c
+bool binary_search(int A[], int v, int l, int u)
+{
+    int m = (l + u)/2;
+    if (l > u)
+        return false;
+    if (v == A[m])
+        return true;
+    else if(v < A[m])
+        return binary_search(A, v, l, m - 1);
+    else
+        return binary_search(A, v, m + 1, u);
+}
+
+```
 
 ## Permutaciones
 
@@ -164,7 +223,36 @@ Para un elemento la única permutación es sí mismo. Para dos elementos colocam
 
 Esto muestra que podemos reducir el problema a un algoritmo recursivo que para *n* elementos se deben generar todas las permutaciones formadas por todas las permutaciones de *n - 1* elementos precedidas del elemento n.
 
-Embed: `perm.c`
+
+```c
+// inicialmente se llama  a perm con el total de elementos en el conjunto
+void perm(int n)
+{
+    int i, tmp;
+    // Caso base: A[0..N-1] contiene la permutacion, podemos hacer lo
+    // que sea con ella, que tal imprimirla :)
+    if (n == 0) { 
+        for (i = 0; i < N; i++)
+            printf("%d", A[i]);
+        printf("\n");
+    } else {
+        for (i = 0; i < n; i++) { // Para cada elemento en A
+            tmp = A[n - 1];       // Mandamos el elemento i al final
+            A[n - 1] = A[i];      // del arreglo con un intercambio
+            A[i] = tmp;
+            
+            // Ahora generamos las permutaciones
+            // de los n - 1 elementos restantes
+            perm(n - 1);    
+        
+            tmp = A[n - 1]; // Regresamos el elemento i a su lugar
+            A[n - 1] = A[i];
+            A[i] = tmp;
+        }
+    }
+}
+
+```
 <pre lang="c" >
 </pre>
 
@@ -178,19 +266,87 @@ Todo algoritmo recursivo puede ser implementado en forma iterativa, y viceversa.
 
 ### Factorial
 
-Embed: `factorial2.c`
+
+```c
+int factorial2(int n)
+{
+    int f = 1;
+    for (int i = 2; i <= n; i++) {
+        f *= i;
+    }
+
+    return f;
+}
+
+```
 
 ### MCD
 
-Embed: `gcd2.c`
+
+```c
+int gcd2(int a, int b) // a > b
+{
+    int tmp;
+
+    while (b != 0) {
+        tmp = b;
+        b = a % b;
+        a = tmp;
+    }
+
+    return a;
+}
+
+```
 
 ### Fibonacci
 
-Embed: `fibonacci-iterative.c`
+
+```c
+int fibonacci(unsigned int n)
+{
+    int a = 0, b = 1, c = 1, i;
+    if (n == 0)
+        return 0;
+
+    if (n == 1 || n == 2)
+        return 1;
+
+    for (i = 3; i <= n; i++) {
+        a = b;
+        b = c;
+        c = a + b;
+    }
+
+    return c;
+}
+
+```
 
 ### Exponenciación rápida
 
-Embed: `power2.c`
+
+```c
+int power2(int a, int n)
+{
+    int p = 1;
+    if (n == 0)
+        return 1;
+
+    while (n > 0) {
+        if (n % 2 == 1) {
+            p *= a;
+            n--;
+        } else {
+            p *= p;
+            n /= 2;
+        }
+    }
+
+    return p;
+}
+
+```
 
 Algunos no son tan fáciles de portar a iterativo. De manera interna la recursión trabaja con una pila, cada llamada recursiva significa crear una copia de todos los valores actuales en la función y ponerlos en la pila, para después cuando termine la ejecución de la llamada recursiva se puedan restaurar los valores tal y como estaban. En muchos casos es necesario utilizar una pila explícitamente para su versión iterativa.
 
