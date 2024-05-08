@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
 function convert() {
-    ~/projects/blog/bin/embed < source.md > out.md
-    mv out.md source.md
+    # ~/projects/blog/bin/embed < source.md > out.md
+    # mv out.md source.md
     # sed -i "s/<%= file(post, '\([^']*\)', '\([^']*\)') %>/[\2](\1)/g" source.md
+    # sed -i "s/<%= file(post, '\([^']*\)') %>/[\1](\1)/g" source.md
     # sed -i "s/<%= src_file(post, '\([^']*\)') %>/[\1](\1)/g" source.md
 
     # # <%= link_to('http://adventofcode.com/', 'Advent of Code', target: :blank) %>
@@ -56,17 +57,17 @@ function convert() {
 
     # sed -i "s/add_bib('\([^']*\)', *'\([^']*\)', *'\([^']*\)', *'\([^']*\)');\?/- [\3](\4)/g" source.md
 
-    # sed -i "s/!\[\(.*\)\](\(.*\))/![\1](\/$1\/\2)/g" source.md
+    sed -i "s/!\[\(.*\)\](\(.*\))/![\1](\/$1\/\2)/g" source.md
     # sed -i "/tex_set/d" source.md
-    
-    # <%= ref('dns_wicd_conf'); %>
+    # 
+    # # <%= ref('dns_wicd_conf'); %>
     # sed -i "s/<%= ref('.*') %>//g" source.md
     # sed -i "s/<%= ref('.*'); %>//g" source.md
 
 
     # sed -i 's/<%= ref(".*") %>//g' source.md
     # sed -i 's/<%= ref(".*"); %>//g' source.md
-    
+    # 
     # sed -i "s/<em>\([^<]*\)<\/em>/*\1*/g" source.md
     # sed -i "s/<strong>\([^<]*\)<\/strong>/**\1**/g" source.md
     # sed -i 's/<a href="\([^"]*\)"\( target="[^"]*"\)\?>\([^<]*\)<\/a>/[\3](\1)/g' source.md

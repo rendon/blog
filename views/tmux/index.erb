@@ -75,14 +75,10 @@ Sistema de control de versiones: git
 </li>
 </ul>
 <h3 id="el-prefijo-de-comandos">El prefijo de comandos</h3>
-<p>
-El prefijo de comandos es una combinación de teclas que avisa a tmux que estamos a punto de indicarle una acción que debe realizar, por defecto esta combinación es <kbd>Ctrl</kbd> + <kbd>b</kbd>, <kbd>PREFIX</kbd> de aquí en adelante. La instrucción <kbd>PREFIX</kbd> + <kbd>c</kbd> se traduce en presionar las teclas <kbd>Ctrl</kbd> y <kbd>b</kbd> simultáneamente, soltar las teclas y después presionar la letra <kbd>c</kbd>.
-</p>
+<p>El prefijo de comandos es una combinación de teclas que avisa a tmux que estamos a punto de indicarle una acción que debe realizar, por defecto esta combinación es <kbd>Ctrl</kbd> + <kbd>b</kbd>, <kbd>PREFIX</kbd> de aquí en adelante. La instrucción <kbd>PREFIX</kbd> + <kbd>c</kbd> se traduce en presionar las teclas <kbd>Ctrl</kbd> y <kbd>b</kbd> simultáneamente, soltar las teclas y después presionar la letra <kbd>c</kbd>.</p>
 <p>Tmux tiene un comando para cada acción y una serie de keybindings para ejecutar algunos de ellos con una combinación de teclas, de esto hablaremos más adelante. Para entrar en modo de comandos presiona <kbd>PREFIX</kbd> + <kbd>:</kbd> y teclea el comando.</p>
 <h3 id="copy-mode">Copy mode</h3>
-<p>
-Como ya se menciono, en este modo podemos navegar por el contenido que se ha generado en la terminal y copiar texto si así lo queremos. Presiona <kbd>PREFIX</kbd> + <kbd>[</kbd> para entrar en este modo.
-</p>
+<p>Como ya se menciono, en este modo podemos navegar por el contenido que se ha generado en la terminal y copiar texto si así lo queremos. Presiona <kbd>PREFIX</kbd> + <kbd>[</kbd> para entrar en este modo.</p>
 <h3 id="paneles">Paneles</h3>
 <p>Tmux permite dividir el área de trabajo en varias partes, llamadas paneles, estas pueden ser horizontales o verticales.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a># Creación de panel horizontal</span>
@@ -105,9 +101,7 @@ Como ya se menciono, en este modo podemos navegar por el contenido que se ha gen
 <img src="/tmux/hdud1_2.png" alt="Splits" />
 <figcaption aria-hidden="true">Splits</figcaption>
 </figure>
-<p>
-Una combinación muy util para moverse entre paneles es <kbd>PREFIX</kbd> + <kbd>q</kbd>, que enumera cada uno de los paneles por un momento, presiona el numero del panel al cual te quieres trasladar y listo.
-</p>
+<p>Una combinación muy util para moverse entre paneles es <kbd>PREFIX</kbd> + <kbd>q</kbd>, que enumera cada uno de los paneles por un momento, presiona el numero del panel al cual te quieres trasladar y listo.</p>
 <figure>
 <img src="/tmux/hdud1_3.png" alt="Paneles enumerados" />
 <figcaption aria-hidden="true">Paneles enumerados</figcaption>
@@ -119,9 +113,7 @@ Una combinación muy util para moverse entre paneles es <kbd>PREFIX</kbd> + <kbd
 <h3 id="aumentar-o-reducir-el-panel-horizontalmente.">Aumentar o reducir el panel horizontalmente.</h3>
 <div class="sourceCode" id="cb5"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>PREFIX + C-LEFT   (resize-pane -L)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>PREFIX + C-RIGHT  (resize-pane -R)</span></code></pre></div>
-<p>
-Para cerrar un panel tenemos dos opciones, terminar la sesión en la terminal con el comando exit o presionando <kbd>PREFIX</kbd> + <kbd>x</kbd>, que cierra el panel con previa confirmación.
-</p>
+<p>Para cerrar un panel tenemos dos opciones, terminar la sesión en la terminal con el comando exit o presionando <kbd>PREFIX</kbd> + <kbd>x</kbd>, que cierra el panel con previa confirmación.</p>
 <h3 id="organizando-paneles">Organizando paneles</h3>
 <p>Tmux proporciona cinco plantillas que nos permiten organizar nuestros paneles.</p>
 <ul>
@@ -141,9 +133,7 @@ Para cerrar un panel tenemos dos opciones, terminar la sesión en la terminal co
 <strong>tiled</strong>: Alinea todos los paneles en la pantalla con igual cantidad de espacio.
 </li>
 </ul>
-<p>
-Presiona <kbd>PREFIX</kbd> + <kbd>Espacio</kbd> para probar cada plantilla.
-</p>
+<p>Presiona <kbd>PREFIX</kbd> + <kbd>Espacio</kbd> para probar cada plantilla.</p>
 <h3 id="ventanas">Ventanas</h3>
 <p>Cuando los paneles no son suficientes o deseamos agrupar las terminales segun su actividad contamos con las ventanas.</p>
 <h6>
@@ -161,9 +151,7 @@ Moverse entre ventanas.
 <img src="/tmux/hdud1_4.png" alt="Ventanas" />
 <figcaption aria-hidden="true">Ventanas</figcaption>
 </figure>
-<p>
-El listado de ventanas activas se muestra en la parte inferior de la pantalla, cada ventana tiene un número que la identifica. Una forma fácil de cambiar de ventana es presionando <kbd>PREFIX</kbd> + numero_de_ventana. Si tienes demasiadas ventanas también es posible buscarlas por su nombre con <kbd>PREFIX</kbd> + <kbd>f</kbd> o bien presionar <kbd>PREFIX</kbd> + <kbd>w</kbd> para mostrar el listado de ventanas.
-</p>
+<p>El listado de ventanas activas se muestra en la parte inferior de la pantalla, cada ventana tiene un número que la identifica. Una forma fácil de cambiar de ventana es presionando <kbd>PREFIX</kbd> + numero_de_ventana. Si tienes demasiadas ventanas también es posible buscarlas por su nombre con <kbd>PREFIX</kbd> + <kbd>f</kbd> o bien presionar <kbd>PREFIX</kbd> + <kbd>w</kbd> para mostrar el listado de ventanas.</p>
 <h3 id="sesiones">Sesiones</h3>
 <p>Una sesión es una colección de pseudo terminales(ver man 7 pty) que son administradas por tmux. Cada sesión tiene una o más ventanas asociadas a ella. Las sesiones son persistentes y mantendrán su estado en caso de una desconexión. Aquí va un punto importante, si un programa se esta ejecutando cuando la sesión se interrumpe éste continuara su ejecución cuando la sesión sea reanudada.</p>
 <p>En otras palabras las sesiones sirven para crear entornos de trabajo personalizados, por ejemplo, si están trabajando en un proyecto y tienes abiertos varios archivos, un terminal interactivo de Ruby o Python, varias ventanas, etc. Si por alguna razón tienes que interrumpir tus actividades, resultaría un poco molesto tener que cerrar archivos, programas, paneles y ventanas, y una hora más tarde cuando regresas a trabajar, restablecer el entorno. La solución es crear una sesión y le asignamos un nombre acorde, si trabajas en más de un proyecto o tarea simplemente crea otra sesión y mantendrás tus áreas de trabajo organizadas. Aunque no lo indiquemos explícitamente tmux crea una sesión de forma automática cada vez que lo ejecutamos.</p>
@@ -206,9 +194,7 @@ El listado de ventanas activas se muestra en la parte inferior de la pantalla, c
 <div class="sourceCode" id="cb11"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>setw -g mode-keys vi</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>bind-key -t vi-copy &#39;v&#39; begin-selection</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>bind-key -t vi-copy &#39;y&#39; copy-selection</span></code></pre></div>
-<p>
-Con estas opciones activadas, haz lo siguiente para copiar contenido dentro de tmux, <strong>1)</strong> entra en modo copy, <strong>2)</strong> presiona la tecla v para iniciar la selección y muevete con las teclas <kbd>hjkl</kbd>, como en vim, <strong>3)</strong> presiona la tecla y para copiar la selección.
-</p>
+<p>Con estas opciones activadas, haz lo siguiente para copiar contenido dentro de tmux, <strong>1)</strong> entra en modo copy, <strong>2)</strong> presiona la tecla v para iniciar la selección y muevete con las teclas <kbd>hjkl</kbd>, como en vim, <strong>3)</strong> presiona la tecla y para copiar la selección.</p>
 <h3 id="moverse-entre-los-paneles-de-manera-similar-a-vim-con-los-splits.">Moverse entre los paneles de manera similar a vim con los splits.</h3>
 <div class="sourceCode" id="cb12"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a># Presiona PREFIX + [jkhl]</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a># para cambiar de panel</span>
@@ -245,9 +231,7 @@ Con estas opciones activadas, haz lo siguiente para copiar contenido dentro de t
 <span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>set-option -g pane-active-border-fg colour027</span></code></pre></div>
 <p>Longitud del historial.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>set -g history-limit 10000</span></code></pre></div>
-<p>
-Recargar configuración con <kbd>PREFIX</kbd> + <kbd>r</kbd>.
-</p>
+<p>Recargar configuración con <kbd>PREFIX</kbd> + <kbd>r</kbd>.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>unbind r</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>bind r source-file ~/.tmux.conf</span></code></pre></div>
 <p>Existen muchas más opciones de configuración pero creo que con esto es suficiente para comenzar.</p>
@@ -260,14 +244,10 @@ Recargar configuración con <kbd>PREFIX</kbd> + <kbd>r</kbd>.
 <h3 id="copiar-texto-al-portapapeles-del-sistema">Copiar texto al portapapeles del sistema</h3>
 <p>Estando en el modo copy es posible copiar texto para ser usado en otros paneles o ventanas dentro de tmux, pero no en otras aplicaciones, es decir, el texto copiado en tmux no se puede pegar en firefox, por citar un ejemplo. La siguiente línea soluciona el problema. Es necesario tener instalado el programa <code>xclip</code>.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>bind C-c run &quot;tmux save-buffer - | xclip -i -selection clipboard&quot;</span></code></pre></div>
-<p>
-Funciona de esta manera, entra en modo copy y copia el texto en cuestión tal como ya se ha visto. Sal del modo copy y presiona <kbd>PREFIX</kbd>, suelta y después <kbd>Ctrl</kbd>+<kbd>c</kbd> para colocar el contenido en el portapapeles del sistema.
-</p>
+<p>Funciona de esta manera, entra en modo copy y copia el texto en cuestión tal como ya se ha visto. Sal del modo copy y presiona <kbd>PREFIX</kbd>, suelta y después <kbd>Ctrl</kbd>+<kbd>c</kbd> para colocar el contenido en el portapapeles del sistema.</p>
 <p>Una desventaja que he notado con este truco es que una vez que lo usas vim ya no puede trabajar con el portapapeles del sistema(<code>"*</code>), aun no he encontrado una solución.</p>
 <h3 id="agregar-una-tecla-control-adicional">Agregar una tecla control adicional</h3>
-<p>
-Cuando reasigne <kbd>PREFIX</kbd> a <kbd>Ctrl</kbd> + <kbd>a</kbd> mencione que ésta combinación era más cómoda, y lo es en comparación a <kbd>Ctrl</kbd> + <kbd>b</kbd>, pero en realidad para mi es más accesible porque he reasignado la tecla de la ventana para que actúe como una tecla control adicional, esta asignación trabaja a nivel de sistema y no tiene relación directa con tmux pero a mi me resulta muy útil, en especial con vim.
-</p>
+<p>Cuando reasigne <kbd>PREFIX</kbd> a <kbd>Ctrl</kbd> + <kbd>a</kbd> mencione que ésta combinación era más cómoda, y lo es en comparación a <kbd>Ctrl</kbd> + <kbd>b</kbd>, pero en realidad para mi es más accesible porque he reasignado la tecla de la ventana para que actúe como una tecla control adicional, esta asignación trabaja a nivel de sistema y no tiene relación directa con tmux pero a mi me resulta muy útil, en especial con vim.</p>
 <p>Para realizar la re asignación emplea el comando <code>xmodmap</code> y agrega lo siguiente en el archivo <code>~/.Xmodmap</code>.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>remove Control = Control_L Control_R</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>remove mod4 = Super_L Super_R</span>

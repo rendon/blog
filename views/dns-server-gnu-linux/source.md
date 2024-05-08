@@ -4,7 +4,7 @@
 
 ## Introducción 
 
-<p>Las siglas DNS son la iniciales de _Domain Name System_, Sistema de Nombres de Dominio, es una base de datos distribuida y jerarquica, que almacena asignaciones de nombres de dominio a varios tipos de datos, como son direcciones IP. Un sistema de DNS permite emplear nombres faciles de recordar, tal como www.misitioweb.com, para localizar computadoras y otros recursos en una red TCP/IP.<%= cite('wp_dns') + cite('ms_dns') + cite('archlinux_dnsmasq') %></p>
+Las siglas DNS son la iniciales de _Domain Name System_, Sistema de Nombres de Dominio, es una base de datos distribuida y jerarquica, que almacena asignaciones de nombres de dominio a varios tipos de datos, como son direcciones IP. Un sistema de DNS permite emplear nombres faciles de recordar, tal como www.misitioweb.com, para localizar computadoras y otros recursos en una red TCP/IP.
 
 ## Configuración del cliente de DNS
 
@@ -97,8 +97,6 @@ Esto es todo por esta práctica. DNS es un tema extenso y complejo, en esta prá
 
 ## Referencias
 
-<%
 - [Domain Name System](https://en.wikipedia.org/wiki/Domain_Name_System)
 - [Domain Name System](http://technet.microsoft.com/en-US/network/bb629410.aspx)
 - [Dnsmasq](https://wiki.archlinux.org/index.php/Dnsmasq)
-%>

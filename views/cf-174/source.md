@@ -75,7 +75,7 @@ The number of primitive roots modulo n, if there are any, is equal to
 $ \varphi\left(\varphi\left(n\right)\right) $
 </blockquote>
 
-<p>Where $\varphi\left(n\right) $ is defined as: How many numbers $m$($1 \leq m < n$) are relatively prime to $n$, i.e. $gcd(n, m) = 1$. Since $p$ in the problem is guaranteed to be prime then $\varphi\left(p\right) = p - 1$ and we only need to compute $\varphi\left(p - 1\right)$, this can be done easily in $O(n)$.</p>
+Where $\varphi\left(n\right) $ is defined as: How many numbers $m$($1 \leq m < n$) are relatively prime to $n$, i.e. $gcd(n, m) = 1$. Since $p$ in the problem is guaranteed to be prime then $\varphi\left(p\right) = p - 1$ and we only need to compute $\varphi\left(p - 1\right)$, this can be done easily in $O(n)$.
 
 
 ```cpp

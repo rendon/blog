@@ -75,8 +75,7 @@
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  grid<span class="kw">[</span>r, c<span class="kw">]</span>(<span class="ss">/r, c) = true</span></span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="ss">end</span></span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="ss">puts grid.length</span></span></code></pre></div>
-<p>
-<p>For v2: Likewise, except that you have to alternate commands with Robo-Santa, the first command is for Santa, the second one isfor Robo-Santa, etc.</p>
+<p>For v2: Likewise, except that you have to alternate commands with Robo-Santa, the first command is for Santa, the second one is for Robo-Santa, etc.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>grid <span class="kw">=</span> <span class="kw">{[</span><span class="dv">0</span>, <span class="dv">0</span><span class="kw">]</span> <span class="kw">=&gt;</span> <span class="dv">true</span><span class="kw">}</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">def</span> move(r, c, d)</span>
@@ -104,7 +103,6 @@
 <h2 id="day-4-the-ideal-stocking-stuffer">Day 4: The Ideal Stocking Stuffer</h2>
 <p>Problem description: <a href="http://adventofcode.com/2015/day/4">day/4</a>.</p>
 <h3 id="solution-3">Solution</h3>
-<p>
 <p>For v1: Well, I just brute-forced this one, used Ruby’s <code>Digest::MD5</code> to compute the checksum.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span> <span class="vs">&#39;digest&#39;</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -120,7 +118,6 @@
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">end</span></span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  key <span class="kw">+=</span> <span class="dv">1</span></span>
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
-<p>
 <p>For v2: The same as v1, just add one more zero.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span> <span class="vs">&#39;digest&#39;</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -139,7 +136,6 @@
 <h2 id="day-5-doesnt-he-have-intern-elves-for-this">Day 5: Doesn’t He Have Intern-Elves For This?</h2>
 <p>Problem description: <a href="http://adventofcode.com/2015/day/5">day/5</a>.</p>
 <h3 id="solution-4">Solution</h3>
-<p>
 <p>For v1: Just follow the instructions <strong>carefully</strong> and you should be able to solve this problem.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">def</span> nice?(word)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  chars <span class="kw">=</span> word<span class="at">.split</span>(<span class="ss">//</span>)</span>
@@ -172,7 +168,6 @@
 <span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
 <span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="fu">puts</span> <span class="dt">File</span><span class="at">.readlines</span>(<span class="vs">&#39;input.txt&#39;</span>)<span class="at">.select</span> <span class="kw">{|</span>w<span class="kw">|</span> nice?(w<span class="at">.chomp</span>) <span class="kw">}</span><span class="at">.length</span></span></code></pre></div>
-<p>
 <p>For v2: Just follow the instructions <strong>even more carefully</strong>, I was trapped by a moment by a pesky bug in this version.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">def</span> nice?(word)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  chars <span class="kw">=</span> word<span class="at">.split</span>(<span class="ss">//</span>)</span>

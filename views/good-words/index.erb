@@ -11,9 +11,7 @@
 <blockquote>
 Suppose a word consisting of only 0 and 1 is called good if there is no adjacent one in the word. We are asked to find good words of length n.
 </blockquote>
-<p>
-At first the problem may appear difficult but actually it can be solved with a little insight: initially we have <em>n</em> spaces, the first good word is the one formed by only ‘0’s, ok?, if you decide the first digit to be ’0’ then you can fill up the remaining <em>n-1</em> as we like respecting the condition of no two adjacent ‘1’s, now if you decide the first digit to be ’1’ then the second digit must be ‘0’ and now we face with the problem of the first case but with <em>n-2</em>. If we are able to find all possible good words for <em>n = 1</em> and <em>n = 2</em> we’ll be able to get the answer for any <em>n</em> greater that two with W<sub>n</sub> = W<sub>n-1</sub> + W<sub>n-2</sub>.
-</p>
+<p>At first the problem may appear difficult but actually it can be solved with a little insight: initially we have <em>n</em> spaces, the first good word is the one formed by only ‘0’s, ok?, if you decide the first digit to be ’0’ then you can fill up the remaining <em>n-1</em> as we like respecting the condition of no two adjacent ‘1’s, now if you decide the first digit to be ’1’ then the second digit must be ‘0’ and now we face with the problem of the first case but with <em>n-2</em>. If we are able to find all possible good words for <em>n = 1</em> and <em>n = 2</em> we’ll be able to get the answer for any <em>n</em> greater that two with W<sub>n</sub> = W<sub>n-1</sub> + W<sub>n-2</sub>.</p>
 <table class="table">
 <tr>
 <th>

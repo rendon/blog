@@ -18,15 +18,9 @@
 <h3>
 Problema
 </h3>
-<p>
-Dado un numero N, siendo 1 &lt;= N &lt;= 1000000000, calcular el numero de ceros al final del resultado de N!.
-</p>
-<h3>
-Entrada
-</h3>
-<p>
-Un único número entero N, 1 &lt;= N &lt;= 1000000000.
-</p>
+<p>Dado un numero N, siendo 1 &lt;= N &lt;= 1000000000, calcular el numero de ceros al final del resultado de N!.</p>
+<h3 id="entrada">Entrada</h3>
+<p>Un único número entero N, 1 &lt;= N &lt;= 1000000000.</p>
 <h3>
 Salida
 </h3>
@@ -95,9 +89,7 @@ Bueno esto podría funcionar, sin embargo implementar el algoritmo descrito requ
 </li>
 </ul>
 <p>Esto último seria algo maravilloso si existiera… Y que creen? SI EXISTE!.</p>
-<p>
-El numero de ceros al final de un entero <strong>N</strong> en base <em>b</em> es igual al exponente de la máxima potencia de <em>b</em> que divide a N. Por ejemplo, sea N = 14000 en <em>base 10</em>, hay 3 ceros al final del número, la máxima potencia de 10 que divide a 14000 es 1000 = 10<sup>3</sup>. El exponente que al que se eleva 10 para dar 1000 es 3, hay tres ceros al final de 14000.
-</p>
+<p>El numero de ceros al final de un entero <strong>N</strong> en base <em>b</em> es igual al exponente de la máxima potencia de <em>b</em> que divide a N. Por ejemplo, sea N = 14000 en <em>base 10</em>, hay 3 ceros al final del número, la máxima potencia de 10 que divide a 14000 es 1000 = 10<sup>3</sup>. El exponente que al que se eleva 10 para dar 1000 es 3, hay tres ceros al final de 14000.</p>
 <p>La cantidad de ceros al final de los factoriales es un caso especial y se calcula como sigue.</p>
 <blockquote>
 <p>“El numero de ceros al final de un numero <strong>n</strong> en base 10 de <em>n! </em> es simplemente la multiplicidad del factor primo 5 en <em>n!</em>. Esto se puede determinar con este caso especial de la <a href="http://en.wikipedia.org/wiki/De_Polignac%27s_formula">formula de Polignac</a>:</p>

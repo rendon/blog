@@ -71,15 +71,11 @@ El simulador es una imagen de disco que podemos usar con VMware Player ([www.vmw
 
 El simulador consume muchos recursos, por defecto el simulador buscará una tarjeta de gráficos en nuestro sistema, si no contamos con una nos encontraremos con esto:
 
-<%= 
-figure(post, 'bbws_start_service_screen.png', caption: 'El emulador no arranca', label: 'bbws_start_service_screen', lang: :es);
- %>
+![El emulador no arranca](/report-iv-bb10-web-service/bbws_start_service_screen.png)
 
 La solución es entrar en uno de los modos seguros, en mi caso he optado por la resolución de pantalla 720x720 y modo seguro (opción 5).
 
-<%= 
-figure(post, 'bbws_start_service_screen_sol.png', caption: 'Elige el modo seguro si no se cuenta con una tarjeta gráfica', label: 'bbws_start_service_screen_sol', lang: :es);
- %>
+![Elige el modo seguro si no se cuenta con una tarjeta gráfica](/report-iv-bb10-web-service/bbws_start_service_screen_sol.png)
 
 
 ### Configuración de Qt Creator
@@ -95,44 +91,32 @@ Vamos a ejecutar Qt Creator desde la consola, pero antes vamos a ejecutar un scr
 
 El script de configuración exporta algunas variables de entorno que Qt Creator necesita para ubicar las herramientas necesarias. Una vez abierto Qt Creator, vamos a agregar el compilador: Tools -> Options ->  Build & Run.
 
-<%= 
-figure(post, 'bbws_qtcreator_qcc.png', caption: 'Configuración del compilador para BlackBerry', label: 'bbws_qtcreator_qcc', lang: :es);
- %>
+![Configuración del compilador para BlackBerry](/report-iv-bb10-web-service/bbws_qtcreator_qcc.png)
 
 Ahora hay que configurar el simulador: Tool -> Options -> Devices -> Add...:
 
-<%= 
-figure(post, 'bbws_qtcreator_add_sim_1.png', caption: 'Agrega un nuevo dispositivo tipo BlackBerry', label: 'bbws_qtcreator_add_sim_1', lang: :es);
- %>
+![Agrega un nuevo dispositivo tipo BlackBerry](/report-iv-bb10-web-service/bbws_qtcreator_add_sim_1.png)
 
 Especificamos la IP del simulador:
 
-<%= 
-figure(post, 'bbws_qtcreator_add_sim_2.png', caption: 'Detección del simulador', label: 'bbws_qtcreator_add_sim_2', lang: :es);
- %>
+![Detección del simulador](/report-iv-bb10-web-service/bbws_qtcreator_add_sim_2.png)
 
-<%= 
-figure(post, 'bbws_qtcreator_add_sim_3.png', caption: 'Detección del simulador', label: 'bbws_qtcreator_add_sim_3', lang: :es);
- %>
+![Detección del simulador](/report-iv-bb10-web-service/bbws_qtcreator_add_sim_3.png)
 
-<%= 
-figure(post, 'bbws_qtcreator_add_sim_4.png', caption: 'Detección del simulador', label: 'bbws_qtcreator_add_sim_4', lang: :es);
- %>
+![Detección del simulador](/report-iv-bb10-web-service/bbws_qtcreator_add_sim_4.png)
 
 La IP la podemos encontrar en la parte inferior derecha del simulador:
 
-<%= 
-figure(post, 'bbws_simulator_ip.png', caption: 'IP del simulador', label: 'bbws_simulator_ip', lang: :es);
- %>
+![IP del simulador](/report-iv-bb10-web-service/bbws_simulator_ip.png)
 
 Ahora deberíamos poder probar una aplicación "¡Hola, mundo!":
 
-<%=  figure(post, 'bbws_hello_world_1.png', caption: 'Nuevo proyecto, Paso 1', label: 'bbws_hello_world_1', lang: :es);  %>
-<%=  figure(post, 'bbws_hello_world_2.png', caption: 'Nuevo proyecto, Paso 2', label: 'bbws_hello_world_2', lang: :es);  %>
-<%=  figure(post, 'bbws_hello_world_3.png', caption: 'Nuevo proyecto, Paso 3', label: 'bbws_hello_world_3', lang: :es);  %>
-<%=  figure(post, 'bbws_hello_world_4.png', caption: 'Nuevo proyecto, Paso 4', label: 'bbws_hello_world_4', lang: :es);  %>
-<%=  figure(post, 'bbws_hello_world_5.png', caption: 'Nuevo proyecto, Paso 5', label: 'bbws_hello_world_5', lang: :es);  %>
-<%=  figure(post, 'bbws_hello_world_6.png', caption: 'Nuevo proyecto, Paso 6', label: 'bbws_hello_world_6', lang: :es);  %>
+![Nuevo proyecto, Paso 1](/report-iv-bb10-web-service/bbws_hello_world_1.png)
+![Nuevo proyecto, Paso 2](/report-iv-bb10-web-service/bbws_hello_world_2.png)
+![Nuevo proyecto, Paso 3](/report-iv-bb10-web-service/bbws_hello_world_3.png)
+![Nuevo proyecto, Paso 4](/report-iv-bb10-web-service/bbws_hello_world_4.png)
+![Nuevo proyecto, Paso 5](/report-iv-bb10-web-service/bbws_hello_world_5.png)
+![Nuevo proyecto, Paso 6](/report-iv-bb10-web-service/bbws_hello_world_6.png)
 
 Para más información sobre la configuración del entorno véase:
 
@@ -148,9 +132,7 @@ En el reporte anterior ya vimos como crear y registrar servicios en PHP usando N
 
 Nuestra base de datos consiste de 4 tablas, Cliente, Producto, Pedido y Detalle.
 
-<%= 
-figure(post, 'bbws_data_model.png', caption: 'Modelo de datos', label: 'bbws_data_model', lang: :es);
- %>
+![Modelo de datos](/report-iv-bb10-web-service/bbws_data_model.png)
 
 **NOTA:** Con el código fuente incluyo el modelo de la base de datos, fue diseñado utilizando MySQL Workbench y por lo tanto podrán exportar la base de datos desde ahí.
 
@@ -549,9 +531,7 @@ Hasta hace poco la tecnología empleada para crear aplicaciones BlackBerry era J
 
 Así lucirá la página principal de nuestra aplicación:
 
-<%= 
-figure(post, 'bbws_app_home.png', caption: 'Página principal de la aplicación', label: 'bbws_app_home', lang: :es);
- %>
+![Página principal de la aplicación](/report-iv-bb10-web-service/bbws_app_home.png)
 
 El diseño de esta página en QML es el siguiente:
 
@@ -625,9 +605,7 @@ Tab {
 
 La siguiente imagen muestra la interfaz de usuario para registrar nuevos pedidos.
 
-<%= 
-figure(post, 'bbws_app_shop.png', caption: 'Registro de pedidos', label: 'bbws_app_shop', lang: :es);
- %>
+![Registro de pedidos](/report-iv-bb10-web-service/bbws_app_shop.png)
 
 El diseño de la interfaz en QML es el siguiente:
 
@@ -836,9 +814,7 @@ bool Backend::saveRequest(QString idClient)
 
 Nuestra aplicación también permite consultar la lista de pedidos, aquí la interfaz:
 
-<%= 
-figure(post, 'bbws_app_query.png', caption: 'Consulta de pedidos', label: 'bbws_app_query', lang: :es);
- %>
+![Consulta de pedidos](/report-iv-bb10-web-service/bbws_app_query.png)
 
 El diseño en QML es el siguiente:
 
@@ -964,9 +940,7 @@ El objeto *_requestModel* esta **enlazado** a un objeto [ListView](http://develo
 
 Para esta operación solo tenemos que presionar un botón y se nos mostrará una barra de progreso que simulará el progreso de la operación.
 
-<%= 
-figure(post, 'bbws_app_upload.png', caption: 'Envío de pedidos al servidor', label: 'bbws_app_upload', lang: :es);
- %>
+![Envío de pedidos al servidor](/report-iv-bb10-web-service/bbws_app_upload.png)
 
 El código que realiza esta operación es el siguiente:
 
@@ -1036,9 +1010,7 @@ QString Backend::formattedRegisters()
 
 La actualización de catálogos es muy similar.
 
-<%= 
-figure(post, 'bbws_app_download.png', caption: 'Actualización de catálogos', label: 'bbws_app_download', lang: :es);
- %>
+![Actualización de catálogos](/report-iv-bb10-web-service/bbws_app_download.png)
 
 Como lo indica el texto del botón, esta operación borra los registros de la base de datos local y actualiza los catálogos con el servidor, he aquí el código:
 

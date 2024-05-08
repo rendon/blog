@@ -33,9 +33,7 @@
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    output_file <span class="op">=</span> temp.pop() <span class="op">+</span> <span class="st">&quot;.png&quot;</span></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    pdb.gimp_file_save(image, drawable, output_file, <span class="st">&#39;Saved file&#39;</span>)</span></code></pre></div>
 <p>En este ejemplo mis imágenes están en formato JPEG pero ustedes pueden modificarlo para adaptarlo a sus necesidades. En la línea 2 importamos todo el contenido del modulo <code>gimpfu</code> el cual contiene todo lo necesario para trabajar con gimp, <code>os</code> y <code>re</code> son de utilería.</p>
-<p>
-Desde una consola nos trasladamos al directorio donde están las imágenes y ejecutamos gimp. Vamos a Filters <code>-&amp;gt;</code>Python-Fu<code>-&amp;gt;</code>Console</code>, tenemos dos opciones, teclear el código ahí directamente o lo guardamos en un archivo y lo ejecutamos en el interprete con la función <code>execfile('script.py')</code>.
-</p>
+<p>Desde una consola nos trasladamos al directorio donde están las imágenes y ejecutamos gimp. Vamos a Filters <code>-&amp;gt;</code>Python-Fu<code>-&amp;gt;</code>Console</code>, tenemos dos opciones, teclear el código ahí directamente o lo guardamos en un archivo y lo ejecutamos en el interprete con la función <code>execfile('script.py')</code>.</p>
 <p>La documentación de las funciones que empleo en el script y muchas más la proporciona el mismo gimp y podemos acceder a ella con el botón <code>Browse...</code>. Hasta aquí con este post, espero que esta información les sea tan útil como a mi o más.</p>
 <figure>
 <img src="/gimp-scripting/gimp-documentation.png" alt="Documentación de GIMP" />

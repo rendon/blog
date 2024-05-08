@@ -14,14 +14,10 @@ Si listamos todos los números naturales menores a 10 que son multiplos de 3 o d
 </blockquote>
 <p>Versión original: <a href="http://projecteuler.net/index.php?section=problems&amp;id=1">Problem 1</a></p>
 <h2 id="análisis">Análisis</h2>
-<p>
-Lo primero que es necesario identificar es que se nos esta pidiendo. Nuestra tarea consiste en encontrar todos aquellos números enteros en el rango de 1 a 999 que sean divisibles ya sea por 3 ó bien por 5, es decir, aquellos números que tienen división exacta con estos dos números. O bien, en otras palabras, para todo numero 1&lt;= i &lt; 1000, <i>i <b>mod</b> 3 = 0</i> ó <i>i <b>mod</b> 5 = 0</i>, donde <b>mod</b> corresponde al residuo de una división entera.
-</p>
+<p>Lo primero que es necesario identificar es que se nos esta pidiendo. Nuestra tarea consiste en encontrar todos aquellos números enteros en el rango de 1 a 999 que sean divisibles ya sea por 3 ó bien por 5, es decir, aquellos números que tienen división exacta con estos dos números. O bien, en otras palabras, para todo numero 1&lt;= i &lt; 1000, <i>i <b>mod</b> 3 = 0</i> ó <i>i <b>mod</b> 5 = 0</i>, donde <b>mod</b> corresponde al residuo de una división entera.</p>
 <h2 id="solución-código">Solución [código]</h2>
 <p>Existe más de una forma de dar solución a este problema:</p>
-<p>
-La manera más sencilla es iterar en el rango dado con <i>i</i> y realizar la operación modulo con 3 y 5 y si alguna de ellas resulta verdadera entonces sumamos <i>i</i> a la suma total.
-</p>
+<p>La manera más sencilla es iterar en el rango dado con <i>i</i> y realizar la operación modulo con 3 y 5 y si alguna de ellas resulta verdadera entonces sumamos <i>i</i> a la suma total.</p>
 <p>Una segunda aproximación al problema un poco más eficiente consiste en calcular todos los múltiplos de 3 y de 5 menores que 1000 y almacenarlos formando dos conjuntos. Note que ciertos valores pueden ser múltiplos de 3 tanto como de 5, siendo 15 un claro ejemplo, por lo tanto es necesario eliminar las repeticiones(A unión B) para que no se altere la suma final. Después de esto simplemente sumamos todos los elementos de ambos conjuntos.</p>
 <p>A continuación se muestran las implementaciones de estas dos estrategias.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>

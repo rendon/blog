@@ -12,9 +12,7 @@
 <p>Uno de los primeros temas que se abordan en los libros de sistemas operativos son los <em>procesos</em>, que en términos simples son programas en <em>ejecución</em>. Un programa por si mismo no es un proceso. Podríamos decir que un programa por si solo es una entidad <strong>pasiva</strong> mientras que un proceso es una entidad <strong>activa</strong>, un programa que se esta ejecutando en el sistema y tiene asociado a él más que código ejecutable.</p>
 <p>Dentro de los datos que se asocian a un proceso podemos encontrar un identificador de proceso (PID), información sobre el creador del proceso actual (el padre), una lista de los procesos creados por el proceso actual (los hijos), recursos como archivos abiertos, un espacio de memoria para uso particular, entre otros. El sistema operativo necesita toda esta información para poder administrar los procesos de manera correcta.</p>
 <h2 id="procesos-en-linux">Procesos en Linux</h2>
-<p>
-En Linux (el kernel) toda la información relacionada a un proceso se almacena en la estructura <code>task_struct</code> la cual esta definida en el encabezado <code>&lt;linux/sched.h&gt;</code> y dentro de sus campos podemos encontrar los siguientes:
-</p>
+<p>En Linux (el kernel) toda la información relacionada a un proceso se almacena en la estructura <code>task_struct</code> la cual esta definida en el encabezado <code>&lt;linux/sched.h&gt;</code> y dentro de sus campos podemos encontrar los siguientes:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> task_struct <span class="op">{</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">volatile</span> <span class="dt">long</span> state<span class="op">;</span>    <span class="co">/* -1 unrunnable, 0 runnable, &gt;0 stopped */</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> <span class="op">*</span>stack<span class="op">;</span></span>
@@ -44,7 +42,10 @@ En Linux (el kernel) toda la información relacionada a un proceso se almacena e
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>Como podrán apreciar en la última línea, un proceso también mantiene una lista de sus procesos hermanos, aquellos que comparten el mismo padre.</p>
 <p>El kernel mantiene la lista de procesos en una lista doublemente enlazada donde cada elemento contiene una estructura <code>task_struct</code>. La figura muestra como luce dicha lista.</p>
-<p>&lt;%= figure(post, ‘doubly_linked_list.png’, caption: ‘Lista doblemente enlazada de procesos’, label: ‘doubly_linked_list’, lang: :es); %&gt;</p>
+<figure>
+<img src="/procesos/doubly_linked_list.png" alt="Lista doblemente enlazada de procesos" />
+<figcaption aria-hidden="true">Lista doblemente enlazada de procesos</figcaption>
+</figure>
 <p>Puesto que un proceso es un programa en ejecución y normalmente la cantidad de procesos es mayor que la cantidad de procesadores (en muchas ocasiones solo uno), éstos tienen que compartir el tiempo de la CPU y es el sistema operativo quien se encarga de coordinar esta actividad. Debido a lo anterior un proceso tiene asociado un <em>estado</em>, que como su nombre lo indica, nos permite determinar que esta haciendo el proceso dentro del sistema operativo, básicamente esta en ejecución o esperando, a continuación una lista de todos los estados posibles en en SO Linux.</p>
 <ul>
 <li>
@@ -64,7 +65,10 @@ __TASK_STOPPED: El proceso a termina su ejecución
 </li>
 </ul>
 <p>La figura ilustra las relaciones entre los distintos estados.</p>
-<p>&lt;%= figure(post, ‘process_states.svg’, caption: ‘Diagrama de flujo de los estados de un proceso’, label: ‘process_states’, lang: :es); %&gt;</p>
+<figure>
+<img src="/procesos/process_states.svg" alt="Diagrama de flujo de los estados de un proceso" />
+<figcaption aria-hidden="true">Diagrama de flujo de los estados de un proceso</figcaption>
+</figure>
 <p>En Linux el primer proceso que se ejecuta es <code>init</code> con PID igual a 1 y es éste el que se encarga de crear al resto de los procesos necesarios para el funcionamiento del sistema. A su vez, cada nuevo proceso es capaz de crear otros más. No es difícil darse cuenta que este mecanismo forma un árbol de procesos, donde la raíz es el proceso <code>init</code>, los nodos intermedios son aquello diferentes de <code>init</code> y que tienen al menos un proceso hijo, mientras que las hojas son aquellos que no crean nuevos procesos.</p>
 <h2 id="consultar-información-de-procesos">Consultar información de procesos</h2>
 <p>A continuación veremos como obtener información a cerca de los procesos desde el punto de vista del administrador del sistema como desde el punto de vista del desarrollador.</p>
@@ -471,9 +475,7 @@ clean:
 <span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a>MODULE_DESCRIPTION<span class="op">(</span><span class="st">&quot;Playing with processes.&quot;</span><span class="op">);</span></span>
 <span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a>MODULE_AUTHOR<span class="op">(</span><span class="st">&quot;Rafael Rendón Pablo&quot;</span><span class="op">);</span></span>
 <span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-<p>
-Manualmente hay que editar un poco la salida para que que sirva como entrada para el visualizador. He aquí el archivo resultante: &lt;%= file(post, ‘pstree.gi’) %&gt;.
-</p>
+<p>Manualmente hay que editar un poco la salida para que que sirva como entrada para el visualizador. He aquí el archivo resultante: <a href="/procesos/pstree.gi">pstree.gi</a>.</p>
 <p>La figura muestra el resultado.</p>
 <figure>
 <img src="/procesos/pstree.svg" alt="Árbol de procesos" />
@@ -579,5 +581,9 @@ El proceso padre puede continuar con su ejecución o bien esperar que que el hij
 <span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>En este ejemplo básicamente leemos la línea de texto que el usuario introduce y se paramos el nombre del comando de los parámetros y además verificamos si el comando debe ejecutarse en <em>background</em> (el comando finaliza con un ampersand), después de esto creamos un nuevo proceso y utilizamos la función <code>execlp()</code> para ejecutar al comando en cuestión, el cual debe existir en el sistema.</p>
 <p>Este programa esta bien limitado y tiene varías fallas, el único propósito es dar una mejor idea de como se crean procesos y no de crear una copia de Bash :).</p>
-<p>&lt;% add_bib(“lkd_rl”, “Robert Love”, “Linux Kernel Development, 3rd Ed.”); add_bib(“osc_9th”, “Silberschatz et al.”, “Operating System Concepts, 9th Ed.”); %&gt;</p>
+<h2 id="referencias">Referencias</h2>
+<ol type="1">
+<li>Robert Love, Linux Kernel Development, 3rd Ed.</li>
+<li>Silberschatz et al., Operating System Concepts, 9th Ed.</li>
+</ol>
 

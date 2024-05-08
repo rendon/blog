@@ -48,8 +48,7 @@ Position $k$ is not contained in the last Z-box. We need to compare character by
 
 
 ### Case 2: $ k $ is within the last Z-box
-
-<p>We'll denote this last Z-box as $\alpha$ and as $\beta$ the box starting at position $k$ and ending at $r$. Since every Z-box matches a prefix, the figure <%=ref('fig_z_alg_case_2');%> depicts our situation.</p>
+We'll denote this last Z-box as $\alpha$ and as $\beta$ the box starting at position $k$ and ending at $r$. Since every Z-box matches a prefix, the following figure depicts our situation.
 
 ![Case 2](/z-algorithm/z_alg_cases_2.svg)
 

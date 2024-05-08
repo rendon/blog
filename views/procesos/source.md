@@ -13,7 +13,7 @@ Dentro de los datos que se asocian a un proceso podemos encontrar un identificad
 
 ## Procesos en Linux
 
-<p>En Linux (el kernel) toda la información relacionada a un proceso se almacena en la estructura `task_struct` la cual esta definida en el encabezado <code><linux/sched.h></code> y dentro de sus campos podemos encontrar los siguientes:</p>
+En Linux (el kernel) toda la información relacionada a un proceso se almacena en la estructura `task_struct` la cual esta definida en el encabezado <code><linux/sched.h></code> y dentro de sus campos podemos encontrar los siguientes:
 
 
 ```c
@@ -51,9 +51,7 @@ Como podrán apreciar en la última línea, un proceso también mantiene una lis
 
 El kernel mantiene la lista de procesos en una lista doublemente enlazada donde cada elemento contiene una estructura `task_struct`. La figura  muestra como luce dicha lista.
 
-<%= 
-figure(post, 'doubly_linked_list.png', caption: 'Lista doblemente enlazada de procesos', label: 'doubly_linked_list', lang: :es);
- %>
+![Lista doblemente enlazada de procesos](/procesos/doubly_linked_list.png)
 
 Puesto que un proceso es un programa en ejecución y normalmente la cantidad de procesos es mayor que la cantidad de procesadores (en muchas ocasiones solo uno), éstos tienen que compartir el tiempo de la CPU y es el sistema operativo quien se encarga de coordinar esta actividad. Debido a lo anterior un proceso tiene asociado un *estado*, que como su nombre lo indica, nos permite determinar que esta haciendo el proceso dentro del sistema operativo, básicamente esta en ejecución o esperando, a continuación una lista de todos los estados posibles en en SO Linux.
 
@@ -67,9 +65,7 @@ Puesto que un proceso es un programa en ejecución y normalmente la cantidad de 
 
 La figura  ilustra las relaciones entre los distintos estados.
 
-<%= 
-figure(post, 'process_states.svg', caption: 'Diagrama de flujo de los estados de un proceso', label: 'process_states', lang: :es);
- %>
+![Diagrama de flujo de los estados de un proceso](/procesos/process_states.svg)
 
 En Linux el primer proceso que se ejecuta es `init` con PID igual a 1 y es éste el que se encarga de crear al resto de los procesos  necesarios para el funcionamiento del sistema. A su vez, cada nuevo proceso es capaz de crear otros más. No es difícil darse cuenta que este mecanismo forma un árbol de procesos, donde la raíz es el proceso `init`, los nodos intermedios son aquello diferentes de `init` y que tienen al menos un proceso hijo, mientras que las hojas son aquellos que no crean nuevos procesos.
 
@@ -533,7 +529,7 @@ MODULE_AUTHOR("Rafael Rendón Pablo");
 
 ```
 
-<p>Manualmente hay que editar un poco la salida para que que sirva como entrada para el visualizador. He aquí el archivo resultante: <%= file(post, 'pstree.gi') %>.</p>
+Manualmente hay que editar un poco la salida para que que sirva como entrada para el visualizador. He aquí el archivo resultante: [pstree.gi](/procesos/pstree.gi).
 
 La figura  muestra el resultado.
 
@@ -650,7 +646,6 @@ En este ejemplo básicamente leemos la línea de texto que el usuario introduce 
 
 Este programa esta bien limitado y tiene varías fallas, el único propósito es dar una mejor idea de como se crean procesos y no de crear una copia de Bash :).
 
-<% 
-add_bib("lkd_rl", "Robert Love", "Linux Kernel Development, 3rd Ed.");
-add_bib("osc_9th", "Silberschatz et al.", "Operating System Concepts, 9th Ed.");
-%>
+## Referencias
+1. Robert Love, Linux Kernel Development, 3rd Ed.
+2. Silberschatz et al., Operating System Concepts, 9th Ed.

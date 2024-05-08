@@ -96,7 +96,7 @@ end
 puts grid.length
 ```
 
-<p>For v2: Likewise, except that you have to alternate commands with Robo-Santa, the first command is for Santa, the second one isfor Robo-Santa, etc.
+For v2: Likewise, except that you have to alternate commands with Robo-Santa, the first command is for Santa, the second one is for Robo-Santa, etc.
 
 ```ruby
 grid = {[0, 0] => true}
@@ -129,7 +129,7 @@ puts grid.length
 Problem description: [day/4](http://adventofcode.com/2015/day/4).
 
 ### Solution
-<p>For v1: Well, I just brute-forced this one, used Ruby's `Digest::MD5` to compute the checksum.
+For v1: Well, I just brute-forced this one, used Ruby's `Digest::MD5` to compute the checksum.
 
 ```ruby
 require 'digest'
@@ -148,7 +148,7 @@ loop do
 end
 ```
 
-<p>For v2: The same as v1, just add one more zero.
+For v2: The same as v1, just add one more zero.
 
 ```ruby
 require 'digest'
@@ -171,7 +171,7 @@ end
 Problem description: [day/5](http://adventofcode.com/2015/day/5).
 
 ### Solution
-<p>For v1: Just follow the instructions **carefully** and you should be able to solve this problem.
+For v1: Just follow the instructions **carefully** and you should be able to solve this problem.
 
 ```ruby
 def nice?(word)
@@ -207,7 +207,7 @@ end
 puts File.readlines('input.txt').select {|w| nice?(w.chomp) }.length
 ```
 
-<p>For v2: Just follow the instructions **even more carefully**, I was trapped by a moment by a pesky bug in this version.
+For v2: Just follow the instructions **even more carefully**, I was trapped by a moment by a pesky bug in this version.
 
 ```ruby
 def nice?(word)

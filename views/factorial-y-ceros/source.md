@@ -20,10 +20,10 @@ El valor de un factorial es una cantidad que crece extremadamente rápido, inclu
 <blockquote>
 <h3>Problema </h3>
 
-<p>Dado un numero N, siendo 1 <= N <= 1000000000, calcular el numero de ceros al final del  resultado de N!.</p>
+Dado un numero N, siendo 1 <= N <= 1000000000, calcular el numero de ceros al final del  resultado de N!.
 
-<h3>Entrada</h3>
-<p>Un único número entero N, 1 <= N <= 1000000000.</p>
+### Entrada
+Un único número entero N, 1 <= N <= 1000000000.
 
 <h3>Salida</h3>
 
@@ -90,7 +90,7 @@ Bueno esto podría funcionar, sin embargo implementar el algoritmo descrito requ
 
 Esto último seria algo maravilloso si existiera... Y que creen? SI EXISTE!.
 
-<p>El numero de ceros al final de un entero **N** en base _b_ es igual al exponente de la máxima potencia de _b_ que divide a N. Por ejemplo, sea N = 14000 en *base 10*, hay 3 ceros al final del número, la máxima potencia de 10 que divide a 14000 es 1000 = 10<sup>3</sup>. El exponente que al que se eleva 10 para dar 1000 es 3, hay tres ceros al final de 14000.</p>
+El numero de ceros al final de un entero **N** en base _b_ es igual al exponente de la máxima potencia de _b_ que divide a N. Por ejemplo, sea N = 14000 en *base 10*, hay 3 ceros al final del número, la máxima potencia de 10 que divide a 14000 es 1000 = 10<sup>3</sup>. El exponente que al que se eleva 10 para dar 1000 es 3, hay tres ceros al final de 14000.
 
 La cantidad de ceros al final de los factoriales es un caso especial y se calcula como sigue.
 

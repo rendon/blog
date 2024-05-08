@@ -38,7 +38,7 @@ for file in os.listdir(os.getcwd()):
 
 En este ejemplo mis imágenes están en formato JPEG pero ustedes pueden modificarlo para adaptarlo a sus necesidades. En la línea 2 importamos todo el contenido del modulo `gimpfu` el cual contiene todo lo necesario para trabajar con gimp, `os` y `re` son de utilería.
 
-<p>Desde una consola nos trasladamos al directorio donde están las imágenes y ejecutamos gimp. Vamos a Filters `-&gt;`Python-Fu`-&gt;`Console</code>, tenemos dos opciones, teclear el código ahí directamente o lo guardamos en un archivo y lo ejecutamos en el interprete con la función `execfile('script.py')`.</p>
+Desde una consola nos trasladamos al directorio donde están las imágenes y ejecutamos gimp. Vamos a Filters `-&gt;`Python-Fu`-&gt;`Console</code>, tenemos dos opciones, teclear el código ahí directamente o lo guardamos en un archivo y lo ejecutamos en el interprete con la función `execfile('script.py')`.
 
 La documentación de las funciones que empleo en el script y muchas más la proporciona el mismo gimp y podemos acceder a ella con el botón `Browse...`. Hasta aquí con este post, espero que esta información les sea tan útil como a mi o más.
 

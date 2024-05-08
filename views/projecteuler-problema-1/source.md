@@ -15,12 +15,12 @@ Versión original: [Problem 1](http://projecteuler.net/index.php?section=problem
 
 
 ## Análisis
-<p>Lo primero que es necesario identificar  es que se  nos esta pidiendo. Nuestra tarea consiste en encontrar todos aquellos números enteros en el rango de 1 a 999 que sean divisibles ya sea por 3 ó bien por 5, es decir, aquellos números que tienen división exacta con estos dos números. O bien, en otras palabras, para todo numero 1<= i < 1000, <i>i <b>mod</b> 3 = 0</i> ó <i>i <b>mod</b> 5 = 0</i>, donde <b>mod</b> corresponde al residuo de una división entera.</p>
+Lo primero que es necesario identificar  es que se  nos esta pidiendo. Nuestra tarea consiste en encontrar todos aquellos números enteros en el rango de 1 a 999 que sean divisibles ya sea por 3 ó bien por 5, es decir, aquellos números que tienen división exacta con estos dos números. O bien, en otras palabras, para todo numero 1<= i < 1000, <i>i <b>mod</b> 3 = 0</i> ó <i>i <b>mod</b> 5 = 0</i>, donde <b>mod</b> corresponde al residuo de una división entera.
 
 ## Solución [código]
 Existe más de una forma de dar solución a este problema:
 
-<p>La manera más sencilla es iterar en el rango dado con <i>i</i> y realizar la operación modulo con 3 y 5 y si alguna de ellas resulta verdadera entonces sumamos <i>i</i> a la suma total.</p>
+La manera más sencilla es iterar en el rango dado con <i>i</i> y realizar la operación modulo con 3 y 5 y si alguna de ellas resulta verdadera entonces sumamos <i>i</i> a la suma total.
 
 Una segunda aproximación al problema un poco más eficiente consiste en calcular todos los múltiplos de 3 y de 5 menores que 1000 y almacenarlos formando dos conjuntos. Note que ciertos valores pueden ser múltiplos de 3 tanto como de 5, siendo 15 un claro ejemplo, por lo tanto es necesario eliminar las repeticiones(A unión B) para que no se altere la suma final. Después de esto simplemente sumamos todos los elementos de ambos conjuntos.
 

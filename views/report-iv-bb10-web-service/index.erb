@@ -90,9 +90,15 @@ El simulador de Blackberry (<a href="https://developer.blackberry.com/devzone/de
 <h3 id="instalación-del-simulador">Instalación del simulador</h3>
 <p>El simulador es una imagen de disco que podemos usar con VMware Player (<a href="https://www.vmware.com">www.vmware.com</a>), simplemente instala VMware Player y carga la imagen del simulador.</p>
 <p>El simulador consume muchos recursos, por defecto el simulador buscará una tarjeta de gráficos en nuestro sistema, si no contamos con una nos encontraremos con esto:</p>
-<p>&lt;%= figure(post, ‘bbws_start_service_screen.png’, caption: ‘El emulador no arranca’, label: ‘bbws_start_service_screen’, lang: :es); %&gt;</p>
+<figure>
+<img src="/report-iv-bb10-web-service/bbws_start_service_screen.png" alt="El emulador no arranca" />
+<figcaption aria-hidden="true">El emulador no arranca</figcaption>
+</figure>
 <p>La solución es entrar en uno de los modos seguros, en mi caso he optado por la resolución de pantalla 720x720 y modo seguro (opción 5).</p>
-<p>&lt;%= figure(post, ‘bbws_start_service_screen_sol.png’, caption: ‘Elige el modo seguro si no se cuenta con una tarjeta gráfica’, label: ‘bbws_start_service_screen_sol’, lang: :es); %&gt;</p>
+<figure>
+<img src="/report-iv-bb10-web-service/bbws_start_service_screen_sol.png" alt="Elige el modo seguro si no se cuenta con una tarjeta gráfica" />
+<figcaption aria-hidden="true">Elige el modo seguro si no se cuenta con una tarjeta gráfica</figcaption>
+</figure>
 <h3 id="configuración-de-qt-creator">Configuración de Qt Creator</h3>
 <p>Qt Creator ya viene con soporte para BlackBerry, sin embargo habrá que configurar algunas cosas. Vamos a asumir que Momentics IDE fue instalado en el directorio <em>/opt/bbndk</em> y Qt fue instalado en <em>/opt/qt5</em>.</p>
 <p>Vamos a ejecutar Qt Creator desde la consola, pero antes vamos a ejecutar un script de configuración que viene incluido con Momentics IDE.</p>
@@ -101,17 +107,35 @@ El simulador de Blackberry (<a href="https://developer.blackberry.com/devzone/de
 /opt/qt5/Tools/QtCreator/bin/qtcreator
 </pre>
 <p>El script de configuración exporta algunas variables de entorno que Qt Creator necesita para ubicar las herramientas necesarias. Una vez abierto Qt Creator, vamos a agregar el compilador: Tools -&gt; Options -&gt; Build &amp; Run.</p>
-<p>&lt;%= figure(post, ‘bbws_qtcreator_qcc.png’, caption: ‘Configuración del compilador para BlackBerry’, label: ‘bbws_qtcreator_qcc’, lang: :es); %&gt;</p>
+<figure>
+<img src="/report-iv-bb10-web-service/bbws_qtcreator_qcc.png" alt="Configuración del compilador para BlackBerry" />
+<figcaption aria-hidden="true">Configuración del compilador para BlackBerry</figcaption>
+</figure>
 <p>Ahora hay que configurar el simulador: Tool -&gt; Options -&gt; Devices -&gt; Add…:</p>
-<p>&lt;%= figure(post, ‘bbws_qtcreator_add_sim_1.png’, caption: ‘Agrega un nuevo dispositivo tipo BlackBerry’, label: ‘bbws_qtcreator_add_sim_1’, lang: :es); %&gt;</p>
+<figure>
+<img src="/report-iv-bb10-web-service/bbws_qtcreator_add_sim_1.png" alt="Agrega un nuevo dispositivo tipo BlackBerry" />
+<figcaption aria-hidden="true">Agrega un nuevo dispositivo tipo BlackBerry</figcaption>
+</figure>
 <p>Especificamos la IP del simulador:</p>
-<p>&lt;%= figure(post, ‘bbws_qtcreator_add_sim_2.png’, caption: ‘Detección del simulador’, label: ‘bbws_qtcreator_add_sim_2’, lang: :es); %&gt;</p>
-<p>&lt;%= figure(post, ‘bbws_qtcreator_add_sim_3.png’, caption: ‘Detección del simulador’, label: ‘bbws_qtcreator_add_sim_3’, lang: :es); %&gt;</p>
-<p>&lt;%= figure(post, ‘bbws_qtcreator_add_sim_4.png’, caption: ‘Detección del simulador’, label: ‘bbws_qtcreator_add_sim_4’, lang: :es); %&gt;</p>
+<figure>
+<img src="/report-iv-bb10-web-service/bbws_qtcreator_add_sim_2.png" alt="Detección del simulador" />
+<figcaption aria-hidden="true">Detección del simulador</figcaption>
+</figure>
+<figure>
+<img src="/report-iv-bb10-web-service/bbws_qtcreator_add_sim_3.png" alt="Detección del simulador" />
+<figcaption aria-hidden="true">Detección del simulador</figcaption>
+</figure>
+<figure>
+<img src="/report-iv-bb10-web-service/bbws_qtcreator_add_sim_4.png" alt="Detección del simulador" />
+<figcaption aria-hidden="true">Detección del simulador</figcaption>
+</figure>
 <p>La IP la podemos encontrar en la parte inferior derecha del simulador:</p>
-<p>&lt;%= figure(post, ‘bbws_simulator_ip.png’, caption: ‘IP del simulador’, label: ‘bbws_simulator_ip’, lang: :es); %&gt;</p>
+<figure>
+<img src="/report-iv-bb10-web-service/bbws_simulator_ip.png" alt="IP del simulador" />
+<figcaption aria-hidden="true">IP del simulador</figcaption>
+</figure>
 <p>Ahora deberíamos poder probar una aplicación “¡Hola, mundo!”:</p>
-<p>&lt;%= figure(post, ‘bbws_hello_world_1.png’, caption: ‘Nuevo proyecto, Paso 1’, label: ‘bbws_hello_world_1’, lang: :es); %&gt; &lt;%= figure(post, ‘bbws_hello_world_2.png’, caption: ‘Nuevo proyecto, Paso 2’, label: ‘bbws_hello_world_2’, lang: :es); %&gt; &lt;%= figure(post, ‘bbws_hello_world_3.png’, caption: ‘Nuevo proyecto, Paso 3’, label: ‘bbws_hello_world_3’, lang: :es); %&gt; &lt;%= figure(post, ‘bbws_hello_world_4.png’, caption: ‘Nuevo proyecto, Paso 4’, label: ‘bbws_hello_world_4’, lang: :es); %&gt; &lt;%= figure(post, ‘bbws_hello_world_5.png’, caption: ‘Nuevo proyecto, Paso 5’, label: ‘bbws_hello_world_5’, lang: :es); %&gt; &lt;%= figure(post, ‘bbws_hello_world_6.png’, caption: ‘Nuevo proyecto, Paso 6’, label: ‘bbws_hello_world_6’, lang: :es); %&gt;</p>
+<p><img src="/report-iv-bb10-web-service/bbws_hello_world_1.png" alt="Nuevo proyecto, Paso 1" /> <img src="/report-iv-bb10-web-service/bbws_hello_world_2.png" alt="Nuevo proyecto, Paso 2" /> <img src="/report-iv-bb10-web-service/bbws_hello_world_3.png" alt="Nuevo proyecto, Paso 3" /> <img src="/report-iv-bb10-web-service/bbws_hello_world_4.png" alt="Nuevo proyecto, Paso 4" /> <img src="/report-iv-bb10-web-service/bbws_hello_world_5.png" alt="Nuevo proyecto, Paso 5" /> <img src="/report-iv-bb10-web-service/bbws_hello_world_6.png" alt="Nuevo proyecto, Paso 6" /></p>
 <p>Para más información sobre la configuración del entorno véase:</p>
 <ul>
 <li><a href="http://qt-project.org/wiki/Setting-up-Qt-Creator-for-BlackBerry-and-QNX">http://qt-project.org/wiki/Setting-up-Qt-Creator-for-BlackBerry-and-QNX</a></li>
@@ -121,7 +145,10 @@ El simulador de Blackberry (<a href="https://developer.blackberry.com/devzone/de
 <p>En el reporte anterior ya vimos como crear y registrar servicios en PHP usando NuSOAP, por ello vamos a mostrar únicamente lo esencial.</p>
 <h3 id="el-modelo-de-datos">El modelo de datos</h3>
 <p>Nuestra base de datos consiste de 4 tablas, Cliente, Producto, Pedido y Detalle.</p>
-<p>&lt;%= figure(post, ‘bbws_data_model.png’, caption: ‘Modelo de datos’, label: ‘bbws_data_model’, lang: :es); %&gt;</p>
+<figure>
+<img src="/report-iv-bb10-web-service/bbws_data_model.png" alt="Modelo de datos" />
+<figcaption aria-hidden="true">Modelo de datos</figcaption>
+</figure>
 <p><strong>NOTA:</strong> Con el código fuente incluyo el modelo de la base de datos, fue diseñado utilizando MySQL Workbench y por lo tanto podrán exportar la base de datos desde ahí.</p>
 <h3 id="los-servicios">Los servicios</h3>
 <p>El web service no difiere mucho del que utilizamos en el proyecto anterior, se ha agregado el servicio <em>GetAllProducts</em> y el servicio <em>Synchronize</em> ha sido reemplazado con <em>PutRegisters</em>.</p>
@@ -496,7 +523,10 @@ QVector<Client> Backend::toClientArray(QString message)
 <p>Hasta hace poco la tecnología empleada para crear aplicaciones BlackBerry era Java, sin embargo, en un intento por permanecer en el mercado, Blackberry ha apostado también por los dispositivos <em>touch</em> y ha reemplazado Java por C++, la tecnología se conoce como <a href="http://developer.blackberry.com/native/">Cascades</a>, un framework basado en <a href="https://www.qt.io/developers/">Qt</a> y <a href="http://qt-project.org/doc/qt-5.0/qtqml/qtqml-index.html">QML</a> para diseñar interfaces gráficas de manera nativa.</p>
 <h3 id="la-página-principal">La página principal</h3>
 <p>Así lucirá la página principal de nuestra aplicación:</p>
-<p>&lt;%= figure(post, ‘bbws_app_home.png’, caption: ‘Página principal de la aplicación’, label: ‘bbws_app_home’, lang: :es); %&gt;</p>
+<figure>
+<img src="/report-iv-bb10-web-service/bbws_app_home.png" alt="Página principal de la aplicación" />
+<figcaption aria-hidden="true">Página principal de la aplicación</figcaption>
+</figure>
 <p>El diseño de esta página en QML es el siguiente:</p>
 <pre lang="javascript">
 Tab {
@@ -565,7 +595,10 @@ Tab {
 </pre>
 <h3 id="registro-de-pedidos">Registro de pedidos</h3>
 <p>La siguiente imagen muestra la interfaz de usuario para registrar nuevos pedidos.</p>
-<p>&lt;%= figure(post, ‘bbws_app_shop.png’, caption: ‘Registro de pedidos’, label: ‘bbws_app_shop’, lang: :es); %&gt;</p>
+<figure>
+<img src="/report-iv-bb10-web-service/bbws_app_shop.png" alt="Registro de pedidos" />
+<figcaption aria-hidden="true">Registro de pedidos</figcaption>
+</figure>
 <p>El diseño de la interfaz en QML es el siguiente:</p>
 <pre lang="javascript">
 Tab {
@@ -767,7 +800,10 @@ bool Backend::saveRequest(QString idClient)
 </pre>
 <h3 id="consulta-de-pedidos">Consulta de pedidos</h3>
 <p>Nuestra aplicación también permite consultar la lista de pedidos, aquí la interfaz:</p>
-<p>&lt;%= figure(post, ‘bbws_app_query.png’, caption: ‘Consulta de pedidos’, label: ‘bbws_app_query’, lang: :es); %&gt;</p>
+<figure>
+<img src="/report-iv-bb10-web-service/bbws_app_query.png" alt="Consulta de pedidos" />
+<figcaption aria-hidden="true">Consulta de pedidos</figcaption>
+</figure>
 <p>El diseño en QML es el siguiente:</p>
 <pre lang="javascript">
 Tab {
@@ -885,7 +921,10 @@ void Backend::loadRequestsToList()
 <p>El objeto *_requestModel* esta <strong>enlazado</strong> a un objeto <a href="http://developer.blackberry.com/native/reference/cascades/bb__cascades__listview.html">ListView</a> en la interfaz gráfica, por lo que los cambios que le ocurren al objeto *_requestModel* se reflejan automáticamente en el ListView.</p>
 <h3 id="subir-los-registros-al-servidor">Subir los registros al servidor</h3>
 <p>Para esta operación solo tenemos que presionar un botón y se nos mostrará una barra de progreso que simulará el progreso de la operación.</p>
-<p>&lt;%= figure(post, ‘bbws_app_upload.png’, caption: ‘Envío de pedidos al servidor’, label: ‘bbws_app_upload’, lang: :es); %&gt;</p>
+<figure>
+<img src="/report-iv-bb10-web-service/bbws_app_upload.png" alt="Envío de pedidos al servidor" />
+<figcaption aria-hidden="true">Envío de pedidos al servidor</figcaption>
+</figure>
 <p>El código que realiza esta operación es el siguiente:</p>
 <pre lang="cpp">
 void Backend::putRegisters()
@@ -949,7 +988,10 @@ QString Backend::formattedRegisters()
 }
 </pre>
 <p>La actualización de catálogos es muy similar.</p>
-<p>&lt;%= figure(post, ‘bbws_app_download.png’, caption: ‘Actualización de catálogos’, label: ‘bbws_app_download’, lang: :es); %&gt;</p>
+<figure>
+<img src="/report-iv-bb10-web-service/bbws_app_download.png" alt="Actualización de catálogos" />
+<figcaption aria-hidden="true">Actualización de catálogos</figcaption>
+</figure>
 <p>Como lo indica el texto del botón, esta operación borra los registros de la base de datos local y actualiza los catálogos con el servidor, he aquí el código:</p>
 <pre lang="cpp">
 void Backend::updateCatalogs()

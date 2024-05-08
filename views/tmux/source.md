@@ -85,12 +85,13 @@ Para empezar a usar tmux abre una terminal y ejecuta tmux, teclea el comando exi
 
 ### El prefijo de comandos
 
-<p>El prefijo de comandos es una combinación de teclas que avisa a tmux que estamos a punto de indicarle una acción que debe realizar, por defecto esta combinación es <kbd>Ctrl</kbd> + <kbd>b</kbd>, <kbd>PREFIX</kbd> de aquí en adelante. La instrucción <kbd>PREFIX</kbd> + <kbd>c</kbd> se traduce en presionar las teclas <kbd>Ctrl</kbd> y <kbd>b</kbd> simultáneamente, soltar las teclas y después presionar la letra <kbd>c</kbd>. </p>
+El prefijo de comandos es una combinación de teclas que avisa a tmux que estamos a punto de indicarle una acción que debe realizar, por defecto esta combinación es <kbd>Ctrl</kbd> + <kbd>b</kbd>, <kbd>PREFIX</kbd> de aquí en adelante. La instrucción <kbd>PREFIX</kbd> + <kbd>c</kbd> se traduce en presionar las teclas <kbd>Ctrl</kbd> y <kbd>b</kbd> simultáneamente, soltar las teclas y después presionar la letra <kbd>c</kbd>. 
+
 Tmux tiene un comando para cada acción y una serie de keybindings para ejecutar algunos de ellos con una combinación de teclas, de esto hablaremos más adelante. Para entrar en modo de comandos presiona <kbd>PREFIX</kbd> + <kbd>:</kbd> y teclea el comando.
 
 ### Copy mode
 
-<p>Como ya se menciono, en este modo podemos navegar por el contenido que se ha generado en la terminal y copiar texto si así lo queremos. Presiona <kbd>PREFIX</kbd> + <kbd>[</kbd> para entrar en este modo.</p>
+Como ya se menciono, en este modo podemos navegar por el contenido que se ha generado en la terminal y copiar texto si así lo queremos. Presiona <kbd>PREFIX</kbd> + <kbd>[</kbd> para entrar en este modo.
 
 ### Paneles
 
@@ -119,7 +120,7 @@ PREFIX + RIGHT  (select-pane -R)
 
 ![Splits](/tmux/hdud1_2.png)
 
-<p>Una combinación muy util para moverse entre paneles es <kbd>PREFIX</kbd> + <kbd>q</kbd>, que enumera cada uno de los paneles por un momento, presiona el numero del panel al cual te quieres trasladar y listo.</p>
+Una combinación muy util para moverse entre paneles es <kbd>PREFIX</kbd> + <kbd>q</kbd>, que enumera cada uno de los paneles por un momento, presiona el numero del panel al cual te quieres trasladar y listo.
 
 ![Paneles enumerados](/tmux/hdud1_3.png)
 
@@ -143,7 +144,7 @@ PREFIX + C-RIGHT  (resize-pane -R)
 
 ```
 
-<p>Para cerrar un panel tenemos dos opciones, terminar la sesión en la terminal con el comando exit o presionando <kbd>PREFIX</kbd> + <kbd>x</kbd>, que cierra el panel con previa confirmación.</p>
+Para cerrar un panel tenemos dos opciones, terminar la sesión en la terminal con el comando exit o presionando <kbd>PREFIX</kbd> + <kbd>x</kbd>, que cierra el panel con previa confirmación.
 
 ### Organizando paneles
 
@@ -157,7 +158,7 @@ Tmux proporciona cinco plantillas que nos permiten organizar nuestros paneles.
 <li>**tiled**: Alinea todos los paneles en la pantalla con igual cantidad de espacio.</li>
 </ul>
 
-<p>Presiona <kbd>PREFIX</kbd> + <kbd>Espacio</kbd> para probar cada plantilla.</p>
+Presiona <kbd>PREFIX</kbd> + <kbd>Espacio</kbd> para probar cada plantilla.
 
 ### Ventanas
 
@@ -188,7 +189,7 @@ PREFIX + p # Anterior
 
 ![Ventanas](/tmux/hdud1_4.png)
 
-<p>El listado de ventanas activas se muestra en la parte inferior de la pantalla, cada ventana tiene un número que la identifica. Una forma fácil de cambiar de ventana es presionando <kbd>PREFIX</kbd> + numero_de_ventana. Si tienes demasiadas ventanas también es posible buscarlas por su nombre con <kbd>PREFIX</kbd> + <kbd>f</kbd> o bien presionar <kbd>PREFIX</kbd> + <kbd>w</kbd> para mostrar el listado de ventanas.</p>
+El listado de ventanas activas se muestra en la parte inferior de la pantalla, cada ventana tiene un número que la identifica. Una forma fácil de cambiar de ventana es presionando <kbd>PREFIX</kbd> + numero_de_ventana. Si tienes demasiadas ventanas también es posible buscarlas por su nombre con <kbd>PREFIX</kbd> + <kbd>f</kbd> o bien presionar <kbd>PREFIX</kbd> + <kbd>w</kbd> para mostrar el listado de ventanas.
 
 ### Sesiones
 
@@ -254,7 +255,7 @@ bind-key -t vi-copy 'y' copy-selection
 
 ```
 
-<p>Con estas opciones activadas, haz lo siguiente para copiar contenido dentro de tmux, **1)** entra en modo copy, **2)** presiona la tecla v para iniciar la selección y muevete con las teclas <kbd>hjkl</kbd>, como en vim, **3)** presiona la tecla y para copiar la selección.</p>
+Con estas opciones activadas, haz lo siguiente para copiar contenido dentro de tmux, **1)** entra en modo copy, **2)** presiona la tecla v para iniciar la selección y muevete con las teclas <kbd>hjkl</kbd>, como en vim, **3)** presiona la tecla y para copiar la selección.
 
 ### Moverse entre los paneles de manera similar a vim con los splits.
 
@@ -316,7 +317,7 @@ set -g history-limit 10000
 
 ```
 
-<p>Recargar configuración con <kbd>PREFIX</kbd> + <kbd>r</kbd>.</p>
+Recargar configuración con <kbd>PREFIX</kbd> + <kbd>r</kbd>.
 
 
 ```txt
@@ -352,13 +353,13 @@ bind C-c run "tmux save-buffer - | xclip -i -selection clipboard"
 
 ```
 
-<p>Funciona de esta manera, entra en modo copy y copia el texto en cuestión tal como ya se ha visto. Sal del modo copy y presiona <kbd>PREFIX</kbd>, suelta y después <kbd>Ctrl</kbd>+<kbd>c</kbd> para colocar el contenido en el portapapeles del sistema.</p>
+Funciona de esta manera, entra en modo copy y copia el texto en cuestión tal como ya se ha visto. Sal del modo copy y presiona <kbd>PREFIX</kbd>, suelta y después <kbd>Ctrl</kbd>+<kbd>c</kbd> para colocar el contenido en el portapapeles del sistema.
 
 Una desventaja que he notado con este truco es que una vez que lo usas vim ya no puede trabajar con el portapapeles del sistema(`"*`), aun no he encontrado una solución.
 
 ### Agregar una tecla control adicional
 
-<p>Cuando reasigne <kbd>PREFIX</kbd> a <kbd>Ctrl</kbd> + <kbd>a</kbd> mencione que ésta combinación era más cómoda, y lo es en comparación a <kbd>Ctrl</kbd> + <kbd>b</kbd>, pero en realidad para mi es más accesible porque he reasignado la tecla de la ventana para que actúe como una tecla control adicional, esta asignación trabaja a nivel de sistema y no tiene relación directa con tmux pero a mi me resulta muy útil, en especial con vim.</p>
+Cuando reasigne <kbd>PREFIX</kbd> a <kbd>Ctrl</kbd> + <kbd>a</kbd> mencione que ésta combinación era más cómoda, y lo es en comparación a <kbd>Ctrl</kbd> + <kbd>b</kbd>, pero en realidad para mi es más accesible porque he reasignado la tecla de la ventana para que actúe como una tecla control adicional, esta asignación trabaja a nivel de sistema y no tiene relación directa con tmux pero a mi me resulta muy útil, en especial con vim.
 
 Para realizar la re asignación emplea el comando `xmodmap` y agrega lo siguiente en el archivo `~/.Xmodmap`.
 

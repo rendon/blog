@@ -64,9 +64,7 @@
 <blockquote>
 The number of primitive roots modulo n, if there are any, is equal to $ ((n)) $
 </blockquote>
-<p>
-Where $(n) $ is defined as: How many numbers <span class="math inline"><em>m</em></span>(<span class="math inline">1 ≤ <em>m</em> &lt; <em>n</em></span>) are relatively prime to <span class="math inline"><em>n</em></span>, i.e. <span class="math inline"><em>g</em><em>c</em><em>d</em>(<em>n</em>,<em>m</em>) = 1</span>. Since <span class="math inline"><em>p</em></span> in the problem is guaranteed to be prime then <span class="math inline"><em>φ</em>(<em>p</em>) = <em>p</em> − 1</span> and we only need to compute <span class="math inline"><em>φ</em>(<em>p</em>−1)</span>, this can be done easily in <span class="math inline"><em>O</em>(<em>n</em>)</span>.
-</p>
+<p>Where $(n) $ is defined as: How many numbers <span class="math inline"><em>m</em></span>(<span class="math inline">1 ≤ <em>m</em> &lt; <em>n</em></span>) are relatively prime to <span class="math inline"><em>n</em></span>, i.e. <span class="math inline"><em>g</em><em>c</em><em>d</em>(<em>n</em>,<em>m</em>) = 1</span>. Since <span class="math inline"><em>p</em></span> in the problem is guaranteed to be prime then <span class="math inline"><em>φ</em>(<em>p</em>) = <em>p</em> − 1</span> and we only need to compute <span class="math inline"><em>φ</em>(<em>p</em>−1)</span>, this can be done easily in <span class="math inline"><em>O</em>(<em>n</em>)</span>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cstdio&gt;</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cstdlib&gt;</span></span>
