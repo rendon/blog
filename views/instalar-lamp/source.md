@@ -1,4 +1,4 @@
-<!-- vim: set spelllang=es_mx: -->
+<!-- vim: set spelllang=es_MX: -->
 
 # Instalar servicio LAMP
 2016-02-18 2024-05-07 #dev #linux #post

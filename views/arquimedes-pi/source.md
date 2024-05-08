@@ -1,4 +1,4 @@
-<!-- vim: set spelllang=es_mx: -->
+<!-- vim: set spelllang=es_MX: -->
 
 # Arquímedes PI
 2016-02-23 2024-05-05 #math #dev #post

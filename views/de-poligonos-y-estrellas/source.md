@@ -1,4 +1,4 @@
-<!-- vim: set spelllang=es_mx: -->
+<!-- vim: set spelllang=es_MX: -->
 # De poligonos y estrellas
 2016-02-18 2024-05-07 #math #computer-graphics #algorithms #post
 

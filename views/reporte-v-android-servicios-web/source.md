@@ -1,4 +1,4 @@
-<!-- vim: set spelllang=es_mx: -->
+<!-- vim: set spelllang=es_MX: -->
 # Reporte V: Android web service
 2016-02-23 2024-05-06 #dev #school #post
 

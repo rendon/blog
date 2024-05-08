@@ -1,4 +1,4 @@
-<!-- vim: set spelllang=es_mx: -->
+<!-- vim: set spelllang=es_MX: -->
 
 # Reporte III: Windows Phone 8 & Web services
 2016-02-24 2024-05-06 #dev #web-services #post

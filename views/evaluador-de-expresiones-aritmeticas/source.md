@@ -1,4 +1,4 @@
-<!-- vim: set spelllang=es_mx: -->
+<!-- vim: set spelllang=es_MX: -->
 
 # Evaluador de expresiones matematicas
 Suponga que tiene la siguiente expresión aritmética: `3*(5*6/3)^(2+5)+1`. ¿Cuál es el resultado? Si aplicamos las reglas de precedencia adecuadas el resultado es 30000001.

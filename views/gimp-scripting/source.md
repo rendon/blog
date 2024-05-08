@@ -1,4 +1,4 @@
-<!-- vim: set spelllang=es_mx: -->
+<!-- vim: set spelllang=es_MX: -->
 
 # Gimp scripting
 2016-02-18 2024-05-07 #tools #image-processing #post

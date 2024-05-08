@@ -1,4 +1,4 @@
-<!-- vim: set spelllang=es_mx: -->
+<!-- vim: set spelllang=es_MX: -->
 
 # Reporte II: MicroOJ & servicios Web
 2016-02-18 2024-05-07 #dev #post

@@ -1,4 +1,4 @@
-<!-- vim: set spelllang=es_mx: -->
+<!-- vim: set spelllang=es_MX: -->
 
 # Reporte I: Enviar mensajes SMS
 2016-03-05 2024-05-06 #dev #android #post

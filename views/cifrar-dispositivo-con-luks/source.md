@@ -1,4 +1,4 @@
-<!-- vim: set spelllang=es_mx: -->
+<!-- vim: set spelllang=es_MX: -->
 <!-- slug: cifrar dispositivo con LUKS -->
 
 # Cifrar dispositivos con LUKS
