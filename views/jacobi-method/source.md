@@ -250,13 +250,13 @@ Jacobi's method needs 28 iterations:
 
 <pre>
 X_28 = {0.18611987381703476 0.3312302839116719 -0.42271293375394314 }
-</pre>
+```
 
 while Gauss-Seidel only needs 17:
 
 <pre>
 X_17 = {0.18611987381703465 0.3312302839116719 -0.42271293375394325 }
-</pre>
+```
 
 ## Conclusion
 

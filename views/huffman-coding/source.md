@@ -273,27 +273,27 @@ First a dummy text:
 
 <pre>
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-</pre>
+```
 
 Original size:
 
-<pre theme="slate">
+```
 ls -lh test1.txt
 -rw-r--r-- 1 rafa rafa 201 Aug 28 10:19 test1.txt
-</pre>
+```
 
 Compress:
 
-<pre theme="slate">
+```
 ./huffman encode test1.txt test1.out
-</pre>
+```
 
 After compression (removing metadata, i.e. frequencies, byte and bit count):
 
-<pre theme="slate">
+```
 ls -lh test1.out
 -rw-r--r-- 1 rafa rafa 39 Aug 28 10:21 test1.out
-</pre>
+```
 
 Wow! 162 bytes less.
 
@@ -301,32 +301,32 @@ Now something less contrived, let's compress the book "The Iliad" By Homer, you 
 
 Original size:
 
-<pre theme="slate">
+```
 ls -lh iliad.mb.txt
 -rw-r--r-- 1 rafa rafa 790K Aug 28 10:12 iliad.mb.txt
-</pre>
+```
 
 Compress:
 
-<pre theme="slate">
+```
 ./huffman encode iliad.mb.txt iliad.mb.out
-</pre>
+```
 
 After compression:
 
-<pre theme="slate">
+```
 ls -lh iliad.mb.out
 -rw-r--r-- 1 rafa rafa 437K Aug 28 10:30 iliad.mb.out
-</pre>
+```
 
 Not too bad, 353K of reduction.
 
 To complete the tests, decompress the output files and verify that the result is the same as the original input.
 
-<pre theme="slate">
+```
 ./huffman decode iliad.mb.out original.iliad.mb.txt
 diff iliad.mb.txt original.iliad.mb.txt
-</pre>
+```
 
 The last command should output NOTHING, otherwise something went wrong.
 

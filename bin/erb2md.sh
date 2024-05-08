@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
 function convert() {
+    sed -i 's/<\/pre>/```/g' source.md
+    sed -i 's/<pre [^>]*>/```/g' source.md
+
+
     # ~/projects/blog/bin/embed < source.md > out.md
     # mv out.md source.md
     # sed -i "s/<%= file(post, '\([^']*\)', '\([^']*\)') %>/[\2](\1)/g" source.md
@@ -57,7 +61,7 @@ function convert() {
 
     # sed -i "s/add_bib('\([^']*\)', *'\([^']*\)', *'\([^']*\)', *'\([^']*\)');\?/- [\3](\4)/g" source.md
 
-    sed -i "s/!\[\(.*\)\](\(.*\))/![\1](\/$1\/\2)/g" source.md
+    # sed -i "s/!\[\(.*\)\](\(.*\))/![\1](\/$1\/\2)/g" source.md
     # sed -i "/tex_set/d" source.md
     # 
     # # <%= ref('dns_wicd_conf'); %>

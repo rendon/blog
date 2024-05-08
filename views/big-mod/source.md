@@ -7,7 +7,7 @@ El objetivo de este documento es describir dos metodos que permiten calcular el 
 
 La mayoría de los lenguajes de programación tienen un operador para la operación módulo, en C/C++, Java, C# y similares el operador es el signo de porcentaje.
 
-<pre lang="c">int n = 123 % 4; // n = 3</pre>
+```int n = 123 % 4; // n = 3```
 
 Pues resulta que en algun momento de tu vida como programador te encuentras con el problema de calculas residuos, pero no cualquier cosa, sino más o menos algo como 
 

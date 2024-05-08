@@ -13,15 +13,15 @@ My ISP is Telmex and its router comes with the DHCP option so I had to rearrange
 
 ## Instalation
 
-<pre lang="bash" theme="slate">
+```
 $ sudo apt-get install dhcp3-server
-</pre>
+```
 
 ## Configuration
 
 First configure your NICs.
 
-<pre lang="bash" theme="slate">
+```
 $ sudo dhclient eth0 -v
 Internet Systems Consortium DHCP Client 4.2.2
 Copyright 2004-2011 Internet Systems Consortium.
@@ -37,11 +37,11 @@ RTNETLINK answers: File exists
 bound to 192.168.1.64 -- renewal in 36506 seconds.
 
 $ sudo ifconfig eth1 128.64.32.1 netmask 255.255.255.0
-</pre>
+```
 
 Now, go to `/etc/dhcp/` and open the `dhcpd.conf` file, add these lines.
 
-<pre lang="bash" theme="slate">
+```
 subnet 128.64.32.0 netmask 255.255.255.0 {
   range                     128.64.32.2 128.64.32.253;
   option subnet-mask        255.255.255.0;
@@ -50,7 +50,7 @@ subnet 128.64.32.0 netmask 255.255.255.0 {
   default-lease-time        600;
   max-lease-time            7200;
 }
-</pre>
+```
 
 Here is the meaning of the options:
 
@@ -65,15 +65,15 @@ Here is the meaning of the options:
 
 Save the file and restart the service.
 
-<pre lang="bash" theme="slate">
+```
 $ sudo service isc-dhcp-server restart
-</pre>
+```
 
 ## Testing
 
 Most operating systems comes with a network manager that detect and try to connect automatically to a network when detected, if not, execute the following command, change `eth0` with your NIC.
 
-<pre lang="bash" theme="slate">
+```
 $ sudo dhclient eth0 -v
 Internet Systems Consortium DHCP Client 4.2.2
 Copyright 2004-2011 Internet Systems Consortium.
@@ -88,7 +88,7 @@ DHCPREQUEST on eth0 to 255.255.255.255 port 67
 DHCPOFFER from 128.64.32.1
 DHCPACK from 128.64.32.1
 bound to 128.64.32.3 -- renewal in 273 seconds.
-</pre>
+```
 
 Follow this [link](http://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol#Technical_details) to know what every message(DHCPDISCOVER, DHCPREQUEST, DHCPOFFER, etc.) means, recommended.
 
@@ -98,10 +98,10 @@ At this point your DHCP server is working, you should be able to comunicate with
 
 In the server execute the next lines to redirect the traffic on `eth1` to `eth0`.
 
-<pre lang="bash" theme="slate">
+```
 $ sudo iptables --table nat --append POSTROUTING --out-interface eth0 -j MASQUERADE
 $ sudo iptables --append FORWARD --in-interface eth1 -j ACCEPT
-</pre>
+```
 
 If there were no problems now you can go out to the internet too.
 

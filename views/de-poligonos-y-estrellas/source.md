@@ -78,10 +78,10 @@ void computePolygon(int n, Point center, Point point)
 
 En las líneas 25 a 27 se hace una rotación a la figura con el fin de que el primer vértice del polígono coincida con el punto donde se encuentra el apuntador del ratón. Esta transformación en realidad no forma parte del algoritmo sino más bien por estética. Los métodos `int ly(int y)` y `int oy(int y)` se encargan de obtener $y'$ y $y$ respectivamente.
 
-<pre lang="cpp" theme="slate" >
+```
 private int ly(int y) { return maxY - y; }
 private int oy(int y) { return maxY - y; }
-</pre>
+```
 
 Como pueden observer los métodos son idénticos, sin embargo el objetivo es distinto. Por claridad los emplearemos para sus respectivas funciones. El código para las estrellas es el siguiente:
 

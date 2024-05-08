@@ -15,11 +15,11 @@ Ve al sitio oficial de Java, [http://www.oracle.com/technetwork/java/javase/down
 
 El archivo que acabamos de descargar contiene los archivo binarios del JDK por lo que no hay que compilar nada, únicamente descomprimirlo en un lugar adecuado, nosotros vamos a usar el directorio `/opt`, como usuario **root** ejecuta los siguientes comandos.
 
-<pre lang="bash" theme="slate">
+```
 mv /home/nombre_de_usuario/descargas/jdk-7uxx-linux-xxxx.tar.gz /opt/
 cd /opt
 tar xvf jdk-7uxx-linux-xxxx.tar.gz
-</pre>
+```
 
 El último comando debió crear una carpeta con un nombre parecido `jdk1.7xxx` dentro del directorio `/opt`. Ten cuidado de no teclear los comandos literalmente, tienes que emplear los valores que correspondan en tu caso.
 
@@ -29,15 +29,15 @@ Una variable de entorno almacena valores que el sistema y algunas aplicaciones u
 
 Con tu editor de texto favorito(vim, nano, gedit, etc) abre el archivo `.bashrc` ubicado en el directorio home y agrega la siguiente línea. Asegúrate de remplazar las "xxx" por lo valores reales.
 
-<pre lang="bash" theme="slate">
+```
 export JAVA_HOME=/opt/jdk1.7xxx
-</pre>
+```
 
 Para verificar que todo esta correcto, abre otra terminal y ejecuta el siguiente comando.
 
-<pre lang="bash" theme="slate">
+```
 echo $JAVA_HOME
 /opt/jdk1.7xxx
-</pre>
+```
 
 Si el comando anterior no imprime nada es que algo salio mal y habrá que repetir el procedimiento con más cuidado.

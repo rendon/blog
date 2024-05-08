@@ -86,8 +86,7 @@ IntelliJ IDEA 12.
 <h2 id="la-base-de-datos-local">La base de datos local</h2>
 <p>Uno de los requisitos de nuestra aplicación es que debe de funcionar de forma desconectada, por ende, es necesario crear una replica del modelo de datos en nuestra aplicación móvil. A continuación se muestra como se manipulan los datos en de formal local, el SGBD es SQLite.</p>
 <p>Lo primero es crear las clases necesarias que representaran a nuestras tablas.</p>
-<pre lang="java">
-package com.inforscience.requisition.model;
+<pre><code>package com.inforscience.requisition.model;
 
 public class Client {
     private int idClient;
@@ -161,12 +160,10 @@ public class Client {
     @Override
     public String toString()
     {
-        return getName() + " " + getMiddleName() + " " + getLastName();
+        return getName() + &quot; &quot; + getMiddleName() + &quot; &quot; + getLastName();
     }
-}
-</pre>
-<pre lang="java">
-package com.inforscience.requisition.model;
+}</code></pre>
+<pre><code>package com.inforscience.requisition.model;
 
 public class Product {
     private int idProduct;
@@ -205,10 +202,8 @@ public class Product {
     {
         return getDescription();
     }
-}
-</pre>
-<pre lang="java">
-package com.inforscience.requisition.model;
+}</code></pre>
+<pre><code>package com.inforscience.requisition.model;
 
 public class Request {
     private int idRequest;
@@ -253,10 +248,8 @@ public class Request {
     {
         this.requestDate = requestDate;
     }
-}
-</pre>
-<pre lang="java">
-package com.inforscience.requisition.model;
+}</code></pre>
+<pre><code>package com.inforscience.requisition.model;
 
 public class Detail {
     private int idDetail;
@@ -271,7 +264,7 @@ public class Detail {
         setIdRequest(0);
         setIdProduct(0);
         setAmount(0);
-        setDescription("");
+        setDescription(&quot;&quot;);
     }
 
     public Detail(int idDetail, int idRequest, int idProduct, int amount)
@@ -335,13 +328,11 @@ public class Detail {
     @Override
     public String toString()
     {
-        return getAmount() + " |  " + getDescription();
+        return getAmount() + &quot; |  &quot; + getDescription();
     }
-}
-</pre>
+}</code></pre>
 <p>Para simplificarnos las cosas vamos a crear un clase auxiliar (un <em>Helper</em>) para que realice todas las tareas que tienen que ver con la base de datos, como son la creación de las tablas (en caso de que no existan), inserción de registros y consulta de los mismos:</p>
-<pre lang="java">
-package com.inforscience.requisition.model;
+<pre><code>package com.inforscience.requisition.model;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -353,40 +344,40 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class DBManager {
-    public static final String DB_NAME = "pedidos";
+    public static final String DB_NAME = &quot;pedidos&quot;;
 
     private static final String DB_CREATE_CLIENT =
-              "CREATE TABLE IF NOT EXISTS Client (IdClient INTEGER PRIMARY KEY,"
-            + "Name VARCHAR(20), MiddleName VARCHAR(20), LastName VARCHAR(20), "
-            + "Address VARCHAR(100))";
+              &quot;CREATE TABLE IF NOT EXISTS Client (IdClient INTEGER PRIMARY KEY,&quot;
+            + &quot;Name VARCHAR(20), MiddleName VARCHAR(20), LastName VARCHAR(20), &quot;
+            + &quot;Address VARCHAR(100))&quot;;
 
     private static final String UNIQUE_FULL_NAME_CONSTRAINT =
-              "CREATE UNIQUE INDEX IF NOT EXISTS unique_fullname ON "
-            + "Client(Name, MiddleName, LastName, Address)";
+              &quot;CREATE UNIQUE INDEX IF NOT EXISTS unique_fullname ON &quot;
+            + &quot;Client(Name, MiddleName, LastName, Address)&quot;;
 
     private static final String DB_CREATE_REQUEST =
-              "CREATE TABLE IF NOT EXISTS Request(IdRequest INTEGER PRIMARY KEY"
-            + " AUTOINCREMENT, IdClient INTEGER, RequestDate DATETIME, "
-            + " FOREIGN KEY (IdClient) REFERENCES Client (IdClient))";
+              &quot;CREATE TABLE IF NOT EXISTS Request(IdRequest INTEGER PRIMARY KEY&quot;
+            + &quot; AUTOINCREMENT, IdClient INTEGER, RequestDate DATETIME, &quot;
+            + &quot; FOREIGN KEY (IdClient) REFERENCES Client (IdClient))&quot;;
 
     private static final String UNIQUE_REQUEST_CONSTRAINT =
-              "CREATE UNIQUE INDEX IF NOT EXISTS unique_request "
-            + "ON Request(IdRequest, IdClient)";
+              &quot;CREATE UNIQUE INDEX IF NOT EXISTS unique_request &quot;
+            + &quot;ON Request(IdRequest, IdClient)&quot;;
 
     private static final String DB_CREATE_PRODUCT =
-              "CREATE TABLE IF NOT EXISTS Product(IdProduct "
-            + "INTEGER PRIMARY KEY, Description VARCHAR(100))";
+              &quot;CREATE TABLE IF NOT EXISTS Product(IdProduct &quot;
+            + &quot;INTEGER PRIMARY KEY, Description VARCHAR(100))&quot;;
 
     private static final String DB_CREATE_DETAIL =
-             "CREATE TABLE IF NOT EXISTS Detail(IdDetail INTEGER PRIMARY "
-            + "KEY AUTOINCREMENT, IdRequest INTEGER, IdProduct INTEGER, "
-            + "Amount INTEGER, FOREIGN KEY (IdRequest) REFERENCES Request "
-            + "(IdRequest), FOREIGN KEY(IdProduct) "
-            + "REFERENCES Product(IdProduct))";
+             &quot;CREATE TABLE IF NOT EXISTS Detail(IdDetail INTEGER PRIMARY &quot;
+            + &quot;KEY AUTOINCREMENT, IdRequest INTEGER, IdProduct INTEGER, &quot;
+            + &quot;Amount INTEGER, FOREIGN KEY (IdRequest) REFERENCES Request &quot;
+            + &quot;(IdRequest), FOREIGN KEY(IdProduct) &quot;
+            + &quot;REFERENCES Product(IdProduct))&quot;;
 
     private static final String UNIQUE_DETAIL_CONSTRAINT =
-              "CREATE UNIQUE INDEX IF NOT EXISTS unique_detail "
-            + "ON Detail(IdDetail, IdRequest)";
+              &quot;CREATE UNIQUE INDEX IF NOT EXISTS unique_detail &quot;
+            + &quot;ON Detail(IdDetail, IdRequest)&quot;;
 
     private DBManager() { }
 
@@ -401,53 +392,53 @@ public class DBManager {
     public static long insertClient(Client client, SQLiteDatabase db)
     {
         ContentValues values = new ContentValues();
-        values.put("IdClient", client.getIdClient());
-        values.put("Name", client.getName());
-        values.put("MiddleName", client.getMiddleName());
-        values.put("LastName", client.getLastName());
-        values.put("Address", client.getAddress());
+        values.put(&quot;IdClient&quot;, client.getIdClient());
+        values.put(&quot;Name&quot;, client.getName());
+        values.put(&quot;MiddleName&quot;, client.getMiddleName());
+        values.put(&quot;LastName&quot;, client.getLastName());
+        values.put(&quot;Address&quot;, client.getAddress());
 
-        return db.insert("Client", null, values);
+        return db.insert(&quot;Client&quot;, null, values);
     }
 
 
     public static long insertProduct(Product product, SQLiteDatabase db)
     {
         ContentValues values = new ContentValues();
-        values.put("IdProduct", product.getIdProduct());
-        values.put("Description", product.getDescription());
+        values.put(&quot;IdProduct&quot;, product.getIdProduct());
+        values.put(&quot;Description&quot;, product.getDescription());
 
-        return db.insert("Product", null, values);
+        return db.insert(&quot;Product&quot;, null, values);
     }
 
 
     public static long insertRequest(Request request, SQLiteDatabase db)
     {
         ContentValues values = new ContentValues();
-        values.put("IdClient", request.getIdClient());
-        values.put("RequestDate", request.getRequestDate());
+        values.put(&quot;IdClient&quot;, request.getIdClient());
+        values.put(&quot;RequestDate&quot;, request.getRequestDate());
 
-        return db.insert("Request", null, values);
+        return db.insert(&quot;Request&quot;, null, values);
     }
 
     public static long insertDetail(Detail detail, SQLiteDatabase db)
     {
         ContentValues values = new ContentValues();
-        values.put("IdRequest", detail.getIdRequest());
-        values.put("IdProduct", detail.getIdProduct());
-        values.put("Amount", detail.getAmount());
+        values.put(&quot;IdRequest&quot;, detail.getIdRequest());
+        values.put(&quot;IdProduct&quot;, detail.getIdProduct());
+        values.put(&quot;Amount&quot;, detail.getAmount());
 
-        return db.insert("Detail", null, values);
+        return db.insert(&quot;Detail&quot;, null, values);
     }
 
-    public static ArrayList<Client> selectClients(SQLiteDatabase db)
+    public static ArrayList&lt;Client&gt; selectClients(SQLiteDatabase db)
     {
-        String[] fields = new String[] {"IdClient", "Name", "MiddleName",
-                "LastName", "Address"};
+        String[] fields = new String[] {&quot;IdClient&quot;, &quot;Name&quot;, &quot;MiddleName&quot;,
+                &quot;LastName&quot;, &quot;Address&quot;};
 
-        Cursor r = db.query("Client", fields, null, null, null, null, null);
+        Cursor r = db.query(&quot;Client&quot;, fields, null, null, null, null, null);
 
-        ArrayList<Client> clients = new ArrayList<Client>();
+        ArrayList&lt;Client&gt; clients = new ArrayList&lt;Client&gt;();
         if (r.moveToFirst()) {
             do {
                 Client c = new Client();
@@ -463,12 +454,12 @@ public class DBManager {
         return clients;
     }
 
-    public static ArrayList<Request> selectRequests(SQLiteDatabase db)
+    public static ArrayList&lt;Request&gt; selectRequests(SQLiteDatabase db)
     {
-        String[] fields = new String[] {"IdRequest", "IdClient", "RequestDate"};
-        Cursor r = db.query("Request", fields, null, null, null, null, null);
+        String[] fields = new String[] {&quot;IdRequest&quot;, &quot;IdClient&quot;, &quot;RequestDate&quot;};
+        Cursor r = db.query(&quot;Request&quot;, fields, null, null, null, null, null);
 
-        ArrayList<Request> requests = new ArrayList<Request>();
+        ArrayList&lt;Request&gt; requests = new ArrayList&lt;Request&gt;();
         if (r.moveToFirst()) {
             do {
                 Request request = new Request();
@@ -482,12 +473,12 @@ public class DBManager {
         return requests;
     }
 
-    public static ArrayList<Product> selectProducts(SQLiteDatabase db)
+    public static ArrayList&lt;Product&gt; selectProducts(SQLiteDatabase db)
     {
-        String[] fields = new String[] {"IdProduct", "Description"};
-        Cursor r = db.query("Product", fields, null, null, null, null, null);
+        String[] fields = new String[] {&quot;IdProduct&quot;, &quot;Description&quot;};
+        Cursor r = db.query(&quot;Product&quot;, fields, null, null, null, null, null);
 
-        ArrayList<Product> products = new ArrayList<Product>();
+        ArrayList&lt;Product&gt; products = new ArrayList&lt;Product&gt;();
         if (r.moveToFirst()) {
             do {
                 Product p = new Product();
@@ -500,13 +491,13 @@ public class DBManager {
         return products;
     }
 
-    public static ArrayList<Detail> selectDetails(SQLiteDatabase db)
+    public static ArrayList&lt;Detail&gt; selectDetails(SQLiteDatabase db)
     {
-        String[] fields = new String[] {"IdDetail", "IdRequest",
-                "IdProduct", "Amount"};
-        Cursor r = db.query("Detail", fields, null, null, null, null, null);
+        String[] fields = new String[] {&quot;IdDetail&quot;, &quot;IdRequest&quot;,
+                &quot;IdProduct&quot;, &quot;Amount&quot;};
+        Cursor r = db.query(&quot;Detail&quot;, fields, null, null, null, null, null);
 
-        ArrayList<Detail> details = new ArrayList<Detail>();
+        ArrayList&lt;Detail&gt; details = new ArrayList&lt;Detail&gt;();
         if (r.moveToFirst()) {
             do {
                 Detail d = new Detail();
@@ -523,74 +514,72 @@ public class DBManager {
 
     public static void clean(SQLiteDatabase db)
     {
-        db.delete("Detail", null, null);
-        db.delete("Request", null, null);
-        db.delete("Product", null, null);
-        db.delete("Client", null, null);
+        db.delete(&quot;Detail&quot;, null, null);
+        db.delete(&quot;Request&quot;, null, null);
+        db.delete(&quot;Product&quot;, null, null);
+        db.delete(&quot;Client&quot;, null, null);
     }
 
 
-    public static ArrayList<String> queryRequests(SQLiteDatabase db)
+    public static ArrayList&lt;String&gt; queryRequests(SQLiteDatabase db)
     {
         Cursor r = db.rawQuery(
-                  "SELECT Request.IdRequest, Client.Name, Client.MiddleName, "
-                + "Client.LastName, Request.RequestDate, Detail.Amount, "
-                + "Product.Description FROM Request, Client, Detail, Product "
-                + "WHERE Detail.IdRequest = Request.IdRequest AND "
-                + "Request.IdClient = Client.IdClient AND "
-                + "Detail.IdProduct = Product.IdProduct", null);
+                  &quot;SELECT Request.IdRequest, Client.Name, Client.MiddleName, &quot;
+                + &quot;Client.LastName, Request.RequestDate, Detail.Amount, &quot;
+                + &quot;Product.Description FROM Request, Client, Detail, Product &quot;
+                + &quot;WHERE Detail.IdRequest = Request.IdRequest AND &quot;
+                + &quot;Request.IdClient = Client.IdClient AND &quot;
+                + &quot;Detail.IdProduct = Product.IdProduct&quot;, null);
 
-        TreeMap<String, ArrayList<String>> map =
-                new TreeMap<String, ArrayList<String>>();
-        ArrayList<String> requests = new ArrayList<String>();
+        TreeMap&lt;String, ArrayList&lt;String&gt;&gt; map =
+                new TreeMap&lt;String, ArrayList&lt;String&gt;&gt;();
+        ArrayList&lt;String&gt; requests = new ArrayList&lt;String&gt;();
 
         if (r.moveToFirst()) {
             do {
-                String key  = r.getString(0) + ": "
-                            + r.getString(1) + " "
-                            + r.getString(2) + " "
-                            + r.getString(3) + "\n";
+                String key  = r.getString(0) + &quot;: &quot;
+                            + r.getString(1) + &quot; &quot;
+                            + r.getString(2) + &quot; &quot;
+                            + r.getString(3) + &quot;\n&quot;;
                 String date = r.getString(4).toString();
 
-                for (int i = 0; i < key.length(); i++) {
+                for (int i = 0; i &lt; key.length(); i++) {
                     if (Character.isLetter(key.charAt(i)))
                         break;
-                    date = " " + date;
+                    date = &quot; &quot; + date;
                 }
 
                 key += date;
 
                 String amount = r.getString(5);
-                while (amount.length() < 4)
-                    amount = " " + amount;
+                while (amount.length() &lt; 4)
+                    amount = &quot; &quot; + amount;
 
-                String value = amount + " | " + r.getString(6);
+                String value = amount + &quot; | &quot; + r.getString(6);
 
                 if (map.containsKey(key)) {
-                    ArrayList<String> a = map.get(key);
+                    ArrayList&lt;String&gt; a = map.get(key);
                     a.add(value);
                 } else {
-                    ArrayList<String> a = new ArrayList<String>();
+                    ArrayList&lt;String&gt; a = new ArrayList&lt;String&gt;();
                     a.add(value);
                     map.put(key, a);
                 }
             } while (r.moveToNext());
         }
 
-        for (Map.Entry<String, ArrayList<String>> entry : map.entrySet()) {
+        for (Map.Entry&lt;String, ArrayList&lt;String&gt;&gt; entry : map.entrySet()) {
             requests.add(entry.getKey());
-            for (int i = 0; i < entry.getValue().size(); i++) {
+            for (int i = 0; i &lt; entry.getValue().size(); i++) {
                 requests.add(entry.getValue().get(i));
             }
         }
 
         return requests;
     }
-}
-</pre>
+}</code></pre>
 <p>Podrán observar que cada uno de los métodos recibe un objecto de tipo <em>SQLiteDatabase</em>, este objecto lo creamos en la actividad principal (<em>MainActivity.java</em>) de nuestra aplicación y se proporciona al a las actividades restantes. He aquí la parte relevante:</p>
-<pre lang="java">
-/* Método onCreate() */
+<pre><code>/* Método onCreate() */
 
 database = openOrCreateDatabase(DBManager.DB_NAME,
             Context.MODE_PRIVATE, null);
@@ -612,13 +601,11 @@ tabHost.setCurrentTab(0);
 HomeActivity homeActivity = (HomeActivity)getLocalActivityManager()
                                 .getCurrentActivity();
 homeActivity.setDatabase(database);
-homeActivity.setShopActivity(shopActivity);
-</pre>
+homeActivity.setShopActivity(shopActivity);</code></pre>
 <p>Como su nombre lo indica, el método <em>openOrCreateDatabase()</em> abre nuestra base de datos o la crea en caso de que aun no exista.</p>
 <h2 id="comunicación-con-el-web-service">Comunicación con el Web service</h2>
 <p>Al igual que con Qt, trabajar con Web services en Java es un poco tedioso ya que no hay soporte nativo (¿Lo hay?) para trabajar con ellos. Existen algunas bibliotecas para trabajar con Web services pero son demasiado complejas y lo que necesitamos para esta aplicación es algo sencillo, por ello vamos a crear nuestro propio proxy.</p>
-<pre lang="java">
-package com.inforscience.requisition.net;
+<pre><code>package com.inforscience.requisition.net;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -634,28 +621,28 @@ import com.inforscience.requisition.model.Request;
 
 public class WebService {
     public static final String WS_URL =
-        "http://192.168.1.200/request_ws/index.php";
+        &quot;http://192.168.1.200/request_ws/index.php&quot;;
     public static final String MSG_GET_ALL_CLIENTS =
-          "<?xml version='1.0'?> <soapenv:Envelope xmlns:soapenv="
-        + "'http://schemas.xmlsoap.org/soap/envelope/' xmlns:req='Request'> "
-        + "<soapenv:Header/> <soapenv:Body> <req:GetAllClients/> "
-        + "</soapenv:Body> </soapenv:Envelope>";
+          &quot;&lt;?xml version=&#39;1.0&#39;?&gt; &lt;soapenv:Envelope xmlns:soapenv=&quot;
+        + &quot;&#39;http://schemas.xmlsoap.org/soap/envelope/&#39; xmlns:req=&#39;Request&#39;&gt; &quot;
+        + &quot;&lt;soapenv:Header/&gt; &lt;soapenv:Body&gt; &lt;req:GetAllClients/&gt; &quot;
+        + &quot;&lt;/soapenv:Body&gt; &lt;/soapenv:Envelope&gt;&quot;;
 
     public static final String MSG_GET_ALL_PRODUCTS =
-          "<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/"
-        + "envelope/' xmlns:req='Request'> <soapenv:Header/> <soapenv:Body> "
-        + "<req:GetAllProducts/> </soapenv:Body> </soapenv:Envelope>";
+          &quot;&lt;soapenv:Envelope xmlns:soapenv=&#39;http://schemas.xmlsoap.org/soap/&quot;
+        + &quot;envelope/&#39; xmlns:req=&#39;Request&#39;&gt; &lt;soapenv:Header/&gt; &lt;soapenv:Body&gt; &quot;
+        + &quot;&lt;req:GetAllProducts/&gt; &lt;/soapenv:Body&gt; &lt;/soapenv:Envelope&gt;&quot;;
 
 
     private WebService() { }
 
-    public static ArrayList<Client> queryClients() throws Exception
+    public static ArrayList&lt;Client&gt; queryClients() throws Exception
     {
         URL url = new URL(WS_URL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-        conn.setRequestMethod("POST");
-        conn.setRequestProperty("Content-Type:", "text/xml");
+        conn.setRequestMethod(&quot;POST&quot;);
+        conn.setRequestProperty(&quot;Content-Type:&quot;, &quot;text/xml&quot;);
 
         conn.setDoOutput(true);
         DataOutputStream out = new DataOutputStream(conn.getOutputStream());
@@ -666,12 +653,12 @@ public class WebService {
         return XMLParser.parseClients(conn.getInputStream());
     }
 
-    public static ArrayList<Product> queryProducts() throws Exception
+    public static ArrayList&lt;Product&gt; queryProducts() throws Exception
     {
         URL url = new URL(WS_URL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("POST");
-        conn.setRequestProperty("Content-Type:", "text/xml");
+        conn.setRequestMethod(&quot;POST&quot;);
+        conn.setRequestProperty(&quot;Content-Type:&quot;, &quot;text/xml&quot;);
         conn.setDoOutput(true);
         DataOutputStream out = new DataOutputStream(conn.getOutputStream());
         out.writeBytes(MSG_GET_ALL_PRODUCTS);
@@ -681,52 +668,52 @@ public class WebService {
         return XMLParser.parseProducts(conn.getInputStream());
     }
 
-    public static void putRegisters(ArrayList<Request> R,
-                             ArrayList<Detail> D) throws Exception
+    public static void putRegisters(ArrayList&lt;Request&gt; R,
+                             ArrayList&lt;Detail&gt; D) throws Exception
     {
         String header =
-                  "<soapenv:Envelope "
-                + "xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/'"
-                + " xmlns:req='Request'> <soapenv:Header/> <soapenv:Body> "
-                + " <req:PutRegisters>";
+                  &quot;&lt;soapenv:Envelope &quot;
+                + &quot;xmlns:soapenv=&#39;http://schemas.xmlsoap.org/soap/envelope/&#39;&quot;
+                + &quot; xmlns:req=&#39;Request&#39;&gt; &lt;soapenv:Header/&gt; &lt;soapenv:Body&gt; &quot;
+                + &quot; &lt;req:PutRegisters&gt;&quot;;
 
-        String footer   = "</req:PutRegisters> "
-                        + "</soapenv:Body> "
-                        + "</soapenv:Envelope>";
+        String footer   = &quot;&lt;/req:PutRegisters&gt; &quot;
+                        + &quot;&lt;/soapenv:Body&gt; &quot;
+                        + &quot;&lt;/soapenv:Envelope&gt;&quot;;
 
-        String requests = "\n<RequestItems>\n";
+        String requests = &quot;\n&lt;RequestItems&gt;\n&quot;;
 
         int n = R.size();
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i &lt; n; i++) {
             Request r = R.get(i);
-            requests += "<item>";
-            requests += "<IdRequest>" + r.getIdRequest() + "</IdRequest>";
-            requests += "<IdClient>" + r.getIdClient()+ "</IdClient>";
-            requests += "<RequestDate>" + r.getRequestDate() + "</RequestDate>";
+            requests += &quot;&lt;item&gt;&quot;;
+            requests += &quot;&lt;IdRequest&gt;&quot; + r.getIdRequest() + &quot;&lt;/IdRequest&gt;&quot;;
+            requests += &quot;&lt;IdClient&gt;&quot; + r.getIdClient()+ &quot;&lt;/IdClient&gt;&quot;;
+            requests += &quot;&lt;RequestDate&gt;&quot; + r.getRequestDate() + &quot;&lt;/RequestDate&gt;&quot;;
 
-            requests += "</item>" + "\n";
+            requests += &quot;&lt;/item&gt;&quot; + &quot;\n&quot;;
         }
-        requests += "</RequestItems>";
+        requests += &quot;&lt;/RequestItems&gt;&quot;;
 
-        String details = "<DetailItems>" + "\n";
+        String details = &quot;&lt;DetailItems&gt;&quot; + &quot;\n&quot;;
         n = D.size();
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i &lt; n; i++) {
             Detail d = D.get(i);
-            details += "<item>";
-            details += "<IdDetail>" + d.getIdDetail() + "</IdDetail>";
-            details += "<IdRequest>" + d.getIdRequest() + "</IdRequest>";
-            details += "<IdProduct>" + d.getIdProduct() + "</IdProduct>";
-            details += "<Amount>" + d.getAmount() + "</Amount>";
-            details += "</item>\n";
+            details += &quot;&lt;item&gt;&quot;;
+            details += &quot;&lt;IdDetail&gt;&quot; + d.getIdDetail() + &quot;&lt;/IdDetail&gt;&quot;;
+            details += &quot;&lt;IdRequest&gt;&quot; + d.getIdRequest() + &quot;&lt;/IdRequest&gt;&quot;;
+            details += &quot;&lt;IdProduct&gt;&quot; + d.getIdProduct() + &quot;&lt;/IdProduct&gt;&quot;;
+            details += &quot;&lt;Amount&gt;&quot; + d.getAmount() + &quot;&lt;/Amount&gt;&quot;;
+            details += &quot;&lt;/item&gt;\n&quot;;
         }
 
-        details += "</DetailItems>";
+        details += &quot;&lt;/DetailItems&gt;&quot;;
 
-        String message = header + requests + "\n" + details + "\n" + footer;
+        String message = header + requests + &quot;\n&quot; + details + &quot;\n&quot; + footer;
         URL url = new URL(WS_URL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("POST");
-        conn.setRequestProperty("Content-Type:", "text/xml");
+        conn.setRequestMethod(&quot;POST&quot;);
+        conn.setRequestProperty(&quot;Content-Type:&quot;, &quot;text/xml&quot;);
 
         conn.setDoOutput(true);
         DataOutputStream out = new DataOutputStream(conn.getOutputStream());
@@ -736,14 +723,13 @@ public class WebService {
 
         InputStreamReader is = new InputStreamReader(conn.getInputStream());
         BufferedReader reader = new BufferedReader(is);
-        String line, response = "";
+        String line, response = &quot;&quot;;
         while ((line = reader.readLine()) != null)
             response += line;
 
-        Log.w("RESPONSE", response);
+        Log.w(&quot;RESPONSE&quot;, response);
     }
-}
-</pre>
+}</code></pre>
 <p>Este código es ni más ni menos que el que ocupamos con Blackberry, pero en Java.</p>
 <h2 id="el-cliente-1">El cliente</h2>
 <p>En este apartado vamos a ver como construir la aplicación en Android y cómo se realizan las operaciones.</p>
@@ -759,57 +745,54 @@ public class WebService {
 <figcaption aria-hidden="true">Página principal</figcaption>
 </figure>
 <p>El diseño correspondiente en XML es el siguiente:</p>
-<pre lang="xml">
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+              android:orientation=&quot;vertical&quot;
+              android:layout_width=&quot;match_parent&quot;
+              android:layout_height=&quot;match_parent&quot;&gt;
 
 
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
-        <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:id="@+id/imageView"
-                android:background="@drawable/ic_itch"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Desarrollo de Aplicaciones kara Tecnologías Móviles"
-                android:id="@+id/textView" android:layout_gravity="center"
-                android:paddingLeft="10dp" android:textSize="16dp"/>
-    </LinearLayout>
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" android:layout_gravity="center"
-            android:gravity="center_vertical">
-        <ListView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/listView"/>
-        <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Enviar registros al servidor"
-                android:id="@+id/put_registers_button"
-                android:layout_gravity="center"/>
-        <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Limpiar registros y actualizar catalogos"
-                android:id="@+id/update_catalogs_button"/>
-    </LinearLayout>
-</LinearLayout>
-</pre>
+    &lt;LinearLayout
+            android:orientation=&quot;horizontal&quot;
+            android:layout_width=&quot;fill_parent&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:layout_gravity=&quot;center&quot;&gt;
+        &lt;ImageView
+                android:layout_width=&quot;70dp&quot;
+                android:layout_height=&quot;70dp&quot;
+                android:id=&quot;@+id/imageView&quot;
+                android:background=&quot;@drawable/ic_itch&quot;/&gt;
+        &lt;TextView
+                android:layout_width=&quot;wrap_content&quot;
+                android:layout_height=&quot;wrap_content&quot;
+                android:text=&quot;Desarrollo de Aplicaciones kara Tecnologías Móviles&quot;
+                android:id=&quot;@+id/textView&quot; android:layout_gravity=&quot;center&quot;
+                android:paddingLeft=&quot;10dp&quot; android:textSize=&quot;16dp&quot;/&gt;
+    &lt;/LinearLayout&gt;
+    &lt;LinearLayout
+            android:orientation=&quot;vertical&quot;
+            android:layout_width=&quot;fill_parent&quot;
+            android:layout_height=&quot;fill_parent&quot; android:layout_gravity=&quot;center&quot;
+            android:gravity=&quot;center_vertical&quot;&gt;
+        &lt;ListView
+                android:layout_width=&quot;fill_parent&quot;
+                android:layout_height=&quot;wrap_content&quot;
+                android:id=&quot;@+id/listView&quot;/&gt;
+        &lt;Button
+                android:layout_width=&quot;fill_parent&quot;
+                android:layout_height=&quot;wrap_content&quot;
+                android:text=&quot;Enviar registros al servidor&quot;
+                android:id=&quot;@+id/put_registers_button&quot;
+                android:layout_gravity=&quot;center&quot;/&gt;
+        &lt;Button
+                android:layout_width=&quot;fill_parent&quot;
+                android:layout_height=&quot;wrap_content&quot;
+                android:text=&quot;Limpiar registros y actualizar catalogos&quot;
+                android:id=&quot;@+id/update_catalogs_button&quot;/&gt;
+    &lt;/LinearLayout&gt;
+&lt;/LinearLayout&gt;</code></pre>
 <p>El siguiente listado muestra como se programa el comportamiento de los dos botones:</p>
-<pre lang="java">
-@Override
+<pre><code>@Override
 public void onCreate(Bundle savedInstanceState)
 {
     super.onCreate(savedInstanceState);
@@ -820,15 +803,15 @@ public void onCreate(Bundle savedInstanceState)
         @Override
         public void onClick(View view)
         {
-            Toast.makeText(getApplicationContext(), "!Espere, por favor!",
+            Toast.makeText(getApplicationContext(), &quot;!Espere, por favor!&quot;,
                            Toast.LENGTH_SHORT).show();
             DBManager.clean(database);
             Spinner clientSpinner = (Spinner)shopActivity
                                         .findViewById(R.id.client_list);
             try {
-                ArrayList<Client> clients = WebService.queryClients();
-                ArrayAdapter<Client> adapter =
-                        new ArrayAdapter<Client>(getApplicationContext(),
+                ArrayList&lt;Client&gt; clients = WebService.queryClients();
+                ArrayAdapter&lt;Client&gt; adapter =
+                        new ArrayAdapter&lt;Client&gt;(getApplicationContext(),
                                 android.R.layout.select_dialog_item,
                                 clients);
 
@@ -836,34 +819,34 @@ public void onCreate(Bundle savedInstanceState)
                 clientSpinner.setBackgroundColor(Color.GRAY);
 
                 int n = clients.size();
-                for (int i = 0; i < n; i++)
+                for (int i = 0; i &lt; n; i++)
                     DBManager.insertClient(clients.get(i), database);
 
             } catch (Exception e) {
-                Log.e("EXCEPTION", e.toString());
+                Log.e(&quot;EXCEPTION&quot;, e.toString());
             }
 
 
             Spinner productSpinner = (Spinner)shopActivity
                                         .findViewById(R.id.product_list);
             try {
-                ArrayList<Product> products = WebService.queryProducts();
-                ArrayAdapter<Product> adapter =
-                        new ArrayAdapter<Product>(getApplicationContext(),
+                ArrayList&lt;Product&gt; products = WebService.queryProducts();
+                ArrayAdapter&lt;Product&gt; adapter =
+                        new ArrayAdapter&lt;Product&gt;(getApplicationContext(),
                                 android.R.layout.select_dialog_item,
                                 products);
 
                 int n = products.size();
-                for (int i = 0; i < n; i++)
+                for (int i = 0; i &lt; n; i++)
                     DBManager.insertProduct(products.get(i), database);
 
                 productSpinner.setAdapter(adapter);
                 productSpinner.setBackgroundColor(Color.GRAY);
             } catch (Exception e) {
-                Log.e("EXCEPTION", e.toString());
+                Log.e(&quot;EXCEPTION&quot;, e.toString());
             }
 
-            Toast.makeText(getApplicationContext(), "!Listo!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), &quot;!Listo!&quot;, Toast.LENGTH_SHORT).show();
         }
     });
 
@@ -872,23 +855,22 @@ public void onCreate(Bundle savedInstanceState)
         @Override
         public void onClick(View view)
         {
-            ArrayList<Request> R = DBManager.selectRequests(database);
-            ArrayList<Detail> D = DBManager.selectDetails(database);
+            ArrayList&lt;Request&gt; R = DBManager.selectRequests(database);
+            ArrayList&lt;Detail&gt; D = DBManager.selectDetails(database);
             try {
                 Toast.makeText(getApplicationContext(),
-                               "!Espere, por favor!",
+                               &quot;!Espere, por favor!&quot;,
                                Toast.LENGTH_SHORT).show();
                 WebService.putRegisters(R, D);
-                Toast.makeText(getApplicationContext(), "!Listo!",
+                Toast.makeText(getApplicationContext(), &quot;!Listo!&quot;,
                                Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
-                Log.e("EXCEPTION", e.toString());
+                Log.e(&quot;EXCEPTION&quot;, e.toString());
             }
         }
     });
 
-}
-</pre>
+}</code></pre>
 <h3 id="registro-de-pedidos">Registro de pedidos</h3>
 <p>A continuación se ilustra la interfaz para registrar pedidos.</p>
 <figure>
@@ -896,71 +878,68 @@ public void onCreate(Bundle savedInstanceState)
 <figcaption aria-hidden="true">Registro de pedidos</figcaption>
 </figure>
 <p>La interfaz esta descrita de la siguiente manera:</p>
-<pre lang="xml">
-<?xml version="1.0" encoding="utf-8"?>
-<linearlayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <linearlayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="280dp" android:layout_gravity="center"
-            android:gravity="top">
-        <linearlayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="center">
-            <spinner
-                    android:layout_width="200dp"
-                    android:layout_height="fill_parent"
-                    android:id="@+id/product_list"
-                    android:layout_gravity="center"/>
-            <edittext
-                    android:layout_width="60dp"
-                    android:layout_height="fill_parent"
-                    android:id="@+id/amount_text"
-                    android:layout_gravity="center"
-                    android:inputtype="phone"
-                    />
-            <button
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:id="@+id/add_item_button"
-                    android:text="+"/>
-        </linearlayout>
-        <listview
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/new_items_list"
-                android:layout_gravity="center"/>
-    </linearlayout>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;linearlayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+              android:orientation=&quot;vertical&quot;
+              android:layout_width=&quot;match_parent&quot;
+              android:layout_height=&quot;match_parent&quot;&gt;
+    &lt;linearlayout
+            android:orientation=&quot;vertical&quot;
+            android:layout_width=&quot;fill_parent&quot;
+            android:layout_height=&quot;280dp&quot; android:layout_gravity=&quot;center&quot;
+            android:gravity=&quot;top&quot;&gt;
+        &lt;linearlayout
+                android:orientation=&quot;horizontal&quot;
+                android:layout_width=&quot;fill_parent&quot;
+                android:layout_height=&quot;50dp&quot;
+                android:layout_gravity=&quot;center&quot;&gt;
+            &lt;spinner
+                    android:layout_width=&quot;200dp&quot;
+                    android:layout_height=&quot;fill_parent&quot;
+                    android:id=&quot;@+id/product_list&quot;
+                    android:layout_gravity=&quot;center&quot;/&gt;
+            &lt;edittext
+                    android:layout_width=&quot;60dp&quot;
+                    android:layout_height=&quot;fill_parent&quot;
+                    android:id=&quot;@+id/amount_text&quot;
+                    android:layout_gravity=&quot;center&quot;
+                    android:inputtype=&quot;phone&quot;
+                    /&gt;
+            &lt;button
+                    android:layout_width=&quot;fill_parent&quot;
+                    android:layout_height=&quot;fill_parent&quot;
+                    android:id=&quot;@+id/add_item_button&quot;
+                    android:text=&quot;+&quot;/&gt;
+        &lt;/linearlayout&gt;
+        &lt;listview
+                android:layout_width=&quot;wrap_content&quot;
+                android:layout_height=&quot;wrap_content&quot;
+                android:id=&quot;@+id/new_items_list&quot;
+                android:layout_gravity=&quot;center&quot;/&gt;
+    &lt;/linearlayout&gt;
 
-    <linearlayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" android:layout_gravity="center"
-            android:gravity="bottom">
+    &lt;linearlayout
+            android:orientation=&quot;vertical&quot;
+            android:layout_width=&quot;fill_parent&quot;
+            android:layout_height=&quot;fill_parent&quot; android:layout_gravity=&quot;center&quot;
+            android:gravity=&quot;bottom&quot;&gt;
 
 
-        <spinner
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/client_list"
-                android:layout_gravity="center"/>
-        <button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="guardar pedido"
-                android:id="@+id/save_request_button"
-                android:layout_gravity="center"/>
-    </linearlayout>
-</linearlayout>
-</pre>
+        &lt;spinner
+                android:layout_width=&quot;fill_parent&quot;
+                android:layout_height=&quot;wrap_content&quot;
+                android:id=&quot;@+id/client_list&quot;
+                android:layout_gravity=&quot;center&quot;/&gt;
+        &lt;button
+                android:layout_width=&quot;fill_parent&quot;
+                android:layout_height=&quot;wrap_content&quot;
+                android:text=&quot;guardar pedido&quot;
+                android:id=&quot;@+id/save_request_button&quot;
+                android:layout_gravity=&quot;center&quot;/&gt;
+    &lt;/linearlayout&gt;
+&lt;/linearlayout&gt;</code></pre>
 <p>La lógica detrás del botón que agrega artículos a la lista (“+”) es la siguiente:</p>
-<pre lang="java">
-Button addItemButton = (Button)findViewById(R.id.add_item_button);
+<pre><code>Button addItemButton = (Button)findViewById(R.id.add_item_button);
 addItemButton.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view)
@@ -972,7 +951,7 @@ addItemButton.setOnClickListener(new View.OnClickListener() {
             amount = Integer.parseInt(editText.getText().toString());
         } catch (NumberFormatException e) {
             Toast.makeText(getApplicationContext(),
-                    "La cantidad no es válida.",
+                    &quot;La cantidad no es válida.&quot;,
                     Toast.LENGTH_LONG).show();
             return;
         }
@@ -987,13 +966,11 @@ addItemButton.setOnClickListener(new View.OnClickListener() {
         detailList.add(detail);
         detailArrayAdapter.notifyDataSetChanged();
 
-        editText.setText("");
+        editText.setText(&quot;&quot;);
     }
-    });
-</pre>
+    });</code></pre>
 <p>Ahora para el botón que almacena el pedido en la base de datos:</p>
-<pre lang="java">
-Button saveRequestButton;
+<pre><code>Button saveRequestButton;
 saveRequestButton = (Button)findViewById(R.id.save_request_button);
 saveRequestButton.setOnClickListener(new View.OnClickListener() {
     @Override
@@ -1001,7 +978,7 @@ saveRequestButton.setOnClickListener(new View.OnClickListener() {
     {
         if (detailList.isEmpty()) {
             Toast.makeText(getApplicationContext(),
-                    "No hay artículos que guardar.",
+                    &quot;No hay artículos que guardar.&quot;,
                     Toast.LENGTH_SHORT).show();
             return;
         }
@@ -1018,19 +995,19 @@ saveRequestButton.setOnClickListener(new View.OnClickListener() {
 
         if (idRequest == -1) {
             Toast.makeText(getApplicationContext(),
-                    "Ocurrio error al intentar guardar el pedido.",
+                    &quot;Ocurrio error al intentar guardar el pedido.&quot;,
                     Toast.LENGTH_LONG).show();
             return;
         }
 
         int n = detailList.size();
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i &lt; n; i++) {
             Detail detail = detailList.get(i);
             detail.setIdRequest((int)idRequest);
             long id = DBManager.insertDetail(detail, database);
             if (id == -1) {
                 Toast.makeText(getApplicationContext(),
-                        "ERROR AL INSERTAR DETALLE",
+                        &quot;ERROR AL INSERTAR DETALLE&quot;,
                         Toast.LENGTH_LONG).show();
                 ok = false;
             }
@@ -1041,13 +1018,12 @@ saveRequestButton.setOnClickListener(new View.OnClickListener() {
             detailArrayAdapter.notifyDataSetChanged();
 
             Toast.makeText(getApplicationContext(),
-                    "El pedido se guardo satisfactoriamente.",
+                    &quot;El pedido se guardo satisfactoriamente.&quot;,
                     Toast.LENGTH_SHORT).show();
         }
 
     }
-});
-</pre>
+});</code></pre>
 <h3 id="consulta-de-pedidos">Consulta de pedidos</h3>
 <p>Nuestra aplicación también permite visualizar la lista de pedidos que tenemos en nuestra base de datos local.</p>
 <figure>
@@ -1055,49 +1031,46 @@ saveRequestButton.setOnClickListener(new View.OnClickListener() {
 <figcaption aria-hidden="true">Consulta de pedidos</figcaption>
 </figure>
 <p>El código XML que describe a esta interfaz es el siguiente:</p>
-<pre lang="xml">
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent">
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+              android:orientation=&quot;vertical&quot;
+              android:layout_width=&quot;fill_parent&quot;
+              android:layout_height=&quot;fill_parent&quot;&gt;
 
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="40dp"
-            android:gravity="center_vertical">
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Lista de pedidos:"
-                android:id="@+id/textView"
-                android:layout_gravity="left|center_vertical"
-                android:layout_weight="1"/>
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Actualizar"
-                android:id="@+id/refresh_query_button"
-                android:layout_gravity="center"
-                android:layout_weight="1"/>
-    </LinearLayout>
-    <ListView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/request_list"/>
-</LinearLayout>
-</pre>
+    &lt;LinearLayout
+            android:orientation=&quot;horizontal&quot;
+            android:layout_width=&quot;fill_parent&quot;
+            android:layout_height=&quot;40dp&quot;
+            android:gravity=&quot;center_vertical&quot;&gt;
+        &lt;TextView
+                android:layout_width=&quot;wrap_content&quot;
+                android:layout_height=&quot;wrap_content&quot;
+                android:text=&quot;Lista de pedidos:&quot;
+                android:id=&quot;@+id/textView&quot;
+                android:layout_gravity=&quot;left|center_vertical&quot;
+                android:layout_weight=&quot;1&quot;/&gt;
+        &lt;Button
+                android:layout_width=&quot;wrap_content&quot;
+                android:layout_height=&quot;wrap_content&quot;
+                android:text=&quot;Actualizar&quot;
+                android:id=&quot;@+id/refresh_query_button&quot;
+                android:layout_gravity=&quot;center&quot;
+                android:layout_weight=&quot;1&quot;/&gt;
+    &lt;/LinearLayout&gt;
+    &lt;ListView
+            android:layout_width=&quot;fill_parent&quot;
+            android:layout_height=&quot;fill_parent&quot;
+            android:id=&quot;@+id/request_list&quot;/&gt;
+&lt;/LinearLayout&gt;</code></pre>
 <p>Y la lógica detrás del botón “Actualizar” es:</p>
-<pre lang="java">
-@Override
+<pre><code>@Override
 public void onCreate(Bundle savedInstanceBundle)
 {
     super.onCreate(savedInstanceBundle);
     setContentView(R.layout.search);
 
     ListView listView = (ListView)findViewById(R.id.request_list);
-    requests = new ArrayList<String>();
+    requests = new ArrayList&lt;String&gt;();
     requestAdapter = new RequestAdapter(this, requests);
     listView.setAdapter(requestAdapter);
     Button refreshButton = (Button)findViewById(R.id.refresh_query_button);
@@ -1105,25 +1078,22 @@ public void onCreate(Bundle savedInstanceBundle)
         @Override
         public void onClick(View view)
         {
-            ArrayList<String> items = DBManager.queryRequests(database);
+            ArrayList&lt;String&gt; items = DBManager.queryRequests(database);
             requests.clear();
-            for (int i = 0; i < items.size(); i++)
+            for (int i = 0; i &lt; items.size(); i++)
                 requests.add(items.get(i));
 
             requestAdapter.notifyDataSetChanged();
         }
     });
-}
-</pre>
+}</code></pre>
 <p>Hasta aquí las explicaciones, al final se proporciona el código completo de la aplicación.</p>
 <h2 id="código-fuente">Código fuente</h2>
 <p>El código del servidor y del cliente están disponibles en Bitbucket en las siguientes direcciones:</p>
 <p><a href="https://bitbucket.org/rendon/request_ws">https://bitbucket.org/rendon/request_ws</a> <a href="https://bitbucket.org/rendon/requisition_android">https://bitbucket.org/rendon/requisition_android</a></p>
 <p>O bien pueden clonar los proyectos:</p>
-<pre theme="slate">
-$ git clone https://rendon@bitbucket.org/rendon/request_ws.git
-$ git clone https://rendon@bitbucket.org/rendon/requisitionandroid.git
-</pre>
+<pre><code>$ git clone https://rendon@bitbucket.org/rendon/request_ws.git
+$ git clone https://rendon@bitbucket.org/rendon/requisitionandroid.git</code></pre>
 <p>La licencia del Web service y de la aplicación cliente es GPLv3.</p>
 <h2 id="por-hacer">Por hacer</h2>
 <p>Mejorar la interfaz gráfica. La personalización de los elementos gráficos es un poco tediosa, al menos en la version 2.3, espero que esto halla mejorado en las versiones más recientes.</p>

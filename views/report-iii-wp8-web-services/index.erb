@@ -84,8 +84,7 @@ Windows Phone 8 SDK (<a href="http://dev.windowsphone.com/en-us/downloadsdk">htt
 </figure>
 <p><strong>NOTA:</strong> Con el código fuente incluyo el modelo de la base de datos, fue diseñado utilizando MySQL Workbench y por lo tanto podrán exportar la base de datos desde ahí.</p>
 <h3 id="synchronize">Synchronize</h3>
-<pre lang="php">
-function Synchronize($ClientItems, $RequestItems, $DetailItems)
+<pre><code>function Synchronize($ClientItems, $RequestItems, $DetailItems)
 {
     if (is_array($ClientItems)) {
         $clients = to_client_array($ClientItems);
@@ -107,20 +106,20 @@ function Synchronize($ClientItems, $RequestItems, $DetailItems)
 
     $mysqli = OpenDB();
     foreach ($clients as $c) {
-        $idClient = $c['IdClient'];
-        $name = $c['Name'];
-        $middleName = $c['MiddleName'];
-        $lastName = $c['LastName'];
-        $address = $c['Address'];
+        $idClient = $c[&#39;IdClient&#39;];
+        $name = $c[&#39;Name&#39;];
+        $middleName = $c[&#39;MiddleName&#39;];
+        $lastName = $c[&#39;LastName&#39;];
+        $address = $c[&#39;Address&#39;];
         if (findClient($name, $middleName, $lastName,
                        $address, $mysqli) == NOT_FOUND) {
 
            $newIdClient = CreateClient($name, $middleName, $lastName,
                                        $address, $mysqli);
             foreach ($requests as $r) {
-                $idRequest = $r['IdRequest'];
-                $requestIdClient = $r['IdClient'];
-                $requestDate = $r['RequestDate'];
+                $idRequest = $r[&#39;IdRequest&#39;];
+                $requestIdClient = $r[&#39;IdClient&#39;];
+                $requestDate = $r[&#39;RequestDate&#39;];
 
                 if ($requestIdClient != $idClient)
                     continue;
@@ -129,19 +128,19 @@ function Synchronize($ClientItems, $RequestItems, $DetailItems)
                 $newIdRequest = CreateRequest($requestIdClient, $requestDate,
                                               $mysqli, $mysqli);
                 foreach ($details as $d) {
-                    $item = $d['Item'];
-                    $amount = $d['Amount'];
+                    $item = $d[&#39;Item&#39;];
+                    $amount = $d[&#39;Amount&#39;];
 
-                    $detailIdRequest = $d['IdRequest'];
+                    $detailIdRequest = $d[&#39;IdRequest&#39;];
                     if ($idRequest != $detailIdRequest) continue;
                     CreateDetail($newIdRequest, $item, $amount, $mysqli);
                 }
             }
         } else {
             foreach ($requests as $r) {
-                $idRequest = $r['IdRequest'];
-                $requestIdClient = $r['IdClient'];
-                $requestDate = $r['RequestDate'];
+                $idRequest = $r[&#39;IdRequest&#39;];
+                $requestIdClient = $r[&#39;IdClient&#39;];
+                $requestDate = $r[&#39;RequestDate&#39;];
 
                 if ($requestIdClient != $idClient)
                     continue;
@@ -151,10 +150,10 @@ function Synchronize($ClientItems, $RequestItems, $DetailItems)
                     $newIdRequest = CreateRequest($requestIdClient, 
                                                   $requestDate, $mysqli);
                     foreach ($details as $d) {
-                        $item = $d['Item'];
-                        $amount = $d['Amount'];
+                        $item = $d[&#39;Item&#39;];
+                        $amount = $d[&#39;Amount&#39;];
 
-                        $detailIdRequest = $d['IdRequest'];
+                        $detailIdRequest = $d[&#39;IdRequest&#39;];
                         if ($idRequest != $detailIdRequest) continue;
                         CreateDetail($newIdRequest, $item, $amount, $mysqli);
                     }
@@ -163,11 +162,10 @@ function Synchronize($ClientItems, $RequestItems, $DetailItems)
         }
     }
 
-    $mysqli->close();
+    $mysqli-&gt;close();
 
     return count($clients) + count($requests) + count($details);
-}
-</pre>
+}</code></pre>
 <p>Los argumentos de esta función son arreglos. Algo curioso que me encontré es que estos arreglos deben tener más de un elemento para que PHP los reconozca como tal, por ello, lo primero que hacemos es convertir la entrada a un formato conveniente.</p>
 <p>Lo que sigue es realizar la sincronización. Esta parte me resulto interesante y al parecer es un tema complicado. Mi algoritmo es muy sencillo y no esta optimizado, pero funciona (más me vale :) ).</p>
 <ul>
@@ -190,138 +188,124 @@ function Synchronize($ClientItems, $RequestItems, $DetailItems)
 </ul>
 <p>Nuestra aplicación móvil no permite modificar detalles de los pedidos, por lo tanto, en el algoritmos anterior no necesitamos verificar hasta los detalles.</p>
 <p>El servicio se registra de la siguiente manera:</p>
-<pre lang="php">
-$server->register('Synchronize',
+<pre><code>$server-&gt;register(&#39;Synchronize&#39;,
     array(
-        'ClientItems' => 'tns:ArrayOfClient',
-        'RequestItems' => 'tns:ArrayOfRequest',
-        'DetailItems' => 'tns:ArrayOfDetail'),
-    array('id' => 'xsd:integer'),
-    'Request',
+        &#39;ClientItems&#39; =&gt; &#39;tns:ArrayOfClient&#39;,
+        &#39;RequestItems&#39; =&gt; &#39;tns:ArrayOfRequest&#39;,
+        &#39;DetailItems&#39; =&gt; &#39;tns:ArrayOfDetail&#39;),
+    array(&#39;id&#39; =&gt; &#39;xsd:integer&#39;),
+    &#39;Request&#39;,
     false,
-    'rpc',
-    'literal',
-    'Synchronize the user data with the server data'
-);
-</pre>
+    &#39;rpc&#39;,
+    &#39;literal&#39;,
+    &#39;Synchronize the user data with the server data&#39;
+);</code></pre>
 <h3 id="getallclients">GetAllClients</h3>
 <p>Después de que la aplicación móvil manda los datos al servidor para la sincronización, ésta borra su base de datos y la vuelve a construir pero ahora con los datos del servidor. Quizás no lo más adecuado pero si lo más fácil.</p>
-<pre lang="php">
-function GetAllClients()
+<pre><code>function GetAllClients()
 {
     $mysqli = OpenDB();
-    $mysqli->query("SET NAMES UTF8");
-    $query = "SELECT * FROM Cliente";
+    $mysqli-&gt;query(&quot;SET NAMES UTF8&quot;);
+    $query = &quot;SELECT * FROM Cliente&quot;;
 
-    $result = $mysqli->query($query);
-    $mysqli->close();
-    if ($result->num_rows == 0) {
+    $result = $mysqli-&gt;query($query);
+    $mysqli-&gt;close();
+    if ($result-&gt;num_rows == 0) {
         return array();
     }
 
     $clients = array();
-    while ($row = $result->fetch_assoc()) {
+    while ($row = $result-&gt;fetch_assoc()) {
         $clients[] = array(
-            'IdClient' => $row['IdCliente'],
-            'Name' => $row['Nombre'],
-            'MiddleName' => $row['ApellidoPaterno'],
-            'LastName' => $row['ApellidoMaterno'],
-            'Address' => $row['Domicilio']);
+            &#39;IdClient&#39; =&gt; $row[&#39;IdCliente&#39;],
+            &#39;Name&#39; =&gt; $row[&#39;Nombre&#39;],
+            &#39;MiddleName&#39; =&gt; $row[&#39;ApellidoPaterno&#39;],
+            &#39;LastName&#39; =&gt; $row[&#39;ApellidoMaterno&#39;],
+            &#39;Address&#39; =&gt; $row[&#39;Domicilio&#39;]);
     }
 
     return $clients;
-}
-</pre>
+}</code></pre>
 <p>El servicio se registra de la siguiente manera:</p>
-<pre lang="php">
-$server->register('GetAllClients',
+<pre><code>$server-&gt;register(&#39;GetAllClients&#39;,
     array(),
-    array('clients' => 'tns:ArrayOfClient'),
-    'Request',
+    array(&#39;clients&#39; =&gt; &#39;tns:ArrayOfClient&#39;),
+    &#39;Request&#39;,
     false,
-    'rpc',
-    'literal',
-    'Retrieve all clients.'
-);
-</pre>
+    &#39;rpc&#39;,
+    &#39;literal&#39;,
+    &#39;Retrieve all clients.&#39;
+);</code></pre>
 <h3 id="getallrequests">GetAllRequests</h3>
 <p>El código para este servicio es el siguiente:</p>
-<pre lang="php">
-function GetAllRequests()
+<pre><code>function GetAllRequests()
 {
     $mysqli = OpenDB();
-    $mysqli->query("SET NAMES UTF8");
-    $query = "SELECT * FROM Pedido";
+    $mysqli-&gt;query(&quot;SET NAMES UTF8&quot;);
+    $query = &quot;SELECT * FROM Pedido&quot;;
 
-    $result = $mysqli->query($query);
-    $mysqli->close();
-    if ($result->num_rows == 0) {
+    $result = $mysqli-&gt;query($query);
+    $mysqli-&gt;close();
+    if ($result-&gt;num_rows == 0) {
         return array();
     }
 
     $requests = array();
-    while ($row = $result->fetch_assoc()) {
+    while ($row = $result-&gt;fetch_assoc()) {
         $requests[] = array(
-            'IdRequest' => $row['IdPedido'],
-            'IdClient' => $row['IdCliente'],
-            'RequestDate' => $row['Fecha']);
+            &#39;IdRequest&#39; =&gt; $row[&#39;IdPedido&#39;],
+            &#39;IdClient&#39; =&gt; $row[&#39;IdCliente&#39;],
+            &#39;RequestDate&#39; =&gt; $row[&#39;Fecha&#39;]);
     }
 
     return $requests;
-}
-</pre>
+}</code></pre>
 <p>Y el registro del servicio es el siguiente:</p>
-<pre lang="php">
-$server->register('GetAllRequests',
+<pre><code>$server-&gt;register(&#39;GetAllRequests&#39;,
     array(),
-    array('requests' => 'tns:ArrayOfRequest'),
-    'Request',
+    array(&#39;requests&#39; =&gt; &#39;tns:ArrayOfRequest&#39;),
+    &#39;Request&#39;,
     false,
-    'rpc',
-    'literal',
-    'Retrieve all requests.'
-);
-</pre>
+    &#39;rpc&#39;,
+    &#39;literal&#39;,
+    &#39;Retrieve all requests.&#39;
+);</code></pre>
 <h3 id="getalldetails">GetAllDetails</h3>
 <p>El código es similar a los dos anteriores:</p>
-<pre lang="php">
-function GetAllDetails()
+<pre><code>function GetAllDetails()
 {
     $mysqli = OpenDB();
-    $mysqli->query("SET NAMES UTF8");
-    $query = "SELECT * FROM Detalle";
+    $mysqli-&gt;query(&quot;SET NAMES UTF8&quot;);
+    $query = &quot;SELECT * FROM Detalle&quot;;
 
-    $result = $mysqli->query($query);
-    $mysqli->close();
-    if ($result->num_rows == 0) {
+    $result = $mysqli-&gt;query($query);
+    $mysqli-&gt;close();
+    if ($result-&gt;num_rows == 0) {
         return array();
     }
 
     $details = array();
-    while ($row = $result->fetch_assoc()) {
+    while ($row = $result-&gt;fetch_assoc()) {
         $details[] = array(
-            'IdDetail' => $row['IdDetalle'],
-            'IdRequest' => $row['IdPedido'],
-            'Item' => $row['Articulo'],
-            'Amount' => $row['Cantidad']
+            &#39;IdDetail&#39; =&gt; $row[&#39;IdDetalle&#39;],
+            &#39;IdRequest&#39; =&gt; $row[&#39;IdPedido&#39;],
+            &#39;Item&#39; =&gt; $row[&#39;Articulo&#39;],
+            &#39;Amount&#39; =&gt; $row[&#39;Cantidad&#39;]
         );
     }
 
     return $details;
-}
-</pre>
+}</code></pre>
 <p>Y su respectivo registro:</p>
-<pre lang="php">
-$server->register('GetAllDetails',
+<pre><code>$server-&gt;register(&#39;GetAllDetails&#39;,
     array(),
-    array('details' => 'tns:ArrayOfDetail'),
-    'Request',
+    array(&#39;details&#39; =&gt; &#39;tns:ArrayOfDetail&#39;),
+    &#39;Request&#39;,
     false,
-    'rpc',
-    'literal',
-    'Retrieve all details.'
-);
-</pre>
+    &#39;rpc&#39;,
+    &#39;literal&#39;,
+    &#39;Retrieve all details.&#39;
+);</code></pre>
 <p>Al final se proporciona el código fuente completo.</p>
 <h2 id="la-base-de-datos-local">La base de datos local</h2>
 <p>Puesto que nuestra aplicación cliente deberá funcionar también en modo <em>offline</em>, debe existir una réplica del modelo de datos en el cliente. Para ello vamos a utilizar lo que se conoce como <strong>LINQ to SQL</strong>, una tecnología que permite trabajar con tablas en forma de clases.</p>
@@ -343,24 +327,21 @@ $server->register('GetAllDetails',
 <p>Las claves primarias de la base de datos del servidor son de tipo <em>autoincrement</em>, sin embargo, para poder realizar la sincronización fue necesario hacer algunos ajustes, digamos que las claves primarias de la base de datos local <strong>no son</strong> autoincrement, por ello la necesida de la tabla <em>Key</em>.</p>
 <p>El código de las clases es simple, aunque algo extenso. Por ello no lo vamos a listar aquí.</p>
 <p>Para construir la base de datos a partir de las clases vamos a utilizar la clase <code>DataContext</code>. El siguiente código arma la base de datos:</p>
-<pre lang="csharp">
-    public class RequisitionDataContext : DataContext
+<pre><code>    public class RequisitionDataContext : DataContext
     {
         public static string DBConnectionString =
-            "Data Source=isostore:/Requisitions.sdf";
+            &quot;Data Source=isostore:/Requisitions.sdf&quot;;
         public RequisitionDataContext(string connectionString)
             : base(connectionString)
         { }
 
-        public Table<Client> clients;
-        public Table<Detail> details;
-        public Table<Request> requests;
-        public Table<Key> keys;
-    }
-</pre>
+        public Table&lt;Client&gt; clients;
+        public Table&lt;Detail&gt; details;
+        public Table&lt;Request&gt; requests;
+        public Table&lt;Key&gt; keys;
+    }</code></pre>
 <p>La estructura de la base de datos ya esta, pero aun no ha sido creada, eso lo realizaremos en el momento que la aplicación inicie su ejecución. En el archivo <em>App.xaml.cs</em>, al final del constructor pegamos el siguiente código:</p>
-<pre lang="csharp">
-string cs = RequisitionDataContext.DBConnectionString;
+<pre><code>string cs = RequisitionDataContext.DBConnectionString;
 using(RequisitionDataContext db = new RequisitionDataContext(cs))
 {
     if (!db.DatabaseExists())
@@ -369,8 +350,7 @@ using(RequisitionDataContext db = new RequisitionDataContext(cs))
     }
 
     // db.DeleteDatabase();
-}
-</pre>
+}</code></pre>
 <p>Creamos la base de datos solo en caso de que no haya sido creada aún.</p>
 <p>El resto de las operaciones se describirán en la siguiente sección.</p>
 <h2 id="desarrollo-del-cliente">Desarrollo del cliente</h2>
@@ -396,80 +376,78 @@ using(RequisitionDataContext db = new RequisitionDataContext(cs))
 <figcaption aria-hidden="true">Pagina principal</figcaption>
 </figure>
 <p>El diseño correspondiente en XAML (archivo <em>MainPage.xaml</em>):</p>
-<pre lang="xml">
-<!--LayoutRoot is the root grid where all page content is placed-->
-<Grid x:Name="LayoutRoot" Background="Transparent">
-    <Grid.RowDefinitions>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
+<pre><code>&lt;!--LayoutRoot is the root grid where all page content is placed--&gt;
+&lt;Grid x:Name=&quot;LayoutRoot&quot; Background=&quot;Transparent&quot;&gt;
+    &lt;Grid.RowDefinitions&gt;
+        &lt;RowDefinition Height=&quot;Auto&quot;/&gt;
+        &lt;RowDefinition Height=&quot;*&quot;/&gt;
+    &lt;/Grid.RowDefinitions&gt;
 
-    <!--TitlePanel contains the name of the application and page title-->
-    <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-        <TextBlock Text="Control de Requisiciones" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0"/>
-        <TextBlock Text="Inicio" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-    </StackPanel>
+    &lt;!--TitlePanel contains the name of the application and page title--&gt;
+    &lt;StackPanel x:Name=&quot;TitlePanel&quot; Grid.Row=&quot;0&quot; Margin=&quot;12,17,0,28&quot;&gt;
+        &lt;TextBlock Text=&quot;Control de Requisiciones&quot; Style=&quot;{StaticResource PhoneTextNormalStyle}&quot; Margin=&quot;12,0&quot;/&gt;
+        &lt;TextBlock Text=&quot;Inicio&quot; Margin=&quot;9,-7,0,0&quot; Style=&quot;{StaticResource PhoneTextTitle1Style}&quot;/&gt;
+    &lt;/StackPanel&gt;
 
-    <!--ContentPanel - place additional content here-->
-    <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="515" Width="436" FontSize="36">
-            <Run Text="Para realizar una operación utiliza los botones en la barra de aplicación."/>
-            <LineBreak/>
-            <LineBreak/>
-            <LineBreak/>
-            <LineBreak/>
-            <LineBreak/>
-            <LineBreak/>
-            <LineBreak/>
-            <Run Text="       DATM: Ags - Dic. 2013"/>
-        </TextBlock>
+    &lt;!--ContentPanel - place additional content here--&gt;
+    &lt;Grid x:Name=&quot;ContentPanel&quot; Grid.Row=&quot;1&quot; Margin=&quot;12,0,12,0&quot;&gt;
+        &lt;TextBlock HorizontalAlignment=&quot;Left&quot; Margin=&quot;10,10,0,0&quot; TextWrapping=&quot;Wrap&quot; VerticalAlignment=&quot;Top&quot; Height=&quot;515&quot; Width=&quot;436&quot; FontSize=&quot;36&quot;&gt;
+            &lt;Run Text=&quot;Para realizar una operación utiliza los botones en la barra de aplicación.&quot;/&gt;
+            &lt;LineBreak/&gt;
+            &lt;LineBreak/&gt;
+            &lt;LineBreak/&gt;
+            &lt;LineBreak/&gt;
+            &lt;LineBreak/&gt;
+            &lt;LineBreak/&gt;
+            &lt;LineBreak/&gt;
+            &lt;Run Text=&quot;       DATM: Ags - Dic. 2013&quot;/&gt;
+        &lt;/TextBlock&gt;
 
-    </Grid>
+    &lt;/Grid&gt;
 
-</Grid>
+&lt;/Grid&gt;
 
-<phone:PhoneApplicationPage.ApplicationBar>
-    <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-        <shell:ApplicationBarIconButton 
-            IconUri="/Images/UserAdd.png" 
-            Text="Agregar" 
-            x:Name="addClientButton" 
-            Click="addClientButton_Click_1"
-            />
+&lt;phone:PhoneApplicationPage.ApplicationBar&gt;
+    &lt;shell:ApplicationBar IsVisible=&quot;True&quot; IsMenuEnabled=&quot;True&quot;&gt;
+        &lt;shell:ApplicationBarIconButton 
+            IconUri=&quot;/Images/UserAdd.png&quot; 
+            Text=&quot;Agregar&quot; 
+            x:Name=&quot;addClientButton&quot; 
+            Click=&quot;addClientButton_Click_1&quot;
+            /&gt;
 
-        <shell:ApplicationBarIconButton 
-            IconUri="/Images/UserFind.png" 
-            Text="Consultar" 
-            x:Name="queryClientButton" 
-            Click="queryClientButton_Click_1"
-            />
-
-
-        <shell:ApplicationBarIconButton 
-            IconUri="/Images/Shop.png" 
-            Text="Pedido" 
-            x:Name="shopButton" 
-            Click="shopButton_Click_1"
-            />
-
-        <shell:ApplicationBarIconButton 
-            IconUri="/Images/ShopFind.png" 
-            Text="Consulta" 
-            x:Name="queryShopButton" 
-            Click="queryShopButton_Click_1"
-            />
+        &lt;shell:ApplicationBarIconButton 
+            IconUri=&quot;/Images/UserFind.png&quot; 
+            Text=&quot;Consultar&quot; 
+            x:Name=&quot;queryClientButton&quot; 
+            Click=&quot;queryClientButton_Click_1&quot;
+            /&gt;
 
 
-        <shell:ApplicationBar.MenuItems>
-            <shell:ApplicationBarMenuItem x:Name="syncOperation"
-                Text="sincronizar con el servidor"
-                                           Click="syncOperation_Click_1" />
-        </shell:ApplicationBar.MenuItems>
+        &lt;shell:ApplicationBarIconButton 
+            IconUri=&quot;/Images/Shop.png&quot; 
+            Text=&quot;Pedido&quot; 
+            x:Name=&quot;shopButton&quot; 
+            Click=&quot;shopButton_Click_1&quot;
+            /&gt;
+
+        &lt;shell:ApplicationBarIconButton 
+            IconUri=&quot;/Images/ShopFind.png&quot; 
+            Text=&quot;Consulta&quot; 
+            x:Name=&quot;queryShopButton&quot; 
+            Click=&quot;queryShopButton_Click_1&quot;
+            /&gt;
 
 
-    </shell:ApplicationBar>
-</phone:PhoneApplicationPage.ApplicationBar>
-</pre>
+        &lt;shell:ApplicationBar.MenuItems&gt;
+            &lt;shell:ApplicationBarMenuItem x:Name=&quot;syncOperation&quot;
+                Text=&quot;sincronizar con el servidor&quot;
+                                           Click=&quot;syncOperation_Click_1&quot; /&gt;
+        &lt;/shell:ApplicationBar.MenuItems&gt;
+
+
+    &lt;/shell:ApplicationBar&gt;
+&lt;/phone:PhoneApplicationPage.ApplicationBar&gt;</code></pre>
 <h3 id="alta-de-clientes">Alta de clientes</h3>
 <p>La siguiente imagen muestra la interfaz para dar de alta a los clientes.</p>
 <figure>
@@ -477,101 +455,98 @@ using(RequisitionDataContext db = new RequisitionDataContext(cs))
 <figcaption aria-hidden="true">Alta de clientes</figcaption>
 </figure>
 <p>El diseño correspondiente en XAML (archivo <em>View/AddClientView.xaml</em>):</p>
-<pre lang="xml">
-<!--LayoutRoot is the root grid where all page content is placed-->
-<Grid x:Name="LayoutRoot" Background="Transparent">
-    <Grid.RowDefinitions>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
+<pre><code>&lt;!--LayoutRoot is the root grid where all page content is placed--&gt;
+&lt;Grid x:Name=&quot;LayoutRoot&quot; Background=&quot;Transparent&quot;&gt;
+    &lt;Grid.RowDefinitions&gt;
+        &lt;RowDefinition Height=&quot;Auto&quot;/&gt;
+        &lt;RowDefinition Height=&quot;*&quot;/&gt;
+    &lt;/Grid.RowDefinitions&gt;
 
-    <!--TitlePanel contains the name of the application and page title-->
-    <StackPanel Grid.Row="0" Margin="12,17,0,28">
-        <TextBlock Text="Control de Requisiciones" Style="{StaticResource PhoneTextNormalStyle}"/>
-        <TextBlock Text="Nuevo cliente" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontSize="48"/>
-    </StackPanel>
+    &lt;!--TitlePanel contains the name of the application and page title--&gt;
+    &lt;StackPanel Grid.Row=&quot;0&quot; Margin=&quot;12,17,0,28&quot;&gt;
+        &lt;TextBlock Text=&quot;Control de Requisiciones&quot; Style=&quot;{StaticResource PhoneTextNormalStyle}&quot;/&gt;
+        &lt;TextBlock Text=&quot;Nuevo cliente&quot; Margin=&quot;9,-7,0,0&quot; Style=&quot;{StaticResource PhoneTextTitle1Style}&quot; FontSize=&quot;48&quot;/&gt;
+    &lt;/StackPanel&gt;
 
-    <!--ContentPanel - place additional content here-->
-    <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-        <TextBlock HorizontalAlignment="Left" 
-                   Margin="29,15,0,0" 
-                   TextWrapping="Wrap" 
-                   Text="Nombre:" 
-                   FontWeight="Bold"
-                   VerticalAlignment="Top"/>
-        <TextBox x:Name="nameText" 
-                 Text="{Binding Client.Name, Mode=TwoWay}" 
-                 HorizontalAlignment="Left" 
-                 Height="72" 
-                 Margin="10,42,0,0" 
-                 TextWrapping="Wrap" 
-                 VerticalAlignment="Top" 
-                 Width="436"/>
+    &lt;!--ContentPanel - place additional content here--&gt;
+    &lt;Grid x:Name=&quot;ContentPanel&quot; Grid.Row=&quot;1&quot; Margin=&quot;12,0,12,0&quot;&gt;
+        &lt;TextBlock HorizontalAlignment=&quot;Left&quot; 
+                   Margin=&quot;29,15,0,0&quot; 
+                   TextWrapping=&quot;Wrap&quot; 
+                   Text=&quot;Nombre:&quot; 
+                   FontWeight=&quot;Bold&quot;
+                   VerticalAlignment=&quot;Top&quot;/&gt;
+        &lt;TextBox x:Name=&quot;nameText&quot; 
+                 Text=&quot;{Binding Client.Name, Mode=TwoWay}&quot; 
+                 HorizontalAlignment=&quot;Left&quot; 
+                 Height=&quot;72&quot; 
+                 Margin=&quot;10,42,0,0&quot; 
+                 TextWrapping=&quot;Wrap&quot; 
+                 VerticalAlignment=&quot;Top&quot; 
+                 Width=&quot;436&quot;/&gt;
 
-        <TextBlock HorizontalAlignment="Left" 
-                   Margin="29,124,0,0" 
-                   TextWrapping="Wrap" 
-                   Text="Apellido Paterno:" 
-                   FontWeight="Bold"
-                   VerticalAlignment="Top"/>
-        <TextBox x:Name="middleNameText" 
-                 Text="{Binding Client.MiddleName, Mode=TwoWay}" 
-                 HorizontalAlignment="Left" 
-                 Height="72" 
-                 Margin="10,151,0,0" 
-                 TextWrapping="Wrap" 
-                 VerticalAlignment="Top" 
-                 Width="436"/>
+        &lt;TextBlock HorizontalAlignment=&quot;Left&quot; 
+                   Margin=&quot;29,124,0,0&quot; 
+                   TextWrapping=&quot;Wrap&quot; 
+                   Text=&quot;Apellido Paterno:&quot; 
+                   FontWeight=&quot;Bold&quot;
+                   VerticalAlignment=&quot;Top&quot;/&gt;
+        &lt;TextBox x:Name=&quot;middleNameText&quot; 
+                 Text=&quot;{Binding Client.MiddleName, Mode=TwoWay}&quot; 
+                 HorizontalAlignment=&quot;Left&quot; 
+                 Height=&quot;72&quot; 
+                 Margin=&quot;10,151,0,0&quot; 
+                 TextWrapping=&quot;Wrap&quot; 
+                 VerticalAlignment=&quot;Top&quot; 
+                 Width=&quot;436&quot;/&gt;
 
-        <TextBlock HorizontalAlignment="Left" 
-                   Margin="29,233,0,0" 
-                   TextWrapping="Wrap" 
-                   Text="Apellido Materno:" 
-                   VerticalAlignment="Top" 
-                   FontWeight="Bold"
-                   Width="181"/>
-        <TextBox x:Name="lastNameText" 
-                 Text="{Binding Client.LastName, Mode=TwoWay}" 
-                 HorizontalAlignment="Left" 
-                 Height="72" 
-                 Margin="10,260,0,0" 
-                 TextWrapping="Wrap" 
-                 VerticalAlignment="Top" 
-                 Width="436"/>
+        &lt;TextBlock HorizontalAlignment=&quot;Left&quot; 
+                   Margin=&quot;29,233,0,0&quot; 
+                   TextWrapping=&quot;Wrap&quot; 
+                   Text=&quot;Apellido Materno:&quot; 
+                   VerticalAlignment=&quot;Top&quot; 
+                   FontWeight=&quot;Bold&quot;
+                   Width=&quot;181&quot;/&gt;
+        &lt;TextBox x:Name=&quot;lastNameText&quot; 
+                 Text=&quot;{Binding Client.LastName, Mode=TwoWay}&quot; 
+                 HorizontalAlignment=&quot;Left&quot; 
+                 Height=&quot;72&quot; 
+                 Margin=&quot;10,260,0,0&quot; 
+                 TextWrapping=&quot;Wrap&quot; 
+                 VerticalAlignment=&quot;Top&quot; 
+                 Width=&quot;436&quot;/&gt;
 
-        <TextBlock HorizontalAlignment="Left" 
-                   Margin="29,342,0,0" 
-                   TextWrapping="Wrap" 
-                   Text="Domicilio:" 
-                   VerticalAlignment="Top" 
-                   FontWeight="Bold"
-                   Width="96"/>
-        <TextBox x:Name="addressText" 
-                 Text="{Binding Client.Address, Mode=TwoWay}" 
-                 HorizontalAlignment="Left" 
-                 Height="183" Margin="10,369,0,0" 
-                 TextWrapping="Wrap" 
-                 VerticalAlignment="Top" 
-                 Width="436"/>
+        &lt;TextBlock HorizontalAlignment=&quot;Left&quot; 
+                   Margin=&quot;29,342,0,0&quot; 
+                   TextWrapping=&quot;Wrap&quot; 
+                   Text=&quot;Domicilio:&quot; 
+                   VerticalAlignment=&quot;Top&quot; 
+                   FontWeight=&quot;Bold&quot;
+                   Width=&quot;96&quot;/&gt;
+        &lt;TextBox x:Name=&quot;addressText&quot; 
+                 Text=&quot;{Binding Client.Address, Mode=TwoWay}&quot; 
+                 HorizontalAlignment=&quot;Left&quot; 
+                 Height=&quot;183&quot; Margin=&quot;10,369,0,0&quot; 
+                 TextWrapping=&quot;Wrap&quot; 
+                 VerticalAlignment=&quot;Top&quot; 
+                 Width=&quot;436&quot;/&gt;
 
-        <Button Content="Crear" 
-                HorizontalAlignment="Left" 
-                Margin="341,557,0,0" 
-                VerticalAlignment="Top" 
-                Click="Button_Click_1"  />
-    </Grid>
-</Grid>
-</pre>
+        &lt;Button Content=&quot;Crear&quot; 
+                HorizontalAlignment=&quot;Left&quot; 
+                Margin=&quot;341,557,0,0&quot; 
+                VerticalAlignment=&quot;Top&quot; 
+                Click=&quot;Button_Click_1&quot;  /&gt;
+    &lt;/Grid&gt;
+&lt;/Grid&gt;</code></pre>
 <p>El código que se encarga de crear el nuevo cliente es el siguiente:</p>
-<pre lang="csharp">
-private void Button_Click_1(object sender, RoutedEventArgs e)
+<pre><code>private void Button_Click_1(object sender, RoutedEventArgs e)
 {
     if (String.IsNullOrEmpty(Client.Name) ||
         String.IsNullOrEmpty(Client.MiddleName) ||
         String.IsNullOrEmpty(Client.LastName) ||
         String.IsNullOrEmpty(Client.Address))
     {
-        MessageBox.Show("ERROR: Te faltan dados.");
+        MessageBox.Show(&quot;ERROR: Te faltan dados.&quot;);
         return;
     }
 
@@ -600,15 +575,14 @@ private void Button_Click_1(object sender, RoutedEventArgs e)
 
         if (ok)
         {
-            MessageBox.Show("El cliente ha sido agregado.");
+            MessageBox.Show(&quot;El cliente ha sido agregado.&quot;);
             Client.Name = String.Empty;
             Client.MiddleName = String.Empty;
             Client.LastName = String.Empty;
             Client.Address = String.Empty;
         }
     }
-}
-</pre>
+}</code></pre>
 <h3 id="consulta-de-clientes">Consulta de Clientes</h3>
 <p>La siguiente imagen muestra la interfaz para la consulta de clientes.</p>
 <figure>
@@ -616,97 +590,94 @@ private void Button_Click_1(object sender, RoutedEventArgs e)
 <figcaption aria-hidden="true">Consulta de clientes</figcaption>
 </figure>
 <p>El diseño correspondiente en XAML (archivo <em>View/QueryClientView.xaml</em>):</p>
-<pre lang="xml">
-<!--LayoutRoot is the root grid where all page content is placed-->
-<Grid x:Name="LayoutRoot" Background="Transparent">
-    <Grid.RowDefinitions>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
+<pre><code>&lt;!--LayoutRoot is the root grid where all page content is placed--&gt;
+&lt;Grid x:Name=&quot;LayoutRoot&quot; Background=&quot;Transparent&quot;&gt;
+    &lt;Grid.RowDefinitions&gt;
+        &lt;RowDefinition Height=&quot;Auto&quot;/&gt;
+        &lt;RowDefinition Height=&quot;*&quot;/&gt;
+    &lt;/Grid.RowDefinitions&gt;
 
-    <!--TitlePanel contains the name of the application and page title-->
-    <StackPanel Grid.Row="0" Margin="12,17,0,28">
-        <TextBlock Text="Control de Requisiciones" Style="{StaticResource PhoneTextNormalStyle}"/>
-        <TextBlock Text="Consulta clientes" Margin="9,-7,10,0" Style="{StaticResource PhoneTextTitle1Style}" Height="73" FontSize="48"/>
-    </StackPanel>
+    &lt;!--TitlePanel contains the name of the application and page title--&gt;
+    &lt;StackPanel Grid.Row=&quot;0&quot; Margin=&quot;12,17,0,28&quot;&gt;
+        &lt;TextBlock Text=&quot;Control de Requisiciones&quot; Style=&quot;{StaticResource PhoneTextNormalStyle}&quot;/&gt;
+        &lt;TextBlock Text=&quot;Consulta clientes&quot; Margin=&quot;9,-7,10,0&quot; Style=&quot;{StaticResource PhoneTextTitle1Style}&quot; Height=&quot;73&quot; FontSize=&quot;48&quot;/&gt;
+    &lt;/StackPanel&gt;
 
-    <!--ContentPanel - place additional content here-->
-    <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-        <ListBox x:Name="queryResultList" ItemsSource="{Binding ClientItems}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <Grid HorizontalAlignment="Stretch" Width="440" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="170" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
+    &lt;!--ContentPanel - place additional content here--&gt;
+    &lt;Grid x:Name=&quot;ContentPanel&quot; Grid.Row=&quot;1&quot; Margin=&quot;12,0,12,0&quot;&gt;
+        &lt;ListBox x:Name=&quot;queryResultList&quot; ItemsSource=&quot;{Binding ClientItems}&quot;&gt;
+            &lt;ListBox.ItemTemplate&gt;
+                &lt;DataTemplate&gt;
+                    &lt;StackPanel&gt;
+                        &lt;Grid HorizontalAlignment=&quot;Stretch&quot; Width=&quot;440&quot; &gt;
+                            &lt;Grid.ColumnDefinitions&gt;
+                                &lt;ColumnDefinition Width=&quot;170&quot; /&gt;
+                                &lt;ColumnDefinition Width=&quot;*&quot; /&gt;
+                            &lt;/Grid.ColumnDefinitions&gt;
+                            &lt;Grid.RowDefinitions&gt;
+                                &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
+                                &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
+                                &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
+                                &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
+                                &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
+                            &lt;/Grid.RowDefinitions&gt;
 
-                            <TextBlock Text="ID:" 
-                                       Grid.Row="0" 
-                                       Grid.Column="0" 
-                                       FontWeight="Bold"
-                                       VerticalAlignment="Center" />
-                            <TextBlock Text="{Binding IdClient}" 
-                                       Grid.Row="0" 
-                                       Grid.Column="1" />
+                            &lt;TextBlock Text=&quot;ID:&quot; 
+                                       Grid.Row=&quot;0&quot; 
+                                       Grid.Column=&quot;0&quot; 
+                                       FontWeight=&quot;Bold&quot;
+                                       VerticalAlignment=&quot;Center&quot; /&gt;
+                            &lt;TextBlock Text=&quot;{Binding IdClient}&quot; 
+                                       Grid.Row=&quot;0&quot; 
+                                       Grid.Column=&quot;1&quot; /&gt;
 
-                            <TextBlock Text="Nombre:" 
-                                       Grid.Row="1" 
-                                       Grid.Column="0" 
-                                       FontWeight="Bold"
-                                       VerticalAlignment="Center" />
-                            <TextBlock Text="{Binding Name}" 
-                                       Grid.Row="1" 
-                                       Grid.Column="1" />
+                            &lt;TextBlock Text=&quot;Nombre:&quot; 
+                                       Grid.Row=&quot;1&quot; 
+                                       Grid.Column=&quot;0&quot; 
+                                       FontWeight=&quot;Bold&quot;
+                                       VerticalAlignment=&quot;Center&quot; /&gt;
+                            &lt;TextBlock Text=&quot;{Binding Name}&quot; 
+                                       Grid.Row=&quot;1&quot; 
+                                       Grid.Column=&quot;1&quot; /&gt;
 
-                            <TextBlock Text="A. Paterno:" 
-                                       Grid.Row="2" 
-                                       Grid.Column="0" 
-                                       FontWeight="Bold"
-                                       VerticalAlignment="Center" />
-                            <TextBlock Text="{Binding MiddleName}" 
-                                       Grid.Row="2" 
-                                       Grid.Column="1" />
+                            &lt;TextBlock Text=&quot;A. Paterno:&quot; 
+                                       Grid.Row=&quot;2&quot; 
+                                       Grid.Column=&quot;0&quot; 
+                                       FontWeight=&quot;Bold&quot;
+                                       VerticalAlignment=&quot;Center&quot; /&gt;
+                            &lt;TextBlock Text=&quot;{Binding MiddleName}&quot; 
+                                       Grid.Row=&quot;2&quot; 
+                                       Grid.Column=&quot;1&quot; /&gt;
 
-                            <TextBlock Text="A. Materno:" 
-                                       Grid.Row="3" 
-                                       Grid.Column="0" 
-                                       FontWeight="Bold"
-                                       VerticalAlignment="Center" />
-                            <TextBlock  Text="{Binding LastName}" 
-                                        Grid.Row="3" 
-                                        Grid.Column="1" />
+                            &lt;TextBlock Text=&quot;A. Materno:&quot; 
+                                       Grid.Row=&quot;3&quot; 
+                                       Grid.Column=&quot;0&quot; 
+                                       FontWeight=&quot;Bold&quot;
+                                       VerticalAlignment=&quot;Center&quot; /&gt;
+                            &lt;TextBlock  Text=&quot;{Binding LastName}&quot; 
+                                        Grid.Row=&quot;3&quot; 
+                                        Grid.Column=&quot;1&quot; /&gt;
 
-                            <TextBlock 
-                                       Text="Dirección:" 
-                                       Grid.Row="4" 
-                                       Grid.Column="0" 
-                                       FontWeight="Bold"
-                                       VerticalAlignment="Center" />
-                            <TextBlock  Text="{Binding Address}" 
-                                        Grid.Row="4" 
-                                        Grid.Column="1" />
-                        </Grid>
-                        <Line X1="0" X2="440" Y1="0" Y2="0" Margin="0,15,0,15" StrokeThickness="1" Stroke="White"></Line>
-                    </StackPanel>
+                            &lt;TextBlock 
+                                       Text=&quot;Dirección:&quot; 
+                                       Grid.Row=&quot;4&quot; 
+                                       Grid.Column=&quot;0&quot; 
+                                       FontWeight=&quot;Bold&quot;
+                                       VerticalAlignment=&quot;Center&quot; /&gt;
+                            &lt;TextBlock  Text=&quot;{Binding Address}&quot; 
+                                        Grid.Row=&quot;4&quot; 
+                                        Grid.Column=&quot;1&quot; /&gt;
+                        &lt;/Grid&gt;
+                        &lt;Line X1=&quot;0&quot; X2=&quot;440&quot; Y1=&quot;0&quot; Y2=&quot;0&quot; Margin=&quot;0,15,0,15&quot; StrokeThickness=&quot;1&quot; Stroke=&quot;White&quot;&gt;&lt;/Line&gt;
+                    &lt;/StackPanel&gt;
 
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </Grid>
-</Grid>
-</pre>
+                &lt;/DataTemplate&gt;
+            &lt;/ListBox.ItemTemplate&gt;
+        &lt;/ListBox&gt;
+    &lt;/Grid&gt;
+&lt;/Grid&gt;</code></pre>
 <p>Los datos que se muestran en la consulta son cargados de la base de datos en el momento que accedemos a la página:</p>
-<pre lang="csharp">
-protected override void OnNavigatedTo(NavigationEventArgs e)
+<pre><code>protected override void OnNavigatedTo(NavigationEventArgs e)
 {
     string cs = RequisitionDataContext.DBConnectionString;
     using (RequisitionDataContext db = new RequisitionDataContext(cs))
@@ -714,16 +685,15 @@ protected override void OnNavigatedTo(NavigationEventArgs e)
         var clients = from Client client in db.clients
                       select client;
 
-        ObservableCollection<Client> items = new ObservableCollection<Client>();
+        ObservableCollection&lt;Client&gt; items = new ObservableCollection&lt;Client&gt;();
         foreach (Client c in clients)
         {
             items.Add(c);
         }
 
-        ClientItems = new ObservableCollection<Client>(items);
+        ClientItems = new ObservableCollection&lt;Client&gt;(items);
     }
-}
-</pre>
+}</code></pre>
 <p>Los elementos la interfaz están enlazados (Data binding) a los elementos de la colección <em>ClientItems</em>.</p>
 <h3 id="registro-de-pedidos">Registro de pedidos</h3>
 <p>La siguiente imagen muestra la interfaz para el registro de pedidos:</p>
@@ -732,89 +702,86 @@ protected override void OnNavigatedTo(NavigationEventArgs e)
 <figcaption aria-hidden="true">Consulta de clientes</figcaption>
 </figure>
 <p>El diseño correspondiente en XAML (archivo <em>View/ShopView.xaml</em>):</p>
-<pre lang="xml">
-<!--LayoutRoot is the root grid where all page content is placed-->
-<Grid x:Name="LayoutRoot" Background="Transparent">
-    <Grid.RowDefinitions>
-        <RowDefinition Height="Auto" MinHeight="129"/>
-        <RowDefinition/>
-    </Grid.RowDefinitions>
+<pre><code>&lt;!--LayoutRoot is the root grid where all page content is placed--&gt;
+&lt;Grid x:Name=&quot;LayoutRoot&quot; Background=&quot;Transparent&quot;&gt;
+    &lt;Grid.RowDefinitions&gt;
+        &lt;RowDefinition Height=&quot;Auto&quot; MinHeight=&quot;129&quot;/&gt;
+        &lt;RowDefinition/&gt;
+    &lt;/Grid.RowDefinitions&gt;
 
-    <!--TitlePanel contains the name of the application and page title-->
-    <StackPanel Grid.Row="0" Margin="12,17,0,28">
-        <TextBlock Text="Control de Requisiciones" Style="{StaticResource PhoneTextNormalStyle}"/>
-        <TextBlock Text="Requisición" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontSize="48"/>
-    </StackPanel>
+    &lt;!--TitlePanel contains the name of the application and page title--&gt;
+    &lt;StackPanel Grid.Row=&quot;0&quot; Margin=&quot;12,17,0,28&quot;&gt;
+        &lt;TextBlock Text=&quot;Control de Requisiciones&quot; Style=&quot;{StaticResource PhoneTextNormalStyle}&quot;/&gt;
+        &lt;TextBlock Text=&quot;Requisición&quot; Margin=&quot;9,-7,0,0&quot; Style=&quot;{StaticResource PhoneTextTitle1Style}&quot; FontSize=&quot;48&quot;/&gt;
+    &lt;/StackPanel&gt;
 
-    <!--ContentPanel - place additional content here-->
-    <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+    &lt;!--ContentPanel - place additional content here--&gt;
+    &lt;Grid x:Name=&quot;ContentPanel&quot; Grid.Row=&quot;1&quot; Margin=&quot;12,0,12,0&quot;&gt;
 
-        <Grid Width="440" Margin="8,0,8,570">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="170" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+        &lt;Grid Width=&quot;440&quot; Margin=&quot;8,0,8,570&quot;&gt;
+            &lt;Grid.ColumnDefinitions&gt;
+                &lt;ColumnDefinition Width=&quot;170&quot; /&gt;
+                &lt;ColumnDefinition Width=&quot;*&quot; /&gt;
+            &lt;/Grid.ColumnDefinitions&gt;
+            &lt;Grid.RowDefinitions&gt;
+                &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
+            &lt;/Grid.RowDefinitions&gt;
 
-            <TextBlock Grid.Row="0" Grid.Column="0"
-                       FontSize="{StaticResource PhoneFontSizeLarge}"
-                       VerticalAlignment="Center" Margin="0,15,25,14">
+            &lt;TextBlock Grid.Row=&quot;0&quot; Grid.Column=&quot;0&quot;
+                       FontSize=&quot;{StaticResource PhoneFontSizeLarge}&quot;
+                       VerticalAlignment=&quot;Center&quot; Margin=&quot;0,15,25,14&quot;&gt;
                 ID Cliente:
-            </TextBlock>
-            <TextBox Grid.Row="0" Text="{Binding IdClient,Mode=TwoWay}" Margin="150,0,10,0" Grid.ColumnSpan="2" />
-        </Grid>
+            &lt;/TextBlock&gt;
+            &lt;TextBox Grid.Row=&quot;0&quot; Text=&quot;{Binding IdClient,Mode=TwoWay}&quot; Margin=&quot;150,0,10,0&quot; Grid.ColumnSpan=&quot;2&quot; /&gt;
+        &lt;/Grid&gt;
 
 
-        <ScrollViewer HorizontalAlignment="Left" Height="391" Margin="10,74,0,0" VerticalAlignment="Top" Width="436">
-            <ListBox x:Name="detailList" ItemsSource="{Binding DetailItems}" Height="364" Width="421">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Width="440">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <TextBox Text="{Binding Amount}" Grid.Column="0" IsReadOnly="True"/>
-                            <TextBox Text="{Binding Item}" Grid.Column="1" IsReadOnly="True"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </ScrollViewer>
+        &lt;ScrollViewer HorizontalAlignment=&quot;Left&quot; Height=&quot;391&quot; Margin=&quot;10,74,0,0&quot; VerticalAlignment=&quot;Top&quot; Width=&quot;436&quot;&gt;
+            &lt;ListBox x:Name=&quot;detailList&quot; ItemsSource=&quot;{Binding DetailItems}&quot; Height=&quot;364&quot; Width=&quot;421&quot;&gt;
+                &lt;ListBox.ItemTemplate&gt;
+                    &lt;DataTemplate&gt;
+                        &lt;Grid Width=&quot;440&quot;&gt;
+                            &lt;Grid.ColumnDefinitions&gt;
+                                &lt;ColumnDefinition Width=&quot;100&quot; /&gt;
+                                &lt;ColumnDefinition Width=&quot;*&quot; /&gt;
+                            &lt;/Grid.ColumnDefinitions&gt;
+                            &lt;TextBox Text=&quot;{Binding Amount}&quot; Grid.Column=&quot;0&quot; IsReadOnly=&quot;True&quot;/&gt;
+                            &lt;TextBox Text=&quot;{Binding Item}&quot; Grid.Column=&quot;1&quot; IsReadOnly=&quot;True&quot;/&gt;
+                        &lt;/Grid&gt;
+                    &lt;/DataTemplate&gt;
+                &lt;/ListBox.ItemTemplate&gt;
+            &lt;/ListBox&gt;
+        &lt;/ScrollViewer&gt;
 
-        <Grid Width="440" Margin="10,470,6,87">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="290" />
-                <ColumnDefinition Width="90" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <TextBox Text="{Binding NewItem,Mode=TwoWay}"
-                     Grid.Column="0" 
-                     Margin="0,0,10,0" />
-            <TextBox Text="{Binding NewItemAmount,Mode=TwoWay}"
-                     Grid.ColumnSpan="2" 
-                     Margin="275,0,15,0" 
-                     TextAlignment="Center" />
-            <Button x:Name="addItemButton" Grid.Column="1" Click="addItemButton_Click" Grid.ColumnSpan="2" Margin="75,0,10,0">
-                <Button.Background>
-                    <ImageBrush Stretch="Uniform" ImageSource="/Images/AddNew.png"/>
-                </Button.Background>
-            </Button>
-        </Grid>
-        <Button x:Name="saveRequisitionButton" Content="Guardar pedido" HorizontalAlignment="Left" Margin="10,557,0,0" VerticalAlignment="Top" Width="446" Click="saveRequisitionButton_Click_1" />
+        &lt;Grid Width=&quot;440&quot; Margin=&quot;10,470,6,87&quot;&gt;
+            &lt;Grid.ColumnDefinitions&gt;
+                &lt;ColumnDefinition Width=&quot;290&quot; /&gt;
+                &lt;ColumnDefinition Width=&quot;90&quot; /&gt;
+                &lt;ColumnDefinition Width=&quot;*&quot; /&gt;
+            &lt;/Grid.ColumnDefinitions&gt;
+            &lt;TextBox Text=&quot;{Binding NewItem,Mode=TwoWay}&quot;
+                     Grid.Column=&quot;0&quot; 
+                     Margin=&quot;0,0,10,0&quot; /&gt;
+            &lt;TextBox Text=&quot;{Binding NewItemAmount,Mode=TwoWay}&quot;
+                     Grid.ColumnSpan=&quot;2&quot; 
+                     Margin=&quot;275,0,15,0&quot; 
+                     TextAlignment=&quot;Center&quot; /&gt;
+            &lt;Button x:Name=&quot;addItemButton&quot; Grid.Column=&quot;1&quot; Click=&quot;addItemButton_Click&quot; Grid.ColumnSpan=&quot;2&quot; Margin=&quot;75,0,10,0&quot;&gt;
+                &lt;Button.Background&gt;
+                    &lt;ImageBrush Stretch=&quot;Uniform&quot; ImageSource=&quot;/Images/AddNew.png&quot;/&gt;
+                &lt;/Button.Background&gt;
+            &lt;/Button&gt;
+        &lt;/Grid&gt;
+        &lt;Button x:Name=&quot;saveRequisitionButton&quot; Content=&quot;Guardar pedido&quot; HorizontalAlignment=&quot;Left&quot; Margin=&quot;10,557,0,0&quot; VerticalAlignment=&quot;Top&quot; Width=&quot;446&quot; Click=&quot;saveRequisitionButton_Click_1&quot; /&gt;
 
-    </Grid>
-</Grid>
-</pre>
+    &lt;/Grid&gt;
+&lt;/Grid&gt;</code></pre>
 <p>El código que se encarga de almacenar los pedidos es el siguiente:</p>
-<pre lang="csharp">
-private void saveRequisitionButton_Click_1(object sender, RoutedEventArgs e)
+<pre><code>private void saveRequisitionButton_Click_1(object sender, RoutedEventArgs e)
 {
     if (DetailItems.Count == 0)
     {
-        MessageBox.Show("La lista esta vacía.");
+        MessageBox.Show(&quot;La lista esta vacía.&quot;);
         return;
     }
 
@@ -825,7 +792,7 @@ private void saveRequisitionButton_Click_1(object sender, RoutedEventArgs e)
     }
     catch (FormatException fe)
     {
-        MessageBox.Show("Verifica el ID del cliente.");
+        MessageBox.Show(&quot;Verifica el ID del cliente.&quot;);
         return;
     }
 
@@ -833,7 +800,7 @@ private void saveRequisitionButton_Click_1(object sender, RoutedEventArgs e)
     string cs = RequisitionDataContext.DBConnectionString;
     using (RequisitionDataContext db = new RequisitionDataContext(cs))
     {
-        string date = DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day;
+        string date = DateTime.Now.Year + &quot;-&quot; + DateTime.Now.Month + &quot;-&quot; + DateTime.Now.Day;
         var keys = (from Key k in db.keys select k).First();
         int newRequestId = keys.NewIdRequest;
         int year = DateTime.Now.Year;
@@ -858,7 +825,7 @@ private void saveRequisitionButton_Click_1(object sender, RoutedEventArgs e)
         }
         catch (Exception ex)
         {
-            Debug.WriteLine("ERROR: " + ex.ToString());
+            Debug.WriteLine(&quot;ERROR: &quot; + ex.ToString());
             ok = false;
         }
 
@@ -886,29 +853,28 @@ private void saveRequisitionButton_Click_1(object sender, RoutedEventArgs e)
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("ERROR: " + ex.ToString());
+                Debug.WriteLine(&quot;ERROR: &quot; + ex.ToString());
                 ok = false;
             }
 
             if (!ok)
             {
-                MessageBox.Show("¡ERROR: No se pudo guardar el pedido!");
+                MessageBox.Show(&quot;¡ERROR: No se pudo guardar el pedido!&quot;);
             }
         }
         else
         {
-            MessageBox.Show("¡ERROR: No se pudo guardar el pedido!");
+            MessageBox.Show(&quot;¡ERROR: No se pudo guardar el pedido!&quot;);
         }
 
         if (ok)
         {
-            MessageBox.Show("La requisicón se ha guardado.");
+            MessageBox.Show(&quot;La requisicón se ha guardado.&quot;);
             IdClient = String.Empty;
             DetailItems.Clear();
         }
     }
-}
-</pre>
+}</code></pre>
 <h3 id="consulta-de-pedidos">Consulta de pedidos</h3>
 <p>La siguiente imagen muestra la interfaz para la consulta de pedidos:</p>
 <figure>
@@ -916,108 +882,105 @@ private void saveRequisitionButton_Click_1(object sender, RoutedEventArgs e)
 <figcaption aria-hidden="true">Consulta de pedidos</figcaption>
 </figure>
 <p>El diseño correspondiente en XAML (archivo <em>View/QueryShopView.xaml</em>):</p>
-<pre lang="xml">
-<!--LayoutRoot is the root grid where all page content is placed-->
-<Grid x:Name="LayoutRoot" Background="Transparent">
-    <Grid.RowDefinitions>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
+<pre><code>&lt;!--LayoutRoot is the root grid where all page content is placed--&gt;
+&lt;Grid x:Name=&quot;LayoutRoot&quot; Background=&quot;Transparent&quot;&gt;
+    &lt;Grid.RowDefinitions&gt;
+        &lt;RowDefinition Height=&quot;Auto&quot;/&gt;
+        &lt;RowDefinition Height=&quot;*&quot;/&gt;
+    &lt;/Grid.RowDefinitions&gt;
 
-    <!--TitlePanel contains the name of the application and page title-->
-    <StackPanel Grid.Row="0" Margin="12,17,0,28">
-        <TextBlock Style="{StaticResource PhoneTextNormalStyle}">
-            <Run Text="Control de Requisiciones"/>
-            <LineBreak/>
-            <Run Text=""/>
-        </TextBlock>
-        <TextBlock Text="Consulta pedidos" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontSize="48"/>
-    </StackPanel>
+    &lt;!--TitlePanel contains the name of the application and page title--&gt;
+    &lt;StackPanel Grid.Row=&quot;0&quot; Margin=&quot;12,17,0,28&quot;&gt;
+        &lt;TextBlock Style=&quot;{StaticResource PhoneTextNormalStyle}&quot;&gt;
+            &lt;Run Text=&quot;Control de Requisiciones&quot;/&gt;
+            &lt;LineBreak/&gt;
+            &lt;Run Text=&quot;&quot;/&gt;
+        &lt;/TextBlock&gt;
+        &lt;TextBlock Text=&quot;Consulta pedidos&quot; Margin=&quot;9,-7,0,0&quot; Style=&quot;{StaticResource PhoneTextTitle1Style}&quot; FontSize=&quot;48&quot;/&gt;
+    &lt;/StackPanel&gt;
 
-    <!--ContentPanel - place additional content here-->
-    <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-        <ListBox x:Name="queryShopsList" ItemsSource="{Binding QueryRequestDetails}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <Grid Width="440">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="130" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
+    &lt;!--ContentPanel - place additional content here--&gt;
+    &lt;Grid x:Name=&quot;ContentPanel&quot; Grid.Row=&quot;1&quot; Margin=&quot;12,0,12,0&quot;&gt;
+        &lt;ListBox x:Name=&quot;queryShopsList&quot; ItemsSource=&quot;{Binding QueryRequestDetails}&quot;&gt;
+            &lt;ListBox.ItemTemplate&gt;
+                &lt;DataTemplate&gt;
+                    &lt;StackPanel&gt;
+                        &lt;Grid Width=&quot;440&quot;&gt;
+                            &lt;Grid.ColumnDefinitions&gt;
+                                &lt;ColumnDefinition Width=&quot;130&quot; /&gt;
+                                &lt;ColumnDefinition Width=&quot;*&quot; /&gt;
+                            &lt;/Grid.ColumnDefinitions&gt;
+                            &lt;Grid.RowDefinitions&gt;
+                                &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
+                                &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
+                                &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
+                                &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
+                            &lt;/Grid.RowDefinitions&gt;
 
-                            <TextBlock Text="Id Pedido:"
-                                   Grid.Row="0"
-                                   Grid.Column="0"
-                                   VerticalAlignment="Center"
-                                   FontWeight="Bold"/>
-                            <TextBlock Text="{Binding IdRequest,Mode=TwoWay}"
-                                   Grid.Row="0"
-                                   Grid.Column="1"/>
+                            &lt;TextBlock Text=&quot;Id Pedido:&quot;
+                                   Grid.Row=&quot;0&quot;
+                                   Grid.Column=&quot;0&quot;
+                                   VerticalAlignment=&quot;Center&quot;
+                                   FontWeight=&quot;Bold&quot;/&gt;
+                            &lt;TextBlock Text=&quot;{Binding IdRequest,Mode=TwoWay}&quot;
+                                   Grid.Row=&quot;0&quot;
+                                   Grid.Column=&quot;1&quot;/&gt;
 
-                            <TextBlock Text="Cliente:"
-                                   Grid.Row="1"
-                                   Grid.Column="0"
-                                   VerticalAlignment="Center"
-                                   FontWeight="Bold"/>
-                            <TextBlock Text="{Binding ClientName,Mode=TwoWay}"
-                                   Grid.Row="1"
-                                   Grid.Column="1"/>
+                            &lt;TextBlock Text=&quot;Cliente:&quot;
+                                   Grid.Row=&quot;1&quot;
+                                   Grid.Column=&quot;0&quot;
+                                   VerticalAlignment=&quot;Center&quot;
+                                   FontWeight=&quot;Bold&quot;/&gt;
+                            &lt;TextBlock Text=&quot;{Binding ClientName,Mode=TwoWay}&quot;
+                                   Grid.Row=&quot;1&quot;
+                                   Grid.Column=&quot;1&quot;/&gt;
 
-                            <TextBlock Text="Fecha:"
-                                   Grid.Row="2"
-                                   Grid.Column="0"
-                                   VerticalAlignment="Center"
-                                   FontWeight="Bold"/>
-                            <TextBlock Text="{Binding Date,Mode=TwoWay}"
-                                   Grid.Row="2"
-                                   Grid.Column="1"/>
+                            &lt;TextBlock Text=&quot;Fecha:&quot;
+                                   Grid.Row=&quot;2&quot;
+                                   Grid.Column=&quot;0&quot;
+                                   VerticalAlignment=&quot;Center&quot;
+                                   FontWeight=&quot;Bold&quot;/&gt;
+                            &lt;TextBlock Text=&quot;{Binding Date,Mode=TwoWay}&quot;
+                                   Grid.Row=&quot;2&quot;
+                                   Grid.Column=&quot;1&quot;/&gt;
 
-                            <ListBox ItemsSource="{Binding Items}"
-                                     Grid.Row="3"
-                                     Grid.Column="1">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid Width="310">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="80" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
+                            &lt;ListBox ItemsSource=&quot;{Binding Items}&quot;
+                                     Grid.Row=&quot;3&quot;
+                                     Grid.Column=&quot;1&quot;&gt;
+                                &lt;ListBox.ItemTemplate&gt;
+                                    &lt;DataTemplate&gt;
+                                        &lt;Grid Width=&quot;310&quot;&gt;
+                                            &lt;Grid.ColumnDefinitions&gt;
+                                                &lt;ColumnDefinition Width=&quot;80&quot; /&gt;
+                                                &lt;ColumnDefinition Width=&quot;*&quot; /&gt;
+                                            &lt;/Grid.ColumnDefinitions&gt;
+                                            &lt;Grid.RowDefinitions&gt;
+                                                &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
+                                            &lt;/Grid.RowDefinitions&gt;
 
-                                            <TextBlock Text="{Binding Amount,Mode=TwoWay}" 
-                                                       Grid.Row="0"
-                                                       Grid.Column="0"/>
-                                            <TextBlock Text="{Binding Name,Mode=TwoWay}"
-                                                       Grid.Row="0"
-                                                       Grid.Column="1"/>
+                                            &lt;TextBlock Text=&quot;{Binding Amount,Mode=TwoWay}&quot; 
+                                                       Grid.Row=&quot;0&quot;
+                                                       Grid.Column=&quot;0&quot;/&gt;
+                                            &lt;TextBlock Text=&quot;{Binding Name,Mode=TwoWay}&quot;
+                                                       Grid.Row=&quot;0&quot;
+                                                       Grid.Column=&quot;1&quot;/&gt;
                                                        
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </Grid>
+                                        &lt;/Grid&gt;
+                                    &lt;/DataTemplate&gt;
+                                &lt;/ListBox.ItemTemplate&gt;
+                            &lt;/ListBox&gt;
+                        &lt;/Grid&gt;
 
-                        <Line X1="0" X2="440" Y1="0" Y2="0" Margin="0,15,0,15" StrokeThickness="1" Stroke="White"></Line>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
+                        &lt;Line X1=&quot;0&quot; X2=&quot;440&quot; Y1=&quot;0&quot; Y2=&quot;0&quot; Margin=&quot;0,15,0,15&quot; StrokeThickness=&quot;1&quot; Stroke=&quot;White&quot;&gt;&lt;/Line&gt;
+                    &lt;/StackPanel&gt;
+                &lt;/DataTemplate&gt;
+            &lt;/ListBox.ItemTemplate&gt;
 
-        </ListBox>
-    </Grid>
-</Grid>
-</pre>
+        &lt;/ListBox&gt;
+    &lt;/Grid&gt;
+&lt;/Grid&gt;</code></pre>
 <p>La lógica detras de esta operación se muestra en el siguiente listado:</p>
-<pre lang="csharp">
-protected override void OnNavigatedTo(NavigationEventArgs e)
+<pre><code>protected override void OnNavigatedTo(NavigationEventArgs e)
 {
     string cs = RequisitionDataContext.DBConnectionString;
     using (RequisitionDataContext db = new RequisitionDataContext(cs))
@@ -1040,29 +1003,29 @@ protected override void OnNavigatedTo(NavigationEventArgs e)
         foreach (var request in requestList)
         {
             items[i] = new MyWebService.RequestDetail();
-            items[i].IdRequest = request.IdRequest + "";
-            items[i].FullName = request.Name + " " +
-                                request.MiddleName + " " +
+            items[i].IdRequest = request.IdRequest + &quot;&quot;;
+            items[i].FullName = request.Name + &quot; &quot; +
+                                request.MiddleName + &quot; &quot; +
                                 request.LastName;
             items[i].Item = request.Item;
-            items[i].Amount = request.Amount + "";
+            items[i].Amount = request.Amount + &quot;&quot;;
             items[i].RequestDate = request.RequestDate.ToString();
             i++;
         }
 
         var requestDetails = processReports(items);
-        QueryRequestDetails = new ObservableCollection<RequestReport>(requestDetails);
+        QueryRequestDetails = new ObservableCollection&lt;RequestReport&gt;(requestDetails);
     }
 
     base.OnNavigatedTo(e);
 }
 
-private ObservableCollection<RequestReport> processReports(MyWebService.RequestDetail[] result)
+private ObservableCollection&lt;RequestReport&gt; processReports(MyWebService.RequestDetail[] result)
 {
     int prev = 0;
-    ObservableCollection<RequestReport> reports = new ObservableCollection<RequestReport>();
+    ObservableCollection&lt;RequestReport&gt; reports = new ObservableCollection&lt;RequestReport&gt;();
     RequestReport report = new RequestReport();
-    ObservableCollection<ItemDetail> details = new ObservableCollection<ItemDetail>();
+    ObservableCollection&lt;ItemDetail&gt; details = new ObservableCollection&lt;ItemDetail&gt;();
     bool first = true;
     foreach (var row in result)
     {
@@ -1070,7 +1033,7 @@ private ObservableCollection<RequestReport> processReports(MyWebService.RequestD
         if (id != prev)
         {
             if (!first) {
-                report.Items = new ObservableCollection<ItemDetail>(details);
+                report.Items = new ObservableCollection&lt;ItemDetail&gt;(details);
                 details.Clear();
                 reports.Add(report);
                 report = new RequestReport();
@@ -1078,7 +1041,7 @@ private ObservableCollection<RequestReport> processReports(MyWebService.RequestD
 
             first = false;
             prev = id;
-            report.IdRequest = id + "";
+            report.IdRequest = id + &quot;&quot;;
             report.ClientName = row.FullName;
             report.Date = row.RequestDate;
             details.Add(new ItemDetail { Amount = row.Amount, Name = row.Item });
@@ -1089,20 +1052,18 @@ private ObservableCollection<RequestReport> processReports(MyWebService.RequestD
         }
     }
 
-    if (details.Count > 0)
+    if (details.Count &gt; 0)
     {
-        report.Items = new ObservableCollection<ItemDetail>(details);
+        report.Items = new ObservableCollection&lt;ItemDetail&gt;(details);
         reports.Add(report);
     }
 
     return reports;
-}
-</pre>
+}</code></pre>
 <h3 id="la-sincronización-con-el-servidor">La sincronización con el servidor</h3>
 <p>Esta operación consiste de varios métodos, en parte porque la comunicación con el Web service se realiza de manera asíncrona, vemos el código y después explicamos lo que sea necesario.</p>
-En el constructor damos de alta los métodos que se encargarán de tratar con las respuestas del Web service.
-<pre lang="csharp">
-private MyWebService.RequestPortTypeClient ws;
+<p>En el constructor damos de alta los métodos que se encargarán de tratar con las respuestas del Web service.</p>
+<pre><code>private MyWebService.RequestPortTypeClient ws;
 // Constructor
 public MainPage()
 {
@@ -1113,14 +1074,12 @@ public MainPage()
     ws.GetAllRequestsCompleted += ws_GetAllRequestsCompleted;
     ws.GetAllDetailsCompleted += ws_GetAllDetailsCompleted;
     ws.SynchronizeCompleted += ws_SynchronizeCompleted;
-}
-</pre>
+}</code></pre>
 <p>Y ahora sí la sincronización:</p>
-<pre lang="csharp">
-private void syncOperation_Click_1(object sender, EventArgs e)
+<pre><code>private void syncOperation_Click_1(object sender, EventArgs e)
 {
     SetProgressIndicator(true);
-    SystemTray.ProgressIndicator.Text = "Sincronizando datos con el servidor.";
+    SystemTray.ProgressIndicator.Text = &quot;Sincronizando datos con el servidor.&quot;;
     string cs = RequisitionDataContext.DBConnectionString;
     using (RequisitionDataContext db = new RequisitionDataContext(cs))
     {
@@ -1136,7 +1095,7 @@ private void syncOperation_Click_1(object sender, EventArgs e)
         foreach (var c in C)
         {
             clients[i] = new MyWebService.Client();
-            clients[i].IdClient = c.IdClient + "";
+            clients[i].IdClient = c.IdClient + &quot;&quot;;
             clients[i].Name = c.Name;
             clients[i].MiddleName = c.MiddleName;
             clients[i].LastName = c.LastName;
@@ -1148,8 +1107,8 @@ private void syncOperation_Click_1(object sender, EventArgs e)
         foreach (var r in R)
         {
             requests[i] = new MyWebService.Request();
-            requests[i].IdRequest = r.IdRequest + "";
-            requests[i].IdClient = r.IdClient + "";
+            requests[i].IdRequest = r.IdRequest + &quot;&quot;;
+            requests[i].IdClient = r.IdClient + &quot;&quot;;
             requests[i].RequestDate = MySqlDateFormat(r.RequestDate);
             i++;
         }
@@ -1158,10 +1117,10 @@ private void syncOperation_Click_1(object sender, EventArgs e)
         foreach (var d in D)
         {
             details[i] = new MyWebService.Detail();
-            details[i].IdDetail = d.IdDetail + "";
-            details[i].IdRequest = d.IdRequest + "";
+            details[i].IdDetail = d.IdDetail + &quot;&quot;;
+            details[i].IdRequest = d.IdRequest + &quot;&quot;;
             details[i].Item = d.Item;
-            details[i].Amount = d.Amount + "";
+            details[i].Amount = d.Amount + &quot;&quot;;
             i++;
         }
 
@@ -1186,7 +1145,7 @@ void ws_SynchronizeCompleted(object sender, MyWebService.SynchronizeCompletedEve
 
 void ws_GetAllClientsCompleted(object sender, MyWebService.GetAllClientsCompletedEventArgs e)
 {
-    Collection<Client> newClients = new Collection<Client>();
+    Collection&lt;Client&gt; newClients = new Collection&lt;Client&gt;();
     foreach (var row in e.Result)
     {
         Client c = new Client
@@ -1215,7 +1174,7 @@ void ws_GetAllClientsCompleted(object sender, MyWebService.GetAllClientsComplete
 
 void ws_GetAllRequestsCompleted(object sender, MyWebService.GetAllRequestsCompletedEventArgs e)
 {
-    Collection<Request> newRequests = new Collection<Request>();
+    Collection&lt;Request&gt; newRequests = new Collection&lt;Request&gt;();
     foreach (var row in e.Result)
     {
         Request r = new Request
@@ -1239,17 +1198,17 @@ void ws_GetAllRequestsCompleted(object sender, MyWebService.GetAllRequestsComple
 
 private string MySqlDateFormat(DateTime dateTime)
 {
-    return dateTime.Year + "-"
-            + dateTime.Month + "-"
-            + dateTime.Day + " "
-            + dateTime.Hour + ":"
-            + dateTime.Minute + ":"
+    return dateTime.Year + &quot;-&quot;
+            + dateTime.Month + &quot;-&quot;
+            + dateTime.Day + &quot; &quot;
+            + dateTime.Hour + &quot;:&quot;
+            + dateTime.Minute + &quot;:&quot;
             + dateTime.Second;
 }
 
 private DateTime SQLServerDateFormat(string rd)
 {
-    string[] tokens = rd.Split(new char[] { '-', ' ', ':' });
+    string[] tokens = rd.Split(new char[] { &#39;-&#39;, &#39; &#39;, &#39;:&#39; });
     int year = Int32.Parse(tokens[0]);
     int month = Int32.Parse(tokens[1]);
     int day = Int32.Parse(tokens[2]);
@@ -1262,7 +1221,7 @@ private DateTime SQLServerDateFormat(string rd)
 
 void ws_GetAllDetailsCompleted(object sender, MyWebService.GetAllDetailsCompletedEventArgs e)
 {
-    Collection<Detail> newDetails = new Collection<Detail>();
+    Collection&lt;Detail&gt; newDetails = new Collection&lt;Detail&gt;();
     foreach (var row in e.Result)
     {
         Detail d = new Detail
@@ -1283,14 +1242,12 @@ void ws_GetAllDetailsCompleted(object sender, MyWebService.GetAllDetailsComplete
 
     }
 
-    updateKeys(); // <-------------
+    updateKeys(); // &lt;-------------
 
     SetProgressIndicator(false); 
-}
-</pre>
+}</code></pre>
 <p>Nótese que casi al final de la sincronización se actualizan las claves primarias, el método <code>updateKeys()</code> es el siguiente:</p>
-<pre lang="csharp">
-private void updateKeys()
+<pre><code>private void updateKeys()
 {
     int idClient = 1;
     int idRequest = 1;
@@ -1298,26 +1255,26 @@ private void updateKeys()
     string cs = RequisitionDataContext.DBConnectionString;
     using (RequisitionDataContext db = new RequisitionDataContext(cs))
     {
-        if (db.clients.Count() > 0)
+        if (db.clients.Count() &gt; 0)
         {
-            var id = db.clients.Max(x => x.IdClient);
+            var id = db.clients.Max(x =&gt; x.IdClient);
             idClient = Math.Max(idClient, id + 1);
         }
 
-        if (db.requests.Count() > 0)
+        if (db.requests.Count() &gt; 0)
         {
-            var id = db.requests.Max(x => x.IdRequest);
+            var id = db.requests.Max(x =&gt; x.IdRequest);
             idRequest = Math.Max(idRequest, id + 1);
         }
 
-        if (db.details.Count() > 0)
+        if (db.details.Count() &gt; 0)
         {
-            var id = db.details.Max(x => x.IdDetail);
+            var id = db.details.Max(x =&gt; x.IdDetail);
             idDetail = Math.Max(idDetail, id + 1);
         }
 
         Key current = new Key();
-        if (db.keys.Count() > 0)
+        if (db.keys.Count() &gt; 0)
         {
             current = (from Key k in db.keys select k).First();
         }
@@ -1329,17 +1286,14 @@ private void updateKeys()
         db.keys.InsertOnSubmit(current);
         db.SubmitChanges();
     }
-}
-</pre>
+}</code></pre>
 <p>Hasta aquí la explicación. Hay muchas cosas que no se abordaron aquí pero si las más importantes, en la siguiente sección se indica como obtener el código fuente para probar la aplicación.</p>
 <h2 id="código-fuente">Código fuente</h2>
 <p>El código tanto del cliente como del servidor están disponibles en Bitbucket en las siguientes direcciones:</p>
 <p><a href="https://bitbucket.org/rendon/request_ws">https://bitbucket.org/rendon/request_ws</a> <a href="https://bitbucket.org/rendon/requisition_wp8">https://bitbucket.org/rendon/requisition_wp8</a></p>
-O bien pueden clonar los proyectos:
-<pre lang="bash" theme="slate">
-$ git clone https://rendon@bitbucket.org/rendon/request_ws.git
-$ git clone https://rendon@bitbucket.org/rendon/requisition_wp8.git
-</pre>
+<p>O bien pueden clonar los proyectos:</p>
+<pre><code>$ git clone https://rendon@bitbucket.org/rendon/request_ws.git
+$ git clone https://rendon@bitbucket.org/rendon/requisition_wp8.git</code></pre>
 <p>La licencia del Web service es GPLv3.</p>
 <p>La licencia de la aplicación cliente es GPLv3, con una posible excepción del código generado por Visual Studio para comunicarnos con el Web service, del cual desconozco que políticas se apliquen.</p>
 <h2 id="por-hacer">Por hacer</h2>

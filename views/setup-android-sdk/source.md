@@ -15,11 +15,11 @@ El archivo tiene un nombre parecido a `android-sdk_r22.x.x-linux.tgz` y pesa apr
 
 El archivo que acabamos de descargar contiene los binarios del SDK, por lo que no habra que compilar nada, únicamente descomprimirlo en un directorio adecuado, en nuestro caso lo haremos en el directorio `/opt`. Como usuario **root** ejecuta los siguientes comandos.
 
-<pre lang="bash" theme="slate">
+```
 mv /home/usuario/descargas/android-sdk_r22.x.x-linux.tgz /opt
 cd /opt
 tar xvf android-sdk_r22.x.x-linux.tgz
-</pre>
+```
 
 El último comando debio crear un direcotorio con el nombre `android-sdk-linux` dentro del directorio `/opt`.
 
@@ -27,9 +27,9 @@ El último comando debio crear un direcotorio con el nombre `android-sdk-linux` 
 
 La variable de entorno PATH es es una variable especial ya que almacena los nombres de los directorios donde el sistema busca los programas instalados, nosotros vamos a registrar el SDK para que cuando ejecutamos algun programa del SDK, el sistema sepa donde encontrarlo. Abrimos el archivo `.bashrc` ubicado en el directorio home y agregamos la siguiente línea.
 
-<pre lang="bash" theme="slate">
+```
 export PATH="${PATH}:/opt/android-sdk-linux/tools:/opt/android-sdk-linux/platform-tools"
-</pre>
+```
 
 
 ## Descargar la API
@@ -44,9 +44,9 @@ Nosotros vamos a desarrollar una aplicación para la versión 2.3 de Android (Ve
 
 Ant es una herramienta para administrar la compilación de aplicaciones Java, esta no se incluye en el SDK de Android y es necesario que se instale. En la línea de comandos ejecuta el siguiente comando como **root**.
 
-<pre lang="bash" theme="slate">
+```
 apt-get install ant
-</pre>
+```
 
 ## Crear una máquina virtual para las pruebas
 
@@ -60,18 +60,18 @@ Elegimos la opción "New" para crear un dispositivo virtual, en esa ventana prop
 
 Para ejecutar el emulador con la imagen recien creada utiliza el siguiente comando en una terminal.
 
-<pre lang="bash" theme="slate">
+```
 emulator @Gingebread2
-</pre>
+```
 
 
 ## Configurar un dispositivo real
 
 Al final de cuentas lo que pretendemos es ejecutar nuestras aplicaciones en un dispositivo de verdad, para ello es necesario realizar algunas configuraciones para que el sistema operativo reconozca nuestro dispositivo. Como usuario root vamos a crear un archivo llamado `51-android.rules` dentro del directorio `/etc/udev/rules.d/` con el siguiente contenido.
 
-<pre lang="bash" theme="slate">
+```
 SUBSYSTEM=="usb", ATTR{idVendor}=="0bb4", MODE="0666", GROUP="plugdev"
-</pre>
+```
 
 El id **0bb4** corresponde a los dispositivos HTC. Vease la documentación oficial en [https://developer.android.com/tools/device.html](https://developer.android.com/tools/device.html) para saber el id de otros dispositivos y más información sobre este tema.
 
@@ -79,10 +79,10 @@ El id **0bb4** corresponde a los dispositivos HTC. Vease la documentación ofici
 
 Solo resta verificar si todo esta correcto. Para ello vamos a crear un proyecto "¡Hola mundo!". Dentro de una terminal posicionate en tu directorio home y ejecuta los siguiente comandos.
 
-<pre lang="bash" theme="slate">
+```
 mkdir HolaMundo
 android create project --target android-10 -n HolaMundo -a HolaMundo -k com.inforscience.test -p ./HolaMundo
-</pre>
+```
 
 El significado de los parametros del comando anterior es el siguiente:
 
@@ -96,11 +96,11 @@ El significado de los parametros del comando anterior es el siguiente:
 
 Para compilar e instalar la aplicación de prueba ejecuta los siguientes comandos.
 
-<pre lang="bash" theme="slate">
+```
 cd HolaMundo
 ant debug
 ant debug install
-</pre>
+```
 
 El último comando buscará algún dispositivo Android conectado al sistema o una máquina virtual activa e instalará el programa ahí.
 

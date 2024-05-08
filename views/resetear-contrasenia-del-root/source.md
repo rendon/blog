@@ -18,11 +18,11 @@ Esta situación que podría parecer trivial resulta que no lo es, ya que una med
 
 Iniciamos la computadora y antes de cargar el sistema presionamos la tecla <kbd>e</kbd> para editar las opciones de arranque (en el caso de openSuse es necesario presionar la tecla <kbd>Esc</kbd> previamente para salir del modo gráfico), y nos aparecerán 3 líneas de comandos , la primera que empieza con `root(hdx,0)`, la segunda inicia con `kernel` y la tercera con `initrd`, la línea que nos interesa es la segunda, la que inicia con *kernel*, presionamos la letra `e` para editar las opciones. Haremos 2 modificaciones, lo primero será ubicar dentro de las opciones el texto `ro`,(read only) y lo sustituiremos por `rw`(read and write), para tener derechos de escritura sobre los archivos de contraseñas. La segunda modificación será añadir la siguiente instrucción al final de la línea de opciones:
 
-<pre lang="bash" theme="slate" >init=/bin/bash</pre>
+```init=/bin/bash```
 
 La línea tiene que quedar más o menos así: 
 
-<pre lang="bash" theme="slate" >kernel /boot/vmlinuz-2.6.18-5-486 root=/dev/hda2 rw vga=791 init=/bin/bash </pre>
+```kernel /boot/vmlinuz-2.6.18-5-486 root=/dev/hda2 rw vga=791 init=/bin/bash ```
 
 Ahora solo presionar <kbd>Enter</kbd> y posteriormente presionar la tecla <kbd>b</kbd> para empezar con la carga del sistema...Si todo se hizo bien en unos instantes nos aparecerá el prompt del sistema en modo root, por lo general el indicador es el `#`, aunque en openSuse por ejemplo esto no es así, pero no hay de que preocuparse, si se esta como root.
 
@@ -38,13 +38,13 @@ Con slackware el proceso cambia un poquito solo en el primer paso ya que el gest
 
 Iniciamos el ordenador y antes de que se cargue el sistema por presionamos la tecla <kbd>Tab</kbd> para editar las opciones de arranque, seleccionamos a `Linux` como sistema a cargar y después de eso agregamos `bin=/bin/bash` quedando como sigue:
 
-<pre lang="bash" theme="slate" > boot: Linux init=/bin/bash </pre>
+``` boot: Linux init=/bin/bash ```
 
 En seguida presionamos <kbd>Enter</kbd> para que cargue en sistema.
 
 Ya una ves estando en el prompt como root tenemos que *remontar* el sistema de archivos para que sea de lectura y escritura(no lo pusimos en las opciones de arranque). Ejecutamos el siguiente comando: 
 
-<pre lang="bash" theme="slate" >mount -o remount,rw /</pre>
+```mount -o remount,rw /```
 
 Después de esto el siguiente paso es ejecutar  el comando `passwd`, y todo lo demás.
 

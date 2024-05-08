@@ -149,7 +149,7 @@ El [triangulo de pascal](http://es.wikipedia.org/wiki/Tri%C3%A1ngulo_de_Pascal) 
 1 3 3 1
 1 4 6 4 1
 1 5 10 10 5 1
-</pre>
+```
 
 
 Inicialmente se empieza con un solo elemento, el 1 el punto más alto del triángulo. Para cada renglón posterior se coloca un 1 en cada extremo del renglón y el resto de los términos se calculan como la suma del elemento superior izquierdo más el elemento superior, es decir `P(i, j) = P(i - 1, j - 1) + P(i - 1, j)`. Nos encontramos nuevamente con una función recursiva. Sabemos que el valor en la primer y última columna de cada fila es igual a 1 y con ello formulamos nuestro caso base como `P(i, 1) = 1` y `P(i, j) == 1` si `i = j`.
@@ -253,8 +253,8 @@ void perm(int n)
 }
 
 ```
-<pre lang="c" >
-</pre>
+```
+```
 
 En las líneas 14 a 16 hacemos que el elemento actual pase al final del arreglo mediante un intercambio, dicho intercambio obviamente es para no perder el elemento que esta en la última posición. Esta sección del código corresponden a "anteponer" cada uno de los n elementos y la línea 20 corresponde a generar todas las permutaciones de los *n - 1* elementos restantes. Quizás notaran que realmente no anteponemos los elementos sino que más bien lo ponemos al final lo cual no altera el funcionamiento del algoritmo. Las permutaciones que genera este algoritmo están desordenadas y es necesario ordenarlos si así lo necesitamos. Existen algoritmos que generan permutaciones "casi" ordenadas pero se los dejo de tarea por si les interesa.
 

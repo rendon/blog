@@ -9,7 +9,7 @@
 <p>En una división entera se distinguen cuatro elementos, <em>dividendo</em>, <em>divisor</em>, <em>cociente</em> y <em>módulo o residuo</em>. Donde el dividendo es la cantidad a dividir, divisor el valor contra el cual se hara la división, el resultado es el cociente y residuo la cantidad sobrante. Por ejemplo, sea <em>n</em> = 123 y <em>d</em> = 4, al realizar la división obtenemos un cociente <em>c</em> igual a 30 y un residuo <em>r</em> igual a 3.</p>
 <p>El objetivo de este documento es describir dos metodos que permiten calcular el módulo de una división entera. Usted podría pensar ¿que difícil es eso? y yo le contesto, no es dificil, pero para numeros muy muy grandes resulta que no es tan sencillo. Con los metodos que aquí les presento ustedes serán capaces de obtener el módulo de divisiones enteras con un dividendo de cientos, miles, o incluso millones de dígitos.</p>
 <p>La mayoría de los lenguajes de programación tienen un operador para la operación módulo, en C/C++, Java, C# y similares el operador es el signo de porcentaje.</p>
-<pre lang="c">int n = 123 % 4; // n = 3</pre>
+<p><code>int n = 123 % 4; // n = 3</code></p>
 <p>Pues resulta que en algun momento de tu vida como programador te encuentras con el problema de calculas residuos, pero no cualquier cosa, sino más o menos algo como</p>
 <blockquote>
 Dados tres números enteros <em>b</em>, <em>p</em> y <em>m</em> donde 0 &lt;= <em>b, p</em> &lt;= 2^30 y 1 &lt;= <em>m</em> &lt;= 2^30, calcular el residuo de <em>(b^p) % m</em>.

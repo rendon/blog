@@ -9,9 +9,9 @@ Como parte de un reporte de proyecto necesito un manual sobre como instalar y co
 
 Lo primero va ser instalar Ruby, Debian Wheezy incluye la versión 1.9.3.
 
-<pre lang="bash" theme="slate">
+```
 apt-get install ruby
-</pre>
+```
 
 ## RVM - Ruby Version Manager
 
@@ -19,46 +19,46 @@ Trabajar con Ruby puede llegar a ser problemático por que es muy común tener q
 
 Primero necesitamos `curl`.
 
-<pre lang="bash" theme="slate">
+```
 sudo apt-get install curl
-</pre>
+```
 
 Ahora instalamos RVM.
 
-<pre lang="bash" theme="slate">
+```
 curl -L get.rvm.io | bash -s stable --auto
-</pre>
+```
 
 El comando anterior instala RVM en el directorio home del usuario, por lo que no afecta las configuraciones de otros usuarios.
 
 Vamos a necesitar de otros paquetes por lo que hay que instalarlos, como usuario **root** ejecuta el siguiente comando.
 
-<pre lang="bash" theme="slate">
+```
 apt-get install build-essential openssl libreadline6 libreadline6-dev \
 curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 \
 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison  \
 subversion pkg-config
-</pre>
+```
 
 ## Ruby
 
 Para nuestro proyecto vamos a utilizar la version 2.0 de Ruby, la cual instalamos con el siguiente comando, para esto **no** necesitamos estar como usuario root.
 
-<pre lang="bash" theme="slate">
+```
 rvm install 2.0.0
-</pre>
+```
 
 Esto tardará un poco. Ahora vamos a activar la versión 2.0 por defecto.
 
-<pre lang="bash" theme="slate">
+```
 ruby -v
 rvm --default use 2.0.0-p247
-</pre>
+```
 
 ## Rails
 
 La versión más reciente del Ruby On Rails es la 4.0, ésta es la que vamos autilizar para nuestro proyecto.
 
-<pre lang="bash" theme="slate">
+```
 gem install rails -v 4.0.0
-</pre>
+```

@@ -22,7 +22,7 @@ Este artículo no es un tutorial sobre comandos UNIX ni un manual de referencia 
 El primer paso a dar es invocar el comando bash, el cual obedece la sintaxis `bash [opciones] [archivo]`, los elementos entre corchetes son opcionales. Lo más probable es que Bash sea interprete de comandos por defecto y no tendrá que ejecutarlo ya que el emulador de terminal lo ejecuta por usted, aunque no esta demás saber algunas cosas.
 Opciones:
 
-<pre theme="slate">
+```
 -i
     Crea un shell interactivo.
 --norc
@@ -33,7 +33,7 @@ Opciones:
     Indica a bash que lea la configuración de inicio desde archivo y no desde ~/.bashrc
 -, --
     Termina el análisis de los parámetros.
-</pre>
+```
 
 **Listado 1.** Opciones del comando bash.
 
@@ -56,28 +56,28 @@ A continuación muestro algunos ejemplos de configuración.
 El prompt es el indicador que le precede a todo lo que tecleamos en la terminal, por ejemplo, `rendon@intel:~$` o `root@intel:~#`. El contenido del prompt se almacena en la variable de entorno `PS1`,  veamos dos ejemplos:
 El más común:
 
-<pre theme="slate">
+```
 $ export PS1='\u@\h:\w$ '
 usuario@host:directorio_actual$   #resultado
-</pre>
+```
 
 Con colores:
 
-<pre lang="bash" theme="slate">
+```
 PS1='[\e[0;32m][\t][\e[1;34m]\u[\e[0;37m][\e[1;37m]@\h~$ [\e[1;37m]'
-</pre>
+```
 
 ![Prompt con colores](/bash/hdud2_1.png)
 
 En la definición del prompt se han utilizados algunos valores especiales para obtener información del sistema, tales como la hora, nombre de usuario,  host, directorio actual,  entre otras.
 
-<pre theme="slate">
+```
 \u Nombre del usuario actual.
 \h Nombre del host.
 \t La hora del sistema.
 \d Fecha.
 \w Directorio actual.
-</pre>
+```
 
 **Listado 2**. Valores especiales.
 
@@ -87,20 +87,20 @@ En [2] encontrarán bastante información sobre el prompt y los colores.
 
 Las variables de entorno son datos que utiliza el sistema operativo o ciertas aplicaciones para ubicar recursos, por ejemplo, la variable `PATH` contiene un listado de directorios de donde el SO tiene que buscar programas, o `JAVA_HOME` que almacena la dirección del directorio de instalación de Java, `PS1` que ya se vio en la sección anterior. El comando export permite declarar variables de entorno.
 
-<pre lang="bash" theme="slate">
+```
 export JAVA_HOME="/usr/local/jdk1.7.0_09"
 export PATH="${PATH}:/usr/local/mis_programas"
-</pre>
+```
 
 ### Alias
 
 Los alias son a grandes rasgos atajos para comandos que nos ayudan a no teclear tanto o dar nombres más significativos a ciertas acciones, ejemplos:
 
-<pre lang="bash" theme="slate">
+```
 alias apt-get="sudo apt-get"
 alias grep="grep --color=always"
 alias ls='ls $LS_OPTIONS'
-</pre>
+```
 
 Al intentar ejecutar `grep` lo que realmente se ejecuta es `grep --color=always` y así con los demás comandos.
 
@@ -110,10 +110,10 @@ Bash tiene dos modos de edición, emacs y vi, que permiten trabajar de manera m�
 
 Para habilitar estos modos de edición emplea los siguientes comandos, ya sea en modo interactivo o en el archivo de configuración para hacer el cambio permanente.
 
-<pre theme="slate">
+```
 set -o vi
 set -o emacs
-</pre>
+```
 
 En [3] y [4] puede encontrar una lista detallada de comandos para los modos vi y emacs respectivamente.
 
@@ -137,28 +137,28 @@ La redirección de datos permite modificar el comportamiento normal de los progr
 Redirecciona la salida de comando a archivo(el archivo se sobrescribe).
 Ej.
 
-<pre lang="bash" theme="slate">
+```
 $ ls -1 > salida.txt
-</pre>
+```
 
 ### comando < archivo
 
 El comando toma la entrada desde archivo.
 Ej.
 
-<pre lang="bash" theme="slate">
+```
 $ bc < entrada.txt
-</pre>
+```
 
 ### comando >> archivo
 
 Redirecciona la salida de comando a archivo(el archivo no se sobrescribe, se agrega al final).
 Ej.
 
-<pre lang="bash" theme="slate">
+```
 $ ls imagenes/ > archivos.txt
 $ ls videos/ >> archivos.txt
-</pre>
+```
 
 *archivos.txt* contiene el listado de archivos en imágenes y también los del directorio videos.
 
@@ -168,12 +168,12 @@ Conocido como here document, todo texto que se tecleé después de marca hasta e
 Ej.
 
 
-<pre lang="bash" theme="slate">
+```
 $cat > salida.txt <<EOF
 > linea 1
 > linea 2
 >EOF
-</pre>
+```
 
 El texto entre `EOF` y `EOF` se almacena en el archivo `salida.txt`.
 
@@ -182,16 +182,16 @@ El texto entre `EOF` y `EOF` se almacena en el archivo `salida.txt`.
 Conocido como *here string*, "cadena" es tomada como entrada de "comando", muy útil.
 Ej. 
 
-<pre lang="bash" theme="slate">
+```
 $ bc <<< "(2^10 + 6)/2"
-</pre>
+```
 
 ### comando n&gt;archivo
 
 Redirecciona la salida que normalmente iría al descriptor de archivo *n* a archivo.
 Ej. 
 
-<pre theme="slate">
+```
 $ gcc > error.txt
   gcc: fatal error: no input files
   compilation terminated.
@@ -201,7 +201,7 @@ $ gcc 2> error.txt
 $ cat error.txt
   gcc: fatal error: no input files
   compilation terminated.
-</pre>
+```
 
 El primer ejemplo de redirección no funciona y el archivo `error.txt` esta vació porque los mensajes de error de `gcc` van dirigidos al descriptor de errores(2) y no al descriptor de salida(1). El segundo ejemplo logra su objetivo.
 
@@ -210,12 +210,12 @@ El primer ejemplo de redirección no funciona y el archivo `error.txt` esta vaci
 Toma la entrada para comando desde el descriptor de archivo n.
 Ej.
 
-<pre lang="bash" theme="slate">
+```
 $ echo "(3 * 4)/2" > entrada.txt
 $ exec 5&lt;entrada.txt 
 $ bc &lt;&5
 6
-</pre>
+```
 
 ### comando &amp;&gt; archivo
 
@@ -238,19 +238,19 @@ Tenga cuidado con los espacios, no todas las redirecciones permiten espacios ant
 _comando2_ toma como entrada la salida generada por _comando1_.
 Ej.
 
-<pre lang="bash" theme="slate">
+```
 $ ls -1 | grep ".*txt"
 $ echo "1 9 7 1 2 9 2 1" | tr ' ' '\n' |  sort -n | uniq
-</pre>
+```
 
 ### comando &lt;(comandos)
 
 _comando_ toma como entrada la salida de _comandos_.
 Ej. 
 
-<pre lang="bash" theme="slate">
+```
 $ uniq <(echo "1 9 7 1 2 9 2 1" | tr ' ' '\n' |  sort -n)
-</pre>
+```
 
 ## Bash como lenguaje de programación
 
@@ -260,25 +260,25 @@ En este apartado vamos a ver algunas de las características de Bash que le perm
 
 Una variable es un identificador que almacena cierto valor, veamos como definir una.
 
-<pre lang="bash" theme="slate">
+```
 $ nombre="Rafael"
 $ declare -i edad=20+3 #variables de tipo entero
 $ idiomas=(español ingles latín hebreo chino) 
-</pre>
+```
 
 Las reglas para nombrar variables son las mismas que en la mayoría de los lenguajes: letras, guion bajo, números, el nombre no debe iniciar con número.
 Para recuperar el valor de una variable anteponga un $ al nombre de la variable.
 
-<pre lang="bash" theme="slate">
+```
 $ echo "Mi nombre es $nombre,  tengo $edad años y hablo ${idiomas[@]}."
 Mi nombre es Rafael,  tengo 23 años y hablo español ingles latín hebreo chino.
-</pre>
+```
 
 #### Variables predefinidas
 
 Bash define algunas variables por defecto, muy útiles cuando trabajamos con scripts.
 
-<pre theme="slate">
+```
 $#    Número de argumentos pasados a un comando.
 $?    Valor de salida del último comando.
 $0    Nombre del comando que se esta ejecutando.
@@ -288,13 +288,13 @@ $n    Valores de los argumentos. $1 es el primer
       ("$1 $2 ...").
 "$@"  Todos los argumentos entre comillas dobles
       de forma individual.
-</pre>
+```
 
 ### Arreglos
 
 Bash provee dos tipos de arreglos, basados en índices(los índices son números) y asociativos(los índices son cadenas).
 
-<pre lang="bash" theme="slate">
+```
 $ idiomas=(español ingles latín hebreo chino)
 $ echo ${idiomas[0]}
 español
@@ -303,30 +303,30 @@ ingles
 $ declare -A P=( [mexico]=52 [bolivia]=591 [canada]=11 )
 $ echo ${P[mexico]}
 52
-</pre>
+```
 
 #### Operaciones sobre arreglos:
 
-<pre lang="bash" theme="slate">
+```
 ${arreglo[i]} Valor en el índice i
 ${arreglo[*]} Todos los elementos
 ${arreglo[@]} Todos los elementos
 ${#name[*]}   Número de elementos en el arreglo
 ${#name[@]}   Número de elementos en el   arreglo
-</pre>
+```
 
 ### Expresiones aritméticas
 
 Las operaciones aritméticas se puede realizar con `$((` *expresión* `))`.
 
-<pre lang="bash" theme="slate">
+```
 $ echo $(( (2**10)/2 ))
 512
 $ a=3; b=10;
 $ echo $(( a += b ))
 $ echo $a
 13
-</pre>
+```
 
 Los operadores en su mayoría son los mismos que en C/C++, salvo algunas excepciones, la exponenciación(**), por ejemplo.
 
@@ -336,58 +336,58 @@ Las estructuras de control permiten guiar el flujo de ejecución de un programa.
 
 #### If
 
-<pre theme="slate">
+```
 if COMANDOS-DE-PRUEBA
 then
   BLOQUE-DE-COMANDOS
 fi
-</pre>
+```
 
 Ej.
 
-<pre lang="bash" theme="slate">
+```
 if [ $edad -lt 18 ]
 then
   echo "Fuera de aquí. Solo para adultos.";
 fi
-</pre>
+```
 
 #### If … else
 
-<pre theme="slate">
+```
 if COMANDOS-DE-PRUEBA
 then
   BLOQUE-DE-COMANDOS-1
 else
   BLOQUE-DE-COMANDOS-2
 fi
-</pre>
+```
 
 Ej. 
 
-<pre lang="bash" theme="slate">
+```
 if [ $edad -ge 18 ]
 then
   echo "Adelante.";
 else
   echo "Fuera de aquí. Solo para adultos.";
 fi
-</pre>
+```
 
 #### If … elif … else
 
-<pre theme="slate">
+```
 if COMANDOS-DE-PRUEBA
 then
   BLOQUE-DE-COMANDOS-1
 elif COMANDOS-DE-PRUEBA
   BLOQUE-DE-COMANDOS-2
 fi
-</pre>
+```
 
 Ej.
 
-<pre lang="bash" theme="slate">
+```
 if [ $edad -ge 18 ]
 then
   echo "Adelante.";
@@ -396,14 +396,14 @@ elif [ $influyente ]
 else
   echo "Fuera de aquí. Solo para adultos.";
 fi
-</pre>
+```
 
 Para las comparaciones he utilizado algunos operadores diferentes a los convencionales, como son
 
-<pre theme="slate">
+```
 -lt   Menor que.
 -ge   Mayor o igual a.
-</pre>
+```
 
 Véase `man [` para más información sobre los operadores de comparación.
 
@@ -413,45 +413,45 @@ Bash soporta las estructuras while y for para repetición de operaciones. Su sin
 
 #### For
 
-<pre theme="slate">
+```
 for argumento in [lista]
 do
   comando(s)...
 done
-</pre>
+```
 
 Ej. 
 
-<pre lang="bash" theme="slate">
+```
 for i in {1..10}
 do
   echo $(( i**2 ));
 done
-</pre>
+```
 
 #### While
 
-<pre theme="slate">
+```
 while [ condición ]
 do
   comando(s)...
 done
-</pre>
+```
 
 Ej. 
 
-<pre lang="bash" theme="slate">
+```
 while read archivo
 do
   rm "$archivo";
 done < <(ls -1)
-</pre>
+```
 
 ## Scripts
 
 Un script no es más que una serie de comandos y operaciones guardados en un archivo, listos para ser ejecutados por Bash. La estructura de un script es la siguiente.
 
-<pre theme="slate">
+```
 #!/bin/bash
 
 VARIABLES_DE_CONFIGURACION
@@ -461,12 +461,12 @@ DEFINICION_DE_FUNCIONES
 CODIGO_PRINCIPAL
 
 EXIT_CODE
-</pre>
+```
 
 La primer línea especifica con que comando deben ser ejecutados los comandos en el archivo. El contenido de la primera línea es conocido como *shebang*.
 Para finalizar les dejo un pequeño script donde se emplean algunos elementos ya vistos, es un script muy sencillo que empleo para configurar un directorio con plantillas de código en diferentes lenguajes para usarse durante un concurso de programación.
 
-<pre lang="bash" theme="slate">
+```
 #!/bin/bash
 PC="/home/data/cs/pc";
 
@@ -517,18 +517,18 @@ else
 fi
 
 exit 0;
-</pre>
+```
 
 **Script 1**: setcontest.sh
 
 Existen básicamente dos formas de ejecutar un script. Invocar bash pasando como argumento el archivo o dando permisos de ejecución al script y se ejecuta como cualquier otro comando.
 
-<pre theme="slate">
+```
 $ bash mi_script.sh      # primera forma
 
 $ chmod +x mi_script.sh  # segunda forma
 $ ./mi_script.sh
-</pre>
+```
 
 ## Conclusión
 

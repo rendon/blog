@@ -84,10 +84,10 @@ Qt Creator ya viene con soporte para BlackBerry, sin embargo habrá que configur
 
 Vamos a ejecutar Qt Creator desde la consola, pero antes vamos a ejecutar un script de configuración que viene incluido con Momentics IDE.
 
-<pre theme="slate">
+```
 /opt/bbndk/bbndk-env_10_2_0_1155.sh
 /opt/qt5/Tools/QtCreator/bin/qtcreator
-</pre>
+```
 
 El script de configuración exporta algunas variables de entorno que Qt Creator necesita para ubicar las herramientas necesarias. Una vez abierto Qt Creator, vamos a agregar el compilador: Tools -> Options ->  Build & Run.
 
@@ -141,7 +141,7 @@ Nuestra base de datos consiste de 4 tablas, Cliente, Producto, Pedido y Detalle.
 El web service no difiere mucho del que utilizamos en el proyecto anterior, se ha agregado el servicio _GetAllProducts_ y  el servicio _Synchronize_ ha sido reemplazado con _PutRegisters_.
 
 
-<pre lang="php">
+```php
 function GetAllProducts()
 {
     $mysqli = OpenDB();
@@ -205,7 +205,7 @@ function PutRegisters($RequestItems, $DetailItems)
 
     return count($requests) + count($details);
 }
-</pre>
+```
 
 La actualización de los datos con el servidor se ha simplificado puesto que ahora no tenemos que crear nuevos clientes.
 
@@ -215,7 +215,7 @@ Puesto que nuestra aplicación cliente deberá funcionar también en modo _offli
 
 <ul>
   <li>**Client** Representa a la tabla Cliente.</li>
-  <li>**Request** Representa a la table Pedido.</li>
+  <li>**Request** Representa a la tabla Pedido.</li>
   <li>**Detail** Representa a la tabla Detalle.</li>
   <li>**Product** Representa a la tabla Detalle.</li>
   <li><del>**Key** Tabla auxiliar para almacenar las claves primarias de las tablas restantes.</del> Debido a las modificaciones ya no es necesaria.</li>
@@ -225,7 +225,7 @@ Puesto que nuestra aplicación cliente deberá funcionar también en modo _offli
 
 Cuando la aplicación inicia se debe preparar la base de datos, en caso de no existir ésta es creada. Dentro de la clase _Backend_ podrán encontrar el siguiente código:
 
-<pre lang="cpp">
+```cpp
 bool Backend::initDataBase()
 {
     //removeDatabase(); return true;
@@ -273,7 +273,7 @@ bool Backend::initDataBase()
 
     return true;
 }
-</pre>
+```
 
 ### Operaciones con la base de datos
 
@@ -281,7 +281,7 @@ Para simplificar la lógica de la aplicación se crearon varias funciones auxili
 
 Inserción de registros:
 
-<pre lang="cpp">
+```cpp
 bool Backend::insertClient(int id, QString name, QString middleName,
                            QString lastName, QString address)
 {
@@ -346,11 +346,11 @@ bool Backend::insertDetail(int idRequest, int idProduct, int amount)
 
     return true;
 }
-</pre>
+```
 
 Consulta de registros:
 
-<pre lang="cpp">
+```cpp
 QVector<Client> Backend::selectClients()
 {
     QString query = "SELECT * FROM Client";
@@ -428,7 +428,7 @@ QVector<Detail> Backend::selectDetails()
 
     return details;
 }
-</pre>
+```
 
 Creo que no hay necesidad de explicar el código ya que se explica a sí mismo.
 
@@ -438,7 +438,7 @@ Qt no proporciona mucho soporte para trabajar con Web services (¿Me equivoco?) 
 
 Vamos a ilustrar la comunicación con uno de los servicios, _GetAllClients_, el resto de las operaciones son similares. Primero creamos un método llamado _queryClients()_, el cual envía la solicitud al servidor con el mensaje adecuado:
 
-<pre lang="cpp">
+```cpp
 void Backend::queryClients()
 {
     QUrl url(WS_URL);
@@ -449,11 +449,11 @@ void Backend::queryClients()
                      this, SLOT(getClientsFinished(QNetworkReply*)));
     networkManager->post(request, MSG_GET_ALL_CLIENTS.toAscii());
 }
-</pre>
+```
 
 El valor de `WS_URL` en nuestro caso es `http://192.168.1.200/request_ws/index.php`, la constante `MSG_GET_ALL_CLIENTS` almacena el mensaje SOAP que solicita la lista de clientes:
 
-<pre lang="xml">
+```xml
 <?xml version="1.0"?>
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:req="Request">
   <soapenv:Header/>
@@ -461,11 +461,11 @@ El valor de `WS_URL` en nuestro caso es `http://192.168.1.200/request_ws/index.p
     <req:GetAllClients/>
   </soapenv:Body>
 </soapenv:Envelope>
-</pre>
+```
 
 La comunicación con el servidor se realiza de manera asíncrona, el método que recibirá la respuesta del servidor es _getClientsFinished()_:
 
-<pre lang="cpp">
+```cpp
 void Backend::getClientsFinished(QNetworkReply *reply)
 {
     QByteArray ans = reply->readAll();
@@ -482,11 +482,11 @@ void Backend::getClientsFinished(QNetworkReply *reply)
 
     loadClientsToList();
 }
-</pre>
+```
 
 El contenido de la variable _response_ almacena la respuesta del servidor en formato XML, por lo que hay que procesarla para obtener los datos que nos interesan, esto se realiza en el método _toClientArray()_, que devuelve una lista de clientes:
 
-<pre lang="cpp">
+```cpp
 QVector<Client> Backend::toClientArray(QString message)
 {
     QVector<Client> list;
@@ -516,7 +516,7 @@ QVector<Client> Backend::toClientArray(QString message)
 
     return list;
 }
-</pre>
+```
 
 En el código anterior nos apoyamos de la clase [QXmlStreamReader](https://qt-project.org/doc/qt-4.8/qxmlstreamreader.html) para extraer los valores.
 
@@ -535,7 +535,7 @@ Así lucirá la página principal de nuestra aplicación:
 
 El diseño de esta página en QML es el siguiente:
 
-<pre lang="javascript">
+```javascript
 Tab {
     title: "Inicio"
     imageSource: "asset:///pictures/home.png"
@@ -599,7 +599,7 @@ Tab {
 
     }
 }
-</pre>
+```
 
 ### Registro de pedidos
 
@@ -609,7 +609,7 @@ La siguiente imagen muestra la interfaz de usuario para registrar nuevos pedidos
 
 El diseño de la interfaz en QML es el siguiente:
 
-<pre lang="javascript">
+```javascript
 Tab {
     title: "Pedidos"
     imageSource: "asset:///pictures/shop.png"
@@ -759,11 +759,11 @@ Tab {
         }
     }
 }
-</pre>
+```
 
 Cuando el usuario presiona el botón para guardar el pedido, se invoca al método _saveReqeust()_ de la clase Backend con el ID del cliente para que almacene el pedido en la base de datos, la lista de artículos artículos se almacena en la clase Backend, por lo que no hay necesidad de enviársela. Aquí el código:
 
-<pre lang="cpp">
+```cpp
 bool Backend::saveRequest(QString idClient)
 {
     int idc = idClient.toInt();
@@ -808,7 +808,7 @@ bool Backend::saveRequest(QString idClient)
     _newDetailsModel->clear();
     return true;
 }
-</pre>
+```
 
 ### Consulta de pedidos
 
@@ -818,7 +818,7 @@ Nuestra aplicación también permite consultar la lista de pedidos, aquí la int
 
 El diseño en QML es el siguiente:
 
-<pre lang="javascript">
+```javascript
 Tab {
     imageSource: "asset:///pictures/search.png"
     Page {
@@ -891,11 +891,11 @@ Tab {
         }
     }
 }
-</pre>
+```
 
 La lógica detrás de esta operación se encuentra en el método _loadRequestsToList()_:
 
-<pre lang="cpp">
+```cpp
 void Backend::loadRequestsToList()
 {
     QString query = "SELECT Request.IdRequest, Client.Name, Client.MiddleName, "
@@ -932,7 +932,7 @@ void Backend::loadRequestsToList()
         _requestModel->insert(entry);
     }
 }
-</pre>
+```
 
 El objeto *_requestModel* esta **enlazado** a un objeto [ListView](http://developer.blackberry.com/native/reference/cascades/bb__cascades__listview.html) en la interfaz gráfica, por lo que los cambios que le ocurren al objeto *_requestModel* se reflejan automáticamente en el ListView.
 
@@ -944,7 +944,7 @@ Para esta operación solo tenemos que presionar un botón y se nos mostrará una
 
 El código que realiza esta operación es el siguiente:
 
-<pre lang="cpp">
+```cpp
 void Backend::putRegisters()
 {
     QUrl url(WS_URL);
@@ -957,11 +957,11 @@ void Backend::putRegisters()
     _progressMessage->setText("Enviando registros...");
     _progressIndicator->setValue(50);
 }
-</pre>
+```
 
 El método _formattedRegisters()_ consulta los registros necesario y los estructura en un formato SOAP para que el servidor pueda interpretar los datos que le enviamos:
 
-<pre lang="cpp">
+```cpp
 QString Backend::formattedRegisters()
 {
     QString header = "<soapenv:Envelope "
@@ -1006,7 +1006,7 @@ QString Backend::formattedRegisters()
     QString message = header + requests + "\n" + details + "\n" + footer;
     return message;
 }
-</pre>
+```
 
 La actualización de catálogos es muy similar.
 
@@ -1014,7 +1014,7 @@ La actualización de catálogos es muy similar.
 
 Como lo indica el texto del botón, esta operación borra los registros de la base de datos local y actualiza los catálogos con el servidor, he aquí el código:
 
-<pre lang="cpp">
+```cpp
 void Backend::updateCatalogs()
 {
     removeDatabase();
@@ -1029,11 +1029,11 @@ void Backend::updateCatalogs()
     _progressIndicator->setValue(75);
     queryProducts();
 }
-</pre>
+```
 
 La operación _queryClients()_ ya la vimos anteriormente cuando explicamos la comunicación con el Web service, solo falta mostrar como se obtiene la lista de productos:
 
-<pre lang="javascript">
+```javascript
 void Backend::queryProducts()
 {
     QUrl url(WS_URL);
@@ -1058,7 +1058,7 @@ void Backend::getProductsFinished(QNetworkReply *reply)
 
     loadProductsToList();
 }
-</pre>
+```
 
 
 Y bueno, mi intención  no es abrumarlos con mucho código, creo que las partes más importantes ya se han explicado. Al final se proporciona el código completo para que prueben la aplicación si así lo desean.
@@ -1073,10 +1073,10 @@ El código tanto del cliente como del servidor están disponibles en Bitbucket e
 
 O bien pueden clonar los proyectos:
 
-<pre lang="bash" theme="slate">
+```
 $ git clone https://rendon@bitbucket.org/rendon/request_ws.git
 $ git clone https://rendon@bitbucket.org/rendon/requisition_bb10.git
-</pre>
+```
 
 La licencia del Web service y del la aplicación cliente es GPLv3.
 

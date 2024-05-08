@@ -271,44 +271,41 @@ Using the new codes just make the translation for each character in the text.
 <p>Let’s see if this really works and how good it is.</p>
 <p>First a dummy text:</p>
 <pre>
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-</pre>
-<p>Original size:</p>
-<pre theme="slate">
-ls -lh test1.txt
--rw-r--r-- 1 rafa rafa 201 Aug 28 10:19 test1.txt
-</pre>
-<p>Compress:</p>
-<pre theme="slate">
-./huffman encode test1.txt test1.out
-</pre>
-<p>After compression (removing metadata, i.e. frequencies, byte and bit count):</p>
-<pre theme="slate">
-ls -lh test1.out
--rw-r--r-- 1 rafa rafa 39 Aug 28 10:21 test1.out
-</pre>
-<p>Wow! 162 bytes less.</p>
-<p>Now something less contrived, let’s compress the book “The Iliad” By Homer, you can find the text version <a href="http://classics.mit.edu/Homer/iliad.mb.txt">here</a>:</p>
-<p>Original size:</p>
-<pre theme="slate">
-ls -lh iliad.mb.txt
--rw-r--r-- 1 rafa rafa 790K Aug 28 10:12 iliad.mb.txt
-</pre>
-<p>Compress:</p>
-<pre theme="slate">
-./huffman encode iliad.mb.txt iliad.mb.out
-</pre>
-<p>After compression:</p>
-<pre theme="slate">
-ls -lh iliad.mb.out
--rw-r--r-- 1 rafa rafa 437K Aug 28 10:30 iliad.mb.out
-</pre>
-<p>Not too bad, 353K of reduction.</p>
-<p>To complete the tests, decompress the output files and verify that the result is the same as the original input.</p>
-<pre theme="slate">
-./huffman decode iliad.mb.out original.iliad.mb.txt
-diff iliad.mb.txt original.iliad.mb.txt
-</pre>
+<p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</p>
+<pre><code>
+Original size:
+</code></pre>
+<p>ls -lh test1.txt -rw-r–r– 1 rafa rafa 201 Aug 28 10:19 test1.txt</p>
+<pre><code>
+Compress:
+</code></pre>
+<p>./huffman encode test1.txt test1.out</p>
+<pre><code>
+After compression (removing metadata, i.e. frequencies, byte and bit count):
+</code></pre>
+<p>ls -lh test1.out -rw-r–r– 1 rafa rafa 39 Aug 28 10:21 test1.out</p>
+<pre><code>
+Wow! 162 bytes less.
+
+Now something less contrived, let&#39;s compress the book &quot;The Iliad&quot; By Homer, you can find the text version [here](http://classics.mit.edu/Homer/iliad.mb.txt):
+
+Original size:
+</code></pre>
+<p>ls -lh iliad.mb.txt -rw-r–r– 1 rafa rafa 790K Aug 28 10:12 iliad.mb.txt</p>
+<pre><code>
+Compress:
+</code></pre>
+<p>./huffman encode iliad.mb.txt iliad.mb.out</p>
+<pre><code>
+After compression:
+</code></pre>
+<p>ls -lh iliad.mb.out -rw-r–r– 1 rafa rafa 437K Aug 28 10:30 iliad.mb.out</p>
+<pre><code>
+Not too bad, 353K of reduction.
+
+To complete the tests, decompress the output files and verify that the result is the same as the original input.
+</code></pre>
+<p>./huffman decode iliad.mb.out original.iliad.mb.txt diff iliad.mb.txt original.iliad.mb.txt ```</p>
 <p>The last command should output NOTHING, otherwise something went wrong.</p>
 <h2 id="references">References</h2>
 <ul>

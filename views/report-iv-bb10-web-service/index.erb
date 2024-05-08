@@ -102,10 +102,8 @@ El simulador de Blackberry (<a href="https://developer.blackberry.com/devzone/de
 <h3 id="configuración-de-qt-creator">Configuración de Qt Creator</h3>
 <p>Qt Creator ya viene con soporte para BlackBerry, sin embargo habrá que configurar algunas cosas. Vamos a asumir que Momentics IDE fue instalado en el directorio <em>/opt/bbndk</em> y Qt fue instalado en <em>/opt/qt5</em>.</p>
 <p>Vamos a ejecutar Qt Creator desde la consola, pero antes vamos a ejecutar un script de configuración que viene incluido con Momentics IDE.</p>
-<pre theme="slate">
-/opt/bbndk/bbndk-env_10_2_0_1155.sh
-/opt/qt5/Tools/QtCreator/bin/qtcreator
-</pre>
+<pre><code>/opt/bbndk/bbndk-env_10_2_0_1155.sh
+/opt/qt5/Tools/QtCreator/bin/qtcreator</code></pre>
 <p>El script de configuración exporta algunas variables de entorno que Qt Creator necesita para ubicar las herramientas necesarias. Una vez abierto Qt Creator, vamos a agregar el compilador: Tools -&gt; Options -&gt; Build &amp; Run.</p>
 <figure>
 <img src="/report-iv-bb10-web-service/bbws_qtcreator_qcc.png" alt="Configuración del compilador para BlackBerry" />
@@ -152,71 +150,69 @@ El simulador de Blackberry (<a href="https://developer.blackberry.com/devzone/de
 <p><strong>NOTA:</strong> Con el código fuente incluyo el modelo de la base de datos, fue diseñado utilizando MySQL Workbench y por lo tanto podrán exportar la base de datos desde ahí.</p>
 <h3 id="los-servicios">Los servicios</h3>
 <p>El web service no difiere mucho del que utilizamos en el proyecto anterior, se ha agregado el servicio <em>GetAllProducts</em> y el servicio <em>Synchronize</em> ha sido reemplazado con <em>PutRegisters</em>.</p>
-<pre lang="php">
-function GetAllProducts()
-{
-    $mysqli = OpenDB();
-    $mysqli->query("SET NAMES UTF8");
-    $query = "SELECT * FROM Producto";
-
-    $result = $mysqli->query($query);
-    $mysqli->close();
-    if ($result->num_rows == 0) {
-        return array();
-    }
-
-    $products = array();
-    while ($row = $result->fetch_assoc()) {
-        $products[] = array(
-            'IdProduct' => $row['IdProducto'],
-            'Description' => $row['Descripcion']
-        );
-    }
-
-    return $products;
-}
-
-
-function PutRegisters($RequestItems, $DetailItems)
-{
-    if (is_array($RequestItems)) {
-        $requests = to_request_array($RequestItems);
-    } else {
-        $requests = array();
-    }
-
-    if (is_array($DetailItems)) {
-        $details = to_detail_array($DetailItems);
-    } else {
-        $details = array();
-    }
-
-    $mysqli = OpenDB();
-    foreach ($requests as $r) {
-        $idRequest = $r['IdRequest'];
-        $requestIdClient = $r['IdClient'];
-        $requestDate = $r['RequestDate'];
-
-        if (findRequest($requestIdClient, $requestDate, $mysqli) == NOT_FOUND) {
-            $newIdRequest = CreateRequest($requestIdClient, $requestDate,
-                                          $mysqli);
-            foreach ($details as $d) {
-                $product = $d['IdProduct'];
-                $amount = $d['Amount'];
-
-                $detailIdRequest = $d['IdRequest'];
-                if ($idRequest != $detailIdRequest) continue;
-
-                CreateDetail($newIdRequest, $product, $amount, $mysqli);
-            }
-        }
-    }
-
-    $mysqli->close();
-
-    return count($requests) + count($details);
-}
-</pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="cn">G</span>etAllProducts()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$mysqli</span> <span class="op">=</span> <span class="cn">O</span>penDB()<span class="ot">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$mysqli</span>-&gt;query(<span class="st">&quot;SET NAMES UTF8&quot;</span>)<span class="ot">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$query</span> <span class="op">=</span> <span class="st">&quot;SELECT * FROM Producto&quot;</span><span class="ot">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">$result</span> <span class="op">=</span> <span class="va">$mysqli</span>-&gt;query(<span class="va">$query</span>)<span class="ot">;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">$mysqli</span>-&gt;close()<span class="ot">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="va">$result</span>-&gt;num_rows <span class="op">==</span> <span class="dv">0</span>) {</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dt">array</span>()<span class="ot">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="va">$products</span> <span class="op">=</span> <span class="dt">array</span>()<span class="ot">;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (<span class="va">$row</span> <span class="op">=</span> <span class="va">$result</span>-&gt;fetch_assoc()) {</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">$products</span>[] <span class="op">=</span> <span class="dt">array</span>(</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;IdProduct&#39;</span> =&gt; <span class="va">$row</span>[<span class="st">&#39;IdProducto&#39;</span>]<span class="ot">,</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;Description&#39;</span> =&gt; <span class="va">$row</span>[<span class="st">&#39;Descripcion&#39;</span>]</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        )<span class="ot">;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$products</span><span class="ot">;</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="cn">P</span>utRegisters(<span class="va">$RequestItems</span><span class="ot">,</span> <span class="va">$DetailItems</span>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is_array</span>(<span class="va">$RequestItems</span>)) {</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>        <span class="va">$requests</span> <span class="op">=</span> to_request_array(<span class="va">$RequestItems</span>)<span class="ot">;</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>        <span class="va">$requests</span> <span class="op">=</span> <span class="dt">array</span>()<span class="ot">;</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is_array</span>(<span class="va">$DetailItems</span>)) {</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>        <span class="va">$details</span> <span class="op">=</span> to_detail_array(<span class="va">$DetailItems</span>)<span class="ot">;</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>        <span class="va">$details</span> <span class="op">=</span> <span class="dt">array</span>()<span class="ot">;</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="va">$mysqli</span> <span class="op">=</span> <span class="cn">O</span>penDB()<span class="ot">;</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">foreach</span> (<span class="va">$requests</span> <span class="kw">as</span> <span class="va">$r</span>) {</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>        <span class="va">$idRequest</span> <span class="op">=</span> <span class="va">$r</span>[<span class="st">&#39;IdRequest&#39;</span>]<span class="ot">;</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>        <span class="va">$requestIdClient</span> <span class="op">=</span> <span class="va">$r</span>[<span class="st">&#39;IdClient&#39;</span>]<span class="ot">;</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>        <span class="va">$requestDate</span> <span class="op">=</span> <span class="va">$r</span>[<span class="st">&#39;RequestDate&#39;</span>]<span class="ot">;</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (findRequest(<span class="va">$requestIdClient</span><span class="ot">,</span> <span class="va">$requestDate</span><span class="ot">,</span> <span class="va">$mysqli</span>) <span class="op">==</span> <span class="cn">NOT_FOUND</span>) {</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>            <span class="va">$newIdRequest</span> <span class="op">=</span> <span class="cn">C</span>reateRequest(<span class="va">$requestIdClient</span><span class="ot">,</span> <span class="va">$requestDate</span><span class="ot">,</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>                                          <span class="va">$mysqli</span>)<span class="ot">;</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>            <span class="cf">foreach</span> (<span class="va">$details</span> <span class="kw">as</span> <span class="va">$d</span>) {</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>                <span class="va">$product</span> <span class="op">=</span> <span class="va">$d</span>[<span class="st">&#39;IdProduct&#39;</span>]<span class="ot">;</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>                <span class="va">$amount</span> <span class="op">=</span> <span class="va">$d</span>[<span class="st">&#39;Amount&#39;</span>]<span class="ot">;</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>                <span class="va">$detailIdRequest</span> <span class="op">=</span> <span class="va">$d</span>[<span class="st">&#39;IdRequest&#39;</span>]<span class="ot">;</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> (<span class="va">$idRequest</span> <span class="op">!=</span> <span class="va">$detailIdRequest</span>) <span class="cf">continue</span><span class="ot">;</span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>                <span class="cn">C</span>reateDetail(<span class="va">$newIdRequest</span><span class="ot">,</span> <span class="va">$product</span><span class="ot">,</span> <span class="va">$amount</span><span class="ot">,</span> <span class="va">$mysqli</span>)<span class="ot">;</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    <span class="va">$mysqli</span>-&gt;close()<span class="ot">;</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">count</span>(<span class="va">$requests</span>) <span class="op">+</span> <span class="fu">count</span>(<span class="va">$details</span>)<span class="ot">;</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>La actualización de los datos con el servidor se ha simplificado puesto que ahora no tenemos que crear nuevos clientes.</p>
 <h2 id="la-base-de-datos-local">La base de datos local</h2>
 <p>Puesto que nuestra aplicación cliente deberá funcionar también en modo <em>offline</em>, debe existir una réplica del modelo de datos en el cliente. En esta ocasión utilizaremos SQLite. Las entidades son las siguientes:</p>
@@ -225,7 +221,7 @@ function PutRegisters($RequestItems, $DetailItems)
 <strong>Client</strong> Representa a la tabla Cliente.
 </li>
 <li>
-<strong>Request</strong> Representa a la table Pedido.
+<strong>Request</strong> Representa a la tabla Pedido.
 </li>
 <li>
 <strong>Detail</strong> Representa a la tabla Detalle.
@@ -242,281 +238,267 @@ Debido a las modificaciones ya no es necesaria.
 </ul>
 <h3 id="inicialización-de-la-base-de-datos">Inicialización de la base de datos</h3>
 <p>Cuando la aplicación inicia se debe preparar la base de datos, en caso de no existir ésta es creada. Dentro de la clase <em>Backend</em> podrán encontrar el siguiente código:</p>
-<pre lang="cpp">
-bool Backend::initDataBase()
-{
-    //removeDatabase(); return true;
-    QSqlDatabase database = QSqlDatabase::addDatabase("QSQLITE");
-    database.setConnectOptions("foreign_key_constraints=ON");
-    database.setDatabaseName(DB_PATH);
-
-    if (!database.open()) {
-        qDebug() << "ERROR: Could NOT open the database :(" << endl;
-        return false;
-    }
-
-    this->sda = new SqlDataAccess(DB_PATH);
-    sda->execute("PRAGMA foreign_keys = ON"); // FORCE foreign key constraints
-
-    if (sda->hasError())
-        qDebug() << "ERROR: " << sda->error() << endl;
-
-    sda->execute(CREATE_TABLE_CLIENT);
-    if (sda->hasError()) {
-        qDebug() << "ERROR: " << sda->error() << endl;
-        return false;
-    }
-
-    sda->execute(CREATE_TABLE_REQUEST);
-    sda->execute(REQUEST_UNIQUE_CONSTRAINT);
-
-    if (sda->hasError()) {
-        qDebug() << "ERROR: " << sda->error() << endl;
-        return false;
-    }
-
-    sda->execute(CREATE_TABLE_PRODUCT);
-    if (sda->hasError()) {
-        qDebug() << "ERROR: " << sda->error() << endl;
-        return false;
-    }
-
-    sda->execute(CREATE_TABLE_DETAIL);
-    sda->execute(DETAIL_UNIQUE_CONSTRAINT);
-    if (sda->hasError()) {
-        qDebug() << "ERROR: " << sda->error() << endl;
-        return false;
-    }
-
-    return true;
-}
-</pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> Backend<span class="op">::</span>initDataBase<span class="op">()</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">//removeDatabase(); return true;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QSqlDatabase</span> database <span class="op">=</span> <span class="ex">QSqlDatabase::addDatabase</span><span class="op">(</span><span class="st">&quot;QSQLITE&quot;</span><span class="op">);</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    database<span class="op">.</span>setConnectOptions<span class="op">(</span><span class="st">&quot;foreign_key_constraints=ON&quot;</span><span class="op">);</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    database<span class="op">.</span>setDatabaseName<span class="op">(</span>DB_PATH<span class="op">);</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(!</span>database<span class="op">.</span>open<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">qDebug</span><span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;ERROR: Could NOT open the database :(&quot;</span> <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">-&gt;</span>sda <span class="op">=</span> <span class="kw">new</span> SqlDataAccess<span class="op">(</span>DB_PATH<span class="op">);</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    sda<span class="op">-&gt;</span>execute<span class="op">(</span><span class="st">&quot;PRAGMA foreign_keys = ON&quot;</span><span class="op">);</span> <span class="co">// FORCE foreign key constraints</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>sda<span class="op">-&gt;</span>hasError<span class="op">())</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="fu">qDebug</span><span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;ERROR: &quot;</span> <span class="op">&lt;&lt;</span> sda<span class="op">-&gt;</span>error<span class="op">()</span> <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    sda<span class="op">-&gt;</span>execute<span class="op">(</span>CREATE_TABLE_CLIENT<span class="op">);</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>sda<span class="op">-&gt;</span>hasError<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">qDebug</span><span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;ERROR: &quot;</span> <span class="op">&lt;&lt;</span> sda<span class="op">-&gt;</span>error<span class="op">()</span> <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    sda<span class="op">-&gt;</span>execute<span class="op">(</span>CREATE_TABLE_REQUEST<span class="op">);</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    sda<span class="op">-&gt;</span>execute<span class="op">(</span>REQUEST_UNIQUE_CONSTRAINT<span class="op">);</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>sda<span class="op">-&gt;</span>hasError<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>        <span class="fu">qDebug</span><span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;ERROR: &quot;</span> <span class="op">&lt;&lt;</span> sda<span class="op">-&gt;</span>error<span class="op">()</span> <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    sda<span class="op">-&gt;</span>execute<span class="op">(</span>CREATE_TABLE_PRODUCT<span class="op">);</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>sda<span class="op">-&gt;</span>hasError<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>        <span class="fu">qDebug</span><span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;ERROR: &quot;</span> <span class="op">&lt;&lt;</span> sda<span class="op">-&gt;</span>error<span class="op">()</span> <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    sda<span class="op">-&gt;</span>execute<span class="op">(</span>CREATE_TABLE_DETAIL<span class="op">);</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    sda<span class="op">-&gt;</span>execute<span class="op">(</span>DETAIL_UNIQUE_CONSTRAINT<span class="op">);</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>sda<span class="op">-&gt;</span>hasError<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>        <span class="fu">qDebug</span><span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;ERROR: &quot;</span> <span class="op">&lt;&lt;</span> sda<span class="op">-&gt;</span>error<span class="op">()</span> <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h3 id="operaciones-con-la-base-de-datos">Operaciones con la base de datos</h3>
 <p>Para simplificar la lógica de la aplicación se crearon varias funciones auxiliares para las diferentes operaciones, como son insertar registros, consultas, etc.</p>
 <p>Inserción de registros:</p>
-<pre lang="cpp">
-bool Backend::insertClient(int id, QString name, QString middleName,
-                           QString lastName, QString address)
-{
-    QVariantList client;
-    client << id << name << middleName << lastName << address;
-    QString values = QString("VALUES(%1, '%2', '%3', '%4', '%5')")
-                     .arg(to_s(id), name, middleName, lastName, address);
-
-    QString query = "INSERT INTO Client(IdClient, Name, MiddleName, "
-                    " LastName, Address) " + values;
-
-    sda->execute(query);
-    if (sda->hasError()) {
-        qDebug() << "ERROR: " << sda->error() << endl;
-        return false;
-    }
-
-    return true;
-}
-
-bool Backend::insertProduct(int id, QString description)
-{
-    QString values = QString("VALUES(%1, '%2')").arg(to_s(id), description);
-    sda->execute("INSERT INTO PRODUCT(IdProduct, Description) " + values);
-
-    if (sda->hasError()) {
-        qDebug() << "ERROR::: " << sda->error() << endl;
-        return false;
-    }
-
-    return true;
-}
-
-int Backend::insertRequest(int idClient, QString date)
-{
-    QString values = QString("VALUES(%1, '%2')").arg(to_s(idClient), date);
-    QString query = "INSERT INTO Request(IdClient, RequestDate) " + values;
-    QSqlQuery Q = sda->connection().exec(query);
-    //qDebug() << "LAST INSERTED ID: " << Q.lastInsertId().toInt() << endl;
-
-    if (sda->hasError()) {
-        qDebug() << "ERROR: " << sda->error() << endl;
-        return -1;
-    }
-
-    return Q.lastInsertId().toInt();
-}
-
-bool Backend::insertDetail(int idRequest, int idProduct, int amount)
-{
-    QString idr = to_s(idRequest);
-    QString a = to_s(amount);
-    QString p = to_s(idProduct);
-
-    QString values = QString("VALUES(%1, %2, %3)").arg(idr, p, a);
-    sda->execute("INSERT INTO Detail(IdRequest, IdProduct, Amount) " + values);
-
-    if (sda->hasError()) {
-        qDebug() << "ERROR: " << sda->error() << endl;
-        return false;
-    }
-
-    return true;
-}
-</pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> Backend<span class="op">::</span>insertClient<span class="op">(</span><span class="dt">int</span> id<span class="op">,</span> <span class="ex">QString</span> name<span class="op">,</span> <span class="ex">QString</span> middleName<span class="op">,</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                           <span class="ex">QString</span> lastName<span class="op">,</span> <span class="ex">QString</span> address<span class="op">)</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QVariantList</span> client<span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    client <span class="op">&lt;&lt;</span> id <span class="op">&lt;&lt;</span> name <span class="op">&lt;&lt;</span> middleName <span class="op">&lt;&lt;</span> lastName <span class="op">&lt;&lt;</span> address<span class="op">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> values <span class="op">=</span> <span class="ex">QString</span><span class="op">(</span><span class="st">&quot;VALUES(%1, &#39;%2&#39;, &#39;%3&#39;, &#39;%4&#39;, &#39;%5&#39;)&quot;</span><span class="op">)</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                     <span class="op">.</span>arg<span class="op">(</span>to_s<span class="op">(</span>id<span class="op">),</span> name<span class="op">,</span> middleName<span class="op">,</span> lastName<span class="op">,</span> address<span class="op">);</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> query <span class="op">=</span> <span class="st">&quot;INSERT INTO Client(IdClient, Name, MiddleName, &quot;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot; LastName, Address) &quot;</span> <span class="op">+</span> values<span class="op">;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    sda<span class="op">-&gt;</span>execute<span class="op">(</span>query<span class="op">);</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>sda<span class="op">-&gt;</span>hasError<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="fu">qDebug</span><span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;ERROR: &quot;</span> <span class="op">&lt;&lt;</span> sda<span class="op">-&gt;</span>error<span class="op">()</span> <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> Backend<span class="op">::</span>insertProduct<span class="op">(</span><span class="dt">int</span> id<span class="op">,</span> <span class="ex">QString</span> description<span class="op">)</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> values <span class="op">=</span> <span class="ex">QString</span><span class="op">(</span><span class="st">&quot;VALUES(%1, &#39;%2&#39;)&quot;</span><span class="op">).</span>arg<span class="op">(</span>to_s<span class="op">(</span>id<span class="op">),</span> description<span class="op">);</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    sda<span class="op">-&gt;</span>execute<span class="op">(</span><span class="st">&quot;INSERT INTO PRODUCT(IdProduct, Description) &quot;</span> <span class="op">+</span> values<span class="op">);</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>sda<span class="op">-&gt;</span>hasError<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        <span class="fu">qDebug</span><span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;ERROR::: &quot;</span> <span class="op">&lt;&lt;</span> sda<span class="op">-&gt;</span>error<span class="op">()</span> <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> Backend<span class="op">::</span>insertRequest<span class="op">(</span><span class="dt">int</span> idClient<span class="op">,</span> <span class="ex">QString</span> date<span class="op">)</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> values <span class="op">=</span> <span class="ex">QString</span><span class="op">(</span><span class="st">&quot;VALUES(%1, &#39;%2&#39;)&quot;</span><span class="op">).</span>arg<span class="op">(</span>to_s<span class="op">(</span>idClient<span class="op">),</span> date<span class="op">);</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> query <span class="op">=</span> <span class="st">&quot;INSERT INTO Request(IdClient, RequestDate) &quot;</span> <span class="op">+</span> values<span class="op">;</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QSqlQuery</span> Q <span class="op">=</span> sda<span class="op">-&gt;</span>connection<span class="op">().</span>exec<span class="op">(</span>query<span class="op">);</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    <span class="co">//qDebug() &lt;&lt; &quot;LAST INSERTED ID: &quot; &lt;&lt; Q.lastInsertId().toInt() &lt;&lt; endl;</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>sda<span class="op">-&gt;</span>hasError<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>        <span class="fu">qDebug</span><span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;ERROR: &quot;</span> <span class="op">&lt;&lt;</span> sda<span class="op">-&gt;</span>error<span class="op">()</span> <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Q<span class="op">.</span>lastInsertId<span class="op">().</span>toInt<span class="op">();</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> Backend<span class="op">::</span>insertDetail<span class="op">(</span><span class="dt">int</span> idRequest<span class="op">,</span> <span class="dt">int</span> idProduct<span class="op">,</span> <span class="dt">int</span> amount<span class="op">)</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> idr <span class="op">=</span> to_s<span class="op">(</span>idRequest<span class="op">);</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> a <span class="op">=</span> to_s<span class="op">(</span>amount<span class="op">);</span></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> p <span class="op">=</span> to_s<span class="op">(</span>idProduct<span class="op">);</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> values <span class="op">=</span> <span class="ex">QString</span><span class="op">(</span><span class="st">&quot;VALUES(%1, %2, %3)&quot;</span><span class="op">).</span>arg<span class="op">(</span>idr<span class="op">,</span> p<span class="op">,</span> a<span class="op">);</span></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>    sda<span class="op">-&gt;</span>execute<span class="op">(</span><span class="st">&quot;INSERT INTO Detail(IdRequest, IdProduct, Amount) &quot;</span> <span class="op">+</span> values<span class="op">);</span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>sda<span class="op">-&gt;</span>hasError<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>        <span class="fu">qDebug</span><span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;ERROR: &quot;</span> <span class="op">&lt;&lt;</span> sda<span class="op">-&gt;</span>error<span class="op">()</span> <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>Consulta de registros:</p>
-<pre lang="cpp">
-QVector<Client> Backend::selectClients()
-{
-    QString query = "SELECT * FROM Client";
-    QVariant result = sda->execute(query);
-    QVariantList list = result.value<QVariantList>();
-    int n = list.size();
-    QVector<Client> clients;
-    for (int i = 0; i < n; i++) {
-        Client c;
-        QVariantMap map = list.at(i).value<QVariantMap>();
-        c.setIdClient(map["IdClient"].toString().toInt());
-        c.setName(map["Name"].toString());
-        c.setMiddleName(map["MiddleName"].toString());
-        c.setLastName(map["LastName"].toString());
-        c.setAddress(map["Address"].toString());
-        clients.append(c);
-    }
-    return clients;
-}
-
-QVector<Product> Backend::selectProducts()
-{
-    QString query = "SELECT * FROM Product";
-    QVariant result = sda->execute(query);
-    QVariantList list = result.value<QVariantList>();
-    int n = list.size();
-    QVector<Product> products;
-    for (int i = 0; i < n; i++) {
-        Product p;
-        QVariantMap map = list.at(i).value<QVariantMap>();
-        p.setIdProduct(map["IdProduct"].toString().toInt());
-        p.setDescription(map["Description"].toString());
-        products.append(p);
-    }
-
-    return products;
-}
-
-QVector<Request> Backend::selectRequests()
-{
-    QString query = "SELECT * FROM Request";
-    QVariant result = sda->execute(query);
-    QVariantList list = result.value<QVariantList>();
-    int n = list.size();
-    QVector<Request> requests;
-    for (int i = 0; i < n; i++) {
-        Request r;
-        QVariantMap map = list.at(i).value<QVariantMap>();
-        r.setIdRequest(map["IdRequest"].toString().toInt());
-        r.setIdClient(map["IdClient"].toString().toInt());
-        r.setRequestDate(map["RequestDate"].toString());
-        requests.append(r);
-    }
-
-    return requests;
-}
-
-QVector<Detail> Backend::selectDetails()
-{
-    QString query = "SELECT * FROM Detail";
-    QVariant result = sda->execute(query);
-    QVariantList list = result.value<QVariantList>();
-    int n = list.size();
-    QVector<Detail> details;
-    for (int i = 0; i < n; i++) {
-        QVariantMap map = list.at(i).value<QVariantMap>();
-        Detail d;
-        d.setIdDetail(map["IdDetail"].toString().toInt());
-        d.setIdRequest(map["IdRequest"].toString().toInt());
-        d.setIdProduct(map["IdProduct"].toString().toInt());
-        d.setAmount(map["Amount"].toString().toInt());
-
-        details.append(d);
-    }
-
-    return details;
-}
-</pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">QVector</span><span class="op">&lt;</span>Client<span class="op">&gt;</span> Backend<span class="op">::</span>selectClients<span class="op">()</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> query <span class="op">=</span> <span class="st">&quot;SELECT * FROM Client&quot;</span><span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QVariant</span> result <span class="op">=</span> sda<span class="op">-&gt;</span>execute<span class="op">(</span>query<span class="op">);</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QVariantList</span> list <span class="op">=</span> result<span class="op">.</span>value<span class="op">&lt;</span><span class="ex">QVariantList</span><span class="op">&gt;();</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> n <span class="op">=</span> list<span class="op">.</span>size<span class="op">();</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QVector</span><span class="op">&lt;</span>Client<span class="op">&gt;</span> clients<span class="op">;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        Client c<span class="op">;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="ex">QVariantMap</span> map <span class="op">=</span> list<span class="op">.</span>at<span class="op">(</span>i<span class="op">).</span>value<span class="op">&lt;</span><span class="ex">QVariantMap</span><span class="op">&gt;();</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        c<span class="op">.</span>setIdClient<span class="op">(</span>map<span class="op">[</span><span class="st">&quot;IdClient&quot;</span><span class="op">].</span>toString<span class="op">().</span>toInt<span class="op">());</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        c<span class="op">.</span>setName<span class="op">(</span>map<span class="op">[</span><span class="st">&quot;Name&quot;</span><span class="op">].</span>toString<span class="op">());</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        c<span class="op">.</span>setMiddleName<span class="op">(</span>map<span class="op">[</span><span class="st">&quot;MiddleName&quot;</span><span class="op">].</span>toString<span class="op">());</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        c<span class="op">.</span>setLastName<span class="op">(</span>map<span class="op">[</span><span class="st">&quot;LastName&quot;</span><span class="op">].</span>toString<span class="op">());</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        c<span class="op">.</span>setAddress<span class="op">(</span>map<span class="op">[</span><span class="st">&quot;Address&quot;</span><span class="op">].</span>toString<span class="op">());</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        clients<span class="op">.</span>append<span class="op">(</span>c<span class="op">);</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> clients<span class="op">;</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="ex">QVector</span><span class="op">&lt;</span>Product<span class="op">&gt;</span> Backend<span class="op">::</span>selectProducts<span class="op">()</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> query <span class="op">=</span> <span class="st">&quot;SELECT * FROM Product&quot;</span><span class="op">;</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QVariant</span> result <span class="op">=</span> sda<span class="op">-&gt;</span>execute<span class="op">(</span>query<span class="op">);</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QVariantList</span> list <span class="op">=</span> result<span class="op">.</span>value<span class="op">&lt;</span><span class="ex">QVariantList</span><span class="op">&gt;();</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> n <span class="op">=</span> list<span class="op">.</span>size<span class="op">();</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QVector</span><span class="op">&lt;</span>Product<span class="op">&gt;</span> products<span class="op">;</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        Product p<span class="op">;</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        <span class="ex">QVariantMap</span> map <span class="op">=</span> list<span class="op">.</span>at<span class="op">(</span>i<span class="op">).</span>value<span class="op">&lt;</span><span class="ex">QVariantMap</span><span class="op">&gt;();</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>        p<span class="op">.</span>setIdProduct<span class="op">(</span>map<span class="op">[</span><span class="st">&quot;IdProduct&quot;</span><span class="op">].</span>toString<span class="op">().</span>toInt<span class="op">());</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>        p<span class="op">.</span>setDescription<span class="op">(</span>map<span class="op">[</span><span class="st">&quot;Description&quot;</span><span class="op">].</span>toString<span class="op">());</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>        products<span class="op">.</span>append<span class="op">(</span>p<span class="op">);</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> products<span class="op">;</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="ex">QVector</span><span class="op">&lt;</span>Request<span class="op">&gt;</span> Backend<span class="op">::</span>selectRequests<span class="op">()</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> query <span class="op">=</span> <span class="st">&quot;SELECT * FROM Request&quot;</span><span class="op">;</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QVariant</span> result <span class="op">=</span> sda<span class="op">-&gt;</span>execute<span class="op">(</span>query<span class="op">);</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QVariantList</span> list <span class="op">=</span> result<span class="op">.</span>value<span class="op">&lt;</span><span class="ex">QVariantList</span><span class="op">&gt;();</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> n <span class="op">=</span> list<span class="op">.</span>size<span class="op">();</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QVector</span><span class="op">&lt;</span>Request<span class="op">&gt;</span> requests<span class="op">;</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>        Request r<span class="op">;</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>        <span class="ex">QVariantMap</span> map <span class="op">=</span> list<span class="op">.</span>at<span class="op">(</span>i<span class="op">).</span>value<span class="op">&lt;</span><span class="ex">QVariantMap</span><span class="op">&gt;();</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>        r<span class="op">.</span>setIdRequest<span class="op">(</span>map<span class="op">[</span><span class="st">&quot;IdRequest&quot;</span><span class="op">].</span>toString<span class="op">().</span>toInt<span class="op">());</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>        r<span class="op">.</span>setIdClient<span class="op">(</span>map<span class="op">[</span><span class="st">&quot;IdClient&quot;</span><span class="op">].</span>toString<span class="op">().</span>toInt<span class="op">());</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>        r<span class="op">.</span>setRequestDate<span class="op">(</span>map<span class="op">[</span><span class="st">&quot;RequestDate&quot;</span><span class="op">].</span>toString<span class="op">());</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>        requests<span class="op">.</span>append<span class="op">(</span>r<span class="op">);</span></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> requests<span class="op">;</span></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="ex">QVector</span><span class="op">&lt;</span>Detail<span class="op">&gt;</span> Backend<span class="op">::</span>selectDetails<span class="op">()</span></span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> query <span class="op">=</span> <span class="st">&quot;SELECT * FROM Detail&quot;</span><span class="op">;</span></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QVariant</span> result <span class="op">=</span> sda<span class="op">-&gt;</span>execute<span class="op">(</span>query<span class="op">);</span></span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QVariantList</span> list <span class="op">=</span> result<span class="op">.</span>value<span class="op">&lt;</span><span class="ex">QVariantList</span><span class="op">&gt;();</span></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> n <span class="op">=</span> list<span class="op">.</span>size<span class="op">();</span></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QVector</span><span class="op">&lt;</span>Detail<span class="op">&gt;</span> details<span class="op">;</span></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>        <span class="ex">QVariantMap</span> map <span class="op">=</span> list<span class="op">.</span>at<span class="op">(</span>i<span class="op">).</span>value<span class="op">&lt;</span><span class="ex">QVariantMap</span><span class="op">&gt;();</span></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>        Detail d<span class="op">;</span></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>        d<span class="op">.</span>setIdDetail<span class="op">(</span>map<span class="op">[</span><span class="st">&quot;IdDetail&quot;</span><span class="op">].</span>toString<span class="op">().</span>toInt<span class="op">());</span></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>        d<span class="op">.</span>setIdRequest<span class="op">(</span>map<span class="op">[</span><span class="st">&quot;IdRequest&quot;</span><span class="op">].</span>toString<span class="op">().</span>toInt<span class="op">());</span></span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>        d<span class="op">.</span>setIdProduct<span class="op">(</span>map<span class="op">[</span><span class="st">&quot;IdProduct&quot;</span><span class="op">].</span>toString<span class="op">().</span>toInt<span class="op">());</span></span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>        d<span class="op">.</span>setAmount<span class="op">(</span>map<span class="op">[</span><span class="st">&quot;Amount&quot;</span><span class="op">].</span>toString<span class="op">().</span>toInt<span class="op">());</span></span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>        details<span class="op">.</span>append<span class="op">(</span>d<span class="op">);</span></span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> details<span class="op">;</span></span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>Creo que no hay necesidad de explicar el código ya que se explica a sí mismo.</p>
 <h2 id="comunicación-con-el-web-service">Comunicación con el Web service</h2>
 <p>Qt no proporciona mucho soporte para trabajar con Web services (¿Me equivoco?) pero si lo necesario para comunicarnos con el servidor, para extraer los datos de los mensajes que nos regrese el servidor habrá que ensuciarnos las manos un poquito.</p>
 <p>Vamos a ilustrar la comunicación con uno de los servicios, <em>GetAllClients</em>, el resto de las operaciones son similares. Primero creamos un método llamado <em>queryClients()</em>, el cual envía la solicitud al servidor con el mensaje adecuado:</p>
-<pre lang="cpp">
-void Backend::queryClients()
-{
-    QUrl url(WS_URL);
-    QNetworkAccessManager *networkManager = new QNetworkAccessManager(this);
-    QNetworkRequest request(url);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "text/xml");
-    QObject::connect(networkManager, SIGNAL(finished(QNetworkReply *)),
-                     this, SLOT(getClientsFinished(QNetworkReply*)));
-    networkManager->post(request, MSG_GET_ALL_CLIENTS.toAscii());
-}
-</pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> Backend<span class="op">::</span>queryClients<span class="op">()</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QUrl</span> url<span class="op">(</span>WS_URL<span class="op">);</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QNetworkAccessManager</span> <span class="op">*</span>networkManager <span class="op">=</span> <span class="kw">new</span> <span class="ex">QNetworkAccessManager</span><span class="op">(</span><span class="kw">this</span><span class="op">);</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QNetworkRequest</span> request<span class="op">(</span>url<span class="op">);</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    request<span class="op">.</span>setHeader<span class="op">(</span><span class="ex">QNetworkRequest::ContentTypeHeader</span><span class="op">,</span> <span class="st">&quot;text/xml&quot;</span><span class="op">);</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QObject::connect</span><span class="op">(</span>networkManager<span class="op">,</span> <span class="ex">SIGNAL</span><span class="op">(</span>finished<span class="op">(</span><span class="ex">QNetworkReply</span> <span class="op">*)),</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                     <span class="kw">this</span><span class="op">,</span> <span class="ex">SLOT</span><span class="op">(</span>getClientsFinished<span class="op">(</span><span class="ex">QNetworkReply</span><span class="op">*)));</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    networkManager<span class="op">-&gt;</span>post<span class="op">(</span>request<span class="op">,</span> MSG_GET_ALL_CLIENTS<span class="op">.</span>toAscii<span class="op">());</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>El valor de <code>WS_URL</code> en nuestro caso es <code>http://192.168.1.200/request_ws/index.php</code>, la constante <code>MSG_GET_ALL_CLIENTS</code> almacena el mensaje SOAP que solicita la lista de clientes:</p>
-<pre lang="xml">
-<?xml version="1.0"?>
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:req="Request">
-  <soapenv:Header/>
-  <soapenv:Body>
-    <req:GetAllClients/>
-  </soapenv:Body>
-</soapenv:Envelope>
-</pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">&lt;?xml</span><span class="ot"> version=</span><span class="st">&quot;1.0&quot;</span><span class="fu">?&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">soapenv:Envelope</span><span class="ot"> xmlns:soapenv=</span><span class="st">&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;</span><span class="ot"> xmlns:req=</span><span class="st">&quot;Request&quot;</span>&gt;</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">soapenv:Header</span>/&gt;</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">soapenv:Body</span>&gt;</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">req:GetAllClients</span>/&gt;</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  &lt;/<span class="kw">soapenv:Body</span>&gt;</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">soapenv:Envelope</span>&gt;</span></code></pre></div>
 <p>La comunicación con el servidor se realiza de manera asíncrona, el método que recibirá la respuesta del servidor es <em>getClientsFinished()</em>:</p>
-<pre lang="cpp">
-void Backend::getClientsFinished(QNetworkReply *reply)
-{
-    QByteArray ans = reply->readAll();
-    QString response(ans.data());
-    QVector<Client> clients = toClientArray(response);
-    int n = clients.size();
-    for (int i = 0; i < n; i++) {
-        insertClient(clients[i].idClient(),
-                     clients[i].name(),
-                     clients[i].middleName(),
-                     clients[i].lastName(),
-                     clients[i].address());
-    }
-
-    loadClientsToList();
-}
-</pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> Backend<span class="op">::</span>getClientsFinished<span class="op">(</span><span class="ex">QNetworkReply</span> <span class="op">*</span>reply<span class="op">)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QByteArray</span> ans <span class="op">=</span> reply<span class="op">-&gt;</span>readAll<span class="op">();</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> response<span class="op">(</span>ans<span class="op">.</span>data<span class="op">());</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QVector</span><span class="op">&lt;</span>Client<span class="op">&gt;</span> clients <span class="op">=</span> toClientArray<span class="op">(</span>response<span class="op">);</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> n <span class="op">=</span> clients<span class="op">.</span>size<span class="op">();</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        insertClient<span class="op">(</span>clients<span class="op">[</span>i<span class="op">].</span>idClient<span class="op">(),</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                     clients<span class="op">[</span>i<span class="op">].</span>name<span class="op">(),</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>                     clients<span class="op">[</span>i<span class="op">].</span>middleName<span class="op">(),</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>                     clients<span class="op">[</span>i<span class="op">].</span>lastName<span class="op">(),</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>                     clients<span class="op">[</span>i<span class="op">].</span>address<span class="op">());</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    loadClientsToList<span class="op">();</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>El contenido de la variable <em>response</em> almacena la respuesta del servidor en formato XML, por lo que hay que procesarla para obtener los datos que nos interesan, esto se realiza en el método <em>toClientArray()</em>, que devuelve una lista de clientes:</p>
-<pre lang="cpp">
-QVector<Client> Backend::toClientArray(QString message)
-{
-    QVector<Client> list;
-    Client client;
-    QXmlStreamReader reader(message);
-    while (!reader.atEnd()) {
-        reader.readNext();
-        QString name = reader.name().toString();
-        if (name == "IdClient" || name == "Name" || name == "MiddleName" ||
-                name == "LastName" || name == "Address") {
-            QString value = reader.readElementText();
-
-            if (name == "IdClient") {
-                client.setIdClient(value.toInt());
-            } else if (name == "Name") {
-                client.setName(value);
-            } else if (name == "MiddleName") {
-                client.setMiddleName(value);
-            } else if (name == "LastName") {
-                client.setLastName(value);
-            } else if (name == "Address") {
-                client.setAddress(value);
-                list.append(client);
-            }
-        }
-    }
-
-    return list;
-}
-</pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">QVector</span><span class="op">&lt;</span>Client<span class="op">&gt;</span> Backend<span class="op">::</span>toClientArray<span class="op">(</span><span class="ex">QString</span> message<span class="op">)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QVector</span><span class="op">&lt;</span>Client<span class="op">&gt;</span> list<span class="op">;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    Client client<span class="op">;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QXmlStreamReader</span> reader<span class="op">(</span>message<span class="op">);</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(!</span>reader<span class="op">.</span>atEnd<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        reader<span class="op">.</span>readNext<span class="op">();</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="ex">QString</span> name <span class="op">=</span> reader<span class="op">.</span>name<span class="op">().</span>toString<span class="op">();</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>name <span class="op">==</span> <span class="st">&quot;IdClient&quot;</span> <span class="op">||</span> name <span class="op">==</span> <span class="st">&quot;Name&quot;</span> <span class="op">||</span> name <span class="op">==</span> <span class="st">&quot;MiddleName&quot;</span> <span class="op">||</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>                name <span class="op">==</span> <span class="st">&quot;LastName&quot;</span> <span class="op">||</span> name <span class="op">==</span> <span class="st">&quot;Address&quot;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>            <span class="ex">QString</span> value <span class="op">=</span> reader<span class="op">.</span>readElementText<span class="op">();</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>name <span class="op">==</span> <span class="st">&quot;IdClient&quot;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>                client<span class="op">.</span>setIdClient<span class="op">(</span>value<span class="op">.</span>toInt<span class="op">());</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>name <span class="op">==</span> <span class="st">&quot;Name&quot;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>                client<span class="op">.</span>setName<span class="op">(</span>value<span class="op">);</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>name <span class="op">==</span> <span class="st">&quot;MiddleName&quot;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>                client<span class="op">.</span>setMiddleName<span class="op">(</span>value<span class="op">);</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>name <span class="op">==</span> <span class="st">&quot;LastName&quot;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>                client<span class="op">.</span>setLastName<span class="op">(</span>value<span class="op">);</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>name <span class="op">==</span> <span class="st">&quot;Address&quot;</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>                client<span class="op">.</span>setAddress<span class="op">(</span>value<span class="op">);</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>                list<span class="op">.</span>append<span class="op">(</span>client<span class="op">);</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> list<span class="op">;</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>En el código anterior nos apoyamos de la clase <a href="https://qt-project.org/doc/qt-4.8/qxmlstreamreader.html">QXmlStreamReader</a> para extraer los valores.</p>
 <h2 id="el-cliente-1">El cliente</h2>
 <p>Ahora veamos como crear una aplicación para BlackBerry que consuma nuestros servicios. El código es un poco extenso así que se explicarán únicamente las partes más importantes.</p>
@@ -528,71 +510,69 @@ QVector<Client> Backend::toClientArray(QString message)
 <figcaption aria-hidden="true">Página principal de la aplicación</figcaption>
 </figure>
 <p>El diseño de esta página en QML es el siguiente:</p>
-<pre lang="javascript">
-Tab {
-    title: "Inicio"
-    imageSource: "asset:///pictures/home.png"
-    NavigationPane {
-        id: homeNavigationPane
-        objectName: "homeNavigationPane"
-        Page {
-            id: home
-            Container {
-                layout: DockLayout { }
-
-                Container {
-                    verticalAlignment: VerticalAlignment.Top
-                    layout: StackLayout {
-                        orientation: LayoutOrientation.LeftToRight
-                    }
-
-                    ImageView {
-                        imageSource: "asset:///pictures/LogoITCH.png"
-                    }
-
-                    Label {
-                        multiline: true
-                        leftMargin: 50
-                        textStyle {
-                            fontSize: FontSize.Large
-                        }
-                        text:   "Desarrollo de Aplicaciones\npara Tecnologías Móviles"
-                    }
-                }
-
-                Container {
-                    verticalAlignment: VerticalAlignment.Center
-                    horizontalAlignment: HorizontalAlignment.Fill
-
-                    layout: StackLayout { }
-
-                    Button {
-                        text: "Enviar registros al servidor"
-                        horizontalAlignment: HorizontalAlignment.Fill
-                        onClicked: {
-                            homeNavigationPane.push(progressPage)
-                            backend.putRegisters()
-                        }
-                    }
-
-                    Button {
-                        text: "Limpiar registros y actualizar catálogos"
-                        horizontalAlignment: HorizontalAlignment.Fill
-                        onClicked: {
-                            homeNavigationPane.push(progressPage)
-                            backend.updateCatalogs()
-                        }
-                    }
-
-                }
-
-
-            }
-        }
-
-    }
-}
-</pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Tab {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">title</span><span class="op">:</span> <span class="st">&quot;Inicio&quot;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">imageSource</span><span class="op">:</span> <span class="st">&quot;asset:///pictures/home.png&quot;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    NavigationPane {</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">id</span><span class="op">:</span> homeNavigationPane</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">objectName</span><span class="op">:</span> <span class="st">&quot;homeNavigationPane&quot;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        Page {</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>            <span class="dt">id</span><span class="op">:</span> home</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>            Container {</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                <span class="dt">layout</span><span class="op">:</span> DockLayout { }</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>                Container {</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">verticalAlignment</span><span class="op">:</span> VerticalAlignment<span class="op">.</span><span class="at">Top</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">layout</span><span class="op">:</span> StackLayout {</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">orientation</span><span class="op">:</span> LayoutOrientation<span class="op">.</span><span class="at">LeftToRight</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>                    }</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>                    ImageView {</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">imageSource</span><span class="op">:</span> <span class="st">&quot;asset:///pictures/LogoITCH.png&quot;</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>                    }</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>                    Label {</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">multiline</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">leftMargin</span><span class="op">:</span> <span class="dv">50</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>                        textStyle {</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>                            <span class="dt">fontSize</span><span class="op">:</span> FontSize<span class="op">.</span><span class="at">Large</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>                        }</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">text</span><span class="op">:</span>   <span class="st">&quot;Desarrollo de Aplicaciones</span><span class="sc">\n</span><span class="st">para Tecnologías Móviles&quot;</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>                    }</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>                }</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>                Container {</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">verticalAlignment</span><span class="op">:</span> VerticalAlignment<span class="op">.</span><span class="at">Center</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">horizontalAlignment</span><span class="op">:</span> HorizontalAlignment<span class="op">.</span><span class="at">Fill</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">layout</span><span class="op">:</span> StackLayout { }</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>                    Button {</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">text</span><span class="op">:</span> <span class="st">&quot;Enviar registros al servidor&quot;</span></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">horizontalAlignment</span><span class="op">:</span> HorizontalAlignment<span class="op">.</span><span class="at">Fill</span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">onClicked</span><span class="op">:</span> {</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>                            homeNavigationPane<span class="op">.</span><span class="fu">push</span>(progressPage)</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>                            backend<span class="op">.</span><span class="fu">putRegisters</span>()</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>                        }</span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>                    }</span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>                    Button {</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">text</span><span class="op">:</span> <span class="st">&quot;Limpiar registros y actualizar catálogos&quot;</span></span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">horizontalAlignment</span><span class="op">:</span> HorizontalAlignment<span class="op">.</span><span class="at">Fill</span></span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">onClicked</span><span class="op">:</span> {</span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>                            homeNavigationPane<span class="op">.</span><span class="fu">push</span>(progressPage)</span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>                            backend<span class="op">.</span><span class="fu">updateCatalogs</span>()</span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>                        }</span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>                    }</span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>                }</span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <h3 id="registro-de-pedidos">Registro de pedidos</h3>
 <p>La siguiente imagen muestra la interfaz de usuario para registrar nuevos pedidos.</p>
 <figure>
@@ -600,204 +580,200 @@ Tab {
 <figcaption aria-hidden="true">Registro de pedidos</figcaption>
 </figure>
 <p>El diseño de la interfaz en QML es el siguiente:</p>
-<pre lang="javascript">
-Tab {
-    title: "Pedidos"
-    imageSource: "asset:///pictures/shop.png"
-
-    NavigationPane {
-        id: requestNavigationPane
-        objectName: "requestNavigationPane"
-        Page {
-            Container {
-                layout: StackLayout { }
-
-                DropDown {
-                    horizontalAlignment: HorizontalAlignment.Fill
-                    title: "Cliente"
-                    objectName: "clientList"
-                    id: clientList
-                    enabled: true
-
-                }
-
-                Container {
-                    layoutProperties: StackLayoutProperties {
-                        spaceQuota: 4
-                    }
-
-                    ListView {
-                        objectName: "newItems"
-                        listItemComponents: ListItemComponent {
-                            type: "item"
-
-                            Container {
-                                Container {
-                                    layout: StackLayout {
-                                        orientation: LayoutOrientation.LeftToRight
-                                    }
-
-                                    Label {
-                                        layoutProperties: StackLayoutProperties {
-                                            spaceQuota: 1
-                                        }
-
-                                        text: ListItemData.amount
-                                    }
-
-                                    Label {
-                                        layoutProperties: StackLayoutProperties {
-                                            spaceQuota: 6
-                                        }
-
-                                        text: ListItemData.description
-                                    }
-
-                                }
-
-                                Divider {
-                                    horizontalAlignment: HorizontalAlignment.Fill
-                                }
-                            }
-
-                        }
-                    }
-                }
-
-                Container {
-                    layoutProperties: StackLayoutProperties {
-                        spaceQuota: 1
-                    }
-                    layout: StackLayout {
-                        orientation: LayoutOrientation.LeftToRight
-                    }
-
-                    DropDown {
-                        objectName: "productList"
-                        id: productList
-                        layoutProperties: StackLayoutProperties {
-                            spaceQuota: 6
-                        }
-                        title: "Producto"
-                        enabled: true
-
-                    }
-
-                    TextField {
-                        id: itemAmount
-                        layoutProperties: StackLayoutProperties {
-                            spaceQuota: 2
-                        }
-                        hintText: "Cantidad"
-                    }
-
-                    Button {
-                        attachedObjects: [
-                            SystemToast {
-                                id: productToast
-                                body: "Seleciona un producto."
-                            }
-                        ]
-
-                        imageSource:"asset:///pictures/add.png"
-                        layoutProperties: StackLayoutProperties {
-                            spaceQuota: 1
-                        }
-                        onClicked: {
-                            var selectedOption = productList.selectedOption
-                            if (selectedOption  !== null) {
-                                var idProduct = selectedOption.value
-                                var description = selectedOption.text
-                                console.log("IdProduct = " + idProduct)
-                                var ok = backend.addDetail(idProduct, description, itemAmount.text)
-                                if (ok) {
-                                    itemAmount.text = ""
-                                    productList.resetSelectedOption()
-                                }
-                            } else {
-                                productToast.show()
-                            }
-                        }
-                    }
-                }
-
-                Button {
-                    attachedObjects: [
-                        SystemToast {
-                            id: clientToast
-                            body: "No hay nada que guardar."
-                        }
-                    ]
-
-                    horizontalAlignment: HorizontalAlignment.Fill
-                    text: "Guardar pedido"
-                    onClicked: {
-                        var selectedOption = clientList.selectedOption
-                        if (selectedOption !== null) {
-                            var idClient = selectedOption.value
-                            console.log("IdClient = " + idClient)
-                            var ok = backend.saveRequest(idClient)
-                            if (ok) {
-                                idClient.text = ""
-                                clientList.resetSelectedOption()
-                            }
-                        } else {
-                            clientToast.show()
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Tab {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">title</span><span class="op">:</span> <span class="st">&quot;Pedidos&quot;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">imageSource</span><span class="op">:</span> <span class="st">&quot;asset:///pictures/shop.png&quot;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    NavigationPane {</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">id</span><span class="op">:</span> requestNavigationPane</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">objectName</span><span class="op">:</span> <span class="st">&quot;requestNavigationPane&quot;</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        Page {</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>            Container {</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>                <span class="dt">layout</span><span class="op">:</span> StackLayout { }</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>                DropDown {</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">horizontalAlignment</span><span class="op">:</span> HorizontalAlignment<span class="op">.</span><span class="at">Fill</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">title</span><span class="op">:</span> <span class="st">&quot;Cliente&quot;</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">objectName</span><span class="op">:</span> <span class="st">&quot;clientList&quot;</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">id</span><span class="op">:</span> clientList</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">enabled</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>                }</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>                Container {</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">layoutProperties</span><span class="op">:</span> StackLayoutProperties {</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">spaceQuota</span><span class="op">:</span> <span class="dv">4</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>                    }</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>                    ListView {</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">objectName</span><span class="op">:</span> <span class="st">&quot;newItems&quot;</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">listItemComponents</span><span class="op">:</span> ListItemComponent {</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>                            <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;item&quot;</span></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>                            Container {</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>                                Container {</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>                                    <span class="dt">layout</span><span class="op">:</span> StackLayout {</span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>                                        <span class="dt">orientation</span><span class="op">:</span> LayoutOrientation<span class="op">.</span><span class="at">LeftToRight</span></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>                                    }</span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>                                    Label {</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>                                        <span class="dt">layoutProperties</span><span class="op">:</span> StackLayoutProperties {</span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>                                            <span class="dt">spaceQuota</span><span class="op">:</span> <span class="dv">1</span></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>                                        }</span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>                                        <span class="dt">text</span><span class="op">:</span> ListItemData<span class="op">.</span><span class="at">amount</span></span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>                                    }</span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>                                    Label {</span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>                                        <span class="dt">layoutProperties</span><span class="op">:</span> StackLayoutProperties {</span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>                                            <span class="dt">spaceQuota</span><span class="op">:</span> <span class="dv">6</span></span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>                                        }</span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>                                        <span class="dt">text</span><span class="op">:</span> ListItemData<span class="op">.</span><span class="at">description</span></span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>                                    }</span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>                                }</span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>                                Divider {</span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>                                    <span class="dt">horizontalAlignment</span><span class="op">:</span> HorizontalAlignment<span class="op">.</span><span class="at">Fill</span></span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>                                }</span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>                            }</span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>                        }</span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>                    }</span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>                }</span>
+<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>                Container {</span>
+<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">layoutProperties</span><span class="op">:</span> StackLayoutProperties {</span>
+<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">spaceQuota</span><span class="op">:</span> <span class="dv">1</span></span>
+<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>                    }</span>
+<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">layout</span><span class="op">:</span> StackLayout {</span>
+<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">orientation</span><span class="op">:</span> LayoutOrientation<span class="op">.</span><span class="at">LeftToRight</span></span>
+<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a>                    }</span>
+<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a>                    DropDown {</span>
+<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">objectName</span><span class="op">:</span> <span class="st">&quot;productList&quot;</span></span>
+<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">id</span><span class="op">:</span> productList</span>
+<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">layoutProperties</span><span class="op">:</span> StackLayoutProperties {</span>
+<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a>                            <span class="dt">spaceQuota</span><span class="op">:</span> <span class="dv">6</span></span>
+<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a>                        }</span>
+<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">title</span><span class="op">:</span> <span class="st">&quot;Producto&quot;</span></span>
+<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">enabled</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a>                    }</span>
+<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a>                    TextField {</span>
+<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">id</span><span class="op">:</span> itemAmount</span>
+<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">layoutProperties</span><span class="op">:</span> StackLayoutProperties {</span>
+<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a>                            <span class="dt">spaceQuota</span><span class="op">:</span> <span class="dv">2</span></span>
+<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a>                        }</span>
+<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">hintText</span><span class="op">:</span> <span class="st">&quot;Cantidad&quot;</span></span>
+<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a>                    }</span>
+<span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a>                    Button {</span>
+<span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">attachedObjects</span><span class="op">:</span> [</span>
+<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a>                            SystemToast {</span>
+<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a>                                <span class="dt">id</span><span class="op">:</span> productToast</span>
+<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a>                                <span class="dt">body</span><span class="op">:</span> <span class="st">&quot;Seleciona un producto.&quot;</span></span>
+<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a>                            }</span>
+<span id="cb11-97"><a href="#cb11-97" aria-hidden="true" tabindex="-1"></a>                        ]</span>
+<span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">imageSource</span><span class="op">:</span><span class="st">&quot;asset:///pictures/add.png&quot;</span></span>
+<span id="cb11-100"><a href="#cb11-100" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">layoutProperties</span><span class="op">:</span> StackLayoutProperties {</span>
+<span id="cb11-101"><a href="#cb11-101" aria-hidden="true" tabindex="-1"></a>                            <span class="dt">spaceQuota</span><span class="op">:</span> <span class="dv">1</span></span>
+<span id="cb11-102"><a href="#cb11-102" aria-hidden="true" tabindex="-1"></a>                        }</span>
+<span id="cb11-103"><a href="#cb11-103" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">onClicked</span><span class="op">:</span> {</span>
+<span id="cb11-104"><a href="#cb11-104" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">var</span> selectedOption <span class="op">=</span> productList<span class="op">.</span><span class="at">selectedOption</span></span>
+<span id="cb11-105"><a href="#cb11-105" aria-hidden="true" tabindex="-1"></a>                            <span class="cf">if</span> (selectedOption  <span class="op">!==</span> <span class="kw">null</span>) {</span>
+<span id="cb11-106"><a href="#cb11-106" aria-hidden="true" tabindex="-1"></a>                                <span class="kw">var</span> idProduct <span class="op">=</span> selectedOption<span class="op">.</span><span class="at">value</span></span>
+<span id="cb11-107"><a href="#cb11-107" aria-hidden="true" tabindex="-1"></a>                                <span class="kw">var</span> description <span class="op">=</span> selectedOption<span class="op">.</span><span class="at">text</span></span>
+<span id="cb11-108"><a href="#cb11-108" aria-hidden="true" tabindex="-1"></a>                                <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;IdProduct = &quot;</span> <span class="op">+</span> idProduct)</span>
+<span id="cb11-109"><a href="#cb11-109" aria-hidden="true" tabindex="-1"></a>                                <span class="kw">var</span> ok <span class="op">=</span> backend<span class="op">.</span><span class="fu">addDetail</span>(idProduct<span class="op">,</span> description<span class="op">,</span> itemAmount<span class="op">.</span><span class="at">text</span>)</span>
+<span id="cb11-110"><a href="#cb11-110" aria-hidden="true" tabindex="-1"></a>                                <span class="cf">if</span> (ok) {</span>
+<span id="cb11-111"><a href="#cb11-111" aria-hidden="true" tabindex="-1"></a>                                    itemAmount<span class="op">.</span><span class="at">text</span> <span class="op">=</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb11-112"><a href="#cb11-112" aria-hidden="true" tabindex="-1"></a>                                    productList<span class="op">.</span><span class="fu">resetSelectedOption</span>()</span>
+<span id="cb11-113"><a href="#cb11-113" aria-hidden="true" tabindex="-1"></a>                                }</span>
+<span id="cb11-114"><a href="#cb11-114" aria-hidden="true" tabindex="-1"></a>                            } <span class="cf">else</span> {</span>
+<span id="cb11-115"><a href="#cb11-115" aria-hidden="true" tabindex="-1"></a>                                productToast<span class="op">.</span><span class="fu">show</span>()</span>
+<span id="cb11-116"><a href="#cb11-116" aria-hidden="true" tabindex="-1"></a>                            }</span>
+<span id="cb11-117"><a href="#cb11-117" aria-hidden="true" tabindex="-1"></a>                        }</span>
+<span id="cb11-118"><a href="#cb11-118" aria-hidden="true" tabindex="-1"></a>                    }</span>
+<span id="cb11-119"><a href="#cb11-119" aria-hidden="true" tabindex="-1"></a>                }</span>
+<span id="cb11-120"><a href="#cb11-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-121"><a href="#cb11-121" aria-hidden="true" tabindex="-1"></a>                Button {</span>
+<span id="cb11-122"><a href="#cb11-122" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">attachedObjects</span><span class="op">:</span> [</span>
+<span id="cb11-123"><a href="#cb11-123" aria-hidden="true" tabindex="-1"></a>                        SystemToast {</span>
+<span id="cb11-124"><a href="#cb11-124" aria-hidden="true" tabindex="-1"></a>                            <span class="dt">id</span><span class="op">:</span> clientToast</span>
+<span id="cb11-125"><a href="#cb11-125" aria-hidden="true" tabindex="-1"></a>                            <span class="dt">body</span><span class="op">:</span> <span class="st">&quot;No hay nada que guardar.&quot;</span></span>
+<span id="cb11-126"><a href="#cb11-126" aria-hidden="true" tabindex="-1"></a>                        }</span>
+<span id="cb11-127"><a href="#cb11-127" aria-hidden="true" tabindex="-1"></a>                    ]</span>
+<span id="cb11-128"><a href="#cb11-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-129"><a href="#cb11-129" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">horizontalAlignment</span><span class="op">:</span> HorizontalAlignment<span class="op">.</span><span class="at">Fill</span></span>
+<span id="cb11-130"><a href="#cb11-130" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">text</span><span class="op">:</span> <span class="st">&quot;Guardar pedido&quot;</span></span>
+<span id="cb11-131"><a href="#cb11-131" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">onClicked</span><span class="op">:</span> {</span>
+<span id="cb11-132"><a href="#cb11-132" aria-hidden="true" tabindex="-1"></a>                        <span class="kw">var</span> selectedOption <span class="op">=</span> clientList<span class="op">.</span><span class="at">selectedOption</span></span>
+<span id="cb11-133"><a href="#cb11-133" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">if</span> (selectedOption <span class="op">!==</span> <span class="kw">null</span>) {</span>
+<span id="cb11-134"><a href="#cb11-134" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">var</span> idClient <span class="op">=</span> selectedOption<span class="op">.</span><span class="at">value</span></span>
+<span id="cb11-135"><a href="#cb11-135" aria-hidden="true" tabindex="-1"></a>                            <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(<span class="st">&quot;IdClient = &quot;</span> <span class="op">+</span> idClient)</span>
+<span id="cb11-136"><a href="#cb11-136" aria-hidden="true" tabindex="-1"></a>                            <span class="kw">var</span> ok <span class="op">=</span> backend<span class="op">.</span><span class="fu">saveRequest</span>(idClient)</span>
+<span id="cb11-137"><a href="#cb11-137" aria-hidden="true" tabindex="-1"></a>                            <span class="cf">if</span> (ok) {</span>
+<span id="cb11-138"><a href="#cb11-138" aria-hidden="true" tabindex="-1"></a>                                idClient<span class="op">.</span><span class="at">text</span> <span class="op">=</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb11-139"><a href="#cb11-139" aria-hidden="true" tabindex="-1"></a>                                clientList<span class="op">.</span><span class="fu">resetSelectedOption</span>()</span>
+<span id="cb11-140"><a href="#cb11-140" aria-hidden="true" tabindex="-1"></a>                            }</span>
+<span id="cb11-141"><a href="#cb11-141" aria-hidden="true" tabindex="-1"></a>                        } <span class="cf">else</span> {</span>
+<span id="cb11-142"><a href="#cb11-142" aria-hidden="true" tabindex="-1"></a>                            clientToast<span class="op">.</span><span class="fu">show</span>()</span>
+<span id="cb11-143"><a href="#cb11-143" aria-hidden="true" tabindex="-1"></a>                        }</span>
+<span id="cb11-144"><a href="#cb11-144" aria-hidden="true" tabindex="-1"></a>                    }</span>
+<span id="cb11-145"><a href="#cb11-145" aria-hidden="true" tabindex="-1"></a>                }</span>
+<span id="cb11-146"><a href="#cb11-146" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb11-147"><a href="#cb11-147" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb11-148"><a href="#cb11-148" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb11-149"><a href="#cb11-149" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Cuando el usuario presiona el botón para guardar el pedido, se invoca al método <em>saveReqeust()</em> de la clase Backend con el ID del cliente para que almacene el pedido en la base de datos, la lista de artículos artículos se almacena en la clase Backend, por lo que no hay necesidad de enviársela. Aquí el código:</p>
-<pre lang="cpp">
-bool Backend::saveRequest(QString idClient)
-{
-    int idc = idClient.toInt();
-
-    if (_newDetails->isEmpty()) {
-        toast->setBody("Debe haber al menos un artículo.");
-        toast->show();
-        return false;
-    }
-
-
-    QDate date = QDate::currentDate();
-    QTime time = QTime::currentTime();
-    QString year    = to_s(date.year());
-    QString month   = to_s(date.month());
-    QString day     = to_s(date.day());
-    QString hour    = to_s(time.hour());
-    QString minute  = to_s(time.minute());
-    QString second  = to_s(time.second());
-    QString rightNow = year + "-" + month + "-" + day + " "
-                     + hour + ":" + minute + ":" + second;
-
-    Key keys = getKeys();
-    int idr = keys.newIdRequest();
-    if (!insertRequest(idr, idc, rightNow))
-        return false;
-
-    int n = _newDetails->size();
-    for (int i = 0; i < n; i++) {
-        keys = getKeys();
-        int idd = keys.newIdDetail();
-        int idProduct = _newDetails->at(i).idProduct();
-        int amount = _newDetails->at(i).amount();
-        if (!insertDetail(idd, idr, idProduct, amount))
-            return false;
-    }
-
-
-    toast->setBody("¡Exito!");
-    toast->show();
-    _newDetails->clear();
-    _newDetailsModel->clear();
-    return true;
-}
-</pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> Backend<span class="op">::</span>saveRequest<span class="op">(</span><span class="ex">QString</span> idClient<span class="op">)</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> idc <span class="op">=</span> idClient<span class="op">.</span>toInt<span class="op">();</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>_newDetails<span class="op">-&gt;</span>isEmpty<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        toast<span class="op">-&gt;</span>setBody<span class="op">(</span><span class="st">&quot;Debe haber al menos un artículo.&quot;</span><span class="op">);</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        toast<span class="op">-&gt;</span>show<span class="op">();</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QDate</span> date <span class="op">=</span> <span class="ex">QDate::currentDate</span><span class="op">();</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QTime</span> time <span class="op">=</span> <span class="ex">QTime::currentTime</span><span class="op">();</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> year    <span class="op">=</span> to_s<span class="op">(</span>date<span class="op">.</span>year<span class="op">());</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> month   <span class="op">=</span> to_s<span class="op">(</span>date<span class="op">.</span>month<span class="op">());</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> day     <span class="op">=</span> to_s<span class="op">(</span>date<span class="op">.</span>day<span class="op">());</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> hour    <span class="op">=</span> to_s<span class="op">(</span>time<span class="op">.</span>hour<span class="op">());</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> minute  <span class="op">=</span> to_s<span class="op">(</span>time<span class="op">.</span>minute<span class="op">());</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> second  <span class="op">=</span> to_s<span class="op">(</span>time<span class="op">.</span>second<span class="op">());</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> rightNow <span class="op">=</span> year <span class="op">+</span> <span class="st">&quot;-&quot;</span> <span class="op">+</span> month <span class="op">+</span> <span class="st">&quot;-&quot;</span> <span class="op">+</span> day <span class="op">+</span> <span class="st">&quot; &quot;</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>                     <span class="op">+</span> hour <span class="op">+</span> <span class="st">&quot;:&quot;</span> <span class="op">+</span> minute <span class="op">+</span> <span class="st">&quot;:&quot;</span> <span class="op">+</span> second<span class="op">;</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    Key keys <span class="op">=</span> getKeys<span class="op">();</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> idr <span class="op">=</span> keys<span class="op">.</span>newIdRequest<span class="op">();</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(!</span>insertRequest<span class="op">(</span>idr<span class="op">,</span> idc<span class="op">,</span> rightNow<span class="op">))</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> n <span class="op">=</span> _newDetails<span class="op">-&gt;</span>size<span class="op">();</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>        keys <span class="op">=</span> getKeys<span class="op">();</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> idd <span class="op">=</span> keys<span class="op">.</span>newIdDetail<span class="op">();</span></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> idProduct <span class="op">=</span> _newDetails<span class="op">-&gt;</span>at<span class="op">(</span>i<span class="op">).</span>idProduct<span class="op">();</span></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> amount <span class="op">=</span> _newDetails<span class="op">-&gt;</span>at<span class="op">(</span>i<span class="op">).</span>amount<span class="op">();</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(!</span>insertDetail<span class="op">(</span>idd<span class="op">,</span> idr<span class="op">,</span> idProduct<span class="op">,</span> amount<span class="op">))</span></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>    toast<span class="op">-&gt;</span>setBody<span class="op">(</span><span class="st">&quot;¡Exito!&quot;</span><span class="op">);</span></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>    toast<span class="op">-&gt;</span>show<span class="op">();</span></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>    _newDetails<span class="op">-&gt;</span>clear<span class="op">();</span></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>    _newDetailsModel<span class="op">-&gt;</span>clear<span class="op">();</span></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h3 id="consulta-de-pedidos">Consulta de pedidos</h3>
 <p>Nuestra aplicación también permite consultar la lista de pedidos, aquí la interfaz:</p>
 <figure>
@@ -805,119 +781,115 @@ bool Backend::saveRequest(QString idClient)
 <figcaption aria-hidden="true">Consulta de pedidos</figcaption>
 </figure>
 <p>El diseño en QML es el siguiente:</p>
-<pre lang="javascript">
-Tab {
-    imageSource: "asset:///pictures/search.png"
-    Page {
-        id: queryPage
-        paneProperties: NavigationPaneProperties {
-            backButton: ActionItem {
-                onTriggered: {
-                    requestNavigationPane.pop()
-                }
-            }
-        }
-
-        Container {
-            Container {
-                layout: StackLayout {
-                    orientation: LayoutOrientation.LeftToRight
-                }
-
-                Label {
-                    layoutProperties: StackLayoutProperties {
-                        spaceQuota: 5
-                    }
-
-                    text: "Lista de pedidos"
-                }
-
-                Button {
-                    layoutProperties: StackLayoutProperties {
-                        spaceQuota: 1
-                    }
-                    imageSource: "asset:///pictures/refresh.png"
-                    onClicked: {
-                        backend.loadRequestsToList()
-                    }
-                }
-
-            }
-
-            ListView {
-                objectName: "listOfRequests"
-                listItemComponents: ListItemComponent {
-                    type: "item"
-
-                    Container {
-                        layout: StackLayout { }
-
-                        Container {
-                            layout: StackLayout { orientation: LayoutOrientation.LeftToRight }
-                            Label {
-                                layoutProperties: StackLayoutProperties { spaceQuota: 1 }
-                            }
-
-                            Label {
-                                layoutProperties: StackLayoutProperties { spaceQuota: 1 }
-                                text: ListItemData.amount
-                            }
-
-                            Label {
-                                layoutProperties: StackLayoutProperties { spaceQuota: 6 }
-                                text: ListItemData.description
-                            }
-                        }
-
-                        Divider {
-                            horizontalAlignment: HorizontalAlignment.Fill
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Tab {</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">imageSource</span><span class="op">:</span> <span class="st">&quot;asset:///pictures/search.png&quot;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    Page {</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        <span class="dt">id</span><span class="op">:</span> queryPage</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">paneProperties</span><span class="op">:</span> NavigationPaneProperties {</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>            <span class="dt">backButton</span><span class="op">:</span> ActionItem {</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                <span class="dt">onTriggered</span><span class="op">:</span> {</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>                    requestNavigationPane<span class="op">.</span><span class="fu">pop</span>()</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                }</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        Container {</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>            Container {</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>                <span class="dt">layout</span><span class="op">:</span> StackLayout {</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">orientation</span><span class="op">:</span> LayoutOrientation<span class="op">.</span><span class="at">LeftToRight</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>                }</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>                Label {</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">layoutProperties</span><span class="op">:</span> StackLayoutProperties {</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">spaceQuota</span><span class="op">:</span> <span class="dv">5</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>                    }</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">text</span><span class="op">:</span> <span class="st">&quot;Lista de pedidos&quot;</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>                }</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>                Button {</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">layoutProperties</span><span class="op">:</span> StackLayoutProperties {</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">spaceQuota</span><span class="op">:</span> <span class="dv">1</span></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>                    }</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">imageSource</span><span class="op">:</span> <span class="st">&quot;asset:///pictures/refresh.png&quot;</span></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">onClicked</span><span class="op">:</span> {</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>                        backend<span class="op">.</span><span class="fu">loadRequestsToList</span>()</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>                    }</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>                }</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>            ListView {</span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>                <span class="dt">objectName</span><span class="op">:</span> <span class="st">&quot;listOfRequests&quot;</span></span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>                <span class="dt">listItemComponents</span><span class="op">:</span> ListItemComponent {</span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;item&quot;</span></span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>                    Container {</span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>                        <span class="dt">layout</span><span class="op">:</span> StackLayout { }</span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>                        Container {</span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>                            <span class="dt">layout</span><span class="op">:</span> StackLayout { <span class="dt">orientation</span><span class="op">:</span> LayoutOrientation<span class="op">.</span><span class="at">LeftToRight</span> }</span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>                            Label {</span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a>                                <span class="dt">layoutProperties</span><span class="op">:</span> StackLayoutProperties { <span class="dt">spaceQuota</span><span class="op">:</span> <span class="dv">1</span> }</span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>                            }</span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a>                            Label {</span>
+<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a>                                <span class="dt">layoutProperties</span><span class="op">:</span> StackLayoutProperties { <span class="dt">spaceQuota</span><span class="op">:</span> <span class="dv">1</span> }</span>
+<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a>                                <span class="dt">text</span><span class="op">:</span> ListItemData<span class="op">.</span><span class="at">amount</span></span>
+<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a>                            }</span>
+<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a>                            Label {</span>
+<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a>                                <span class="dt">layoutProperties</span><span class="op">:</span> StackLayoutProperties { <span class="dt">spaceQuota</span><span class="op">:</span> <span class="dv">6</span> }</span>
+<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a>                                <span class="dt">text</span><span class="op">:</span> ListItemData<span class="op">.</span><span class="at">description</span></span>
+<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a>                            }</span>
+<span id="cb13-62"><a href="#cb13-62" aria-hidden="true" tabindex="-1"></a>                        }</span>
+<span id="cb13-63"><a href="#cb13-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-64"><a href="#cb13-64" aria-hidden="true" tabindex="-1"></a>                        Divider {</span>
+<span id="cb13-65"><a href="#cb13-65" aria-hidden="true" tabindex="-1"></a>                            <span class="dt">horizontalAlignment</span><span class="op">:</span> HorizontalAlignment<span class="op">.</span><span class="at">Fill</span></span>
+<span id="cb13-66"><a href="#cb13-66" aria-hidden="true" tabindex="-1"></a>                        }</span>
+<span id="cb13-67"><a href="#cb13-67" aria-hidden="true" tabindex="-1"></a>                    }</span>
+<span id="cb13-68"><a href="#cb13-68" aria-hidden="true" tabindex="-1"></a>                }</span>
+<span id="cb13-69"><a href="#cb13-69" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb13-70"><a href="#cb13-70" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb13-71"><a href="#cb13-71" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-72"><a href="#cb13-72" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>La lógica detrás de esta operación se encuentra en el método <em>loadRequestsToList()</em>:</p>
-<pre lang="cpp">
-void Backend::loadRequestsToList()
-{
-    QString query = "SELECT Request.IdRequest, Client.Name, Client.MiddleName, "
-                    "Client.LastName, Product.Description, Detail.Amount, "
-                    "Request.RequestDate FROM Request, Client, Detail, Product "
-                    "WHERE Detail.IdRequest = Request.IdRequest AND "
-                    "Request.IdClient = Client.IdClient AND "
-                    "Detail.IdProduct = Product.IdProduct";
-    QVariant result = sda->execute(query);
-    if (sda->hasError()) {
-        qDebug() << "ERROR: "  << sda->error() << endl;
-    }
-
-    QVariantList list = result.value<QVariantList>();
-
-    int n = list.size();
-    _requestModel->clear();
-
-    QVariantMap entry;
-    QVariantMap row;
-    for (int i = 0; i < n; i++) {
-        row = list.at(i).value<QVariantMap>();
-        QString id = row["IdRequest"].toString();
-        QString client  = row["Name"].toString() + " "
-                        + row["MiddleName"].toString() + " "
-                        + row["LastName"].toString();
-        QString date = row["RequestDate"].toString();
-
-        entry["Request"] = id + ": " + client + " (" + date + ")";
-
-        entry["description"] = row["Description"].toString();
-        entry["amount"] = row["Amount"].toString();
-
-        _requestModel->insert(entry);
-    }
-}
-</pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> Backend<span class="op">::</span>loadRequestsToList<span class="op">()</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> query <span class="op">=</span> <span class="st">&quot;SELECT Request.IdRequest, Client.Name, Client.MiddleName, &quot;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;Client.LastName, Product.Description, Detail.Amount, &quot;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;Request.RequestDate FROM Request, Client, Detail, Product &quot;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;WHERE Detail.IdRequest = Request.IdRequest AND &quot;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;Request.IdClient = Client.IdClient AND &quot;</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;Detail.IdProduct = Product.IdProduct&quot;</span><span class="op">;</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QVariant</span> result <span class="op">=</span> sda<span class="op">-&gt;</span>execute<span class="op">(</span>query<span class="op">);</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>sda<span class="op">-&gt;</span>hasError<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">qDebug</span><span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="st">&quot;ERROR: &quot;</span>  <span class="op">&lt;&lt;</span> sda<span class="op">-&gt;</span>error<span class="op">()</span> <span class="op">&lt;&lt;</span> endl<span class="op">;</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QVariantList</span> list <span class="op">=</span> result<span class="op">.</span>value<span class="op">&lt;</span><span class="ex">QVariantList</span><span class="op">&gt;();</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> n <span class="op">=</span> list<span class="op">.</span>size<span class="op">();</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    _requestModel<span class="op">-&gt;</span>clear<span class="op">();</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QVariantMap</span> entry<span class="op">;</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QVariantMap</span> row<span class="op">;</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>        row <span class="op">=</span> list<span class="op">.</span>at<span class="op">(</span>i<span class="op">).</span>value<span class="op">&lt;</span><span class="ex">QVariantMap</span><span class="op">&gt;();</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>        <span class="ex">QString</span> id <span class="op">=</span> row<span class="op">[</span><span class="st">&quot;IdRequest&quot;</span><span class="op">].</span>toString<span class="op">();</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>        <span class="ex">QString</span> client  <span class="op">=</span> row<span class="op">[</span><span class="st">&quot;Name&quot;</span><span class="op">].</span>toString<span class="op">()</span> <span class="op">+</span> <span class="st">&quot; &quot;</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>                        <span class="op">+</span> row<span class="op">[</span><span class="st">&quot;MiddleName&quot;</span><span class="op">].</span>toString<span class="op">()</span> <span class="op">+</span> <span class="st">&quot; &quot;</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>                        <span class="op">+</span> row<span class="op">[</span><span class="st">&quot;LastName&quot;</span><span class="op">].</span>toString<span class="op">();</span></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>        <span class="ex">QString</span> date <span class="op">=</span> row<span class="op">[</span><span class="st">&quot;RequestDate&quot;</span><span class="op">].</span>toString<span class="op">();</span></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>        entry<span class="op">[</span><span class="st">&quot;Request&quot;</span><span class="op">]</span> <span class="op">=</span> id <span class="op">+</span> <span class="st">&quot;: &quot;</span> <span class="op">+</span> client <span class="op">+</span> <span class="st">&quot; (&quot;</span> <span class="op">+</span> date <span class="op">+</span> <span class="st">&quot;)&quot;</span><span class="op">;</span></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>        entry<span class="op">[</span><span class="st">&quot;description&quot;</span><span class="op">]</span> <span class="op">=</span> row<span class="op">[</span><span class="st">&quot;Description&quot;</span><span class="op">].</span>toString<span class="op">();</span></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>        entry<span class="op">[</span><span class="st">&quot;amount&quot;</span><span class="op">]</span> <span class="op">=</span> row<span class="op">[</span><span class="st">&quot;Amount&quot;</span><span class="op">].</span>toString<span class="op">();</span></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>        _requestModel<span class="op">-&gt;</span>insert<span class="op">(</span>entry<span class="op">);</span></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>El objeto *_requestModel* esta <strong>enlazado</strong> a un objeto <a href="http://developer.blackberry.com/native/reference/cascades/bb__cascades__listview.html">ListView</a> en la interfaz gráfica, por lo que los cambios que le ocurren al objeto *_requestModel* se reflejan automáticamente en el ListView.</p>
 <h3 id="subir-los-registros-al-servidor">Subir los registros al servidor</h3>
 <p>Para esta operación solo tenemos que presionar un botón y se nos mostrará una barra de progreso que simulará el progreso de la operación.</p>
@@ -926,125 +898,115 @@ void Backend::loadRequestsToList()
 <figcaption aria-hidden="true">Envío de pedidos al servidor</figcaption>
 </figure>
 <p>El código que realiza esta operación es el siguiente:</p>
-<pre lang="cpp">
-void Backend::putRegisters()
-{
-    QUrl url(WS_URL);
-    QNetworkAccessManager *networkManager = new QNetworkAccessManager(this);
-    QNetworkRequest request(url);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "text/xml");
-    QObject::connect(networkManager, SIGNAL(finished(QNetworkReply *)),
-            this, SLOT(putRequestsFinished(QNetworkReply*)));
-    networkManager->post(request, formattedRegisters().toAscii());
-    _progressMessage->setText("Enviando registros...");
-    _progressIndicator->setValue(50);
-}
-</pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> Backend<span class="op">::</span>putRegisters<span class="op">()</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QUrl</span> url<span class="op">(</span>WS_URL<span class="op">);</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QNetworkAccessManager</span> <span class="op">*</span>networkManager <span class="op">=</span> <span class="kw">new</span> <span class="ex">QNetworkAccessManager</span><span class="op">(</span><span class="kw">this</span><span class="op">);</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QNetworkRequest</span> request<span class="op">(</span>url<span class="op">);</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    request<span class="op">.</span>setHeader<span class="op">(</span><span class="ex">QNetworkRequest::ContentTypeHeader</span><span class="op">,</span> <span class="st">&quot;text/xml&quot;</span><span class="op">);</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QObject::connect</span><span class="op">(</span>networkManager<span class="op">,</span> <span class="ex">SIGNAL</span><span class="op">(</span>finished<span class="op">(</span><span class="ex">QNetworkReply</span> <span class="op">*)),</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>            <span class="kw">this</span><span class="op">,</span> <span class="ex">SLOT</span><span class="op">(</span>putRequestsFinished<span class="op">(</span><span class="ex">QNetworkReply</span><span class="op">*)));</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    networkManager<span class="op">-&gt;</span>post<span class="op">(</span>request<span class="op">,</span> formattedRegisters<span class="op">().</span>toAscii<span class="op">());</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    _progressMessage<span class="op">-&gt;</span>setText<span class="op">(</span><span class="st">&quot;Enviando registros...&quot;</span><span class="op">);</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    _progressIndicator<span class="op">-&gt;</span>setValue<span class="op">(</span><span class="dv">50</span><span class="op">);</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>El método <em>formattedRegisters()</em> consulta los registros necesario y los estructura en un formato SOAP para que el servidor pueda interpretar los datos que le enviamos:</p>
-<pre lang="cpp">
-QString Backend::formattedRegisters()
-{
-    QString header = "<soapenv:Envelope "
-                     "xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/'"
-                     " xmlns:req='Request'> <soapenv:Header/> <soapenv:Body> "
-                     " <req:PutRegisters>";
-
-    QString footer = "</req:PutRegisters> </soapenv:Body> </soapenv:Envelope>";
-
-    QString requests = "\n";
-    requests += "<RequestItems>";
-    requests += "\n";
-
-    QVector<Request> R = selectRequests();
-    int n = R.size();
-    for (int i = 0; i < n; i++) {
-        requests += "<item>";
-        requests += "<IdRequest>" + to_s(R[i].idRequest()) + "</IdRequest>";
-        requests += "<IdClient>" + to_s(R[i].idClient())+ "</IdClient>";
-        requests += "<RequestDate>" + R[i].requestDate() + "</RequestDate>";
-        requests += "</item>";
-        requests += "\n";
-    }
-    requests += "</RequestItems>";
-
-    QString details = "<DetailItems>";
-    details += "\n";
-    QVector<Detail> D = selectDetails();
-    n = D.size();
-    for (int i = 0; i < n; i++) {
-        details += "<item>";
-        details += "<IdDetail>" + to_s(D[i].idDetail()) + "</IdDetail>";
-        details += "<IdRequest>" + to_s(D[i].idRequest()) + "</IdRequest>";
-        details += "<IdProduct>" + to_s(D[i].idProduct()) + "</IdProduct>";
-        details += "<Amount>" + to_s(D[i].amount()) + "</Amount>";
-        details += "</item>";
-        details += "\n";
-    }
-    details += "</DetailItems>";
-
-
-    QString message = header + requests + "\n" + details + "\n" + footer;
-    return message;
-}
-</pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">QString</span> Backend<span class="op">::</span>formattedRegisters<span class="op">()</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> header <span class="op">=</span> <span class="st">&quot;&lt;soapenv:Envelope &quot;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&quot;xmlns:soapenv=&#39;http://schemas.xmlsoap.org/soap/envelope/&#39;&quot;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&quot; xmlns:req=&#39;Request&#39;&gt; &lt;soapenv:Header/&gt; &lt;soapenv:Body&gt; &quot;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&quot; &lt;req:PutRegisters&gt;&quot;</span><span class="op">;</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> footer <span class="op">=</span> <span class="st">&quot;&lt;/req:PutRegisters&gt; &lt;/soapenv:Body&gt; &lt;/soapenv:Envelope&gt;&quot;</span><span class="op">;</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> requests <span class="op">=</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    requests <span class="op">+=</span> <span class="st">&quot;&lt;RequestItems&gt;&quot;</span><span class="op">;</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    requests <span class="op">+=</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QVector</span><span class="op">&lt;</span>Request<span class="op">&gt;</span> R <span class="op">=</span> selectRequests<span class="op">();</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> n <span class="op">=</span> R<span class="op">.</span>size<span class="op">();</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>        requests <span class="op">+=</span> <span class="st">&quot;&lt;item&gt;&quot;</span><span class="op">;</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>        requests <span class="op">+=</span> <span class="st">&quot;&lt;IdRequest&gt;&quot;</span> <span class="op">+</span> to_s<span class="op">(</span>R<span class="op">[</span>i<span class="op">].</span>idRequest<span class="op">())</span> <span class="op">+</span> <span class="st">&quot;&lt;/IdRequest&gt;&quot;</span><span class="op">;</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>        requests <span class="op">+=</span> <span class="st">&quot;&lt;IdClient&gt;&quot;</span> <span class="op">+</span> to_s<span class="op">(</span>R<span class="op">[</span>i<span class="op">].</span>idClient<span class="op">())+</span> <span class="st">&quot;&lt;/IdClient&gt;&quot;</span><span class="op">;</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>        requests <span class="op">+=</span> <span class="st">&quot;&lt;RequestDate&gt;&quot;</span> <span class="op">+</span> R<span class="op">[</span>i<span class="op">].</span>requestDate<span class="op">()</span> <span class="op">+</span> <span class="st">&quot;&lt;/RequestDate&gt;&quot;</span><span class="op">;</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>        requests <span class="op">+=</span> <span class="st">&quot;&lt;/item&gt;&quot;</span><span class="op">;</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>        requests <span class="op">+=</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    requests <span class="op">+=</span> <span class="st">&quot;&lt;/RequestItems&gt;&quot;</span><span class="op">;</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> details <span class="op">=</span> <span class="st">&quot;&lt;DetailItems&gt;&quot;</span><span class="op">;</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>    details <span class="op">+=</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QVector</span><span class="op">&lt;</span>Detail<span class="op">&gt;</span> D <span class="op">=</span> selectDetails<span class="op">();</span></span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> D<span class="op">.</span>size<span class="op">();</span></span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>        details <span class="op">+=</span> <span class="st">&quot;&lt;item&gt;&quot;</span><span class="op">;</span></span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>        details <span class="op">+=</span> <span class="st">&quot;&lt;IdDetail&gt;&quot;</span> <span class="op">+</span> to_s<span class="op">(</span>D<span class="op">[</span>i<span class="op">].</span>idDetail<span class="op">())</span> <span class="op">+</span> <span class="st">&quot;&lt;/IdDetail&gt;&quot;</span><span class="op">;</span></span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>        details <span class="op">+=</span> <span class="st">&quot;&lt;IdRequest&gt;&quot;</span> <span class="op">+</span> to_s<span class="op">(</span>D<span class="op">[</span>i<span class="op">].</span>idRequest<span class="op">())</span> <span class="op">+</span> <span class="st">&quot;&lt;/IdRequest&gt;&quot;</span><span class="op">;</span></span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>        details <span class="op">+=</span> <span class="st">&quot;&lt;IdProduct&gt;&quot;</span> <span class="op">+</span> to_s<span class="op">(</span>D<span class="op">[</span>i<span class="op">].</span>idProduct<span class="op">())</span> <span class="op">+</span> <span class="st">&quot;&lt;/IdProduct&gt;&quot;</span><span class="op">;</span></span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>        details <span class="op">+=</span> <span class="st">&quot;&lt;Amount&gt;&quot;</span> <span class="op">+</span> to_s<span class="op">(</span>D<span class="op">[</span>i<span class="op">].</span>amount<span class="op">())</span> <span class="op">+</span> <span class="st">&quot;&lt;/Amount&gt;&quot;</span><span class="op">;</span></span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>        details <span class="op">+=</span> <span class="st">&quot;&lt;/item&gt;&quot;</span><span class="op">;</span></span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>        details <span class="op">+=</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>    details <span class="op">+=</span> <span class="st">&quot;&lt;/DetailItems&gt;&quot;</span><span class="op">;</span></span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>    <span class="ex">QString</span> message <span class="op">=</span> header <span class="op">+</span> requests <span class="op">+</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span> <span class="op">+</span> details <span class="op">+</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span> <span class="op">+</span> footer<span class="op">;</span></span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> message<span class="op">;</span></span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>La actualización de catálogos es muy similar.</p>
 <figure>
 <img src="/report-iv-bb10-web-service/bbws_app_download.png" alt="Actualización de catálogos" />
 <figcaption aria-hidden="true">Actualización de catálogos</figcaption>
 </figure>
 <p>Como lo indica el texto del botón, esta operación borra los registros de la base de datos local y actualiza los catálogos con el servidor, he aquí el código:</p>
-<pre lang="cpp">
-void Backend::updateCatalogs()
-{
-    removeDatabase();
-    _progressMessage->setText("Limpiando registros");
-    _progressIndicator->setValue(25);
-    initDataBase();
-
-    _progressMessage->setText("Descargando catalogo de clientes...");
-    _progressIndicator->setValue(50);
-    queryClients();
-    _progressMessage->setText("Descargando catalogo de clientes...");
-    _progressIndicator->setValue(75);
-    queryProducts();
-}
-</pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> Backend<span class="op">::</span>updateCatalogs<span class="op">()</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    removeDatabase<span class="op">();</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    _progressMessage<span class="op">-&gt;</span>setText<span class="op">(</span><span class="st">&quot;Limpiando registros&quot;</span><span class="op">);</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    _progressIndicator<span class="op">-&gt;</span>setValue<span class="op">(</span><span class="dv">25</span><span class="op">);</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    initDataBase<span class="op">();</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    _progressMessage<span class="op">-&gt;</span>setText<span class="op">(</span><span class="st">&quot;Descargando catalogo de clientes...&quot;</span><span class="op">);</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    _progressIndicator<span class="op">-&gt;</span>setValue<span class="op">(</span><span class="dv">50</span><span class="op">);</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    queryClients<span class="op">();</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    _progressMessage<span class="op">-&gt;</span>setText<span class="op">(</span><span class="st">&quot;Descargando catalogo de clientes...&quot;</span><span class="op">);</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    _progressIndicator<span class="op">-&gt;</span>setValue<span class="op">(</span><span class="dv">75</span><span class="op">);</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    queryProducts<span class="op">();</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>La operación <em>queryClients()</em> ya la vimos anteriormente cuando explicamos la comunicación con el Web service, solo falta mostrar como se obtiene la lista de productos:</p>
-<pre lang="javascript">
-void Backend::queryProducts()
-{
-    QUrl url(WS_URL);
-    QNetworkAccessManager *networkManager = new QNetworkAccessManager(this);
-    QNetworkRequest request(url);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "text/xml");
-    QObject::connect(networkManager, SIGNAL(finished(QNetworkReply *)),
-                     this, SLOT(getProductsFinished(QNetworkReply*)));
-    networkManager->post(request, MSG_GET_ALL_PRODUCTS.toAscii());
-}
-
-void Backend::getProductsFinished(QNetworkReply *reply)
-{
-    QByteArray ans = reply->readAll();
-    QString response(ans.data());
-    QVector<Product> products = toProductArray(response);
-
-    int n = products.size();
-    for (int i = 0; i < n; i++) {
-        insertProduct(products[i].idProduct(), products[i].description());
-    }
-
-    loadProductsToList();
-}
-</pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">void</span> Backend<span class="op">::</span><span class="fu">queryProducts</span>()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    QUrl <span class="fu">url</span>(WS_URL)<span class="op">;</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    QNetworkAccessManager <span class="op">*</span>networkManager <span class="op">=</span> <span class="kw">new</span> <span class="fu">QNetworkAccessManager</span>(<span class="kw">this</span>)<span class="op">;</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    QNetworkRequest <span class="fu">request</span>(url)<span class="op">;</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    request<span class="op">.</span><span class="fu">setHeader</span>(<span class="dt">QNetworkRequest</span><span class="op">::</span>ContentTypeHeader<span class="op">,</span> <span class="st">&quot;text/xml&quot;</span>)<span class="op">;</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">QObject</span><span class="op">::</span><span class="fu">connect</span>(networkManager<span class="op">,</span> <span class="fu">SIGNAL</span>(<span class="fu">finished</span>(QNetworkReply <span class="op">*</span>))<span class="op">,</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                     <span class="kw">this</span><span class="op">,</span> <span class="fu">SLOT</span>(<span class="fu">getProductsFinished</span>(QNetworkReply<span class="op">*</span>)))<span class="op">;</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    networkManager<span class="op">-&gt;</span><span class="fu">post</span>(request<span class="op">,</span> MSG_GET_ALL_PRODUCTS<span class="op">.</span><span class="fu">toAscii</span>())<span class="op">;</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="kw">void</span> Backend<span class="op">::</span><span class="fu">getProductsFinished</span>(QNetworkReply <span class="op">*</span>reply)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    QByteArray ans <span class="op">=</span> reply<span class="op">-&gt;</span><span class="fu">readAll</span>()<span class="op">;</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    QString <span class="fu">response</span>(ans<span class="op">.</span><span class="fu">data</span>())<span class="op">;</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    QVector<span class="op">&lt;</span>Product<span class="op">&gt;</span> products <span class="op">=</span> <span class="fu">toProductArray</span>(response)<span class="op">;</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    int n <span class="op">=</span> products<span class="op">.</span><span class="fu">size</span>()<span class="op">;</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (int i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>        <span class="fu">insertProduct</span>(products[i]<span class="op">.</span><span class="fu">idProduct</span>()<span class="op">,</span> products[i]<span class="op">.</span><span class="fu">description</span>())<span class="op">;</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">loadProductsToList</span>()<span class="op">;</span></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Y bueno, mi intención no es abrumarlos con mucho código, creo que las partes más importantes ya se han explicado. Al final se proporciona el código completo para que prueben la aplicación si así lo desean.</p>
 <h2 id="código-fuente">Código fuente</h2>
 <p>El código tanto del cliente como del servidor están disponibles en Bitbucket en las siguientes direcciones:</p>
 <p><a href="https://bitbucket.org/rendon/request_ws">https://bitbucket.org/rendon/request_ws</a> <a href="https://bitbucket.org/rendon/requisition_bb10">https://bitbucket.org/rendon/requisition_bb10</a></p>
 <p>O bien pueden clonar los proyectos:</p>
-<pre lang="bash" theme="slate">
-$ git clone https://rendon@bitbucket.org/rendon/request_ws.git
-$ git clone https://rendon@bitbucket.org/rendon/requisition_bb10.git
-</pre>
+<pre><code>$ git clone https://rendon@bitbucket.org/rendon/request_ws.git
+$ git clone https://rendon@bitbucket.org/rendon/requisition_bb10.git</code></pre>
 <p>La licencia del Web service y del la aplicación cliente es GPLv3.</p>
 <h2 id="por-hacer">Por hacer</h2>
 <p>Esta es la primara vez que utilizo Qt para algo más que un simple “Hola, mundo!”, y la primera vez que utilizo QML, seguramente existe una mejor manera de realizar las cosas, Qt emplea el patrón de diseño <a href="http://qt-project.org/doc/qt-4.8/modelview.html">Model View</a>, sin embargo, al ser la primera vez, me enfoque más en que las cosas funcionaran. Lo cierto es que apegarse a un patrón de diseño ayuda a dar mantenimiento a nuestro software de forma más fácil.</p>

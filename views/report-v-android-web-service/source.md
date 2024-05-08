@@ -68,7 +68,7 @@ Uno de los requisitos de nuestra aplicación es que debe de funcionar de forma d
 
 Lo primero es crear las clases necesarias que representaran a nuestras tablas.
 
-<pre lang="java">
+```
 package com.inforscience.requisition.model;
 
 public class Client {
@@ -146,9 +146,9 @@ public class Client {
         return getName() + " " + getMiddleName() + " " + getLastName();
     }
 }
-</pre>
+```
 
-<pre lang="java">
+```
 package com.inforscience.requisition.model;
 
 public class Product {
@@ -189,9 +189,9 @@ public class Product {
         return getDescription();
     }
 }
-</pre>
+```
 
-<pre lang="java">
+```
 package com.inforscience.requisition.model;
 
 public class Request {
@@ -238,9 +238,9 @@ public class Request {
         this.requestDate = requestDate;
     }
 }
-</pre>
+```
 
-<pre lang="java">
+```
 package com.inforscience.requisition.model;
 
 public class Detail {
@@ -323,11 +323,11 @@ public class Detail {
         return getAmount() + " |  " + getDescription();
     }
 }
-</pre>
+```
 
 Para simplificarnos las cosas vamos a crear un clase auxiliar (un _Helper_) para que realice todas las tareas que tienen que ver con la base de datos, como son la creación de las tablas (en caso de que no existan), inserción de registros y consulta de los mismos:
 
-<pre lang="java">
+```
 package com.inforscience.requisition.model;
 
 import android.content.ContentValues;
@@ -574,11 +574,11 @@ public class DBManager {
         return requests;
     }
 }
-</pre>
+```
 
 Podrán observar que cada uno de los métodos recibe un objecto de tipo _SQLiteDatabase_, este objecto lo creamos en la actividad principal (_MainActivity.java_) de nuestra aplicación y se proporciona al a las actividades restantes. He aquí la parte relevante:
 
-<pre lang="java">
+```
 /* Método onCreate() */
 
 database = openOrCreateDatabase(DBManager.DB_NAME,
@@ -602,7 +602,7 @@ HomeActivity homeActivity = (HomeActivity)getLocalActivityManager()
                                 .getCurrentActivity();
 homeActivity.setDatabase(database);
 homeActivity.setShopActivity(shopActivity);
-</pre>
+```
 
 Como su nombre lo indica, el método _openOrCreateDatabase()_ abre nuestra base de datos o la crea en caso de que aun no exista.
 
@@ -610,7 +610,7 @@ Como su nombre lo indica, el método _openOrCreateDatabase()_ abre nuestra base 
 
 Al igual que con Qt, trabajar con Web services en Java es un poco tedioso ya que no hay soporte nativo (¿Lo hay?) para trabajar con ellos. Existen algunas bibliotecas para trabajar con Web services pero son demasiado complejas y lo que necesitamos para esta aplicación es algo sencillo, por ello vamos a crear nuestro propio proxy.
 
-<pre lang="java">
+```
 package com.inforscience.requisition.net;
 
 import java.io.*;
@@ -736,7 +736,7 @@ public class WebService {
         Log.w("RESPONSE", response);
     }
 }
-</pre>
+```
 
 Este código es ni más ni menos que el que ocupamos con Blackberry, pero en Java.
 
@@ -765,7 +765,7 @@ La siguiente figura muestra como lucirá la página principal de nuestra aplicac
 
 El diseño correspondiente en XML es el siguiente:
 
-<pre lang="xml">
+```
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
@@ -812,11 +812,11 @@ El diseño correspondiente en XML es el siguiente:
                 android:id="@+id/update_catalogs_button"/>
     </LinearLayout>
 </LinearLayout>
-</pre>
+```
 
 El siguiente listado muestra como se programa el comportamiento de los dos botones:
 
-<pre lang="java">
+```
 @Override
 public void onCreate(Bundle savedInstanceState)
 {
@@ -896,7 +896,7 @@ public void onCreate(Bundle savedInstanceState)
     });
 
 }
-</pre>
+```
 
 
 ### Registro de pedidos
@@ -907,7 +907,7 @@ A continuación se ilustra la interfaz para registrar pedidos.
 
 La interfaz esta descrita de la siguiente manera:
 
-<pre lang="xml">
+```
 <?xml version="1.0" encoding="utf-8"?>
 <linearlayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
@@ -968,11 +968,11 @@ La interfaz esta descrita de la siguiente manera:
                 android:layout_gravity="center"/>
     </linearlayout>
 </linearlayout>
-</pre>
+```
 
 La lógica detrás del botón que agrega artículos a la lista ("+") es la siguiente:
 
-<pre lang="java">
+```
 Button addItemButton = (Button)findViewById(R.id.add_item_button);
 addItemButton.setOnClickListener(new View.OnClickListener() {
     @Override
@@ -1003,11 +1003,11 @@ addItemButton.setOnClickListener(new View.OnClickListener() {
         editText.setText("");
     }
     });
-</pre>
+```
 
 Ahora para el botón que almacena el pedido en la base de datos:
 
-<pre lang="java">
+```
 Button saveRequestButton;
 saveRequestButton = (Button)findViewById(R.id.save_request_button);
 saveRequestButton.setOnClickListener(new View.OnClickListener() {
@@ -1062,7 +1062,7 @@ saveRequestButton.setOnClickListener(new View.OnClickListener() {
 
     }
 });
-</pre>
+```
 
 
 ### Consulta de pedidos
@@ -1073,7 +1073,7 @@ Nuestra aplicación también permite visualizar la lista de pedidos que tenemos 
 
 El código XML que describe a esta interfaz es el siguiente:
 
-<pre lang="xml">
+```
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
@@ -1105,11 +1105,11 @@ El código XML que describe a esta interfaz es el siguiente:
             android:layout_height="fill_parent"
             android:id="@+id/request_list"/>
 </LinearLayout>
-</pre>
+```
 
 Y la lógica detrás del botón "Actualizar" es:
 
-<pre lang="java">
+```
 @Override
 public void onCreate(Bundle savedInstanceBundle)
 {
@@ -1134,7 +1134,7 @@ public void onCreate(Bundle savedInstanceBundle)
         }
     });
 }
-</pre>
+```
 
 Hasta aquí las explicaciones, al final se proporciona el código completo de la aplicación.
 
@@ -1148,10 +1148,10 @@ El código del servidor y del cliente están disponibles en Bitbucket en las sig
 
 O bien pueden clonar los proyectos:
 
-<pre theme="slate">
+```
 $ git clone https://rendon@bitbucket.org/rendon/request_ws.git
 $ git clone https://rendon@bitbucket.org/rendon/requisitionandroid.git
-</pre>
+```
 
 La licencia del Web service y de la aplicación cliente es GPLv3.
 

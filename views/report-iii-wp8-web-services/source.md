@@ -75,7 +75,7 @@ Nuestra base de datos consiste de 3 tablas, Cliente, Pedido y Detalle.
 
 ### Synchronize
 
-<pre lang="php">
+```
 function Synchronize($ClientItems, $RequestItems, $DetailItems)
 {
     if (is_array($ClientItems)) {
@@ -158,7 +158,7 @@ function Synchronize($ClientItems, $RequestItems, $DetailItems)
 
     return count($clients) + count($requests) + count($details);
 }
-</pre>
+```
 Los argumentos de esta función son arreglos. Algo curioso que me encontré es que estos arreglos deben tener más de un elemento para que PHP los reconozca como tal, por ello, lo primero que hacemos es convertir la entrada a un formato conveniente.
 
 Lo que sigue es realizar la sincronización. Esta parte me resulto interesante y al parecer es un tema complicado. Mi algoritmo es muy sencillo y no esta optimizado, pero funciona (más me vale :) ).
@@ -180,7 +180,7 @@ Nuestra aplicación móvil no permite modificar detalles de los pedidos, por lo 
 
 El servicio se registra de la siguiente manera:
 
-<pre lang="php">
+```
 $server->register('Synchronize',
     array(
         'ClientItems' => 'tns:ArrayOfClient',
@@ -193,13 +193,13 @@ $server->register('Synchronize',
     'literal',
     'Synchronize the user data with the server data'
 );
-</pre>
+```
 
 ### GetAllClients
 
 Después de que la aplicación móvil manda los datos al servidor para la sincronización, ésta borra su base de datos y la vuelve a construir pero ahora con los datos del servidor. Quizás no lo más adecuado pero si lo más fácil.
 
-<pre lang="php">
+```
 function GetAllClients()
 {
     $mysqli = OpenDB();
@@ -224,11 +224,11 @@ function GetAllClients()
 
     return $clients;
 }
-</pre>
+```
 
 El servicio se registra de la siguiente manera:
 
-<pre lang="php">
+```
 $server->register('GetAllClients',
     array(),
     array('clients' => 'tns:ArrayOfClient'),
@@ -238,13 +238,13 @@ $server->register('GetAllClients',
     'literal',
     'Retrieve all clients.'
 );
-</pre>
+```
 
 ### GetAllRequests
 
 El código para este servicio es el siguiente:
 
-<pre lang="php">
+```
 function GetAllRequests()
 {
     $mysqli = OpenDB();
@@ -267,11 +267,11 @@ function GetAllRequests()
 
     return $requests;
 }
-</pre>
+```
 
 Y el registro del servicio es el siguiente:
 
-<pre lang="php">
+```
 $server->register('GetAllRequests',
     array(),
     array('requests' => 'tns:ArrayOfRequest'),
@@ -281,13 +281,13 @@ $server->register('GetAllRequests',
     'literal',
     'Retrieve all requests.'
 );
-</pre>
+```
 
 ### GetAllDetails
 
 El código es similar a los dos anteriores:
 
-<pre lang="php">
+```
 function GetAllDetails()
 {
     $mysqli = OpenDB();
@@ -312,11 +312,11 @@ function GetAllDetails()
 
     return $details;
 }
-</pre>
+```
 
 Y su respectivo registro:
 
-<pre lang="php">
+```
 $server->register('GetAllDetails',
     array(),
     array('details' => 'tns:ArrayOfDetail'),
@@ -326,7 +326,7 @@ $server->register('GetAllDetails',
     'literal',
     'Retrieve all details.'
 );
-</pre>
+```
 
 Al final se proporciona el código fuente completo.
 
@@ -349,7 +349,7 @@ El código de las clases es simple, aunque algo extenso. Por ello no lo vamos a 
 
 Para construir la base de datos a partir de las clases vamos a utilizar la clase `DataContext`. El siguiente código arma la base de datos:
 
-<pre lang="csharp">
+```
     public class RequisitionDataContext : DataContext
     {
         public static string DBConnectionString =
@@ -363,11 +363,11 @@ Para construir la base de datos a partir de las clases vamos a utilizar la clase
         public Table<Request> requests;
         public Table<Key> keys;
     }
-</pre>
+```
 
 La estructura de la base de datos ya esta, pero aun no ha sido creada, eso lo realizaremos en el momento que la aplicación inicie su ejecución. En el archivo _App.xaml.cs_, al final del constructor pegamos el siguiente código:
 
-<pre lang="csharp">
+```
 string cs = RequisitionDataContext.DBConnectionString;
 using(RequisitionDataContext db = new RequisitionDataContext(cs))
 {
@@ -378,7 +378,7 @@ using(RequisitionDataContext db = new RequisitionDataContext(cs))
 
     // db.DeleteDatabase();
 }
-</pre>
+```
 
 Creamos la base de datos solo en caso de que no haya sido creada aún.
 
@@ -413,7 +413,7 @@ La siguiente imagen muestra la pagina principal de la aplicación:
 
 El diseño correspondiente en XAML (archivo _MainPage.xaml_):
 
-<pre lang="xml">
+```
 <!--LayoutRoot is the root grid where all page content is placed-->
 <Grid x:Name="LayoutRoot" Background="Transparent">
     <Grid.RowDefinitions>
@@ -486,7 +486,7 @@ El diseño correspondiente en XAML (archivo _MainPage.xaml_):
 
     </shell:ApplicationBar>
 </phone:PhoneApplicationPage.ApplicationBar>
-</pre>
+```
 
 
 
@@ -498,7 +498,7 @@ La siguiente imagen muestra la interfaz para dar de alta a los clientes.
 
 El diseño correspondiente en XAML (archivo _View/AddClientView.xaml_):
 
-<pre lang="xml">
+```
 <!--LayoutRoot is the root grid where all page content is placed-->
 <Grid x:Name="LayoutRoot" Background="Transparent">
     <Grid.RowDefinitions>
@@ -582,11 +582,11 @@ El diseño correspondiente en XAML (archivo _View/AddClientView.xaml_):
                 Click="Button_Click_1"  />
     </Grid>
 </Grid>
-</pre>
+```
 
 El código que se encarga de crear el nuevo cliente es el siguiente:
 
-<pre lang="csharp">
+```
 private void Button_Click_1(object sender, RoutedEventArgs e)
 {
     if (String.IsNullOrEmpty(Client.Name) ||
@@ -631,7 +631,7 @@ private void Button_Click_1(object sender, RoutedEventArgs e)
         }
     }
 }
-</pre>
+```
 
 
 ### Consulta de Clientes
@@ -642,7 +642,7 @@ La siguiente imagen muestra la interfaz para la consulta de clientes.
 
 El diseño correspondiente en XAML (archivo _View/QueryClientView.xaml_):
 
-<pre lang="xml">
+```
 <!--LayoutRoot is the root grid where all page content is placed-->
 <Grid x:Name="LayoutRoot" Background="Transparent">
     <Grid.RowDefinitions>
@@ -729,11 +729,11 @@ El diseño correspondiente en XAML (archivo _View/QueryClientView.xaml_):
         </ListBox>
     </Grid>
 </Grid>
-</pre>
+```
 
 Los datos que se muestran en la consulta son cargados de la base de datos en el momento que accedemos a la página:
 
-<pre lang="csharp">
+```
 protected override void OnNavigatedTo(NavigationEventArgs e)
 {
     string cs = RequisitionDataContext.DBConnectionString;
@@ -751,7 +751,7 @@ protected override void OnNavigatedTo(NavigationEventArgs e)
         ClientItems = new ObservableCollection<Client>(items);
     }
 }
-</pre>
+```
 
 Los elementos la interfaz están enlazados (Data binding) a los elementos de la colección _ClientItems_.
 
@@ -763,7 +763,7 @@ La siguiente imagen muestra la interfaz para el registro de pedidos:
 
 El diseño correspondiente en XAML (archivo _View/ShopView.xaml_):
 
-<pre lang="xml">
+```
 <!--LayoutRoot is the root grid where all page content is placed-->
 <Grid x:Name="LayoutRoot" Background="Transparent">
     <Grid.RowDefinitions>
@@ -838,11 +838,11 @@ El diseño correspondiente en XAML (archivo _View/ShopView.xaml_):
 
     </Grid>
 </Grid>
-</pre>
+```
 
 El código que se encarga de almacenar los pedidos es el siguiente:
 
-<pre lang="csharp">
+```
 private void saveRequisitionButton_Click_1(object sender, RoutedEventArgs e)
 {
     if (DetailItems.Count == 0)
@@ -941,7 +941,7 @@ private void saveRequisitionButton_Click_1(object sender, RoutedEventArgs e)
         }
     }
 }
-</pre>
+```
 
 ### Consulta de pedidos
 
@@ -951,7 +951,7 @@ La siguiente imagen muestra la interfaz para la consulta de pedidos:
 
 El diseño correspondiente en XAML (archivo _View/QueryShopView.xaml_):
 
-<pre lang="xml">
+```
 <!--LayoutRoot is the root grid where all page content is placed-->
 <Grid x:Name="LayoutRoot" Background="Transparent">
     <Grid.RowDefinitions>
@@ -1049,11 +1049,11 @@ El diseño correspondiente en XAML (archivo _View/QueryShopView.xaml_):
         </ListBox>
     </Grid>
 </Grid>
-</pre>
+```
 
 La lógica detras de esta operación se muestra en el siguiente listado:
 
-<pre lang="csharp">
+```
 protected override void OnNavigatedTo(NavigationEventArgs e)
 {
     string cs = RequisitionDataContext.DBConnectionString;
@@ -1134,14 +1134,14 @@ private ObservableCollection<RequestReport> processReports(MyWebService.RequestD
 
     return reports;
 }
-</pre>
+```
 
 ### La sincronización con el servidor
 
 Esta operación consiste de varios métodos, en parte porque la comunicación con el Web service se realiza de manera asíncrona, vemos el código y después explicamos lo que sea necesario. 
 
 En el constructor damos de alta los métodos que se encargarán de tratar con las respuestas del Web service.
-<pre lang="csharp">
+```
 private MyWebService.RequestPortTypeClient ws;
 // Constructor
 public MainPage()
@@ -1154,11 +1154,11 @@ public MainPage()
     ws.GetAllDetailsCompleted += ws_GetAllDetailsCompleted;
     ws.SynchronizeCompleted += ws_SynchronizeCompleted;
 }
-</pre>
+```
 
 Y ahora sí la sincronización: 
 
-<pre lang="csharp">
+```
 private void syncOperation_Click_1(object sender, EventArgs e)
 {
     SetProgressIndicator(true);
@@ -1329,11 +1329,11 @@ void ws_GetAllDetailsCompleted(object sender, MyWebService.GetAllDetailsComplete
 
     SetProgressIndicator(false); 
 }
-</pre>
+```
 
 Nótese que casi al final de la sincronización se actualizan las claves primarias, el método `updateKeys()` es el siguiente:
 
-<pre lang="csharp">
+```
 private void updateKeys()
 {
     int idClient = 1;
@@ -1374,7 +1374,7 @@ private void updateKeys()
         db.SubmitChanges();
     }
 }
-</pre>
+```
 
 Hasta aquí la explicación. Hay muchas cosas que no se abordaron aquí pero si las más importantes, en la siguiente sección se indica como obtener el código fuente para probar la aplicación.
 
@@ -1386,10 +1386,10 @@ El código tanto del cliente como del servidor están disponibles en Bitbucket e
 [https://bitbucket.org/rendon/requisition_wp8](https://bitbucket.org/rendon/requisition_wp8)
 
 O bien pueden clonar los proyectos:
-<pre lang="bash" theme="slate">
+```
 $ git clone https://rendon@bitbucket.org/rendon/request_ws.git
 $ git clone https://rendon@bitbucket.org/rendon/requisition_wp8.git
-</pre>
+```
 
 La licencia del Web service es GPLv3.
 

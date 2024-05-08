@@ -15,7 +15,7 @@ Debido a las restricciones del problema, realizar la simulación no es factible,
 54  55  51
 106 105 109
 214 215 211
-</pre>
+```
 
 Calculemos la suma de cada fila:
 
@@ -27,7 +27,7 @@ Calculemos la suma de cada fila:
 54 + 55 + 51    = 160
 106+ 105+ 109   = 320
 214+ 215+ 211   = 640
-</pre>
+```
 
 
 ¿Notan el patrón? ¿No? Bueno, otro ejemplo:
@@ -39,7 +39,7 @@ Calculemos la suma de cada fila:
 126    129    128    130 
 387    384    385    383 
 1152   1155   1154   1156
-</pre>
+```
 
 Y las sumas son:
 
@@ -50,7 +50,7 @@ Y las sumas son:
 126  +  129  +  128  +  130  = 513
 387  +  384  +  385  +  383  = 1539
 1152 +  1155 +  1154 +  1156 = 4617
-</pre>
+```
 
 Las sumas a partir de la segunda fila corresponden la suma de la fila anterior multiplicada por $n - 1$, donde $n$ es el número de columnas (el número de vacas que tiene el granjero Juan), en nuestro segundo ejemplo $n = 4$ y por lo tanto $3 * 19 = 57$, $3 * 57 = 171$, etc.
 
