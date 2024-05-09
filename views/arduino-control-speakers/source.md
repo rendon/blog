@@ -124,11 +124,8 @@ Connect the USB cable from arduino to the computer and execute the previous prog
 
 <iframe width="640" height="360" src="http://www.youtube.com/embed/MBYaRwM9fFo?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
 
-That is all friends! See you in the next post.
+That is it. Until next time.
 
 ## References
-
-<table>
-  <tr> <td>1</td> <td>[Serial Programming/Serial Linux](http://en.wikibooks.org/wiki/Serial_Programming/Serial_Linux)</td> </tr>
-  <tr> <td>2</td> <td>[Reading a Potentiometer (analog input)](http://www.arduino.cc/en/Tutorial/Potentiometer)</td> </tr>
-</table>
+- [Serial Programming/Serial Linux](https://en.wikibooks.org/wiki/Serial_Programming/Serial_Linux)
+- [Reading a Potentiometer (analog input)](https://docs.arduino.cc/built-in-examples/basics/AnalogReadSerial/)

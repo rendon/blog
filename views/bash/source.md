@@ -121,12 +121,11 @@ En [3] y [4] puede encontrar una lista detallada de comandos para los modos vi y
 
 El funcionamiento básico de todo programa es recibir una entrada, procesar los datos y producir una salida. En los sistemas UNIX existen dos tipos de salida, normal y de errores. Por defecto la entrada corresponde al teclado y la salida a la pantalla.
 
-<table>
-<tr><th>Descriptor de archivo</th>   <th>Nombre</th>   <th>Abreviación</th>   <th>Por defecto</th></tr>
-<tr><td>0</td>   <td>Entrada estándar</td>  <td>stdin</td>    <td>Teclado</td></tr>
-<tr><td>1</td>   <td>Salida estándar</td>   <td>stdout</td>   <td>Pantalla</td></tr>
-<tr><td>2</td>   <td>Error estándar</td>    <td>stderr</td>   <td>Pantalla</td></tr>
-</table>
+| Descriptor de archivo   |   Nombre            |  Abreviación  | Por defecto    |
+|-------------------------|---------------------|---------------|----------------|
+| 0                       | Entrada estándar    |   stdin       |  Teclado       |
+| 1                       | Salida estándar     |   stdout      |  Pantalla      |
+| 2                       | Error estándar      |   stderr      |  Pantalla      |
 
 **Tabla 1**. Entradas y salidas en UNIX.
 
@@ -134,8 +133,7 @@ La redirección de datos permite modificar el comportamiento normal de los progr
 
 ### comando > archivo
 
-Redirecciona la salida de comando a archivo(el archivo se sobrescribe).
-Ej.
+Redirecciona la salida de comando a archivo(el archivo se sobrescribe). Por ejemplo:
 
 ```
 $ ls -1 > salida.txt
@@ -164,7 +162,7 @@ $ ls videos/ >> archivos.txt
 
 ### comando << marca
 
-Conocido como here document, todo texto que se tecleé después de marca hasta encontrar nuevamente a marca se tomará como la entrada del programa, marca no forma parte de la entrada.
+Conocido como *here document*, todo texto que se tecleé después de marca hasta encontrar nuevamente a marca se tomará como la entrada del programa, marca no forma parte de la entrada.
 Ej.
 
 
@@ -177,7 +175,7 @@ $cat > salida.txt <<EOF
 
 El texto entre `EOF` y `EOF` se almacena en el archivo `salida.txt`.
 
-### comando &lt;&lt;&lt; cadena
+### comando <<< cadena
 
 Conocido como *here string*, "cadena" es tomada como entrada de "comando", muy útil.
 Ej. 
@@ -186,10 +184,9 @@ Ej.
 $ bc <<< "(2^10 + 6)/2"
 ```
 
-### comando n&gt;archivo
+### comando > archivo
 
-Redirecciona la salida que normalmente iría al descriptor de archivo *n* a archivo.
-Ej. 
+Redirecciona la salida que normalmente iría al descriptor de archivo *n* a archivo. Por ejemplo:
 
 ```
 $ gcc > error.txt
@@ -205,14 +202,14 @@ $ cat error.txt
 
 El primer ejemplo de redirección no funciona y el archivo `error.txt` esta vació porque los mensajes de error de `gcc` van dirigidos al descriptor de errores(2) y no al descriptor de salida(1). El segundo ejemplo logra su objetivo.
 
-### comando &lt;&amp;n
+### comando <& n
 
 Toma la entrada para comando desde el descriptor de archivo n.
 Ej.
 
 ```
 $ echo "(3 * 4)/2" > entrada.txt
-$ exec 5&lt;entrada.txt 
+$ exec 5<entrada.txt 
 $ bc &lt;&5
 6
 ```

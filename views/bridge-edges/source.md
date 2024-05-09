@@ -88,5 +88,5 @@ int main() {
 I hope it helps. In the references you can find more detailed explanations of the algorithm.
 
 ## References
-- [Bridges in a graph](http://www.geeksforgeeks.org/bridge-in-a-graph/)
+- [Bridges in a graph](https://www.geeksforgeeks.org/bridge-in-a-graph/)
 - [Bridge (graph theory)](https://en.wikipedia.org/wiki/Bridge_(graph_theory))

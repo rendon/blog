@@ -1,15 +1,15 @@
 # Advent of code 2015 - part 1
 2016-12-01 2024-05-06 #algorithms #data-structures #post
 
-I recently found out about [Advent of Code](http://adventofcode.com/), and as part of my preparation for this year's event I'm solving the puzzles of the previous event ([adventofcode.com/2015](http://adventofcode.com/2015)), in this short series I'll publish my solutions with a brief explanation.
+I recently found out about [Advent of Code](https://adventofcode.com/), and as part of my preparation for this year's event I'm solving the puzzles of the previous event ([AdventofCode.com/2015](https://adventofcode.com/2015)), in this short series I'll publish my solutions with a brief explanation.
 
-A brief explanation about how Advent of Code works, there's one puzzle every day from December 1st to the 25th, each puzzle has two versions so you can earn upto two stars for every puzzle.
+A brief explanation about how Advent of Code works, there's one puzzle every day from December 1st to the 25th, each puzzle has two versions so you can earn up to two stars for every puzzle.
 
 ## Day 1: Not Quite Lisp
 Problem description: [day/1](http://adventofcode.com/2015/day/1).
 
 ### Solution
-For v1: Just use a variable for the current floor, increase by one when we find a `(`, descrease by 1 when we find a `)`.
+For v1: Just use a variable for the current floor, increase by one when we find a `(`, decrease by 1 when we find a `)`.
 
 ```ruby
 #!/usr/bin/env ruby
@@ -51,7 +51,7 @@ end
 Problem description: [day/2](http://adventofcode.com/2015/day/2).
 
 ### Solution
-For v1: Read all lines, parse the three integers and just apply the fomula from the problem description.
+For v1: Read all lines, parse the three integers and just apply the formula from the problem description.
 
 ```ruby
 paper = 0

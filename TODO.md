@@ -1,17 +1,7 @@
 # Review and fix
 
 ## Fix links to images and files.
-- a-star
-- adventofcode2015-part1
-- aho-corasick
-- andrews-convex-hull-algorithm
-- arduino-control-speakers
-- arduino-game-controller
-- arquimedes-pi
-- articulation-points
 - bash
-- big-mod
-- bridge-edges
 
 - cf-172
 - cf-174

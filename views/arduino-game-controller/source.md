@@ -291,11 +291,11 @@ Connect the Arduino to the PC and execute the previous program. Here is a screen
 
 ![Game in action](/arduino-game-controller/game3.jpg)
 
-Game Over! See you in the next post.
+Game Over! Until next time.
 
 ## References
 
-The schematic and the electronic diagram were designed using [fritzing](http://fritzing.org/).
+The schematic and the electronic diagram were designed using [fritzing](https://fritzing.org/).
 
-1. [Serial Programming/Serial Linux](http://en.wikibooks.org/wiki/Serial_Programming/Serial_Linux)
-2. [Reading a Potentiometer (analog input)](http://www.arduino.cc/en/Tutorial/Potentiometer)
+1. [Serial Programming/Serial Linux](https://en.wikibooks.org/wiki/Serial_Programming/Serial_Linux)
+2. [Reading a Potentiometer (analog input)](https://docs.arduino.cc/built-in-examples/basics/AnalogReadSerial/)

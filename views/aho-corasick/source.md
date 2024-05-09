@@ -6,9 +6,9 @@ The best way to explain this topic is with a problem:
 
 <blockquote>You are given a text T (1 <= |T| <= 1,000,000) and n (1 <= n <= 1000) patterns, each pattern P<sub>i</sub> has at least 1 and at most 500 characters. Find how many times each pattern occurs in T.</blockquote>
 
-Although we can find the number of occurrences of a pattern in linear time (for example, using the [Z Algorithm](/z-algorithm)) , there are many patterns and so this approach will not be fast enough to finish in a reasonably amount of time.
+Although we can find the number of occurrences of a pattern in linear time (for example, using the [Z Algorithm](/z-algorithm)) , there are many patterns and so this approach will not be fast enough to finish in a reasonable amount of time.
 
-In short and as you probably have already guessed, there exist a more efficient solution to this problem than our first attempt, the string matching algorithm invented by Alfred V. Aho and Margaret J. Corasick. I will not try to explain the algorithm because the authors explain it very well in their paper, I'm only going to provide you with an implementation and some practice problems.
+In short and as you probably have already guessed, there exist a more efficient solution to this problem than our first attempt, the string matching algorithm invented by Alfred V. Aho and Margaret J. Corasick. I will not try to explain the algorithm because the authors explain it very well in their paper. I'm only going to provide you with an implementation and some practice problems.
 
 This is the paper [Efficient String Matching: An Aid to Bibliographic Search](/aho-corasick/AhoCorasick.pdf)
 
