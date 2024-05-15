@@ -3,9 +3,6 @@
 ## Fix links to images and files.
 - bash
 
-- cf-172
-- cf-174
-- cifrar-dispositivo-con-luks
 - ddb-delete-tables
 - ddb-truncate-table
 - de-poligonos-y-estrellas

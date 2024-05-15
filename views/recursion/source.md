@@ -30,7 +30,7 @@ Si una imagen dice más que mil palabras entonces un código también.
 La función factorial tiene la siguiente definición:
 
 
-$$n!= \begin{cases} 1 & \text{si n = 0} \\\\ n(n - 1)!& \text{si n > 0} \end{cases} $$
+$$n!= \begin{cases} 1 & \text{si n = 0} \\\\ n(n - 1)!& \text{si n > 0} \end{cases}$$
 
 
 Antes de proceder con la implementación veamos un ejemplo para ver como se comporta esta función. Sea *n = 4*.
@@ -57,7 +57,6 @@ La condición en la línea 2 es nuestro caso base, el problema se puede resolver
 
 
 ## Máximo común divisor
-
 En matemáticas el máximo común divisor de dos o más números diferentes de cero es el máximo entero que divide a estos mismos de manera exacta, es decir, con residuo igual a cero. A continuación se describe el método de euclides para determinar el MCD de dos números.
 
 
@@ -84,7 +83,6 @@ int gcd(int a, int b) // a > b
 ```
 
 ## Exponenciación rápida
-
 Dados dos números $a$ y $b$, $a^b$ es equivalente a multiplicar $a$ por sí misma $n$ veces. En términos matemáticos esto es exponenciación. Se pide un algoritmo que obtenga $a^n$ de manera eficiente.
 
 Al parecer es un problema muy simple, basta con iterar *n* veces multiplicando *a* por sí misma, resultando en un algoritmo lineal respecto a *n*.
@@ -142,7 +140,7 @@ Note que el parámetro es de tipo `unsigned int` para asegurar que *n* siempre s
 
 El [triangulo de pascal](http://es.wikipedia.org/wiki/Tri%C3%A1ngulo_de_Pascal) es un arreglo triangular que contiene en la fila *n* los coeficientes binomiales que resultan al desarrollar $(a + b)^n$. Las primeras 6 filas de este triangulo son:
 
-<pre>
+```
 1
 1 1
 1 2 1
@@ -165,20 +163,17 @@ int pascal(int i, int j)
 }
 
 ```
-    
-<!--Búsqueda-->
+
 ## Búsqueda binaria
+Sea *A\[0...n -1\]* un arreglo de elementos ordenados, existe un algoritmo de búsqueda que permite encontrar(si existe) un elemento en el arreglo con complejidad O(log (n)). Este algoritmo es conocido como búsqueda binaria ya que en cada paso reduce el campo de búsqueda a la mitad. Para este ejemplo *A* contiene números enteros aunque puede ser cualquier tipo de dato, salvo algunas pequeñas diferencias.
 
-Sea *A[0...n -1]* un arreglo de elementos ordenados, existe un algoritmo de búsqueda que permite encontrar(si existe) un elemento en el arreglo con complejidad O(log (n)). Este algoritmo es conocido como búsqueda binaria ya que en cada paso reduce el campo de búsqueda a la mitad. Para este ejemplo *A* contiene números enteros aunque puede ser cualquier tipo de dato, salvo algunas pequeñas diferencias.
-
-La búsqueda binaria trabaja más o menos así: sea *v* el valor que buscamos y *A* un arreglo con los  elementos sobre los que realizaremos la búsqueda, ordenados en forma ascendente(en orden descendente no implica mayor complicación). Nos colocamos a la mitad del arreglo que contiene los elementos, es decir *A[A.size/2]*, comparamos el valor que se encuentra en esta posición con *v*, y pueden suceder tres casos, si son iguales entonces ya encontramos lo que andabamos buscando y termina la búsqueda de manera satisfactoria, si *v* es mayor entonces el valor que buscamos posiblemente se encuentra en la segunda mitad, es decir *A[A.size/2 + 1]* a *A[A.size - 1]*, y podemos estar seguros de que no se encuentra en la primera mitad gracias a que los elementos están ordenados. Si *v* es menor entonces descartamos la segunda mitad dejando a la primera mitad como la posible contenedora de *v*. Hecho esto hemos reducido el campo de búsqueda a la mitad, se descarta una de las mitades y repetimos el mismo procedimiento con la mitad restante, hasta encontrar el elemento que buscamos o hasta que comprobar que el elemento buscado no se encuentra en *A*.
+La búsqueda binaria trabaja más o menos así: sea *v* el valor que buscamos y *A* un arreglo con los  elementos sobre los que realizaremos la búsqueda, ordenados en forma ascendente(en orden descendente no implica mayor complicación). Nos colocamos a la mitad del arreglo que contiene los elementos, es decir *A\[A.size/2\]*, comparamos el valor que se encuentra en esta posición con *v*, y pueden suceder tres casos, si son iguales entonces ya encontramos lo que andabamos buscando y termina la búsqueda de manera satisfactoria, si *v* es mayor entonces el valor que buscamos posiblemente se encuentra en la segunda mitad, es decir *A\[A.size/2 + 1\]* a *A\[A.size - 1\]*, y podemos estar seguros de que no se encuentra en la primera mitad gracias a que los elementos están ordenados. Si *v* es menor entonces descartamos la segunda mitad dejando a la primera mitad como la posible contenedora de *v*. Hecho esto hemos reducido el campo de búsqueda a la mitad, se descarta una de las mitades y repetimos el mismo procedimiento con la mitad restante, hasta encontrar el elemento que buscamos o hasta que comprobar que el elemento buscado no se encuentra en *A*.
 
 Quizás una imagen ayuda un poco a entender este procedimiento.
 
 ![Búsqueda Binaria](/recursion/binary_search.png)
 
 Una posible implementación de este algoritmo de forma recursiva es la siguiente.
-
 
 ```c
 bool binary_search(int A[], int v, int l, int u)
@@ -197,7 +192,6 @@ bool binary_search(int A[], int v, int l, int u)
 ```
 
 ## Permutaciones
-
 Dada una lista de elementos sin que se repita ninguno de ellos se pide encontrar el número de permutaciones de dichos elementos y mostrar dichas permutaciones.
 
 Una permutación no es mas que el reordenamiento de un cierto número de objetos. Cuando se pide generar todas las permutaciones de un conjunto de elementos(al hablar de conjunto se sabe que no debe haber elementos repetidos) el problema se reduce a generar todas las reordenaciones posibles tales que no halla dos reordenaciones idénticas. Por ejemplo, el conjunto `{1, 2, 3}` tiene 6 permutaciones que son `{1, 2, 3}, {1, 3, 2}, {2, 1, 3}, {2, 3, 1}, {3, 1, 2} ,{3, 2, 1}`.
