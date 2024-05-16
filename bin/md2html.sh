@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Locates all article sources (files named source.md) into ERB files.
+# Locates all article sources (files named source.md) and converts them into ERB files.
 
 export PATH="$PWD/bin:$PATH"
 
@@ -8,10 +8,11 @@ function convert() {
     # Convert markdown links
     link < source.md > out1
 
-    pandoc --wrap=preserve -f markdown out1 -t html -o out2
-
     # Format metadata
-    fmtmd < out2 > out3
+    fmtmd < out1 > out2
+
+    pandoc --wrap=preserve -f markdown out2 -t html -o out3
+
     mv out3 index.erb
 
     rm -f out1 out2 out3

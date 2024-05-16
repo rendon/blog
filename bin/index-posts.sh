@@ -8,7 +8,7 @@ then
 fi
 
 echo '# All posts' > views/all/source.md
-echo > views/all/source.md
+echo >> views/all/source.md
 while read file
 do
     slug=$(basename $file)

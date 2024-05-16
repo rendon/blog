@@ -1,3 +1,3 @@
 install:
-	go build -o fmtmd main.go
+	go build
 	mv fmtmd ../../bin/
