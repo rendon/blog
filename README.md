@@ -31,3 +31,15 @@ The server will listen on port 8080: http://127.0.0.1:8080.
 docker build -t blog .
 docker run --rm --name myblog -p 8080:8080 -d blog
 ```
+
+## Production
+The blog is currently hosted on a Linode server behind Apache and using a Let's Encrypt certificate. The Apache config can be found in the `apache/` folder. You can generate a certificate as follows:
+
+The following assumes that you own a domain and that its A record is pointing to the your host's IP.
+
+```
+sudo snap install --classic certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
+sudo certbot --apache
+# Answer the questions
+```
