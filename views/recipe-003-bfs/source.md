@@ -1,5 +1,12 @@
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-03-05
+updated: 2024-05-06
+---
 # Recipe 003: Breadth-First Search (BFS)
-2016-03-05 2024-05-06 #algorithms #data-structures #post
 
 [Breadth-First Search](http://en.wikipedia.org/wiki/Breadth-first_search) is another fundamental algorithm in [graph theory](http://en.wikipedia.org/wiki/Graph_theory), it's a must-know algorithm!
 

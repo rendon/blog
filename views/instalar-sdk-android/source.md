@@ -1,7 +1,14 @@
 <!-- vim: set spelllang=es_MX: -->
 
+---
+tags:
+    - dev
+    - android
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Instalar SDK de Android
-2016-02-18 2024-05-07 #dev #android #post
 
 Como parte de un reporte de proyecto necesito un manual sobre como instalar y configurar el SDK de Java, si bien es cierto que en Internet hay gran cantidad de tutoriales, para mi reporte necesito una fuente confiable, algo de lo que este yo seguro de que funciona, y como dice el dicho, si quieres algo bien hecho hazlo tu mismo. En este tutorial vamos a ver como obtener y configurar el Android SDK en GNU/Linux Debian Wheezy.
 

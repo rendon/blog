@@ -1,5 +1,11 @@
+---
+tags:
+    - algorithms
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Z algorithm
-2016-02-18 2024-05-07 #algorithms #post
 
 String matching is a very common problem, given a text $T$ and a pattern $P$ find the occurrences of $P$ in $T$. This problem doesn't need too much introduction.
 

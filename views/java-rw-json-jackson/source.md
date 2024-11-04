@@ -1,5 +1,12 @@
+---
+tags:
+    - dev
+    - java
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Read and write JSON documents in Java with Jackson
-2016-02-18 2024-05-07 #dev #java #post
 
 I'm working on my [graph tool](https://github.com/rendon/graph_illustrator/) and I just changed the file format to JSON, then the need to read and write JSON from and to a file.
 

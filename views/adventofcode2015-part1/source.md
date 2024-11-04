@@ -1,5 +1,12 @@
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-12-01
+updated: 2024-05-06
+---
 # Advent of code 2015 - part 1
-2016-12-01 2024-05-06 #algorithms #data-structures #post
 
 I recently found out about [Advent of Code](https://adventofcode.com/), and as part of my preparation for this year's event I'm solving the puzzles of the previous event ([AdventofCode.com/2015](https://adventofcode.com/2015)), in this short series I'll publish my solutions with a brief explanation.
 

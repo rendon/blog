@@ -1,5 +1,12 @@
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-02-18
+updated: 2024-05-14
+---
 # CODEFORCES 172
-2016-02-18 2024-05-14 #algorithms #data-structures #post
 
 I took part in Codeforces 172, Division II, and here are my solutions for some of the problems.
 

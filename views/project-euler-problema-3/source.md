@@ -1,7 +1,14 @@
 <!-- vim: set spelllang=es_MX: -->
 
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # ProjectEuler - Problema 3
-2016-02-18 2024-05-07 #algorithms #data-structures #post
 
 Dentro del conjunto de los [números naturales](http://es.wikipedia.org/wiki/N%C3%BAmero_natural)(denotado por $\mathbb{N}$) pueden distinguirse básicamente dos tipos de números: primos y compuestos. Los primos son aquellos que son únicamente divisibles(división exacta) con uno y consigo mismos mientras que los compuestos reciben su nombre debido a que se obtienen como un producto de números primos, factores, los cuales pueden aparecer más de una vez en el producto.
 

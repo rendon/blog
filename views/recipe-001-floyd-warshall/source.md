@@ -1,5 +1,12 @@
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Recipe 001: Floyd-Warshall
-2016-02-18 2024-05-07 #algorithms #data-structures #post
 
 Compute the minimum distance between all the nodes in a graph.
 

@@ -1,7 +1,14 @@
 <!-- vim: set spelllang=es_MX: -->
 
+---
+tags:
+    - dev
+    - linux
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Instalar servicio LAMP
-2016-02-18 2024-05-07 #dev #linux #post
 
 ## Configurar Entorno LAMP
 Como parte de un reporte de proyecto necesito un manual sobre como instalar y configurar un entorno LAMP (Linux + Apache + MySQL + PHP), si bien es cierto que en Internet hay gran cantidad de tutoriales, para mi reporte necesito una fuente confiable, algo de lo que este yo seguro de que funciona, y como dice el dicho, si quieres algo bien hecho, hazlo tu mismo. En este tutorial vamos a ver como obtener y configurar un entorno LAMP en GNU/Linux Debian Wheezy.

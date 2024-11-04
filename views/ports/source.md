@@ -1,5 +1,11 @@
+---
+tags:
+    - sysadmin
+    - post
+created: 2017-10-14
+updated: 2024-05-06
+---
 # Ports
-2017-10-14 2024-05-06 #sysadmin #post
 
 ## Open up SSH port (or any other port)
 

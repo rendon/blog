@@ -1,7 +1,14 @@
 <!-- vim: set spelllang=es_MX: -->
 
+---
+tags:
+    - dev
+    - web-services
+    - post
+created: 2016-02-24
+updated: 2024-05-06
+---
 # Reporte III: Windows Phone 8 & Web services
-2016-02-24 2024-05-06 #dev #web-services #post
 
 Tengo que decir que no soy un usuario Windows, pero en esta situación no tuve elección.
 

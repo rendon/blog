@@ -1,6 +1,13 @@
 <!-- vim: set spelllang=es_MX: -->
+---
+tags:
+    - dev
+    - school
+    - post
+created: 2016-02-23
+updated: 2024-05-06
+---
 # Reporte V: Android web service
-2016-02-23 2024-05-06 #dev #school #post
 
 Este reporte corresponde al proyecto número 5 de la asignatura Desarrollo de Aplicaciones para Tecnologías Móviles.
 

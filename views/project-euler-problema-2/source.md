@@ -1,7 +1,14 @@
 <!-- vim: set spelllang=es_MX: -->
 
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # ProjectEuler - Problema 2
-2016-02-18 2024-05-07 #algorithms #data-structures #post
 
 La sucesión de fibonacci es muy famosa y es común encontrarla en problemas de concursos de programación. Un problema clásico para ejemplificar la [recursión](/?p=35) y uno de los problemas más sencillos para demostrar el poder de la *programación dinámica*. El inventor de dicha secuencia fue el matemático italiano [Leonardo de pisa](http://en.wikipedia.org/wiki/Fibonacci) y se define de la siguiente forma.
 

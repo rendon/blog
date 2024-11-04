@@ -1,5 +1,12 @@
+---
+tags:
+    - dev
+    - sysadmin
+    - post
+created: 2016-02-18
+updated: 2024-05-06
+---
 # MySQL Workbench libtool issues
-2016-02-18 2024-05-06 #dev #sysadmin #post
 
 I have been trying to use MySQL Workbench to design some database schemas these days, but it does crash so often that I decided to install it from the source hoping to find a more stable version, however I faced this problem:
 

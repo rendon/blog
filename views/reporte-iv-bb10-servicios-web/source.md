@@ -1,7 +1,14 @@
 <!-- vim: set spelllang=es_MX: -->
 
+---
+tags:
+    - dev
+    - web-services
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Reporte IV BlackBerry 10 Web service
-2016-02-18 2024-05-07 #dev #web-services #post
 
 Este reporte corresponde al proyecto número 4 de la asignatura Desarrollo de Aplicaciones para Tecnologías Móviles.
 

@@ -1,7 +1,14 @@
 <!-- vim: set spelllang=es_MX: -->
 
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # OMI Training Gate: Sumando sumas
-2016-02-18 2024-05-07 #algorithms #data-structures #post
 
 El día de hoy estuve resolviendo [este problema](http://www.spoj.com/problems/SUMSUMS/) y les quiero compartir mi solución y un poco del análisis para poder resolverlo.
 

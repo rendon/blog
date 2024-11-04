@@ -1,7 +1,14 @@
 <!-- vim: set spelllang=es_MX: -->
 
+---
+tags:
+    - sysadmin
+    - tools
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Tmux
-2016-02-18 2024-05-07 #sysadmin #tools #post
 
 **NOTA**: Este artículo fue publicado originalmente en [ATIX](http://revista.atixlibre.org/?p=259), revista de software libre.
 
@@ -48,6 +55,14 @@ Para los usuarios de distribuciones Debian, Ubuntu, CentOS, Fedora, etc. es muy 
 
 
 ```sh
+---
+tags:
+    - sysadmin
+    - tools
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Debian y Ubuntu
 $ sudo apt-get install tmux
 
@@ -99,13 +114,45 @@ Tmux permite dividir el área de trabajo en varias partes, llamadas paneles, est
 
 
 ```txt
+---
+tags:
+    - sysadmin
+    - tools
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Creación de panel horizontal
+---
+tags:
+    - sysadmin
+    - tools
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Combinación     Comando
 PREFIX + "      (split-window)
 
+---
+tags:
+    - sysadmin
+    - tools
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Creación de panel vertical
 PREFIX + %      (split-window -h)
 
+---
+tags:
+    - sysadmin
+    - tools
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Moverse al siguiente panel
 PREFIX + o      (select-pane -t :.+)
 
@@ -226,17 +273,49 @@ Hasta ahora hemos cubierto lo esencial, usando las configuraciones por defecto, 
 
 
 ```txt
+---
+tags:
+    - sysadmin
+    - tools
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Soporte para 256 colores.
 set -g default-terminal "screen-256color"
 
+---
+tags:
+    - sysadmin
+    - tools
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Cambiar PREFIX a Ctrl + a, más cómodo.
 set-option -g prefix C-a
 unbind-key C-b
 bind-key C-a send-prefix
 
 #Como dividir la pantalla de forma más intuitiva
+---
+tags:
+    - sysadmin
+    - tools
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # | en vez de %
 bind | split-window -h
+---
+tags:
+    - sysadmin
+    - tools
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # - en vez de "
 bind - split-window -v
 
@@ -261,7 +340,23 @@ Con estas opciones activadas, haz lo siguiente para copiar contenido dentro de t
 
 
 ```txt
+---
+tags:
+    - sysadmin
+    - tools
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Presiona PREFIX + [jkhl]
+---
+tags:
+    - sysadmin
+    - tools
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # para cambiar de panel
 unbind-key j
 bind-key j select-pane -D
@@ -278,7 +373,23 @@ bind-key l select-pane -R
 
 
 ```txt
+---
+tags:
+    - sysadmin
+    - tools
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Presiona Ctrl + a + [jkhl]
+---
+tags:
+    - sysadmin
+    - tools
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # para redimensionar panel
 bind-key C-a-j resize-pane -D 2
 bind-key C-a-k resize-pane -U 2
@@ -291,19 +402,67 @@ bind-key C-a-l resize-pane -R 4
 
 
 ```txt
+---
+tags:
+    - sysadmin
+    - tools
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Color de fondo y de letra
 set -g status-bg black
 set -g status-fg white
 
+---
+tags:
+    - sysadmin
+    - tools
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Leyendas que se deben mostrar
+---
+tags:
+    - sysadmin
+    - tools
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # A la izquierda el nombre del host
+---
+tags:
+    - sysadmin
+    - tools
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # y a la derecha la fecha
 set -g status-left '#[fg=green]#H'
 set -g status-right '#[fg=yellow]#(date)'
 
+---
+tags:
+    - sysadmin
+    - tools
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Color de la ventana activa
 set-window-option -g window-status-current-bg blue
 
+---
+tags:
+    - sysadmin
+    - tools
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Color del panel activo
 set-option -g pane-active-border-fg colour027
 

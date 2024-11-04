@@ -1,5 +1,11 @@
+---
+tags:
+    - algorithms
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Ternary search
-2016-02-18 2024-05-07 #algorithms #post
 
 Hi! This time I going to talk about a new technique I've just learned, [Ternary Search](http://en.wikipedia.org/wiki/Ternary_search).
 

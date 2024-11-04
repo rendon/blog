@@ -1,5 +1,12 @@
+---
+tags:
+    - dev
+    - hardware
+    - post
+created: 2016-02-24
+updated: 2024-05-06
+---
 # Game controller with Arduino
-2016-02-24 2024-05-06 #dev #hardware #post
 
 Hi guys!, In my [previous post](/arduino-control-speakers) I described how to build a volume controller with Arduino, using the **termios** API for serial communication in GNU/Linux, well, in this post I use the same concepts to build a simple game controller for the classical game Snake.
 

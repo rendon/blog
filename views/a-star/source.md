@@ -1,5 +1,12 @@
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-02-18
+updated: 2024-05-06
+---
 # A* search algorithm
-2016-02-18 2024-05-06 #algorithms #data-structures #post
 
 I've been trying to implement the [A*](http://en.wikipedia.org/wiki/A*_search_algorithm) algorithm and solve at least one problem with it, however, almost all sources of information are abstract and give only high level details, but I've got it!
 

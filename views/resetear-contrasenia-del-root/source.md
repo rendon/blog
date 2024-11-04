@@ -1,7 +1,13 @@
 <!-- vim: set spelllang=es_MX: -->
 
+---
+tags:
+    - sysadminuuulinux
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Retear contrasenia del usuario root
-2016-02-18 2024-05-07 #sysadminuuulinux #post
 
 ## Problema
 Hoy quiero hablarles de cómo **resetear** la contraseña del super usuario en GNU/Linux por si lo llegan a necesitar :-).

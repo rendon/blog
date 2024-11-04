@@ -1,5 +1,12 @@
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-07-09
+updated: 2024-05-06
+---
 # Bridge edges
-2016-07-09 2024-05-06 #algorithms #data-structures #post
 
 Let's talk a little bit about [bridges](https://en.wikipedia.org/wiki/Bridge_%28graph_theory%29), like in graph theory. In a nutshell, an edge is called a bridge if its removal increases the number of connected components. In a connected graph, if I were to remove a bridge, it would not be connected anymore.
 

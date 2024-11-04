@@ -1,7 +1,14 @@
 <!-- vim: set spelllang=es_MX: -->
 
+---
+tags:
+    - dev
+    - android
+    - post
+created: 2016-03-05
+updated: 2024-05-06
+---
 # Reporte I: Enviar mensajes SMS
-2016-03-05 2024-05-06 #dev #android #post
 
 Con éste documento doy inicio a una serie de reportes correspondientes al desarrollo de los proyectos de la asignatura **Desarrollo de Aplicaciones para Tecnologías Móviles**.
 

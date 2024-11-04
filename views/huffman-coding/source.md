@@ -1,5 +1,12 @@
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Huffman encoding
-2016-02-18 2024-05-07 #algorithms #data-structures #post
 
 Data compression is an interesting topic, and at last I had some time to explore this topic a little bit.
 

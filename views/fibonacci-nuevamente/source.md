@@ -1,7 +1,13 @@
 <!-- vim: set spelllang=es_MX: -->
 
+---
+tags:
+    - algorithms
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Fibonacci nuevamente
-2016-02-18 2024-05-07 #algorithms #post
 
 La sucesión de fibonacci se define de la siguiente manera:
 

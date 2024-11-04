@@ -1,5 +1,12 @@
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Eulerian tour
-2016-02-18 2024-05-07 #algorithms #data-structures #post
 
 I'm taking [Intro to Algorithms](https://classroom.udacity.com/courses/cs215), which focuses mostly on graphs, and one of the first topics is about Eulerian paths and tours, you can easily find the theory of these topics in the course or on Wikipedia, let's write some code.
 
@@ -7,15 +14,79 @@ This is my brute force solution to the challenge in problem set 1: Find Eulerian
 
 
 ```py
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Find Eulerian Tour
 #
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Write a function that takes in a graph
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # represented as a list of tuples
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # and return a list of nodes that
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # you would follow on an Eulerian Tour
 #
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # For example, if the input graph was
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # [(1, 2), (2, 3), (3, 1)]
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # A possible Eulerian tour would be [1, 2, 3, 1]
 import copy
 

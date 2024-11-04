@@ -1,8 +1,14 @@
 <!-- vim: set spelllang=es_MX: -->
 <!-- slug: cifrar dispositivo con LUKS -->
 
+---
+tags:
+    - sysadmin
+    - seguridad
+    - linux
+created: 2024-04-26
+---
 # Cifrar dispositivos con LUKS
-2024-04-26 15:33:19 #sysadmin #seguridad #linux
 
 <div class='video'>
   <iframe width="560" height="315" src="https://www.youtube.com/embed/YIzfk069uYE?si=4e04fXz5mVrq9L2p" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -23,24 +29,73 @@ Algo que yo quiero poder hacer es guardar una copia en la casa, o encargarla con
 ## Configuración inicial:
 
 ```bash
+---
+tags:
+    - sysadmin
+    - seguridad
+    - linux
+created: 2024-04-26
+---
 # Encuentra tu dispositivo
 lsblk
 
+---
+tags:
+    - sysadmin
+    - seguridad
+    - linux
+created: 2024-04-26
+---
 # Formatea el dispositivo con formato LUKS
 sudo cryptsetup luksFormat <dispositivo>
 
+---
+tags:
+    - sysadmin
+    - seguridad
+    - linux
+created: 2024-04-26
+---
 # Inspecciona el siguiente directorio
 ls /dev/mapper/
 
+---
+tags:
+    - sysadmin
+    - seguridad
+    - linux
+created: 2024-04-26
+---
 # Abre dispositivo como <nombre>
 sudo cryptsetup open <dispositivo> [<nombre>]
 
+---
+tags:
+    - sysadmin
+    - seguridad
+    - linux
+created: 2024-04-26
+---
 # Inspecciona el siguiente directorio nuevamente
 ls /dev/mapper/<nombre>
 
+---
+tags:
+    - sysadmin
+    - seguridad
+    - linux
+created: 2024-04-26
+---
 # Crear un sistema de archivos
 sudo mkfs.btrfs -L <etiqueta> /dev/mapper/<nombre>
 
+---
+tags:
+    - sysadmin
+    - seguridad
+    - linux
+created: 2024-04-26
+---
 # Cierra dispositivo
 sudo cryptsetup close <dispositivo>
 ```
@@ -49,20 +104,62 @@ sudo cryptsetup close <dispositivo>
 ## Como usar tu dispositivo
 
 ```bash
+---
+tags:
+    - sysadmin
+    - seguridad
+    - linux
+created: 2024-04-26
+---
 # Encuentra tu dispositivo
 lsblk
 
+---
+tags:
+    - sysadmin
+    - seguridad
+    - linux
+created: 2024-04-26
+---
 # Abre dispositivo como <nombre>
 sudo cryptsetup open <dispositivo> [<nombre>]
 
+---
+tags:
+    - sysadmin
+    - seguridad
+    - linux
+created: 2024-04-26
+---
 # Monta el dispositivo
 sudo mount /dev/mapper/<nombre> /mnt/
 
+---
+tags:
+    - sysadmin
+    - seguridad
+    - linux
+created: 2024-04-26
+---
 # Lee o escribe como normalmente lo haces
 
+---
+tags:
+    - sysadmin
+    - seguridad
+    - linux
+created: 2024-04-26
+---
 # Desmonta el dispositivo
 sudo umount /mnt/
 
+---
+tags:
+    - sysadmin
+    - seguridad
+    - linux
+created: 2024-04-26
+---
 # Cierra dispositivo
 sudo cryptsetup close <dispositivo>
 ```

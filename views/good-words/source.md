@@ -1,5 +1,11 @@
+---
+tags:
+    - algorithms
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Good words
-2016-02-18 2024-05-07 #algorithms #post
 
 Hi! Welcome to my first post in English :).
 

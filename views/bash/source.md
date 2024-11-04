@@ -1,7 +1,14 @@
 <!-- vim: set spelllang=es_MX: -->
 
+---
+tags:
+    - sysadmin
+    - linux
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Bash
-2016-02-18 2024-05-07 #sysadmin #linux #post
 
 **NOTA**: Este artículo fue publicado originalmente en [ATIX](http://revista.atixlibre.org/?p=271), revista de software libre.
 

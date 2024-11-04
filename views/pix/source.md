@@ -1,7 +1,15 @@
 <!-- vim: set spelllang=es_MX: -->
 
+---
+tags:
+    - dev
+    - graphics
+    - java
+    - cpp
+created: 2016-02-18
+updated: 2024-05-01
+---
 # Pix
-2016-02-18 2024-05-01 #dev #graphics #java #cpp
 
 En el semestre que curso actualmente llevo la asignatura de graficación, para la cual hace unos días elabore un programa, proyecto de la primera unidad. Este programa consiste básicamente en mostrar como se representan los gráficos en un monitor, es decir, a nivel de píxeles. Ya que los píxeles son unidades físicas muy pequeñas se nos ha encomendado programar un simulador que escenifique este mismo proceso a una mayor escala.
 

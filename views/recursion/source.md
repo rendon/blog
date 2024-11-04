@@ -1,7 +1,14 @@
 <!-- vim: set spelllang=es_MX: -->
 
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Recursión
-2016-02-18 2024-05-07 #algorithms #data-structures #post
 
 La recursión es una técnica de diseño de algoritmos muy útil que permite formular soluciones de forma natural a un gran número de problemas. En este documento trato de dar una breve introducción a este tema mediante algunos sencillos ejemplos. Se proporciona una breve descripción del problema, el análisis de la solucion recursiva y además el código de la solución con el fin de que al lector le sea posible poner en práctica cada algoritmo de manera inmediata.
 

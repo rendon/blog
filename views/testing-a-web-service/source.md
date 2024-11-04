@@ -1,5 +1,11 @@
+---
+tags:
+    - dev
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Testing a Web service
-2016-02-18 2024-05-07 #dev #post
 
 I've been working with Web services these days for some college projects. Here are some interesting ways to test your web service.
 

@@ -1,5 +1,11 @@
+---
+tags:
+    - sysadmin
+    - post
+created: 2016-02-04
+updated: 2024-05-06
+---
 # Enable MySQL remote connection
-2016-02-04 2024-05-06 #sysadmin #post
 
 In this post I'll show you how to allow remote connections to MySQL server, just in case, my distro is Debian GNU/Linux. I am assuming that MySQL server and MySQL client are already installed in the server and client side respectively.
 
@@ -11,7 +17,21 @@ Open the MySQL configuration file(`/etc/mysql/my.cnf`) and set the `bind-address
 
 
 ```cnf
+---
+tags:
+    - sysadmin
+    - post
+created: 2016-02-04
+updated: 2024-05-06
+---
 # Instead of skip-networking the default is now to listen only on
+---
+tags:
+    - sysadmin
+    - post
+created: 2016-02-04
+updated: 2024-05-06
+---
 # localhost which is more compatible and is not less secure.
 #bind-address   = 127.0.0.1
 bind-address    = 0.0.0.0

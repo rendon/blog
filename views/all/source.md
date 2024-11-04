@@ -1,3 +1,4 @@
+# All posts
 
 - [a-star](/a-star)
 - [adventofcode2015-part1](/adventofcode2015-part1)
@@ -34,7 +35,7 @@
 - [maven-generate-self-contained-jar](/maven-generate-self-contained-jar)
 - [maven-getting-started](/maven-getting-started)
 - [mysql-workbench-libtool-problem](/mysql-workbench-libtool-problem)
-- [numeros-y-strings](/numeros-y-strings)
+- [numeros-y-cadenas](/numeros-y-cadenas)
 - [omi-tg-sumando-sumas](/omi-tg-sumando-sumas)
 - [pix](/pix)
 - [ports](/ports)
@@ -54,6 +55,7 @@
 - [reporte-v-android-servicios-web](/reporte-v-android-servicios-web)
 - [resetear-contrasenia-del-root](/resetear-contrasenia-del-root)
 - [servidor-dns-en-linux](/servidor-dns-en-linux)
+- [set-up-aws-credentials](/set-up-aws-credentials)
 - [setup-dhcp-server-on-linux](/setup-dhcp-server-on-linux)
 - [ternary-search](/ternary-search)
 - [testing-a-web-service](/testing-a-web-service)

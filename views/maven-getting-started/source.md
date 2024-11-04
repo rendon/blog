@@ -1,5 +1,11 @@
+---
+tags:
+    - dev
+    - tools
+    - post
+created: 2024-05-03
+---
 # Maven: Getting started
-2024-05-03 08:37:10 #dev #tools #post
 
 ## Install maven
 ```sh

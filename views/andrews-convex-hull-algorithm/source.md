@@ -1,5 +1,12 @@
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-02-23
+updated: 2024-05-06
+---
 # Andrew's Convex Hull Algorithm
-2016-02-23 2024-05-06 #algorithms #data-structures #post
 
 Convex hull is a classical problem in computational geometry and often used in programming contests. Today I present to you  the Andrew's algorithm to compute the convex hull from a set of 2D points. 
 

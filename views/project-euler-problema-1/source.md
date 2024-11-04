@@ -1,7 +1,14 @@
 <!-- vim: set spelllang=es_MX: -->
 
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # ProjectEuler - Problema 1
-2016-02-18 2024-05-07 #algorithms #data-structures #post
 
 Un saludo a todos. Les comento que he decidido empezar a escribir sobre las soluciones de los problemas que a veces resuelvo, esto con el fin de mejorar mi capacidad de análisis, así como mi habilidad pedagogica.
 

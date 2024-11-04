@@ -1,7 +1,14 @@
 <!-- vim: set spelllang=es_MX: -->
 
+---
+tags:
+    - tools
+    - image-processing
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Gimp scripting
-2016-02-18 2024-05-07 #tools #image-processing #post
 
 ## Problema
 En estos días he estado trabajando en un proyecto web junto con algunos compañeros de clase y estoy contento porque he aprendido muchas cosas interesantes, hoy les voy a hablar de una de ellas.

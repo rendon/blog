@@ -1,6 +1,13 @@
 <!-- vim: set spelllang=es_MX: -->
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Números y cadenas
-2016-02-18 2024-05-07 #algorithms #data-structures #post
 
 ## Introducción
 

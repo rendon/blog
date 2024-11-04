@@ -1,7 +1,15 @@
 <!-- vim: set spelllang=es_MX: -->
 
+---
+tags:
+    - dev
+    - ruby
+    - rails
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Set up Ruby on Rails
-2016-02-18 2024-05-07 #dev #ruby #rails #post
 
 Como parte de un reporte de proyecto necesito un manual sobre como instalar y configurar Ruby On Rails, si bien es cierto que en Internet hay gran cantidad de tutoriales, para mi reporte necesito una fuente confiable, algo de lo que este yo seguro de que funciona, y como dice el dicho, si quieres algo bien hecho, hazlo tu mismo. En este tutorial vamos a ver como obtener y configurar un Ruby On Rails en GNU/Linux Debian Wheezy.
 

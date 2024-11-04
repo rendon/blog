@@ -1,6 +1,13 @@
 <!-- vim: set spelllang=es_MX: -->
+---
+tags:
+    - sysadmin
+    - linux
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Instalar servidor de DNS en Linux
-2016-02-18 2024-05-07 #sysadmin #linux #post
 
 ## Introducción 
 
@@ -24,6 +31,14 @@ El método para especificar el servidor(es) DNS desde la lína de comandos, es u
 
 
 ```conf
+---
+tags:
+    - sysadmin
+    - linux
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # /etc/resolv.conf
 search 192.168.1.65
 nameserver 192.168.1.65
@@ -34,6 +49,14 @@ En este caso el servidor DNS se encuentra en la máquina con IP 192.168.1.65. Es
 
 
 ```sh
+---
+tags:
+    - sysadmin
+    - linux
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # ifconfig eth0 192.168.1.100 netmask 255.255.255.0
 
 ```
@@ -42,6 +65,14 @@ Y por último establecer la dirección IP del _Gateway_.
 
 
 ```sh
+---
+tags:
+    - sysadmin
+    - linux
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # route add default gw 192.168.1.254
 
 ```
@@ -52,6 +83,14 @@ Ahora vamos a configurar nuestro sistema para que actue como servidor de DNS, ya
 
 
 ```sh
+---
+tags:
+    - sysadmin
+    - linux
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # apt-get install dnsmasq
 
 ```

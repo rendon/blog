@@ -1,5 +1,12 @@
+---
+tags:
+    - dev
+    - aws
+    - post
+created: 2017-05-02
+updated: 2024-05-04
+---
 # DynamoDB: Delete tables
-2017-05-02 2024-05-04 #dev #aws #post
 
 I found myself deleting tables manually from the DynamoDB UI and it started to get tedious. Here a small working program to delete tables in Java:
 ```java

@@ -1,7 +1,14 @@
 <!-- vim: set spelllang=es_MX: -->
 
+---
+tags:
+    - math
+    - algorithms
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Big Mod
-2016-02-18 2024-05-07 #math #algorithms #post
 
 En una división entera se distinguen cuatro elementos, *dividendo*, *divisor*, *cociente* y *módulo o residuo*. Donde el dividendo es la cantidad a dividir, divisor el valor contra el cual se hará la división, el resultado es el cociente y residuo la cantidad sobrante. Por ejemplo, sea *n* = 123 y *d* = 4, al realizar la división obtenemos un cociente *c* igual a 30 y un residuo *r* igual a 3.
 

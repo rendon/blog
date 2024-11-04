@@ -1,7 +1,13 @@
 <!-- vim: set spelllang=es_MX: -->
 
+---
+tags:
+    - dev
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Reporte II: MicroOJ & servicios Web
-2016-02-18 2024-05-07 #dev #post
 
 Este es el reporte correspondiente al proyecto número 2 de la materia Desarrollo de Aplicaciones para Tecnologías Móviles.
 

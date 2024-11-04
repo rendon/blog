@@ -1,5 +1,12 @@
+---
+tags:
+    - algorithms
+    - data-structures
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Aho-Corasick
-2016-02-18 2024-05-07 #algorithms #data-structures #post
 
 ## Introduction
 The best way to explain this topic is with a problem:

@@ -1,5 +1,12 @@
+---
+tags:
+    - sysadmin
+    - linux
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Set up DHCP server
-2016-02-18 2024-05-07 #sysadmin #linux #post
 
 DHCP stands for Dynamic Host Configuration Protocol, a network protocol used to automatically configure hosts in a network. There are some concepts you need to know to understand what is a DHCP server.
 

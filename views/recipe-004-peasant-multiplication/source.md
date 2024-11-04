@@ -1,5 +1,11 @@
+---
+tags:
+    - algorithms
+    - post
+created: 2016-05-02
+updated: 2024-05-06
+---
 # Russian peasant multiplication
-2016-05-02 2024-05-06 #algorithms #post
 
 I learned this one from [Intro to Algorithms](https://classroom.udacity.com/courses/cs215).
 

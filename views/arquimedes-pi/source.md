@@ -1,7 +1,14 @@
 <!-- vim: set spelllang=es_MX: -->
 
+---
+tags:
+    - math
+    - dev
+    - post
+created: 2016-02-23
+updated: 2024-05-05
+---
 # Arquímedes PI
-2016-02-23 2024-05-05 #math #dev #post
 
 ## Introducción
 

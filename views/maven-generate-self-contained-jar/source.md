@@ -1,5 +1,10 @@
+---
+tags:
+    - dev
+    - post
+created: 2024-05-03
+---
 # Maven generate self-contained jar
-2024-05-03  #dev #post
 
 If your application is meant to run out of the box, it's convenient for the users to get a single file and just execute it. For that, we need a way to bundle everything together in a big JAR file. For this task, we can use the [Shade](https://maven.apache.org/plugins/maven-shade-plugin/index.html).
 

@@ -1,6 +1,13 @@
 <!-- vim: set spelllang=es_MX: -->
+---
+tags:
+    - algorithms
+    - math
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Factorial y ceros
-2016-02-18 2024-05-07 #algorithms #math #post
 
 ## Introducción
 

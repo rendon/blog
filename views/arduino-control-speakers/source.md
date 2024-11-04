@@ -1,5 +1,12 @@
+---
+tags:
+    - dev
+    - hardware
+    - post
+created: 2016-02-18
+updated: 2024-05-07
+---
 # Arduino volume controller
-2016-02-18 2024-05-07 #dev #hardware #post
 
 Today I will show you how to build a simple volume controller using arduino and serial communication in GNU/Linux, specifically Debian Squeeze.
 
