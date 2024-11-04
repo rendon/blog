@@ -32,6 +32,7 @@
 - [jacobi-method](/jacobi-method)
 - [java-data-compression](/java-data-compression)
 - [java-rw-json-jackson](/java-rw-json-jackson)
+- [kadane](/kadane)
 - [maven-generate-self-contained-jar](/maven-generate-self-contained-jar)
 - [maven-getting-started](/maven-getting-started)
 - [mysql-workbench-libtool-problem](/mysql-workbench-libtool-problem)
