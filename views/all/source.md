@@ -23,6 +23,7 @@
 - [evaluador-de-expresiones-aritmeticas](/evaluador-de-expresiones-aritmeticas)
 - [factorial-y-ceros](/factorial-y-ceros)
 - [fibonacci-nuevamente](/fibonacci-nuevamente)
+- [generate-permutations-in-sorted-order](/generate-permutations-in-sorted-order)
 - [gimp-scripting](/gimp-scripting)
 - [good-words](/good-words)
 - [huffman-coding](/huffman-coding)

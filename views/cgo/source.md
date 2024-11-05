@@ -5,7 +5,7 @@ tags:
     - programming
     - post
 created: 2021-04-26
-updated: 2021-04-26
+updated: 2024-11-04
 ---
 # Hello-World CGO program
 
@@ -19,6 +19,7 @@ go mod init cgo
 ```
 
 Then we'll add the following files:
+
 - hello.c
 - hello.h
 - main.go
