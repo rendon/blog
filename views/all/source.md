@@ -31,6 +31,7 @@
 - [instalar-ruby-on-rails](/instalar-ruby-on-rails)
 - [instalar-sdk-android](/instalar-sdk-android)
 - [instalar-sdk-de-java](/instalar-sdk-de-java)
+- [install-neovim-on-ubuntu](/install-neovim-on-ubuntu)
 - [jacobi-method](/jacobi-method)
 - [java-data-compression](/java-data-compression)
 - [java-rw-json-jackson](/java-rw-json-jackson)
