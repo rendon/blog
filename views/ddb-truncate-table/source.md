@@ -10,7 +10,7 @@ updated: 2024-05-04
 
 One of the features that I miss from most RDBMS is the ability to easily delete all rows, either via `DELETE * FROM MyTable` or using `TRUNCATE TABLE MyTable`. Unfortunately, DynamoDB does not have such a feature, you have to either, delete your table or remove all items one at a time.
 
-See [[ddb-delete-tables]] if you want to know how to delete tables using the AWS SDK with Java.
+See [[dynamodb-delete-tables]] if you want to know how to delete tables using the AWS SDK with Java.
 
 Sometimes however, deleting your tables is not convenient, for example, you will have to define your schema and specify your capacity settings again, in this case, and if your tables contains just a few tens of records, it's easier to remove them one by one.
 

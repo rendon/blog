@@ -13,6 +13,7 @@
 - [bridge-edges](/bridge-edges)
 - [cf-172](/cf-172)
 - [cf-174](/cf-174)
+- [cgo](/cgo)
 - [cifrar-dispositivo-con-luks](/cifrar-dispositivo-con-luks)
 - [ddb-delete-tables](/ddb-delete-tables)
 - [ddb-truncate-table](/ddb-truncate-table)
