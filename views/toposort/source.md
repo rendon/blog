@@ -1,6 +1,7 @@
 ---
 tags:
     - algorithms
+    - topological-sorting
     - post
 created: 2016-02-18
 updated: 2024-05-07
