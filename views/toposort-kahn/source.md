@@ -8,8 +8,6 @@ updated: 2024-11-15
 ---
 # Topological sorting - Kahn's algorithm
 
-WORK IN PROGRESS
-
 Problem: [course-schedule-ii](https://leetcode.com/problems/course-schedule-ii/)
 
 Solution:

@@ -60,6 +60,11 @@ for (int k = 0; k < n; k++) {
     }
 }
 
+
 ```
 
-Algorithm complexity: $O(n^3)$.
+Runtime complexity: $O(n^3)$.
+
+
+## Practice problems
+1. [Course Schedule IV - LeetCode](https://leetcode.com/problems/course-schedule-iv/)
